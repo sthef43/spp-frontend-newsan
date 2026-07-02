@@ -1,0 +1,82 @@
+import { Typography } from "@mui/material";
+import { BinariosIdentificadoresSlice } from "app/Middleware/reducers/BinariosIdentificadoresSlice";
+import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
+import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { useAppDispatch, useAppSelector } from "app/core/store/store";
+import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { SelectTableroPuesto } from "app/features/tableros/components/SelectTableroPuesto";
+import { TableroPuestoBody } from "app/features/tableros/modules/tableroPuestoConObjetivo/components/TableroPuestoBody";
+import { TableroPuestoHead } from "app/features/tableros/modules/tableroPuestoConObjetivo/components/TableroPuestoHead";
+import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
+import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
+import React, { useEffect, useState } from "react";
+
+export const TableroPuestoPage = (): JSX.Element => {
+  const { TitleChanger } = useTitleOfApp();
+  const dispatch = useAppDispatch();
+  const { openNotificationUI } = useNotificationUI();
+
+  const navBarState = useAppSelector((state) => state.binariosIdentificadores.ocultar);
+
+  const [config, setConfig] = useState(true);
+
+  const lineaPuesto = useAppSelector((state) => state.lineaPuesto.object);
+  const lineaPuestoTablero = useAppSelector((state) => state.lineaPuestoTablero.object);
+  const linea = useAppSelector((state) => state.lineaProduccion.object);
+  const planta = useAppSelector((state) => state.plant.object);
+
+  const getLinea = async () => {
+    try {
+      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
+      await dispatch(LineaSliceRequests.GetByCodigoInicio(linea.identificadorLinea.toString()));
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
+    } catch (e) {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
+      openNotificationUI(e, "error");
+    }
+  };
+  const onLeave = () => {
+    dispatch(BinariosIdentificadoresSlice.actions.hiddenNavBar(!navBarState));
+  };
+  useEffect(() => {
+    TitleChanger("Tablero puesto");
+    dispatch(BinariosIdentificadoresSlice.actions.hiddenNavBar(true));
+    return () => {
+      dispatch(BinariosIdentificadoresSlice.actions.hiddenNavBar(false));
+    };
+  }, []);
+  useEffect(() => {
+    linea && getLinea();
+  }, [linea]);
+
+  return config ? (
+    <ModalCompoment title="Configure el tablero" setOpenPopup={setConfig} openPopup={config}>
+      <SelectTableroPuesto closeModal={setConfig} />
+    </ModalCompoment>
+  ) : (
+    <div
+      className="h-screen w-screen"
+      style={{
+        backgroundColor:
+          lineaPuestoTablero.color == "verde"
+            ? "#0F2415"
+            : lineaPuestoTablero.color == "amarillo"
+            ? "#FEBE16"
+            : "#8B1212"
+      }}>
+      <Typography
+        align="center"
+        className="cursor-pointer m-auto py-10"
+        variant="h2"
+        fontWeight="bold"
+        color={"white"}
+        onClick={onLeave}
+        fontSize={"6.75rem"}>
+        {planta?.name.toLocaleUpperCase()} - {linea?.alias.toLocaleUpperCase()} -{" "}
+        {lineaPuesto?.puesto?.nombre.toLocaleUpperCase()}
+      </Typography>
+      <TableroPuestoHead />
+      <TableroPuestoBody />
+    </div>
+  );
+};

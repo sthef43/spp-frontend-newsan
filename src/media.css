@@ -1,0 +1,100 @@
+@media screen and (max-width: 600px) {
+  table {
+    border: 0 !important;
+    table-layout: fixed !important;
+  }
+
+  table caption {
+    font-size: 1.3em !important;
+  }
+  div[class*="Component-horizontalScrollContainer"] {
+    overflow-x: hidden !important;
+  }
+  .MuiPaper-root div[class*="jss"] {
+    overflow-x: hidden !important;
+  }
+  td[class*="uiTableCell-footer"] {
+    overflow-x: hidden !important;
+    padding-right: 2rem !important;
+  }
+  td[class*="Component-paginationRoot"] {
+    width: 100% !important;
+    padding: 0 0.5rem !important;
+    margin: 0;
+  }
+  div[class*="MuiTablePagination-spacer"] {
+    display: none;
+    flex: 0;
+  }
+  div[class*="Component-paginationSelectRoot"] {
+    width: 25%;
+  }
+  div[class*="MTablePaginationInner-root"] {
+    width: 80%;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+  }
+  div[class*="MTablePaginationInner-root"] .MuiTypography-caption {
+    grid-column: span 3 / span 3;
+  }
+  table th {
+    font-size: 0.8em !important;
+    letter-spacing: 0.1em;
+    padding: 0.625em !important;
+    text-align: center !important;
+    text-transform: uppercase;
+  }
+  table thead {
+    overflow-x: hidden;
+    visibility: hidden;
+    overflow-x: hidden;
+    position: absolute !important;
+    height: 0px !important;
+    width: 0px !important;
+  }
+  .MuiTableCell-paddingNone {
+    border: hidden !important;
+  }
+  tr td div .MuiButtonBase-root {
+    position: absolute;
+    padding: 0;
+  }
+  tr td {
+    border: 0 !important;
+  }
+  table tbody tr {
+    min-height: 0px !important;
+    height: 100% !important;
+  }
+  div table tbody tr .MuiTableRow-root {
+    display: none !important;
+  }
+  table tr {
+    /*border-bottom: 3px solid #ddd !important;*/
+    display: block !important;
+    margin-bottom: 1rem !important;
+  }
+
+  table td {
+    width: 100% !important;
+    display: block !important;
+  }
+  .textButtons {
+    position: relative !important;
+  }
+
+  #icono {
+    margin-right: 1.25rem /* 20px */;
+    padding-bottom: 2rem /* 32px */;
+  }
+  .MuiTablePagination-actions .MuiIconButton-root {
+    position: relative;
+  }
+}
+
+
+.cls-1{stroke:#000;stroke-width:16px;}
+                .cls-1,
+                .cls-2{fill:none;stroke-miterlimit:10;}
+		.cls-3{fill:#fff;}
+		.cls-2{stroke:#fff;stroke-linecap:round;stroke-width:12px;}

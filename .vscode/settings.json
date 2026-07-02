@@ -1,0 +1,5 @@
+{
+  "typescript.tsdk": "node_modules\\typescript\\lib",
+  "cSpell.words": ["linea"],
+  "livePreview.defaultPreviewPath": "/Mail.html"
+}

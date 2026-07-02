@@ -1,0 +1,141 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap'); */
+/* import './assets/css/inter-font.css'; */
+
+
+*{
+  margin: 0;
+  
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+body{
+  background-color: #1E1E2D;
+  
+  
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: auto;
+}
+
+.modal {
+  padding: 20px;
+  border-radius: 8px;
+  width: 550px;
+  height: 650px;
+  position: relative;
+  overflow-y: auto; /* Agregar scroll si el contenido excede la altura */
+}
+
+.close-button {
+  position: absolute;
+  top: 69px;
+  right: 50px;
+  border: none;
+  font-size: 15px;
+  cursor: pointer;
+  width: 22px;
+  height: 22px;
+  border-radius: 7%;
+  text-align: center;
+  line-height: 22px;
+  background: rgb(206, 205, 205);
+  transform: translate(50%, -50%); 
+}
+
+
+.foot{
+  background: #2D2D41;
+  height: 90px;
+  color: white;
+  padding-left: 30px;
+  margin-left: 20px;
+  padding-right: 30px;
+  padding-top: 5px;
+  color: #FFF;
+  position: absolute;
+  left: 0px;
+  bottom: 6px;
+  width: 355px;
+  z-index: 0;
+
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  font-family: Inter;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 200;
+  line-height: normal;
+  padding-bottom: 2px;
+}
+
+.info-row-two{
+  text-align: left;
+  padding-left:12px;
+  padding-top: 5px;
+  color: #FFF;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: italic;
+  font-weight: 100;
+  line-height: normal;
+}
+@media (min-width: 416px) {
+  body {
+    background: #1E1E2D;  
+  }
+  .foot{
+    width: 95%;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-top: 5px;
+    margin-left: 20px;
+    margin-top: 800px;
+  }
+}

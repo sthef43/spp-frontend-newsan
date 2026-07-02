@@ -1,0 +1,21 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "baseUrl": "src",
+    "isolatedModules": true,
+    "strict": false,
+    "skipLibCheck": true,
+    "paths": {
+      "react": ["./node_modules/@types/react"]
+    },
+    "types": ["vite/client"]
+  },
+  "include": ["src/**/*", "vite.config.mjs"],
+  "exclude": ["**/node_modules", "**/.*/"],
+  "paths": {
+    "@core/*": ["src/app/core/*"],
+    "@shared/*": ["src/app/shared/*"],
+    "@features/*": ["src/app/features/*"]
+  }
+}

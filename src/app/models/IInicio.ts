@@ -1,0 +1,41 @@
+/* istanbul ignore file */
+/* tslint:disable */
+/* eslint-disable */
+
+import { IPlanProd } from "./IPlanProd";
+
+export interface IInicio {
+  idInicio?: number | null;
+  fecha?: string | null;
+  turno?: string | null;
+  idProduccion?: number | null;
+  tipoUnidad?: string | null;
+  codigoTrazabilidad?: string | null;
+  codigoNewsan?: string | null;
+  fechaFin?: string | null;
+  nombreInicio?: string | null;
+  nombreFin?: string | null;
+  turnoFin?: string | null;
+  hora?: string | null;
+  horaFin?: string | null;
+  observaciones?: string | null;
+  compresor?: string | null;
+  codigoNewsan2?: string | null;
+  idModelo?: number | null;
+  montado?: number | null;
+  fechaMontado?: string | null;
+  horaMontado?: Date | null;
+  modeloFin?: string | null;
+  nroOp?: string | null;
+  organizacion?: string | null;
+  lote?: string | null;
+  target?: number | null;
+  nroLpn?: string | null;
+  codigoEvaporador?: string | null;
+  idProveedor?: number | null;
+  idProduccionNavigation?: IPlanProd;
+  desde?: number | null;
+  hasta?: number | null;
+  producido?: number | null;
+  rechazados?: number | null;
+}

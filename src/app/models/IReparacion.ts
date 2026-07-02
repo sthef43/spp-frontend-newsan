@@ -1,0 +1,44 @@
+import { ICausa } from "./ICausa";
+import { IDefecto } from "./IDefecto";
+import { IOrigenes } from "./IOrigen";
+
+export interface IReparacion {
+  IdReparacion: number;
+  Fecha?: Date;
+  TipoUnidad: string;
+  Capacidad?: number;
+  RefrigeracionCalefaccion: string;
+  Proveedor: string;
+  NumeroEquipo?: number;
+  CodigoTrazabilidad: string;
+  IdDefecto?: number;
+  Defecto: IDefecto;
+  TipoDefecto: string;
+  Descripcion: string;
+  Nombre: string;
+  Turno: string;
+  IdCausa?: number;
+  Causas: ICausa;
+  Hora: string;
+  IdOrigen?: number;
+  Origenes: IOrigenes;
+  Color: string;
+  Subconjunto: string;
+  FechaRechazo: Date;
+  HoraRechazo: string;
+  TurnoRechazo: string;
+  CodigoError: string;
+  Estado: string;
+  CodigoError2: string;
+  CodigoColor: string;
+  PuestoRechazo?: number;
+  NumeroBomba: number;
+  CodigoPlaqueta: string;
+  SolucionPlaqueta: string;
+  Diagnostico: string;
+  DescripcionMain: string;
+  LineaProduccionId?: number;
+  ReparadorId?: number;
+  DescripcionRechazo?: string;
+  NombreReparador?: string;
+}

@@ -1,0 +1,12 @@
+.tabla-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+  }
+  
+  .tabla-container > * {
+    flex: 1;
+    padding: 10px;
+    box-sizing: border-box;
+  }

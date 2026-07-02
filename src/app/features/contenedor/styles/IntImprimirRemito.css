@@ -1,0 +1,110 @@
+@media print {
+  body {
+    margin: 0;
+    font-family: "Arial", sans-serif;
+  }
+}
+
+.remito-container {
+  padding: 40px;
+  max-width: 800px;
+  margin: auto;
+  font-size: 12pt;
+  color: #000;
+  background-color: #fff;
+  text-align: left; /* Asegura alineación a la izquierda */
+}
+
+.remito-header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid #000;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+.empresa-info h1 {
+  margin: 0;
+  font-size: 20pt;
+}
+
+.remito-info {
+  text-align: right;
+}
+
+.remito-datos {
+  margin-bottom: 20px;
+  line-height: 1.5;
+}
+
+.remito-firmas {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 50px;
+}
+
+/*  */
+.remito-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.remito-tabla thead th {
+  border-right: 1px solid #000;
+  border-bottom: 2px solid #000;
+  padding: 4px 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.remito-tabla thead th:last-child {
+  border-right: none;
+}
+
+.remito-tabla tbody td {
+  border-right: 1px solid #000;
+  padding: 4px 8px;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.remito-tabla tbody td:last-child {
+  border-right: none;
+}
+
+.remito-tabla tbody tr {
+  border-bottom: none;
+}
+
+.remito-tabla tbody tr:last-child td {
+  border-bottom: 1px solid #000;
+}
+
+.observacion {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #000;
+  margin-top: 0;
+  margin-bottom: 30px;
+}
+
+.recorte {
+  display: flex;
+  align-items: center;
+  margin-top: 50px;
+}
+
+.tijera {
+  font-size: 18pt;
+  margin-right: 8px;
+}
+
+.linea-punteada {
+  flex-grow: 1;
+  border-bottom: 1px dashed black;
+  height: 1px;
+}
+

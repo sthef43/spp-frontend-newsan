@@ -1,0 +1,24 @@
+export interface IStock_CLI {
+  lpN_ETIQUETA?: string | null;
+  parenT_LPN_ID?: string | null;
+  item?: string | null;
+  inventorY_ITEM_ID?: string | null;
+  iteM_DESCRIPCION?: string | null;
+  loT_NUMBER?: string | null;
+  cantidad?: number | null;
+  unidaD_MEDIDA?: string | null;
+  organizacion?: string | null;
+  organizatioN_ID?: string | null;
+  subinventario?: string | null;
+  localizador?: string | null;
+  embarque?: string | null;
+  contenedoR_ORIG?: string | null;
+  fechA_CREACION_ETIQUETA?: string | null;
+  fechA_MOVIMIENTO_ETIQUETA?: string | null;
+  usuariO_ULT_MOVIM_ETIQUETA?: string | null;
+  lpN_CONTENEDOR?: string | null;
+  lpN_PALLET?: string | null;
+  costO_UNIT: number | null;
+  costO_TOTAL: number | null;
+  fecha_Ultimo_Movimiento?: string | null;
+}

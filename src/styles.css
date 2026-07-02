@@ -1,0 +1,386 @@
+@import "animate.css/animate.css";
+@import url(./media.css);
+
+html,
+head {
+  height: 0vh;
+  width: 100vw;
+  /* overflow-x: hidden; */
+}
+body {
+  overflow-x: hidden;
+  position: absolute;
+  height: 100vh;
+  width: 100vw;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(270deg, #001134 0%, #2b46ae 98.36%);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(270deg, rgb(40, 94, 187) 0%, rgbrgb(96, 162, 244) 0.36%);
+}
+::-webkit-scrollbar-track {
+  background: #2562dc;
+  border-radius: 10px;
+  box-shadow: inset 0px 0px 0px 0px #f0f0f0;
+}
+
+.div-item-tickets::-webkit-scrollbar {
+  height: 10px;
+}
+.div-item-tickets::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgb(190, 187, 187);
+  background: var(--color-background-scrollBar);
+  border-radius: 10px;
+}
+
+.div-item-tickets::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background: var(--color-scrollBar);
+}
+
+/* :root{
+  --primary-color: "#2697FF";
+  --secondary-color: "#2D2D41";
+  --background-color: "#1E1E2D";
+  --danger-color: "#e3342f";
+  --newsanLighten-color: "rgb(239,15,77)";
+  --newsan-color: "#9B072D"
+} */
+:root {
+  --main-color-init: #108761;
+  --primary-color: #2495c8;
+  /* --sucess-color:         #29c824; */
+  --secondary-color: #2d2d41;
+  --background-color: #1e1e2d;
+  --background-color-reporte: #00224d;
+  --background-color-reporte-letra: #00224d;
+  --danger-color: #e3342f;
+  --text-color: rgba(250, 250, 250, 0.9);
+  --textSec-color: rgba(250, 250, 250, 0.6);
+  --newsanLighten-color: #c80f4d;
+  --emerald-color: #2ecc71;
+  --newsan-color: #9b072d;
+  /* --newsan-gradient-color: linear-gradient(
+    45deg,
+    rgba(220, 15, 77, 0.9) 00%,
+    rgba(155, 7, 45, 0.9) 50%,
+    rgba(220, 15, 77, 0.9) 100%
+  ); */
+}
+.dark {
+  /* --sucess-color:#29c824; 
+  --primary-color: #2495c8; 
+  --background-color: rgba(22, 45, 85, 1); 
+  --secondary-color: rgb(248, 249, 250); 
+  --danger-color: #e3342f;
+  --text-color: #000000;
+  --emerald-color: rgb(46, 204, 113);
+  --textSec-color: rgba(250, 250, 250, 0.6);
+  --main-color-init: #2bfeba;
+  --newsanLighten-color: rgba(200, 15, 76);
+  --newsan-color: #9b072d;
+  --shadow-box: 0px 3px 3px -1px rgba(56,56,56,1); */
+
+  --background-color: #000d27;
+  --primary-color: #253b92;
+  --primary-color-opacity: #3e519f;
+  --secondary-color: #001134;
+  --background-input-message-ticket: #0f2053;
+  --background-color-registro-placas: #02194a;
+  --background-for-audit: #1a242f;
+
+  --background-color-horas-extras: #1e3a8a;
+  --background-color-horas-extras-select: #192742;
+
+  --background-modal-audit: #060e1e52;
+  --background-color-button-close-modal: #274786bf;
+
+  --background-New: #001947;
+  --background-New-Primary: #000d27;
+  --background-New-Secondary: #032970;
+  --background-New-Tertiary: #001947;
+  --background-Card: #000d27;
+  --border: #0f2053;
+  --axis: #ffffff;
+  --grid: #818181ff;
+
+  --table-color-top: #001134;
+  --table-color-bottom: #062764;
+  --text-color-main-page: #bee3ff;
+  --color-info-icon: #11a9d3;
+
+  --text-color: #ffffff;
+  --text-color-subtitle-modules: #ffffff;
+  --text-color-opposite: #000000;
+
+  --warning-color: #ffac1c3d;
+
+  --text-color-new: #ffffff;
+
+  --danger-color: #e3342f;
+  --emerald-color: rgb(46, 204, 113);
+  --textSec-color: rgba(250, 250, 250, 0.6);
+  --main-color-init: #2bfeba;
+
+  --newsanLighten-color: #21398e;
+  --newsan-color: #192f78;
+  --newsan-color-mid-subtitle: #011132;
+
+  --background-color-table-planProdSpp: #021b4e;
+  --background-color-tableHeader-planProdSpp: #021b4e;
+  --background-color-tableSelected-planProdSpp: #b7aafe;
+  --background-color-tableAGC: #21398e;
+
+  --color-background-scrollBar: #bfbfbf;
+  --color-scrollBar: #717171;
+
+  --border-divider: #777a79;
+  --shadow-box: 0px 3px 3px -1px rgba(56, 56, 56, 1);
+  --bar-navigate-wit-blue-gradient: linear-gradient(270deg, rgba(22, 45, 85, 1) 0%, rgba(34, 125, 238, 1) 98.36%);
+}
+
+.light {
+  --background-color: rgb(240, 241, 242);
+  --primary-color: #2697ff;
+  --primary-color-opacity: #70baffc7;
+  --secondary-color: rgb(248, 249, 250);
+  --background-input-message-ticket: #d6d3d1;
+  --background-color-registro-placas: #dbeaf6;
+  --background-for-audit: #f8f9fa;
+
+  --background-color-horas-extras: #1e3a8a;
+  --background-color-horas-extras-select: #f9fefc;
+
+  --background-modal-audit: #eaeff4;
+  --background-color-button-close-modal: #bdbdbd;
+
+  --background-New: #ffffff;
+  --background-New-Tertiary: #eff8ff;
+  --background-New-Secondary: #ffffff;
+  --background-New-Primary: #f8fafb;
+  --background-Card: #f0f0f0;
+  --border: #eaeff4;
+  --grid: #bdbdbd;
+  --axis: #47475f;
+
+  --table-color-top: #fff;
+  --table-color-bottom: #fff;
+
+  --danger-color: #e3342f;
+  --warning-color: #fff3c5;
+  --emerald-color: rgb(46, 235, 113);
+  --main-color-init: #108761;
+  --textSec-color: #181818e0;
+  --shadow-box: 0 6px 3px -1px rgba(166, 166, 166, 0.71);
+  --shadow: 0px 4px 4px 0px #00000040;
+
+  --text-color: #181818;
+  --text-color-subtitle-modules: #3f3d56;
+  --text-color: #000000;
+  --text-color-new: #3f3d56;
+  --text-color-opposite: #ffffff;
+  --text-color-main-page: #253b92;
+  --color-info-icon: #2697ff;
+
+  --newsanLighten-color: #21398e;
+  --newsan-color: #192f78;
+  --newsan-color-mid-subtitle: #011132;
+
+  --background-color-table-planProdSpp: #e7f5ff;
+  --background-color-tableHeader-planProdSpp: #bee3ff;
+  --background-color-tableSelected-planProdSpp: #b7aafe;
+  --background-color-tableAGC: #eff6ff;
+
+  --color-background-scrollBar: #a3a3a3;
+  --color-scrollBar: #202020;
+  --border-divider: #777a79;
+  --bar-navigate-wit-blue-gradient: linear-gradient(270deg, rgba(22, 45, 85, 1) 0%, rgba(34, 125, 238, 1) 98.36%);
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  overflow-x: hidden;
+}
+.btn-sucess {
+  background-color: #29c824 !important;
+}
+
+.calendar-screen {
+  display: flex;
+  flex-flow: column;
+  height: 100vh;
+  padding-bottom: 10px;
+}
+.react-big-calendar {
+  height: 100%;
+}
+.react-datetime-picker input:focus {
+  outline: none;
+}
+
+.react-datetime-picker__wrapper {
+  display: flex;
+  border: 0px solid gray !important;
+}
+
+.pdf-wrapper .rpv-core__inner-page {
+  background-color: transparent !important;
+}
+
+/*Select clean*/
+/* .select-clean .MuiInput-underline:before,
+.select-clean .MuiInput-underline:after,.MuiOutlinedInput-notchedOutline,
+.select-clean .MuiInput-underline:hover:not(.Mui-disabled):before {
+  border-bottom: none !important;
+  border: none !important;
+} */
+
+/*fabs*/
+.fab {
+  border-radius: 100%;
+  bottom: 25px;
+  font-size: 20px;
+  padding: 15px;
+  position: fixed;
+  right: 25px;
+}
+.my-node-enter {
+  opacity: 0;
+}
+.my-node-enter-active {
+  opacity: 1;
+}
+.my-node-exit {
+  opacity: 1;
+}
+.my-node-exit-active {
+  opacity: 0;
+}
+.my-node-active,
+.my-node-active {
+  transition: opacity 500ms;
+}
+.animate__superfaster {
+  --animate-duration: 0.4s;
+}
+.animate__faster {
+  --animate-duration: 0.8s;
+}
+.fade-enter {
+  opacity: 0;
+}
+.fade-exit {
+  opacity: 1;
+}
+.fade-enter-active {
+  opacity: 1;
+}
+.fade-exit-active {
+  opacity: 0;
+}
+.fade-enter-active,
+.fade-exit-active {
+  transition: opacity 500ms;
+}
+
+@tailwind base;
+@layer base {
+  .wraper-container {
+    @apply p-2 m-2 rounded-lg shadow-2xl bg-secondaryNew;
+  }
+}
+
+@layer base {
+  @font-face {
+    font-family: "Roboto";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url("https://fonts.gstatic.com/s/roboto/v30/KFOmCnqEu92Fr1Mu4mxK.woff2") format("woff2");
+  }
+}
+
+@tailwind components;
+@layer components {
+  /* ESTILOS DE OQC CELULARES */
+  .selectSupervisorPlantaProducto {
+    @apply bg-secondaryNew w-[30rem] p-2 text-xl font-semibold border-[1px] rounded-md border-gray-200 text-textColor h-16 shadow-shadowBox cursor-pointer focus:outline-none row-start-1 col-start-1 appearance-none;
+  }
+  .inputsDatosZapling {
+    @apply w-1/2 py-1 text-center text-textColor border-b border-b-gray-400 focus:outline-none bg-transparent;
+  }
+  .inputNuevoPallet {
+    @apply placeholder:text-center placeholder:text-textColor text-center border-b-[1px] border-b-gray-400 bg-secondaryNew focus:outline-none text-textColor w-64;
+  }
+  .cuadroCerrarMasterBox {
+    @apply z-50 text-center text-black absolute top-[-2.5rem] items-center rounded-md flex flex-col justify-evenly bg-[#FCECDA] w-[50%] h-[40%] right-0 left-0 bottom-0 m-auto shadow-[0_2px_3px_0_rgb(138,138,138,0.60)];
+  }
+  .stilosTextArea {
+    @apply placeholder:text-gray-600 placeholder:text-xs placeholder:text-center text-sm border-[1px] border-gray-300 focus:outline-none px-1;
+  }
+  .datosCelualresZapling {
+    @apply text-sm;
+  }
+
+  /* ESTILOS DEL SISTEMA DE TICKETS*/
+  .barraNavegacionLayouts {
+    @apply flex flex-row items-center gap-x-1 cursor-pointer h-full transition-colors hover:bg-gray-200/30 w-[20%] justify-center;
+  }
+}
+
+@tailwind utilities;
+
+.graph_bg {
+  background: var(--secondary-color);
+  padding: 10px;
+  width: 100%;
+  box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 10px 10px 5px 0px rgba(0, 0, 0, 0.75);
+  border-radius: 10px;
+  margin: 0 auto;
+}
+
+.graph_bg h1 {
+  color: white;
+  margin-left: 5%;
+  margin-bottom: 5px;
+  font-size: 25px;
+}
+
+.modelosProducidos .cell {
+  color: #73b3ff;
+}
+
+.modelosProducidos .fpy.green {
+  color: #c9ff36;
+}
+.modelosProducidos .fpy.red {
+  color: #ffb3b3;
+}
+
+/* EPP */
+
+.bg-btn-epp {
+  background-color: #eff8ff;
+  color: #001134;
+  width: 220px;
+}
+.bg-btn-epp:hover {
+  background-color: #bee3ff;
+}
+
+.dark .bg-btn-epp {
+  background-color: #bee3ff;
+}
+.dark .bg-btn-epp:hover {
+  background-color: #1e3688;
+}

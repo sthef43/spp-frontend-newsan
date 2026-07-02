@@ -1,0 +1,67 @@
+.table-cell {
+    text-align: center;
+    color: white;
+    font-size: 20px;
+    /* font-weight: bold; */
+    font-family: Roboto, sans-serif;
+}
+.table-cell-good {
+    text-align: center;
+    color: #9ACF0A;
+    font-size: 20px;
+    /* font-weight: bold; */
+    font-family: Roboto, sans-serif;
+}
+.table-cell-nogood {
+    text-align: center;
+    color: #E16A64;
+    font-size: 20px;
+    /* font-weight: bold; */
+    font-family: Roboto, sans-serif;
+}
+.table-cell-encabezado {
+    text-align: center;
+    color: #121833;
+    font-size: 25px;
+    font-weight: bold;
+    font-family: Roboto, sans-serif;
+}
+
+.boton {
+    margin: 50px;
+    margin-left: 80px;
+    margin-right: 80px;
+    text-align: center;
+}
+.boton-interior {
+    background-color: #263268;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+/* className={styles["table-cell-encabezado"]} */
+
+
+/* const [counter, setCounter] = useState<number>(5); // Inicializar contador en 5 segundos Estados
+const pollingInterval = 5; // Intervalo de polling en segundos
+
+useEffect(() => {
+  // Ejecutar la primera llamada
+  getEnsayos();
+  // Configurar el intervalo de polling
+  const interval = setInterval(() => {
+    getEnsayos(); // Llamada al servidor
+    setCounter(pollingInterval); // Reiniciar el contador
+  }, pollingInterval * 1000);
+  return () => clearInterval(interval); // Limpiar el intervalo al desmontar el componente
+}, []);
+
+useEffect(() => {
+  // Reducir el contador cada segundo
+  const timer = setInterval(() => {
+    setCounter((prev) => (prev > 0 ? prev - 1 : 0));
+  }, 1000);
+  return () => clearInterval(timer); // Limpiar el temporizador al desmontar el componente
+}, []); */

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title></title>
+  </head>
+  <body style="padding: 0; margin: 0; font-family: Roboto">
+    <section style="background-color: #1e3a8a; padding: 20px; color: #fff">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div>
+          <h1 style="margin: 0">Reporte de Auditoria</h1>
+          <p>[linea]</p>
+        </div>
+        <div style="background-color: #354e96; padding: 5px 50px; border-radius: 5px">
+          <p style="color: #969696; font-weight: bold">FECHA Y HORA</p>
+          <p style="color: #fff; font-weight: 600; font-size: 20px">[fechaHora]</p>
+        </div>
+      </div>
+    </section>
+    <section style="width: 100%; background-color: #f8fafc; border-radius: 5px; margin: 0">
+      <div style="display: flex; justify-content: space-between; align-items: center">
+        <div style="width: 50%">
+          <p style="margin: 0; padding: 20px">Linea</p>
+          <p style="margin: 0; padding: 20px">[linea]</p>
+        </div>
+        <div style="width: 50%">
+          <p style="margin: 0; padding: 20px">Auditor</p>
+          <p style="margin: 0; padding: 20px">[nombreAuditor]</p>
+        </div>
+        <div style="width: 50%">
+          <p style="margin: 0; padding: 20px">Numero de Producto</p>
+          <p style="margin: 0; padding: 20px">[numeroProducto]</p>
+        </div>
+      </div>
+    </section>
+    <section style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin: 4rem 0">
+      <div style="padding: 0 1rem">
+        <p style="margin: 2rem 0 1rem; font-size: 24px; font-weight: 600">Evaluacion Criteria</p>
+        <div style="display: flex; justify-content: space-between; align-items: center; gap: 1rem">
+          <!-- Aca va un array donde irian los valores de cada uno -->
+          <div style="background-color: #f0fdf4; padding: 20px; border-radius: 5px; width: 50%; text-align: center">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; margin: 0 0 1rem; color: #4ea44b">
+              [valorCriterio]
+            </p>
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #4ea44b">[descripcionCriterio]</p>
+          </div>
+          <div style="background-color: #fdf7ed; padding: 20px; border-radius: 5px; width: 50%; text-align: center">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; margin: 0 0 1rem; color: #e8572a">
+              [valorCriterio]
+            </p>
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #e8572a">[descripcionCriterio]</p>
+          </div>
+          <div style="background-color: #fcf2f2; padding: 20px; border-radius: 5px; width: 50%; text-align: center">
+            <p style="margin: 0; font-size: 16px; font-weight: 600; margin: 0 0 1rem; color: #dc2c2b">
+              [valorCriterio]
+            </p>
+            <p style="margin: 0; font-size: 16px; font-weight: 600; color: #dc2c2b">[descripcionCriterio]</p>
+          </div>
+        </div>
+      </div>
+      <div style="text-align: center; position: relative; width: 50%">
+        <div style="z-index: 1; margin-top: 1rem; position: relative">
+          <!-- Cambiar los numeros de ponderacion por la variable ponderacion -->
+          <p style="font-size: 22px; font-weight: 600">[90.62]%</p>
+          <p>Cumplimiento</p>
+        </div>
+        <figure
+          style="
+            position: absolute;
+            top: -55%;
+            left: 24%;
+            width: 35%;
+            height: 170%;
+            border-radius: 50%;
+            z-index: -1;
+            border: 8px solid green;
+          "
+        ></figure>
+      </div>
+    </section>
+    <section style="width: 100%; display: flex; align-items: center; justify-content: space-between; margin: 4rem 0">
+      <div style="width: 100%; padding: 0 1rem">
+        <p style="font-size: 24px; font-weight: 600">Detalles de Valores</p>
+        <table
+          style="
+            margin-top: 1rem;
+            width: 100%;
+            background-color: #f8fafc;
+            border-collapse: collapse;
+            border: 1px solid #e7ecf3;
+          "
+        >
+          <tr>
+            <th align="left" style="border-bottom: 1px solid #e7ecf3; padding-left: 6px; padding: 1rem 0 1rem 1rem">
+              Referencia Item
+            </th>
+            <th align="left" style="border-bottom: 1px solid #e7ecf3; padding: 1rem 0 1rem 0">Estado</th>
+            <th align="left" style="border-bottom: 1px solid #e7ecf3; padding: 1rem 0 1rem 0">Ponderación</th>
+            <th align="left" style="border-bottom: 1px solid #e7ecf3; padding-right: 6px; padding: 1rem 6px 1rem 0">
+              Comentarios
+            </th>
+          </tr>
+          <tr>
+            <td style="padding: 1rem 0 1rem 1rem">
+              <p style="margin: 0; color: #1f3b8b; background-color: #eff6ff; display: inline">[nombreBloque]</p>
+            </td>
+            <td style="padding: 1rem 0 1rem 0">[descripcionItem]</td>
+            <td style="padding: 1rem 0 1rem 0">[valor]</td>
+            <td style="padding: 1rem 6px 1rem 0" align="left">[comentarios]</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+  </body>
+</html>
