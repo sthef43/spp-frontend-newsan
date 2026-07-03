@@ -27,7 +27,7 @@ import { TextFieldComponent } from "app/features/cli/Components/TextFieldCompone
 
 interface Props {
   openModal: boolean;
-  edicionActia: boolean;
+  edicionActiva: boolean;
   auditoriaSeleccionadaEditar?: IAuditoriaAsignada;
   setListaAuditoriasAsignadas?: (newValue: IAuditoriaAsignada[]) => void;
   setOpenModal: (newValue: boolean) => void;
@@ -38,7 +38,7 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
   setOpenModal,
   openModal,
   setActiveRefresh,
-  edicionActia,
+  edicionActiva,
   auditoriaSeleccionadaEditar,
   setListaAuditoriasAsignadas
 }) => {
@@ -66,16 +66,16 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
   const [listaTurnos, setListaTurnos] = useState<ITurno[]>([]);
 
   const [auditoriaSeleccionada, setAuditoriaSeleccionada] = useState<string | number>(
-    edicionActia ? auditoriaSeleccionadaEditar?.auditoriaId : 0
+    edicionActiva ? auditoriaSeleccionadaEditar?.auditoriaId : 0
   );
   const [lineaProduccionSeleccionada, setLineaProduccionSeleccionada] = useState<string | number>(
-    edicionActia ? auditoriaSeleccionadaEditar?.lineaProduccionId : 0
+    edicionActiva ? auditoriaSeleccionadaEditar?.lineaProduccionId : 0
   );
   const [subrolSeleccionado, setSubrolSeleccionado] = useState<string | number>(
-    edicionActia ? auditoriaSeleccionadaEditar?.subRolId : 0
+    edicionActiva ? auditoriaSeleccionadaEditar?.subRolId : 0
   );
   const [turnoSeleccionado, setTurnoSeleccionado] = useState<string | number>(
-    edicionActia ? auditoriaSeleccionadaEditar?.turnoId : 0
+    edicionActiva ? auditoriaSeleccionadaEditar?.turnoId : 0
   );
 
   FetchApi<ILineaProduccion[]>(
@@ -110,13 +110,13 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
     let nuevaAuditoria: AuditoriaEntidadesDTO;
     let actualizacionAuditoria: IAuditoriaAsignada;
 
-    if (!edicionActia) {
+    if (!edicionActiva) {
       nuevaAuditoria = generateAuditoriaEntidades(data);
     } else {
       actualizacionAuditoria = generarActualizacion(data);
     }
 
-    if (!edicionActia) {
+    if (!edicionActiva) {
       FetchPost(AuditoriaAsignadaSliceRequest.createAuditWithResults, nuevaAuditoria, false, () => {
         openNotificationUI("Auditoria asignada correctamente", "success");
         setActiveRefresh(true);
@@ -238,8 +238,8 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
           control={control}
           inputLabel="Lista De Auditorias disponibles"
           nameSelect="auditoria"
-          defaultValue={edicionActia ? auditoriaSeleccionadaEditar?.auditoriaId : 0}
-          disabled={edicionActia}
+          defaultValue={edicionActiva ? auditoriaSeleccionadaEditar?.auditoriaId : 0}
+          disabled={edicionActiva}
           varianteEstilo="standard"
           listaObjetos={auditorias}
           valueKey={(value) => value}
@@ -256,13 +256,13 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
           validacionAdicionales={isNumeric("Se deben ingresar solo numeros")}
           errors={errors}
           typeInput="standard"
-          valueDefault={edicionActia ? auditoriaSeleccionadaEditar?.cantidadMuestras.toString() : ""}
+          valueDefault={edicionActiva ? auditoriaSeleccionadaEditar?.cantidadMuestras.toString() : ""}
         />
         <SelectComponent
           control={control}
           inputLabel="Seleccionar Linea de Produccion"
           activeRequired
-          defaultValue={edicionActia ? auditoriaSeleccionadaEditar?.lineaProduccionId : 0}
+          defaultValue={edicionActiva ? auditoriaSeleccionadaEditar?.lineaProduccionId : 0}
           listaObjetos={listaLineasProduccion}
           nameSelect="lineaProduccion"
           valueKey={(value) => value}
@@ -286,7 +286,7 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
           inputLabel="Seleccionar SubRol"
           listaObjetos={listaSubRoles}
           nameSelect="subrol"
-          defaultValue={edicionActia ? auditoriaSeleccionadaEditar?.subRolId : 0}
+          defaultValue={edicionActiva ? auditoriaSeleccionadaEditar?.subRolId : 0}
           valueKey={(value) => value}
           valueLabel={(value) => value.name}
           valueSelect={(value) => value.id}
@@ -299,7 +299,7 @@ export const CrearNuevaAsignacion: React.FC<Props> = ({
           inputLabel="Seleccionar Turno"
           listaObjetos={listaTurnos}
           nameSelect="turno"
-          defaultValue={edicionActia ? auditoriaSeleccionadaEditar?.turnoId : 0}
+          defaultValue={edicionActiva ? auditoriaSeleccionadaEditar?.turnoId : 0}
           valueKey={(value) => value}
           valueLabel={(value) => value.nombre}
           valueSelect={(value) => value.id}

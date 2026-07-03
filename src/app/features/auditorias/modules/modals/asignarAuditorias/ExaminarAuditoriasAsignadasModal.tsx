@@ -100,7 +100,7 @@ export const ExaminarAuditoriasAsignadasModal: React.FC<Props> = ({ setOpenModal
           openModal={openModalEditar}
           setOpenModal={setOpenModalEditar}
           auditoriaSeleccionadaEditar={auditoriaSeleccionada}
-          edicionActia={true}
+          edicionActiva={true}
           setListaAuditoriasAsignadas={setListaAuditoriasAsignadas}
         />
       </ModalCompoment>

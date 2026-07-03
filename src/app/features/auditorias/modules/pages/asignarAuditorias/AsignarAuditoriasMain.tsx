@@ -1,7 +1,5 @@
-/* eslint-disable unused-imports/no-unused-vars */
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { useForm } from "react-hook-form";
@@ -17,6 +15,7 @@ import { auditoriaSlice, AuditoriaSliceRequest } from "../../../slices/Auditoria
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
 import { CrearNuevaAsignacion } from "../../modals/asignarAuditorias/CrearNuevaAsignacion";
 import { ExaminarAuditoriasAsignadasModal } from "../../modals/asignarAuditorias/ExaminarAuditoriasAsignadasModal";
@@ -28,11 +27,11 @@ export const AsignarAuditoriasMain = () => {
   const auditorias = useAppSelector((state) => state.auditoria.dataAll as IAuditoria[]);
   const { object, dataAll } = useAppSelector((state) => state.plant);
 
-  const buttonClases = MaterialButtons();
-  const { openNotificationUI } = useNotificationUI();
+  const buttonClasses = MaterialButtons();
   const dispatch = useAppDispatch();
   const { TitleChanger } = useTitleOfApp();
   const { formatDateHourOrMinutes } = UseUtilHooks();
+  const { FetchDelete } = useFetchApiMultiResults<boolean>();
 
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [openModalExaminar, setOpenModalExaminar] = useState<boolean>(false);
@@ -44,7 +43,7 @@ export const AsignarAuditoriasMain = () => {
 
   FetchApi<IAuditoria[]>(
     AuditoriaSliceRequest.GetAllAuditsByRolAndPlantId,
-    { idPlant: object?.id ? object.id : 0, idRol: infoUser.permisos.rolId },
+    { idPlant: object?.id ? object.id : 0, idRol: infoUser.permisos?.rolId },
     false,
     object?.id || activeRefresh ? object.id : 0,
     null,
@@ -78,63 +77,81 @@ export const AsignarAuditoriasMain = () => {
           />
         </div>
         <Button
-          disabled={object?.id ? false : true}
+          disabled={!object?.id}
           onClick={() => setOpenModal(true)}
           variant="contained"
-          className={`${buttonClases.blueButton} w-1/5`}>
+          className={`${buttonClasses.blueButton} w-1/5`}>
           <AddCircle sx={{ marginRight: "16px" }} />
           <p>Asignar Auditoria</p>
         </Button>
       </div>
       <ContainerForPages optionsLayout="Table" activeEffectVisible>
+        {auditorias.length === 0 ? (
+          <div className="w-full text-center py-10 text-gray-500 text-lg">
+            No se encontraron auditorías asignadas
+          </div>
+        ) : (
         <TableComponent
           dataInfo={auditorias}
           IDcolumn="id"
-          columns={[
-            {
-              title: "Fecha",
-              field: "",
-              render: (value: IAuditoria) =>
-                formatDateHourOrMinutes({
-                  optionDate: "fullDate",
-                  optionHour: "fechaBaseDatos",
-                  fechaIngresada: value.createdDate
-                })
-            },
-            {
-              title: "Nombre Auditoria",
-              field: "nombre"
-            },
-            {
-              title: "Numero de Registro",
-              field: "numeroRegistro"
-            },
-            {
-              title: "Accion",
-              field: "",
-              render: (value: IAuditoria) => {
-                return (
-                  <div className="flex flex-row items-center gap-x-2">
-                    <TooltipComponent
-                      titleTooltip="Examinar"
-                      typeTooltip="normal"
-                      onClick={() => {
-                        setAuditoriaId(value.id);
-                        setOpenModalExaminar(true);
-                      }}
-                      componenteIcono={<VisibilityRounded color="primary" />}
-                    />
-                    <TooltipComponent
-                      titleTooltip="Eliminar"
-                      typeTooltip="normal"
-                      componenteIcono={<DeleteRounded color="error" />}
-                    />
-                  </div>
-                );
+          buscar
+          columns={useMemo(
+            () => [
+              {
+                title: "Fecha",
+                field: "",
+                render: (value: IAuditoria) =>
+                  formatDateHourOrMinutes({
+                    optionDate: "fullDate",
+                    optionHour: "fechaBaseDatos",
+                    fechaIngresada: value.createdDate
+                  })
+              },
+              {
+                title: "Nombre Auditoria",
+                field: "nombre"
+              },
+              {
+                title: "Numero de Registro",
+                field: "numeroRegistro"
+              },
+              {
+                title: "Accion",
+                field: "",
+                render: (value: IAuditoria) => {
+                  return (
+                    <div className="flex flex-row items-center gap-x-2">
+                      <TooltipComponent
+                        titleTooltip="Examinar"
+                        typeTooltip="normal"
+                        onClick={() => {
+                          setAuditoriaId(value.id);
+                          setOpenModalExaminar(true);
+                        }}
+                        componenteIcono={<VisibilityRounded color="primary" />}
+                      />
+                      <TooltipComponent
+                        titleTooltip="Eliminar"
+                        typeTooltip="normal"
+                        onClick={() => {
+                          FetchDelete({
+                            sliceRequest: AuditoriaSliceRequest.deleteRequest,
+                            deleteId: value.id,
+                            consoleLog: false,
+                            functionAdd: () => setActiveRefresh((prev) => !prev)
+                          });
+                        }}
+                        componenteIcono={<DeleteRounded color="error" />}
+                      />
+                    </div>
+                  );
+                }
               }
-            }
-          ]}
+            ],
+            [formatDateHourOrMinutes, FetchDelete]
+          )}
         />
+        )}
       </ContainerForPages>
       <ModalCompoment
         setOpenPopup={setOpenModal}
@@ -144,7 +161,7 @@ export const AsignarAuditoriasMain = () => {
         subTitle="Asignacion de una nueva auditoria a realizar"
         title="Creacion de nueva auditoria a realizar">
         <CrearNuevaAsignacion
-          edicionActia={false}
+          edicionActiva={false}
           setActiveRefresh={setActiveRefresh}
           setOpenModal={setOpenModal}
           openModal={openModal}
