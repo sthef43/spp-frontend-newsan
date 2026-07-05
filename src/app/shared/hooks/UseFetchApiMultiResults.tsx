@@ -122,10 +122,11 @@ export function useFetchApiMultiResults<T>() {
           functionAdd(response);
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error(error);
+      const mensajeError = error?.response?.data?.message || error?.message || "Ocurrio un error al intentar agregar el elemento";
       openNotificationUI(
-        `${activarMensajeExepcion ? error : "Ocurrio un error al intentar agregar el elemento"}`,
+        `${activarMensajeExepcion ? error : mensajeError}`,
         "error"
       );
     } finally {
@@ -246,9 +247,10 @@ export function useFetchApiMultiResults<T>() {
           }
         }
       }
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
-      openNotificationUI("Ocurrio un error al intentar actualizar el elemento", "error");
+      const mensajeError = error?.response?.data?.message || error?.message || "Ocurrio un error al intentar actualizar el elemento";
+      openNotificationUI(mensajeError, "error");
       if (funcionReject) {
         functionReject(error as T);
       }

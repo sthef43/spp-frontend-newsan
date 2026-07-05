@@ -33,4 +33,16 @@ export class AuditDispositivoService extends GenericService<IAuditDispositivo> {
         });
     });
   }
+  public GetAllByPlant(plantId: number): Promise<IAuditDispositivo[]> {
+    return new Promise((resolve, reject) => {
+      axios
+        .get<IAuditDispositivo[]>(`${import.meta.env.VITE_API_URL}/${this.Url}/GetAllByPlant/${plantId}`)
+        .then(function (response) {
+          resolve(response.data);
+        })
+        .catch(function (error) {
+          reject(error);
+        });
+    });
+  }
 }

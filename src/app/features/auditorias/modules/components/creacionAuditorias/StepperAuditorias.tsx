@@ -128,7 +128,7 @@ export const StepperAuditorias: React.FC<Props> = ({
   submitForm
 }) => {
   const { listaEmails, tipoAuditoriaId, listaValores, bloques } = useAppSelector(
-    (state) => state.listaDatosParaAuditorias
+    (state) => state.auditoriasUI
   );
 
   const arrayTextos = ["Nombre y Mails", "Tipo de Auditoria", "Bloques y Items"];

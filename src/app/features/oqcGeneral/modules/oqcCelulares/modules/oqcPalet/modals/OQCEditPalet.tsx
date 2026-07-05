@@ -11,6 +11,7 @@ import { IOQCPalet } from "app/models/IOQCPalet";
 import { FormButtons } from "app/shared/helpers/FormButtons";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { OQCPaletSliceRequests } from "app/features/oqcGeneral/slices/OQCPaletSlice";
+import { limpiarPalet } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;
@@ -31,15 +32,11 @@ export const OQCEditPalet: React.FC<Props> = ({ setOpenModal, openModal, refresh
   const { openNotificationUI } = useNotificationUI();
 
   const onSubmit = (data: any) => {
-    const clonPalet: IOQCPalet = {
+    const clonPalet = limpiarPalet({
       ...palet,
       cantidadEquipos: data.cantidadEquipos,
       cantidadMasterBox: data.cantidadMasterBox
-    };
-    delete clonPalet.oqcDesignada;
-    delete clonPalet.oqcModelo;
-    delete clonPalet.oqcPaletPrint;
-    delete clonPalet.plant;
+    } as IOQCPalet);
     FetchPut({
       consoleLog: false,
       modelPut: clonPalet,

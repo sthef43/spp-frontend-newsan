@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
-import imagenEtiqueta from "../../../images/image.png";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import botonImagenAyudaEtiqueta from "../../../images/Group2447.png";
 import { useForm, Controller } from "react-hook-form";
 import { DatosZamplingModal } from "./DatosZamplingModal";
@@ -10,15 +9,15 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { IOQCModelo } from "app/models/IOQModelo";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
-import { Check, Close, CloseSharp } from "@mui/icons-material";
+import { Check, Close } from "@mui/icons-material";
 import { IPlant } from "app/models";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { IOQCPalet } from "app/models/IOQCPalet";
-import { Dialog, DialogContent, IconButton, useMediaQuery, useTheme } from "@mui/material";
 import { IXXE_WIP_ITF_SERIE } from "app/models/IXXE_WIP_ITF_SERIE";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
 import { OQCNuevoPalletSliceRequest } from "app/features/oqcGeneral/slices/OQCNuevoPalletSlice";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
+import { AyudaEtiquetaModal } from "../Components/AyudaEtiquetaModal";
 
 interface props {
   refreshTable: () => void;
@@ -33,9 +32,7 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
   const contextGlobal = useContext(ContextApp);
   const dispatch = useAppDispatch();
   const { openNotificationUI } = useNotificationUI();
-
-  const theme = useTheme();
-  const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>([]);
 
   const {
     handleSubmit,
@@ -192,26 +189,36 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
 
   const onSubmit = async () => {
     const nuevoPallet = datosPalet();
+    let paletCreadoId: number | null = null;
     try {
       dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
       const response = unwrapResult(await dispatch(OQCPaletSliceRequests.PostRequest(nuevoPallet)));
-      dispatch(oqcPaletSlice.actions.setObject(response));
+      paletCreadoId = response.id;
       datosParaAniadir.forEach((elementos) => {
         elementos.palletId = response.id;
       });
-      await dispatch(OQCNuevoPalletSliceRequest.multiPostRequest(datosParaAniadir));
+      try {
+        await dispatch(OQCNuevoPalletSliceRequest.multiPostRequest(datosParaAniadir));
+      } catch (multiPostError) {
+        if (paletCreadoId) {
+          await dispatch(OQCPaletSliceRequests.deleteRequest(paletCreadoId));
+        }
+        throw multiPostError;
+      }
       const verDatos = unwrapResult(await dispatch(OQCNuevoPalletSliceRequest.GetAllByLpn(lpnWatch)));
       if (verDatos) {
         contextGlobal.setPaletIngresado(verDatos);
       }
       openNotificationUI("Palet añadido", "success");
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
     } catch (error) {
       console.log(error);
+      openNotificationUI("Error al crear el palet", "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
+      reset();
+      contextGlobal.setEquiposControlados(0);
+      contextGlobal.setDatosZampling(true);
     }
-    reset();
-    contextGlobal.setEquiposControlados(0);
-    contextGlobal.setDatosZampling(true);
   };
 
   const [listaCodigosMsn, setListaCodigosMsn] = useState([]);
@@ -259,41 +266,37 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
     seleccionarImeis(3);
   };
 
+  const obtenerInput = (index: number) => inputRefs.current[index];
+
   const manejarEnter = async (event: React.KeyboardEvent, index: number) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const inputs = document.querySelectorAll(".inputNuevoPallet");
-      const inputActual = inputs[index] as HTMLInputElement;
+      const inputActual = obtenerInput(index);
+      if (!inputActual) return;
       const esValido = await trigger(inputActual.name);
       if (!esValido) {
         inputActual.select();
         return;
       }
-      const siguienteInput = inputs[index + 1] as HTMLInputElement;
-      if (siguienteInput && siguienteInput instanceof HTMLElement) {
+      const siguienteInput = obtenerInput(index + 1);
+      if (siguienteInput) {
         siguienteInput.focus();
       }
     }
   };
 
-  const seleccionarImeis = (index) => {
-    const inputs = document.querySelectorAll(".inputNuevoPallet");
-    const inputActual = inputs[index] as HTMLInputElement;
+  const seleccionarImeis = (index: number) => {
+    const inputActual = obtenerInput(index);
     if (inputActual) {
       inputActual.focus();
     }
   };
 
-  const seleccionarLpn = (index) => {
-    const inputs = document.querySelectorAll(".inputNuevoPallet");
-    const inputActual = inputs[index] as HTMLInputElement;
+  const seleccionarLpn = (index: number) => {
+    const inputActual = obtenerInput(index);
     if (inputActual) {
       inputActual.select();
     }
-  };
-
-  const modalAyudaHandle = (estado: boolean) => {
-    openModalAyuda(estado);
   };
 
   useEffect(() => {
@@ -315,7 +318,7 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
           <p className="font-semibold text-base">Escanear Master Box según el Orden</p>
           <img
             onClick={() => {
-              modalAyudaHandle(!modalAyuda);
+              openModalAyuda(!modalAyuda);
             }}
             className="w-[10%] cursor-pointer"
             src={botonImagenAyudaEtiqueta}
@@ -355,6 +358,7 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
                         }
                       }
                     })}
+                    ref={(el) => { inputRefs.current[0] = el; }}
                   />
                 )}
               />
@@ -389,6 +393,7 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
                       },
                       validate: (value) => (value === codigoProducto ? true : "Codigo Incorrecto")
                     })}
+                    ref={(el) => { inputRefs.current[1] = el; }}
                   />
                 )}
               />
@@ -423,6 +428,7 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
                       },
                       validate: (value) => (value === modeloSeleccionado.eanCode ? true : "Codigo incorrecto")
                     })}
+                    ref={(el) => { inputRefs.current[2] = el; }}
                   />
                 )}
               />
@@ -468,6 +474,7 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
                         }
                       }
                     })}
+                    ref={(el) => { inputRefs.current[3] = el; }}
                   />
                 )}
               />
@@ -529,52 +536,22 @@ export const NuevoRegistroDePalletModal: React.FC<props> = ({ refreshTable, moda
           </div>
         </section>
       </form>
-      {modalAyuda && (
-        <>
-          <Dialog
-            fullScreen={fullScreen}
-            open={modalAyuda}
-            onClose={modalAyudaHandle}
-            sx={modalAyuda ? { right: "0", left: "60%" } : {}}>
-            <IconButton
-              onClick={() => {
-                modalAyudaHandle(!modalAyuda);
-              }}
-              size="small"
-              style={{
-                position: "absolute",
-                right: ".5rem",
-                top: ".5rem",
-                borderRadius: "8px",
-                backgroundColor: "lightgrey"
-              }}>
-              <CloseSharp color="primary" />
-            </IconButton>
-            <DialogContent sx={{ display: "flex", flexDirection: "column", alignItems: "center", overflowY: "hidden" }}>
-              <div className="relative w-full">
-                <span className="bg-green-500 absolute top-12 left-56 rounded-full px-4 py-2 text-white font-bold text-xl">
-                  1
-                </span>
-                <span className="bg-green-500 absolute top-[5rem] left-[12rem] rounded-full px-4 py-2 text-white font-bold text-xl">
-                  2
-                </span>
-                <span className="bg-green-500 absolute top-[8.5rem] left-[9.5rem] rounded-full px-4 py-2 text-white font-bold text-xl">
-                  3
-                </span>
-                <span className="bg-green-500 absolute top-[30rem] left-[17.5rem] rounded-full px-4 py-2 text-white font-bold text-xl">
-                  4
-                </span>
-              </div>
-              <figure className="w-[78%]">
-                <img src={imagenEtiqueta} alt="" />
-              </figure>
-            </DialogContent>
-          </Dialog>
-        </>
-      )}
       <ModalCompoment
-        openPopup={contextGlobal.datosZampling}
+        openPopup={modalAyuda}
+        setOpenPopup={openModalAyuda}
+        title="Ayuda"
+        subTitle="Diagrama de referencia para la disposición de etiquetas en el pallet"
+        titleModalStyle="Audit"
+        showModalCenterPage
+        onCloseDynamic>
+        <AyudaEtiquetaModal />
+      </ModalCompoment>
+      <ModalCompoment
         setOpenPopup={contextGlobal.setDatosZampling}
+        openPopup={contextGlobal.datosZampling}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Ingreso de datos de muestreo para el nuevo palet"
         title="Datos Sampling"
         onCloseDynamic>
         <DatosZamplingModal

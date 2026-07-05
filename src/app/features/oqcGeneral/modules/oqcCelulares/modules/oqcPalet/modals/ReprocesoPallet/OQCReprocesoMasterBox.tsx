@@ -379,7 +379,13 @@ export const OQCReprocesoMasterBox: React.FC<Props> = ({ setOpenModal, openModal
         </div>
       </section>
       {/* Modal para reproceso sampling */}
-      <ModalCompoment openPopup={openModalSamplin} setOpenPopup={setOpenModalSamplin} title="Reproceso Sampling">
+      <ModalCompoment
+        openPopup={openModalSamplin}
+        setOpenPopup={setOpenModalSamplin}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Reproceso de muestreo de equipos"
+        title="Reproceso Sampling">
         <OQCReprocesoSampling
           plantaId={planta.id}
           setOpenModalZampling={setOpenModalSamplin}

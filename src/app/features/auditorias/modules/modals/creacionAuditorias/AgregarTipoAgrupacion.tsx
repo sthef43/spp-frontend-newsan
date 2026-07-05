@@ -9,7 +9,7 @@ import { IAppUser } from "app/models";
 import { IAuditoriaTipos } from "../../../models/IAuditoriaTipos";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { AuditoriaTiposSliceRequest } from "../../../slices/AuditoriaTiposSlice";
-import { statesForActiveFetchsSlice } from "../../../slices/StatesForActiveFetchsSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button } from "@mui/material";
@@ -39,7 +39,7 @@ export const AgregarTipoAgrupacion: React.FC<Props> = ({ setOpenModal }) => {
     if (await getConfirmation("Agregar Tipo de Agrupacion", "¿Estas seguro de agregar este tipo?", null, "Aceptar")) {
       FetchPost(AuditoriaTiposSliceRequest.PostRequest, nuevoTipo, false, () => {
         openNotificationUI("Tipo agregado con exito!", "success");
-        dispatch(statesForActiveFetchsSlice.actions.setActiveFetchTipoAgrupacion(true));
+        dispatch(auditoriasUISlice.actions.setActiveFetchTipoAgrupacion(true));
         setOpenModal(false);
       });
     }

@@ -6,22 +6,22 @@ import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { useForm } from "react-hook-form";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
-import { StepperAuditorias } from "../../components/creacionAuditorias/StepperAuditorias";
-import { valuesDefaultStepper } from "../../../models/utils/ValuesDefaultStepper";
-import { LayoutCrudCreacionAuditoria } from "../../layouts/LayoutCrudCreacionAuditoria";
-import { AuditoriaEditDTO, AuditoriaEntidadesDTO } from "../../../models/DTO/AuditoriaEntidadesDTO";
-import { IAuditoria } from "../../../models/IAuditoria";
+import { StepperAuditorias } from "../components/creacionAuditorias/StepperAuditorias";
+import { valuesDefaultStepper } from "../../models/utils/ValuesDefaultStepper";
+import { LayoutCrudCreacionAuditoria } from "../layouts/LayoutCrudCreacionAuditoria";
+import { AuditoriaEditDTO, AuditoriaEntidadesDTO } from "../../models/DTO/AuditoriaEntidadesDTO";
+import { IAuditoria } from "../../models/IAuditoria";
 import { IAppUser } from "app/models";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
-import { IAuditoriaGrupoItemsResult } from "../../../models/IAuditoriaGrupoItemsResult";
-import { IAuditoriaItemsResult } from "../../../models/IAuditoriaItemsResult";
-import { AuditoriaSliceRequest } from "../../../slices/AuditoriaSlice";
+import { IAuditoriaGrupoItemsResult } from "../../models/IAuditoriaGrupoItemsResult";
+import { IAuditoriaItemsResult } from "../../models/IAuditoriaItemsResult";
+import { AuditoriaSliceRequest } from "../../slices/AuditoriaSlice";
 import { useHistory } from "react-router-dom";
-import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
-import { AuditoriaAsignadaSliceRequest } from "../../../slices/AuditoriaAsignadaSlice";
-import { IAuditoriaGrupoItems } from "../../../models/IAuditoriaGrupoItems";
-import { AuditoriaValoresResultSliceRequest } from "../../../slices/AuditoriaValoresResult.slice";
+import { IAuditoriaAsignada } from "../../models/IAuditoriaAsignada";
+import { AuditoriaAsignadaSliceRequest } from "../../slices/AuditoriaAsignadaSlice";
+import { IAuditoriaGrupoItems } from "../../models/IAuditoriaGrupoItems";
+import { AuditoriaValoresResultSliceRequest } from "../../slices/AuditoriaValoresResult.slice";
 
 const initialValues: valuesDefaultStepper[] = [
   {
@@ -50,7 +50,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
 
   const infoUser: IAppUser = useAppSelector((state) => state.appUser.data as IAppUser);
   const { listaValores, listaValoresResult, bloques, listaValoresPadre, listaEmails } = useAppSelector(
-    (state) => state.listaDatosParaAuditorias
+    (state) => state.auditoriasUI
   );
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
 
@@ -200,6 +200,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
     const nuevaAuditoria: IAuditoria | IAuditoriaAsignada = {
       nombre: nombreAuditoria,
       tipoAuditoriaId: tipoAuditoria,
+      auditoriaTipoId: tipoAuditoria,
       numeroRegistro: numeroRegistro,
       rolId: infoUser.permisos.rolId,
       plantId: infoUser.operator.plantaId,

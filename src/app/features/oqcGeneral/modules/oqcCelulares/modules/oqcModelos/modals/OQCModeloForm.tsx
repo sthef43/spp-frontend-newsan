@@ -47,7 +47,7 @@ export const OQCModeloForm = ({ closeModal }: IOQCModeloForm): JSX.Element => {
   }, [linea]);
 
   return (
-    <ContainerForPages optionsLayout="personalized" classNamePersonalized="">
+    <ContainerForPages activeEffectVisible optionsLayout="personalized" classNamePersonalized="">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-5">
         <Controller
           control={control}

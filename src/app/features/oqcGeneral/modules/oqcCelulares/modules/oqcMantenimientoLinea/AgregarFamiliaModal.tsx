@@ -320,7 +320,7 @@ export const AgregarFamiliaModal = ({
                   }}
                 />
               </div>
-              <ModalCompoment setOpenPopup={setOpenFamilia} openPopup={openFamilia} title={titulo}>
+              <ModalCompoment titleModalStyle="Audit" showModalCenterPage onCloseDynamic setOpenPopup={setOpenFamilia} openPopup={openFamilia} title={titulo} subTitle="Administración de Model Number">
                 <AgregarFamiliaForm
                   setOpenFamilia={setOpenFamilia} // UN BOOLEAN PARA CERRAR O NO EL MODAL
                   dataEdit={editState}
@@ -330,7 +330,7 @@ export const AgregarFamiliaModal = ({
                 />
               </ModalCompoment>
 
-              <ModalCompoment setOpenPopup={setAsignar} openPopup={asignar} title="Asignar Model Number">
+              <ModalCompoment titleModalStyle="Audit" showModalCenterPage onCloseDynamic setOpenPopup={setAsignar} openPopup={asignar} title="Asignar Model Number" subTitle="Asignación de línea al Model Number">
                 <AsignacionLinea
                   lineasComponente={lineas}
                   actualizarLineas={setLIneas}

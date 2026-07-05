@@ -7,26 +7,32 @@ import { LazyRouteConfig } from "app/shared/helpers/lazyRoutes";
 
 const AuditoriasRoutes: LazyRouteConfig[] = [
   {
+    path: "/tipos-auditoria",
+    importFn: () => import("app/features/auditorias/modules/pages/TiposAuditoriaMain"),
+    exportName: "TiposAuditoriaMain",
+    permission: "auditorias-v2/tipos-auditoria"
+  },
+  {
     path: "/creacion-auditorias",
-    importFn: () => import("app/features/auditorias/modules/pages/creacionAuditorias/CreacionAuditoriasMain"),
+    importFn: () => import("app/features/auditorias/modules/pages/CreacionAuditoriasMain"),
     exportName: "CreacionAuditoriasMain",
     permission: "auditorias-v2/creacion-auditorias"
   },
   {
     path: "/asignar-auditorias",
-    importFn: () => import("app/features/auditorias/modules/pages/asignarAuditorias/AsignarAuditoriasMain"),
+    importFn: () => import("app/features/auditorias/modules/pages/AsignarAuditoriasMain"),
     exportName: "AsignarAuditoriasMain",
     permission: "auditorias-v2/asignar-auditorias"
   },
   {
     path: "/realizar-auditorias",
-    importFn: () => import("app/features/auditorias/modules/pages/realizarAuditorias/RealizarAuditoriasMain"),
+    importFn: () => import("app/features/auditorias/modules/pages/RealizarAuditoriasMain"),
     exportName: "RealizarAuditoriasMain",
     permission: "auditorias-v2/realizar-auditorias"
   },
   {
     path: "/reporte-auditorias",
-    importFn: () => import("app/features/auditorias/modules/pages/reporteAuditoria/ReporteAuditoriaMain"),
+    importFn: () => import("app/features/auditorias/modules/pages/ReporteAuditoriaMain"),
     exportName: "ReporteAuditoriaMain",
     permission: "auditorias-v2/reporte-auditorias"
   },
@@ -34,24 +40,24 @@ const AuditoriasRoutes: LazyRouteConfig[] = [
   //Rutas que son accesibles sin permisos
   {
     path: "/crud-creacion-auditorias",
-    importFn: () => import("app/features/auditorias/modules/pages/global/CrudCreacionAuditorias"),
+    importFn: () => import("app/features/auditorias/modules/pages/CrudCreacionAuditorias"),
     exportName: "CrudCreacionAuditorias"
   },
   {
     path: "/crud-editar-auditoria/:id",
-    importFn: () => import("app/features/auditorias/modules/pages/global/CrudCreacionAuditorias"),
+    importFn: () => import("app/features/auditorias/modules/pages/CrudCreacionAuditorias"),
     exportName: "CrudCreacionAuditorias"
   },
   //Se usa el mismo componente tanto para poder examinar como para realizar las auditorias
   //Se diferencia por el estado que se le pasa por parametro
   {
     path: "/completar-auditoria/:id/:estado",
-    importFn: () => import("app/features/auditorias/modules/pages/global/CompletarAuditoria"),
+    importFn: () => import("app/features/auditorias/modules/pages/CompletarAuditoria"),
     exportName: "CompletarAuditoria"
   },
   {
     path: "/examinar-auditoria/:id/:estado",
-    importFn: () => import("app/features/auditorias/modules/pages/global/CompletarAuditoria"),
+    importFn: () => import("app/features/auditorias/modules/pages/CompletarAuditoria"),
     exportName: "CompletarAuditoria"
   }
 ];

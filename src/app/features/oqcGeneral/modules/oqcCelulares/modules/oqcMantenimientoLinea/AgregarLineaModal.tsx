@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Button, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText } from "@mui/material";
+import { Button, TextField, FormControl, InputLabel, Select, MenuItem, FormHelperText, Grow } from "@mui/material";
 import { Controller, useForm } from "react-hook-form";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -132,9 +132,9 @@ export const AgregarLineaModal = ({ open, handleClose, plant, productId, editSta
 
   return (
     <>
-      <div
-        className={`${showModal ? "border-[1px] py-4 rounded-md border-gray-300 shadow-lg relative block" : "hidden"}`}>
-        {showModal && (
+      <Grow in={showModal} timeout={500}>
+        <div
+          className={`${showModal ? "border-[1px] py-4 rounded-md border-gray-300 shadow-lg relative block" : "hidden"}`}>
           <div>
             <header className="relative text-center border-b border-[#a9a9a9]">
               <span
@@ -228,8 +228,8 @@ export const AgregarLineaModal = ({ open, handleClose, plant, productId, editSta
               </form>
             </div>
           </div>
-        )}
-      </div>
+        </div>
+      </Grow>
     </>
   );
 };

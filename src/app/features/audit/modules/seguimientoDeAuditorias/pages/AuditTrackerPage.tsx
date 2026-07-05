@@ -2,7 +2,7 @@ import { Check, Clear, Visibility } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAuditTracking } from "app/models/IAuditTracking";
-import { AuditTrackerResol } from "app/features/auditorias/modules/modals/reporteAuditoria/AuditTrackerResol";
+import { AuditTrackerResol } from "app/features/auditorias";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";

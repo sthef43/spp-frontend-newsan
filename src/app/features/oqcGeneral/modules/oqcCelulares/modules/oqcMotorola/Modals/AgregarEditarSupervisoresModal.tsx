@@ -86,7 +86,7 @@ export const AgregarEditarSupervisoresModal: React.FC<Props> = ({
   };
 
   return (
-    <ContainerForPages optionsLayout="modal">
+    <ContainerForPages activeEffectVisible optionsLayout="modal">
       <form className="flex flex-col gap-y-4" onSubmit={handleSubmit(onSubmit)}>
         <TextFieldComponent
           control={control}

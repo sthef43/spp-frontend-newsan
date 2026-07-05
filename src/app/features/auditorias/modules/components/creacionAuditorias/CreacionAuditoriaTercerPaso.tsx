@@ -13,13 +13,11 @@ import { IAuditoriaGrupoItems } from "../../../models/IAuditoriaGrupoItems";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { AuditoriaGrupoItemsSliceRequest } from "../../../slices/AuditoriaGrupoItemsSlice";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
-import { estadoDeRenderizadosSlice } from "../../../slices/EstadoDeRenderizadosSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
 import { useParams } from "react-router-dom";
 import { IAuditoriaGrupoItemsResult } from "../../../models/IAuditoriaGrupoItemsResult";
-import { statesForActiveFetchsSlice } from "../../../slices/StatesForActiveFetchsSlice";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { AuditoriaGrupoItemsResultSliceRequest } from "../../../slices/AuditoriaGrupoItemsResultSlice";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
@@ -112,9 +110,9 @@ export const CreacionAuditoriaTercerPaso: React.FC<Props> = ({
   errosFather
 }) => {
   const auditoriaEdicion = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
-  const { bloques } = useAppSelector((state) => state.listaDatosParaAuditorias);
-  const { activeBloqItems } = useAppSelector((state) => state.statesForFetchs);
-  const { cantidadBloques, bloqueSeleccionado } = useAppSelector((state) => state.estadoDeRenderizados);
+  const { bloques } = useAppSelector((state) => state.auditoriasUI);
+  const { activeBloqItems } = useAppSelector((state) => state.auditoriasUI);
+  const { cantidadBloques, bloqueSeleccionado } = useAppSelector((state) => state.auditoriasUI);
   const listaGruposItems = useAppSelector((state) => state.auditoriaGrupoItems.dataAll);
 
   const params = useParams<Params>();
@@ -138,7 +136,7 @@ export const CreacionAuditoriaTercerPaso: React.FC<Props> = ({
     false,
     false,
     () => {
-      dispatch(statesForActiveFetchsSlice.actions.setActiveBloqItems(false));
+      dispatch(auditoriasUISlice.actions.setActiveBloqItems(false));
     }
   );
 
@@ -154,9 +152,9 @@ export const CreacionAuditoriaTercerPaso: React.FC<Props> = ({
       setValuesFather(`bloque${index}`, "");
       return;
     }
-    dispatch(statesListDataForAuditoriasSlice.actions.setBloques(buscarBloque));
+    dispatch(auditoriasUISlice.actions.setBloques(buscarBloque));
     dispatch(
-      estadoDeRenderizadosSlice.actions.setBloqueSeleccionado({
+      auditoriasUISlice.actions.setBloqueSeleccionado({
         ...bloqueSeleccionado,
         [index]: value
       })
@@ -178,21 +176,21 @@ export const CreacionAuditoriaTercerPaso: React.FC<Props> = ({
           reindexado[k] = nuevoBloqueSeleccionado[k];
         }
       });
-      dispatch(estadoDeRenderizadosSlice.actions.setBloqueSeleccionado(reindexado));
+      dispatch(auditoriasUISlice.actions.setBloqueSeleccionado(reindexado));
       if (idAEliminar) {
-        dispatch(statesListDataForAuditoriasSlice.actions.deleteBloques(Number(idAEliminar)));
+        dispatch(auditoriasUISlice.actions.deleteBloques(Number(idAEliminar)));
       }
       setValuesFather(`bloque${index}`, "");
-      dispatch(estadoDeRenderizadosSlice.actions.setCantidadBloques(cantidadBloques - 1));
+      dispatch(auditoriasUISlice.actions.setCantidadBloques(cantidadBloques - 1));
     } else {
       dispatch(
-        estadoDeRenderizadosSlice.actions.setBloqueSeleccionado({
+        auditoriasUISlice.actions.setBloqueSeleccionado({
           ...bloqueSeleccionado,
           [index]: 0
         })
       );
       if (idAEliminar) {
-        dispatch(statesListDataForAuditoriasSlice.actions.deleteBloques(Number(idAEliminar)));
+        dispatch(auditoriasUISlice.actions.deleteBloques(Number(idAEliminar)));
       }
     }
   };
@@ -230,23 +228,23 @@ export const CreacionAuditoriaTercerPaso: React.FC<Props> = ({
   const handleOpenModalEditItems = (items: IAuditoriaGrupoItemsResult) => {
     setListaItems(items);
     setOpenModalEditarBloque(true);
-    dispatch(estadoDeRenderizadosSlice.actions.setEdicionActiva(true));
+    dispatch(auditoriasUISlice.actions.setEdicionActiva(true));
   };
 
   const handleOpenModalAddItems = () => {
     setOpenModalAgregarBloque(true);
-    dispatch(estadoDeRenderizadosSlice.actions.setEdicionActiva(false));
+    dispatch(auditoriasUISlice.actions.setEdicionActiva(false));
   };
 
   useEffect(() => {
     if (auditoriaEdicion && auditoriaEdicion.auditoriaGrupoItemsResult) {
       const total = auditoriaEdicion.auditoriaGrupoItemsResult.length;
-      dispatch(estadoDeRenderizadosSlice.actions.setCantidadBloques(total));
+      dispatch(auditoriasUISlice.actions.setCantidadBloques(total));
       const mapeoEdicion: { [key: number]: number } = {};
       auditoriaEdicion.auditoriaGrupoItemsResult.forEach((bloque, idx) => {
         mapeoEdicion[idx] = bloque.id;
       });
-      dispatch(estadoDeRenderizadosSlice.actions.setBloqueSeleccionado(mapeoEdicion));
+      dispatch(auditoriasUISlice.actions.setBloqueSeleccionado(mapeoEdicion));
     }
   }, [auditoriaEdicion, dispatch]);
 
@@ -254,7 +252,7 @@ export const CreacionAuditoriaTercerPaso: React.FC<Props> = ({
     <ContainerForPages activeEffectVisible optionsLayout="personalized" classNamePersonalized="">
       <section className="flex flex-row items-center gap-x-6">
         <Button
-          onClick={() => dispatch(estadoDeRenderizadosSlice.actions.setCantidadBloques(cantidadBloques + 1))}
+          onClick={() => dispatch(auditoriasUISlice.actions.setCantidadBloques(cantidadBloques + 1))}
           variant="contained"
           className={`${buttonClases.blueButton} w-full p-4`}>
           <AddCircleRounded sx={{ margin: "0 1rem" }} fontSize="small" />

@@ -7,26 +7,31 @@ import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { useForm } from "react-hook-form";
 import { useHistory, useParams } from "react-router-dom";
-import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
+import { IAuditoriaAsignada } from "../../models/IAuditoriaAsignada";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { IAppUser } from "app/models/IAppUser";
-import { IAuditoriaListaValoresResult } from "../../../models/IAuditoriaListaValoresResult";
-import { IAuditoriaGrupoItemsResult } from "../../../models/IAuditoriaGrupoItemsResult";
+import { IAuditoriaListaValoresResult } from "../../models/IAuditoriaListaValoresResult";
+import { IAuditoriaGrupoItemsResult } from "../../models/IAuditoriaGrupoItemsResult";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
-import { StteperForBloqItems } from "../../components/realizarAuditorias/StteperForBloqItems";
-import { IAuditoriaValoresResult } from "../../../models/IAuditoriaValoresResult";
-import { valuesDefaultStepper } from "../../../models/utils/ValuesDefaultStepper";
-import { AuditoriaAsignadaSliceRequest } from "../../../slices/AuditoriaAsignadaSlice";
-import { IAuditoriaItemsHistorico } from "../../../models/IAuditoriaItemsHistorico";
-import { IAuditoriasHistorico } from "../../../models/IAuditoriasHistorico";
+import { StteperForBloqItems } from "../components/realizarAuditorias/StteperForBloqItems";
+import { IAuditoriaValoresResult } from "../../models/IAuditoriaValoresResult";
+import { valuesDefaultStepper } from "../../models/utils/ValuesDefaultStepper";
+import { AuditoriaAsignadaSliceRequest } from "../../slices/AuditoriaAsignadaSlice";
+import { IAuditoriaItemsHistorico } from "../../models/IAuditoriaItemsHistorico";
+import { IAuditoriasHistorico } from "../../models/IAuditoriasHistorico";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
-import { AuditoriasHistoricoSliceRequest } from "../../../slices/AuditoriasHistoricoSlice";
-import { AuditoriaGrupoItemsHistoricoSliceRequest } from "../../../slices/AuditoriaGrupoItemsHistoricoSlice";
-import { IAuditoriaGrupoItemsHistorico } from "../../../models/IAuditoriaGrupoItemsHistorico";
+import { AuditoriasHistoricoSliceRequest } from "../../slices/AuditoriasHistoricoSlice";
+import { AuditoriaGrupoItemsHistoricoSliceRequest } from "../../slices/AuditoriaGrupoItemsHistoricoSlice";
+import { IAuditoriaGrupoItemsHistorico } from "../../models/IAuditoriaGrupoItemsHistorico";
 import moment from "moment";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
+import { SelectComponent } from "app/features/cli/Components/SelectComponent";
+import { IPlant } from "app/models";
+import { IAuditDispositivo } from "app/models/IAuditDispositivo";
+import { PlantSliceRequests } from "app/Middleware/reducers";
+import { AuditDispositivoSliceRequests } from "app/features/audit/slices/AuditDispositivoSlice";
 
 interface Params {
   id: string;
@@ -49,6 +54,7 @@ export const CompletarAuditoria: React.FC = () => {
   const {
     control,
     handleSubmit,
+    watch,
     formState: { errors }
   } = useForm();
 
@@ -73,6 +79,9 @@ export const CompletarAuditoria: React.FC = () => {
   const [listaUrls, setListaUrls] = useState<ListaUrls[]>([]);
 
   const [valoresSeleccionados, setValoresSeleccionados] = useState<string | number>(0);
+  const [selectedPlantId, setSelectedPlantId] = useState<number>(0);
+  const plants = useAppSelector((state) => state.plant.dataAll as IPlant[]);
+  const dispositivos = useAppSelector((state) => state.auditDispositivo.dataAll as IAuditDispositivo[]);
 
   FetchApi<IAuditoriaAsignada>(
     AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById,
@@ -107,6 +116,14 @@ export const CompletarAuditoria: React.FC = () => {
       history.push("/main/auditorias-v2/reporte-auditorias");
     }
   );
+
+  FetchApi(PlantSliceRequests.getAllRequest, null, false, null, null, false, false, false);
+
+  useEffect(() => {
+    if (selectedPlantId) {
+      dispatch(AuditDispositivoSliceRequests.GetAllByPlant(selectedPlantId));
+    }
+  }, [selectedPlantId]);
 
   const onSubmit = async (data: any) => {
     const nuevaAuditoriaHistorico = generateAuditoriaHistorico(data);
@@ -302,6 +319,13 @@ export const CompletarAuditoria: React.FC = () => {
     }
   }, [params.estado]);
 
+  const auditoriaTipoId =
+    (auditResult as IAuditoriaAsignada)?.auditoria?.auditoriaTipoId ??
+    (auditResult as IAuditoriasHistorico)?.auditoriaAsignada?.auditoria?.auditoriaTipoId;
+
+  const codigoProductoValue = watch("codigoProducto");
+  const selectedDispositivo = dispositivos.find((d) => d.codigo === codigoProductoValue);
+
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       {auditResult && valuesStepper && (
@@ -336,6 +360,37 @@ export const CompletarAuditoria: React.FC = () => {
               </div>
             </ContainerForPages>
           </header>
+          {auditoriaTipoId === 3 && selectedDispositivo && (
+            <section className="mt-6 p-4 bg-secondaryNew rounded-lg shadow-md border border-gray-200">
+              <h3 className="text-lg font-semibold mb-3">Dispositivo Seleccionado</h3>
+              <div className="grid grid-cols-2 gap-4">
+                <div>
+                  <p className="text-sm text-gray-500">Código</p>
+                  <p className="font-medium">{selectedDispositivo.codigo}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Nombre</p>
+                  <p className="font-medium">{selectedDispositivo.nombre ?? "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Marca</p>
+                  <p className="font-medium">{selectedDispositivo.marca ?? "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Modelo</p>
+                  <p className="font-medium">{selectedDispositivo.modelo ?? "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Año</p>
+                  <p className="font-medium">{selectedDispositivo.ano ?? "-"}</p>
+                </div>
+                <div>
+                  <p className="text-sm text-gray-500">Interno</p>
+                  <p className="font-medium">{selectedDispositivo.interno ?? "-"}</p>
+                </div>
+              </div>
+            </section>
+          )}
           <section className="flex flex-row justify-between mt-8">
             <div className="w-1/2 flex-row items-center gap-y-2">
               <h3 className="text-xl font-semibold">Valores</h3>
@@ -353,44 +408,75 @@ export const CompletarAuditoria: React.FC = () => {
             </div>
             <div className="w-1/2">
               <ContainerForPages optionsLayout="Selects">
-                <TextFieldComponent
-                  control={control}
-                  index={0}
-                  nameInput="codigoProducto"
-                  labelInput="Ingresar Codigo de Producto"
-                  valueDefault={
-                    params.estado === "examinar" ? (auditResult as IAuditoriasHistorico).codigoProducto : ""
-                  }
-                  disabled={params.estado === "examinar"}
-                  typeInput="standard"
-                  estilosPersonalizados={{
-                    "& .MuiInput-underline": {
-                      "&::before": {
-                        borderBottom: "none"
+                {auditoriaTipoId === 3 ? (
+                  <div className="flex flex-col gap-y-4">
+                    <SelectComponent
+                      control={control}
+                      listaObjetos={plants}
+                      nameSelect="plantaSeleccionada"
+                      inputLabel="Seleccionar Planta"
+                      valueLabel={(value: IPlant) => value.name}
+                      valueSelect={(value: IPlant) => value.id}
+                      valueKey={(value: number) => value}
+                      disabled={params.estado === "examinar"}
+                      ValueSave={(value) => setSelectedPlantId(value as number)}
+                    />
+                    <SelectComponent
+                      control={control}
+                      listaObjetos={dispositivos}
+                      nameSelect="codigoProducto"
+                      inputLabel="Seleccionar Dispositivo"
+                      valueLabel={(value: IAuditDispositivo) => `${value.codigo} - ${value.nombre ?? ""}`}
+                      valueSelect={(value: IAuditDispositivo) => value.codigo}
+                      valueKey={(value: number) => value}
+                      defaultValue={
+                        params.estado === "examinar" ? (auditResult as IAuditoriasHistorico).codigoProducto : ""
                       }
-                    },
-                    "& .MuiInputLabel-formControl": {
-                      color: "green"
+                      disabled={params.estado === "examinar"}
+                    />
+                  </div>
+                ) : (
+                  <TextFieldComponent
+                    control={control}
+                    index={0}
+                    nameInput="codigoProducto"
+                    labelInput="Ingresar Codigo de Producto"
+                    valueDefault={
+                      params.estado === "examinar" ? (auditResult as IAuditoriasHistorico).codigoProducto : ""
                     }
-                  }}
-                />
+                    disabled={params.estado === "examinar"}
+                    typeInput="standard"
+                    estilosPersonalizados={{
+                      "& .MuiInput-underline": {
+                        "&::before": {
+                          borderBottom: "none"
+                        }
+                      },
+                      "& .MuiInputLabel-formControl": {
+                        color: "green"
+                      }
+                    }}
+                  />
+                )}
               </ContainerForPages>
             </div>
           </section>
-          <StteperForBloqItems
-            idAuditoriaAsignada={parseInt(params.id)}
-            setListaUrlsProp={setearUrls}
-            tipoAuditoria={params.estado}
-            nextStepActive={nextStepActive}
-            backStepActive={backStepActive}
-            valuesStepper={valuesStepper}
-            listaBloqueItems={listaItems}
-            controlPadre={control}
-            errorsPadre={errors}
-            listaValores={valores}
-            setValores={setValoresSeleccionados}
-            functionSubmit={onSubmit}
-          />
+          {(auditoriaTipoId !== 3 || !!codigoProductoValue) && (
+            <StteperForBloqItems
+              idAuditoriaAsignada={parseInt(params.id)}
+              setListaUrlsProp={setearUrls}
+              tipoAuditoria={params.estado}
+              nextStepActive={nextStepActive}
+              backStepActive={backStepActive}
+              valuesStepper={valuesStepper}
+              listaBloqueItems={listaItems}
+              controlPadre={control}
+              errorsPadre={errors}
+              listaValores={valores}
+              setValores={setValoresSeleccionados}
+              functionSubmit={onSubmit}
+            />
+          )}
         </ContainerForPages>
       )}
     </form>

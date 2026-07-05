@@ -16,11 +16,11 @@ import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { CheckCircleOutlined, EditRounded } from "@mui/icons-material";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { useHistory } from "react-router-dom";
-import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
-import { auditoriaAsignadaSlice, AuditoriaAsignadaSliceRequest } from "../../../slices/AuditoriaAsignadaSlice";
+import { IAuditoriaAsignada } from "../../models/IAuditoriaAsignada";
+import { auditoriaAsignadaSlice, AuditoriaAsignadaSliceRequest } from "../../slices/AuditoriaAsignadaSlice";
 import { PermisosSliceRequests } from "app/features/manejoSistema/slices/PermisosSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
+import { auditoriasUISlice } from "../../slices/auditoriasUISlice";
 
 export const RealizarAuditoriasMain: React.FC = () => {
   const { control } = useForm();
@@ -91,7 +91,7 @@ export const RealizarAuditoriasMain: React.FC = () => {
   );
 
   const hamdleEditAuditoria = async (auditoria: IAuditoriaAsignada) => {
-    dispatch(statesListDataForAuditoriasSlice.actions.setBloquesVacio([]));
+    dispatch(auditoriasUISlice.actions.setBloquesVacio([]));
     const response = unwrapResult(
       await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id))
     );
@@ -99,15 +99,15 @@ export const RealizarAuditoriasMain: React.FC = () => {
       console.log(response);
       dispatch(auditoriaAsignadaSlice.actions.setAuditoria(response));
       dispatch(
-        statesListDataForAuditoriasSlice.actions.setListaValores(
+        auditoriasUISlice.actions.setListaValores(
           response.auditoria.auditoriaListaValoresResult.auditoriaValoresResult
         )
       );
       response.auditoriaGrupoItemsResult.map((elementos) => {
-        dispatch(statesListDataForAuditoriasSlice.actions.setBloques(elementos));
+        dispatch(auditoriasUISlice.actions.setBloques(elementos));
       });
       dispatch(
-        statesListDataForAuditoriasSlice.actions.setTipoAuditoria(
+        auditoriasUISlice.actions.setTipoAuditoria(
           response.auditoria.auditoriaListaValoresResult.auditoriaTiposId
         )
       );

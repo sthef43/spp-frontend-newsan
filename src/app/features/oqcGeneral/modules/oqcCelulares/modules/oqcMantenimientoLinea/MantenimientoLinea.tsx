@@ -21,6 +21,7 @@ import { MantenimientoLineaComponent } from "./MantenimientoLineaComponent";
 import { IModelo } from "app/models/IModelo";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
 import { EditarModelo } from "./EditarModelo";
 import { IOperator } from "app/models";
@@ -264,16 +265,15 @@ export const MantenimientoLinea = () => {
   const [mostarFondo, setMostrarFondo] = useState(false);
 
   return (
-    <>
-      <div className="w-full">
-        <nav ref={navbarRef}></nav>
-        <figure
-          className={`${
-            !mostarFondo
-              ? ""
-              : "w-[100%] h-[400vh] bg-black/50 absolute top-0 z-10 overflow-hidden left-0 right-0 m-auto"
-          }`}></figure>
-        <div className="flex flex-col gap-1 bg-secondaryNew px-20 py-2">
+    <ContainerForPages activeEffectVisible optionsLayout="page">
+      <nav ref={navbarRef}></nav>
+      <figure
+        className={`${
+          !mostarFondo
+            ? ""
+            : "w-[100%] h-[400vh] bg-black/50 absolute top-0 z-10 overflow-hidden left-0 right-0 m-auto"
+        }`}></figure>
+      <div className="flex flex-col gap-1 bg-secondaryNew px-20 py-2">
           <TitleUIComponent title="Ingreso de datos" />
           <SelectOFPlantAndProducts selectLineas>
             <>
@@ -455,7 +455,7 @@ export const MantenimientoLinea = () => {
               buscar
             />
           </div>
-          <ModalCompoment title={"Editar Modelo"} openPopup={ModalOpen} setOpenPopup={setModalOpen}>
+          <ModalCompoment title={"Editar Modelo"} openPopup={ModalOpen} setOpenPopup={setModalOpen} titleModalStyle="Audit" showModalCenterPage onCloseDynamic>
             <EditarModelo
               lineaId={linea?.id}
               setOpenPopup={setModalOpen}
@@ -466,7 +466,7 @@ export const MantenimientoLinea = () => {
             />
           </ModalCompoment>
 
-          <ModalCompoment title={"Clonar Modelo"} openPopup={modalClon} setOpenPopup={setmodalClon}>
+          <ModalCompoment title={"Clonar Modelo"} openPopup={modalClon} setOpenPopup={setmodalClon} titleModalStyle="Audit" showModalCenterPage onCloseDynamic>
             <ClonarModelo
               lineaId={lineaId}
               setOpenPopup={setmodalClon}
@@ -476,8 +476,7 @@ export const MantenimientoLinea = () => {
               editState={editModelo}
             />
           </ModalCompoment>
-        </div>
       </div>
-    </>
+    </ContainerForPages>
   );
 };

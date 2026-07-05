@@ -15,18 +15,17 @@ import { useGetAllPlantsExecute } from "app/shared/hooks/hooksServices/usePlantA
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
-import { IAuditoria } from "../../../models/IAuditoria";
-import { auditoriaAsignadaSlice } from "../../../slices/AuditoriaAsignadaSlice";
-import { estadoDeRenderizadosSlice } from "../../../slices/EstadoDeRenderizadosSlice";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
-import { useGetAllAuditsFatherByRolAndPlantId } from "../../../hooks/useAuditoriasApi";
+import { IAuditoria } from "../../models/IAuditoria";
+import { auditoriaAsignadaSlice } from "../../slices/AuditoriaAsignadaSlice";
+import { auditoriasUISlice } from "../../slices/auditoriasUISlice";
+import { useGetAllAuditsFatherByRolAndPlantId } from "../../composables/useAuditoriasApi";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
-import { ExaminarBloquesAuditoria } from "../../modals/creacionAuditorias/ExaminarBloquesAuditoria";
-import { ExaminarValoresAudiutoria } from "../../modals/creacionAuditorias/ExaminarValoresAuditoria";
-import { useGetAllListValuesByAuditIdExcute } from "../../../hooks/useAuditoriaListaValoresResultApi";
-import { IAuditoriaListaValoresResult } from "../../../models/IAuditoriaListaValoresResult";
-import { useGetAllGroupResultsByAuditIdExcute } from "../../../hooks/useAuditoriaGrupoItemsResultApi";
-import { IAuditoriaGrupoItemsResult } from "../../../models/IAuditoriaGrupoItemsResult";
+import { ExaminarBloquesAuditoria } from "../modals/creacionAuditorias/ExaminarBloquesAuditoria";
+import { ExaminarValoresAudiutoria } from "../modals/creacionAuditorias/ExaminarValoresAuditoria";
+import { useGetAllListValuesByAuditIdExcute } from "../../composables/useAuditoriaListaValoresResultApi";
+import { IAuditoriaListaValoresResult } from "../../models/IAuditoriaListaValoresResult";
+import { useGetAllGroupResultsByAuditIdExcute } from "../../composables/useAuditoriaGrupoItemsResultApi";
+import { IAuditoriaGrupoItemsResult } from "../../models/IAuditoriaGrupoItemsResult";
 
 export const CreacionAuditoriasMain: React.FC = () => {
   const { control, watch } = useForm();
@@ -56,12 +55,12 @@ export const CreacionAuditoriasMain: React.FC = () => {
 
   const handleCreateAuditoria = () => {
     dispatch(auditoriaAsignadaSlice.actions.setAuditoria(null));
-    dispatch(statesListDataForAuditoriasSlice.actions.setListaEmails(""));
-    dispatch(statesListDataForAuditoriasSlice.actions.setBloquesVacio([]));
-    dispatch(statesListDataForAuditoriasSlice.actions.setListaValores([]));
-    dispatch(statesListDataForAuditoriasSlice.actions.setTipoAuditoria(0));
-    dispatch(estadoDeRenderizadosSlice.actions.setCantidadBloques(0));
-    dispatch(estadoDeRenderizadosSlice.actions.setBloqueSeleccionado({}));
+    dispatch(auditoriasUISlice.actions.setListaEmails(""));
+    dispatch(auditoriasUISlice.actions.setBloquesVacio([]));
+    dispatch(auditoriasUISlice.actions.setListaValores([]));
+    dispatch(auditoriasUISlice.actions.setTipoAuditoria(0));
+    dispatch(auditoriasUISlice.actions.setCantidadBloques(0));
+    dispatch(auditoriasUISlice.actions.setBloqueSeleccionado({}));
     history.push("/main/auditorias-v2/crud-creacion-auditorias");
   };
 

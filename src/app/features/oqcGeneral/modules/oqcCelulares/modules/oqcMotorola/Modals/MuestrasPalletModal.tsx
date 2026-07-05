@@ -1,5 +1,5 @@
 // eslint-disable-next-line unused-imports/no-unused-vars
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { ContextApp } from "../../../Context/Context";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
@@ -32,6 +32,7 @@ import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slic
 import { OQCNuevoPalletSliceRequest } from "app/features/oqcGeneral/slices/OQCNuevoPalletSlice";
 import { oqcPaletPrintSlice } from "app/features/oqcGeneral/slices/OQCPaletPrintSlice";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
+import { limpiarPalet } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 
 interface props {
   refreshPallet: () => void;
@@ -104,6 +105,7 @@ export const MuestrasPalletModal: React.FC<props> = ({ refreshPallet }) => {
   };
 
   const watchConformidad = watch("conformidad");
+  const primeraVezConformidad = useRef(true);
   const cerrarPallet = async () => {
     dispatch(oqcPaletPrintSlice.actions.setObject(null));
     try {
@@ -112,51 +114,33 @@ export const MuestrasPalletModal: React.FC<props> = ({ refreshPallet }) => {
           await getConfirmation("Continuar", "Tienes elementos con una criticidad alta, deseas declarar como conforme?")
         ) {
           dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-          dispatch(OQCPaletSliceRequests.PutRequest(nuevoPalletFormateado));
+          const response = unwrapResult(await dispatch(OQCPaletSliceRequests.PutRequest(nuevoPalletFormateado)));
           setOpenModalPrint(!openModalPrint);
           setHallazgosEncontrados([]);
         }
       } else {
         dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-        dispatch(OQCPaletSliceRequests.PutRequest(nuevoPalletFormateado));
+        const response = unwrapResult(await dispatch(OQCPaletSliceRequests.PutRequest(nuevoPalletFormateado)));
         setOpenModalPrint(!openModalPrint);
       }
-      dispatch(oqcPaletSlice.actions.setObject(nuevoPalletFormateado));
     } catch (error) {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
       openNotificationUI(error, "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
   };
 
   const [estadoReimpresion, setEstadoReimpresion] = useState(false);
-  const cambiarConformidad = async () => {
+  const cambiarConformidad = () => {
     const nuevoRegistro = generarRegistro();
-    try {
-      if (watchConformidad == "CONFORME") {
-        dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-        setEstadoReimpresion(true);
-        const cambiarConformePalet = { ...palet, conforme: true, registro: nuevoRegistro };
-        delete cambiarConformePalet.oqcDesignadaResultado;
-        delete cambiarConformePalet.oqcModelo;
-        delete cambiarConformePalet.oqcDesignada;
-        setNuevoPalletFormateado(cambiarConformePalet);
-        await dispatch(OQCPaletSliceRequests.PutRequest(cambiarConformePalet));
-        dispatch(LoadingUISlice.actions.LoadingUIClose());
-      } else if (watchConformidad == "NO CONFORME") {
-        dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-        setEstadoReimpresion(false);
-        const cambiarConformePalet = { ...palet, conforme: false, registro: nuevoRegistro };
-        !cambiarConformePalet.conforme;
-        delete cambiarConformePalet.oqcDesignadaResultado;
-        delete cambiarConformePalet.oqcModelo;
-        delete cambiarConformePalet.oqcDesignada;
-        setNuevoPalletFormateado(cambiarConformePalet);
-        await dispatch(OQCPaletSliceRequests.PutRequest(cambiarConformePalet));
-        dispatch(LoadingUISlice.actions.LoadingUIClose());
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
+    if (watchConformidad == "CONFORME") {
+      setEstadoReimpresion(true);
+      const cambiarConformePalet = limpiarPalet({ ...palet, conforme: true, registro: nuevoRegistro }) as IOQCPalet;
+      setNuevoPalletFormateado(cambiarConformePalet);
+    } else if (watchConformidad == "NO CONFORME") {
+      setEstadoReimpresion(false);
+      const cambiarConformePalet = limpiarPalet({ ...palet, conforme: false, registro: nuevoRegistro }) as IOQCPalet;
+      setNuevoPalletFormateado(cambiarConformePalet);
     }
   };
 
@@ -219,7 +203,11 @@ export const MuestrasPalletModal: React.FC<props> = ({ refreshPallet }) => {
   }, [contextoGlobal.muestrasPallet]);
 
   useEffect(() => {
-    if (watchConformidad) {
+    if (primeraVezConformidad.current) {
+      primeraVezConformidad.current = false;
+      return;
+    }
+    if (watchConformidad && watchConformidad !== "Seleccione una opcion") {
       cambiarConformidad();
     }
   }, [watchConformidad]);
@@ -314,7 +302,13 @@ export const MuestrasPalletModal: React.FC<props> = ({ refreshPallet }) => {
           AGREGAR MASTER BOX
         </button>
       </div>
-      <ModalCompoment setOpenPopup={setOpenModalPrint} openPopup={openModalPrint} title="Imprimir Datos Palet">
+      <ModalCompoment
+        setOpenPopup={setOpenModalPrint}
+        openPopup={openModalPrint}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Impresión de datos del palet"
+        title="Imprimir Datos Palet">
         <OQCPaletPrint
           ultimaMuestraOQC={ultimaMuestra}
           reproceso={false}
@@ -328,6 +322,9 @@ export const MuestrasPalletModal: React.FC<props> = ({ refreshPallet }) => {
       <ModalCompoment
         setOpenPopup={contextoGlobal.setContinuarPallet}
         openPopup={contextoGlobal.continuarPallet}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Continuar con el muestreo del palet"
         title="Continuar Palet"
         onCloseDynamic>
         <ContinuarPalletModal
@@ -337,9 +334,12 @@ export const MuestrasPalletModal: React.FC<props> = ({ refreshPallet }) => {
         />
       </ModalCompoment>
       <ModalCompoment
-        title="Datos Sampling"
         setOpenPopup={contextoGlobal.setDatosZampling}
         openPopup={contextoGlobal.datosZampling}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Ingreso de datos de muestreo"
+        title="Datos Sampling"
         onCloseDynamic>
         <DatosZamplingModal
           refreshTable={refreshPallet}

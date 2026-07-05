@@ -8,7 +8,7 @@ import { CSSTransition } from "react-transition-group";
 import { Button, colors, Step, StepConnector, StepIconProps, StepLabel, Stepper } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { IAuditBloq } from "app/models/IAuditBloq";
-import { AuditNameAndInfo } from "app/features/auditorias/modules/components/reporteAuditoria/AuditNameInfoAndGroup";
+import { AuditNameAndInfo } from "app/features/auditorias";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { useHistory, useParams } from "react-router-dom";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

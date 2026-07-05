@@ -20,10 +20,9 @@ import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResult
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IStatesForActiveFetchs } from "../../../models/utils/IStatesForActiveFetchs";
-import { statesForActiveFetchsSlice } from "../../../slices/StatesForActiveFetchsSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { AuditoriaValoresSliceRequest } from "../../../slices/AuditoriaValoresSlice";
 import { AgregarTipoAgrupacion } from "./AgregarTipoAgrupacion";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { IAuditoriaValoresListaBloq } from "../../../models/IAuditoriaValoresListaBloq";
 import { AuditoriaValoresListaBloqSliceRequest } from "../../../slices/AuditoriaValoresListaBloqSlice";
@@ -57,11 +56,11 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
   } = useForm();
 
   const infoUser: IAppUser = useAppSelector<IAppUser>((state) => state.appUser.data as IAppUser);
-  const { mostrarListaValores } = useAppSelector((state) => state.estadoDeRenderizados);
+  const { mostrarListaValores } = useAppSelector((state) => state.auditoriasUI);
   const { activeFetchListaValores, activeFetchTipoAgrupacion } = useAppSelector(
-    (state) => state.statesForFetchs as IStatesForActiveFetchs
+    (state) => state.auditoriasUI as IStatesForActiveFetchs
   );
-  const { listaValoresPreview } = useAppSelector((state) => state.listaDatosParaAuditorias);
+  const { listaValoresPreview } = useAppSelector((state) => state.auditoriasUI);
 
   const dispatch = useAppDispatch();
   const buttonClases = MaterialButtons();
@@ -91,7 +90,7 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
     false,
     false,
     () => {
-      dispatch(statesForActiveFetchsSlice.actions.setActiveFetchTipoAgrupacion(false));
+      dispatch(auditoriasUISlice.actions.setActiveFetchTipoAgrupacion(false));
     }
   );
 
@@ -149,8 +148,8 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
     });
     FetchPost(AuditoriaValoresListaBloqSliceRequest.multiPostRequest, listaBloques, false, () => {
       openNotificationUI("Lista de valores creada exitosamente", "success");
-      dispatch(statesForActiveFetchsSlice.actions.setActiveFetchListaValores(true));
-      dispatch(statesForActiveFetchsSlice.actions.setActiveFetchTipoAuditoria(true));
+      dispatch(auditoriasUISlice.actions.setActiveFetchListaValores(true));
+      dispatch(auditoriasUISlice.actions.setActiveFetchTipoAuditoria(true));
       setOpenModal(false);
     });
   };
@@ -237,7 +236,7 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
             valueSelect={(value) => value.id}
             ValueSave={(e) => {
               setTipoAuditoriaSeleccionada(e);
-              dispatch(statesListDataForAuditoriasSlice.actions.setTipoProductoId(e as number));
+              dispatch(auditoriasUISlice.actions.setTipoProductoId(e as number));
             }}
             valueKey={(value) => value}
             control={control}

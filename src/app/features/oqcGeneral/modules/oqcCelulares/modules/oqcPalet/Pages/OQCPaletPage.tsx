@@ -52,17 +52,20 @@ export const OQCPaletPage = (): JSX.Element => {
         const linea = listaLineas.find((elementos) => {
           return elementos.id === lineaSeleccionada;
         });
-        dispatch(lineaProduccionSlice.actions.setSelectLinea(linea.id));
+        if (linea) {
+          dispatch(lineaProduccionSlice.actions.setSelectLinea(linea.id));
+        }
       }
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
     } catch (e) {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
       openNotificationUI(e, "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
   };
 
   const onGetPalets = async () => {
     try {
+      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
       const response = unwrapResult(await dispatch(OQCPaletSliceRequests.getAllPaletsByModel(modeloId as number)));
       if (!response || response.length === 0) {
         openNotificationUI("No se encontraron palets para el modelo seleccionado", "info");
@@ -70,6 +73,8 @@ export const OQCPaletPage = (): JSX.Element => {
       dispatch(oqcModeloSlice.actions.finModelo(modeloId as number));
     } catch (e) {
       openNotificationUI(e, "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
   };
 
@@ -89,7 +94,7 @@ export const OQCPaletPage = (): JSX.Element => {
   }, [modeloId]);
 
   return (
-    <ContainerForPages optionsLayout="page">
+    <ContainerForPages activeEffectVisible optionsLayout="page">
       <SelectLineaAndPlant
         varianteEstilo="standard"
         activarEstilosPersonalizados

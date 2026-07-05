@@ -315,7 +315,7 @@ body {
     @apply bg-secondaryNew w-[30rem] p-2 text-xl font-semibold border-[1px] rounded-md border-gray-200 text-textColor h-16 shadow-shadowBox cursor-pointer focus:outline-none row-start-1 col-start-1 appearance-none;
   }
   .inputsDatosZapling {
-    @apply w-1/2 py-1 text-center text-textColor border-b border-b-gray-400 focus:outline-none bg-transparent;
+    @apply w-full max-w-sm py-2 text-center text-textColor border-b border-b-gray-400 focus:outline-none bg-transparent;
   }
   .inputNuevoPallet {
     @apply placeholder:text-center placeholder:text-textColor text-center border-b-[1px] border-b-gray-400 bg-secondaryNew focus:outline-none text-textColor w-64;

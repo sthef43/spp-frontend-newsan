@@ -25,6 +25,7 @@ import { useReactToPrint } from "react-to-print";
 import { OQCPaletPrintView } from "./OQCPaletPrintView";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { IOQCPalet } from "app/models/IOQCPalet";
+import { limpiarPalet } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 import { IOQCSupervisoresMotorola } from "app/models/IOQCSupervisoresMotorola";
 import { OQCSupervisoresMotorolaSliceRequest } from "app/features/oqcGeneral/slices/OqcSupervisoresMotorola";
 import { MaterialButtons } from "../../../../../../shared/components/material-ui/MaterialButtons";
@@ -190,16 +191,11 @@ export const OQCPaletPrint = ({
       try {
         dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
         const operator = unwrapResult(await dispatch(OperatorSliceRequests.getInfoByDni(GetInfoUser().dni | 0)));
-        const paletSubmit: IOQCPalet = { ...palet, operatorId: operator.id, cerrado: false };
-        delete paletSubmit.operator;
-        delete paletSubmit.plant;
-        delete paletSubmit.oqcDesignadaResultado;
-        delete paletSubmit.oqcModelo;
-        delete paletSubmit.oqcDesignada;
+        const paletSubmit = limpiarPalet({ ...palet, operatorId: operator.id, cerrado: false } as IOQCPalet) as IOQCPalet;
         await dispatch(OQCPaletSliceRequests.PutRequest(paletSubmit));
-        dispatch(LoadingUISlice.actions.LoadingUIClose());
       } catch (error) {
         console.log(error);
+      } finally {
         dispatch(LoadingUISlice.actions.LoadingUIClose());
       }
       refresh();
@@ -477,10 +473,19 @@ export const OQCPaletPrint = ({
         <ModalCompoment
           setOpenPopup={setOpenModalPreviewTicket}
           openPopup={openModalPreviewTicket}
+          showModalCenterPage
+          titleModalStyle="Audit"
+          subTitle="Vista previa del ticket"
           title="Vista Previa">
           <OQCPaletPrintView estadoReimpresion={estadoReimpresion} reproceso={reproceso} />
         </ModalCompoment>
-        <ModalCompoment setOpenPopup={setOpenModalConsultaEBS} openPopup={openModalConsultaEBS} title="Consulta EBS">
+        <ModalCompoment
+          setOpenPopup={setOpenModalConsultaEBS}
+          openPopup={openModalConsultaEBS}
+          showModalCenterPage
+          titleModalStyle="Audit"
+          subTitle="Consulta de master box en EBS"
+          title="Consulta EBS">
           <OQCConsultaMasterBoxEBS setOpenModal={setOpenModalConsultaEBS} />
         </ModalCompoment>
       </div>

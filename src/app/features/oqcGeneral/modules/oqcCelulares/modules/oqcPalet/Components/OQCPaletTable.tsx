@@ -19,6 +19,7 @@ import { OQCEditPalet } from "../modals/OQCEditPalet";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { oqcPaletPrintSlice } from "app/features/oqcGeneral/slices/OQCPaletPrintSlice";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
+import { limpiarPalet } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 
 interface IOQCPaletTable {
   refresh?: () => void;
@@ -42,11 +43,7 @@ export const OQCPaletTable = ({ refresh }: IOQCPaletTable): JSX.Element => {
   };
 
   const volverAbrirPallet = (pallet: IOQCPalet) => {
-    const palletAbierto: IOQCPalet = { ...pallet, cerrado: true };
-    delete palletAbierto.oqcDesignada;
-    delete palletAbierto.oqcModelo;
-    delete palletAbierto.oqcPaletPrint;
-    delete palletAbierto.plant;
+    const palletAbierto = limpiarPalet({ ...pallet, cerrado: true });
     FetchPut({
       consoleLog: false,
       modelPut: palletAbierto,
@@ -77,7 +74,7 @@ export const OQCPaletTable = ({ refresh }: IOQCPaletTable): JSX.Element => {
   };
 
   return (
-    <ContainerForPages optionsLayout="Table">
+    <ContainerForPages activeEffectVisible optionsLayout="Table">
       <TableComponent
         IDcolumn="id"
         columns={[
@@ -179,7 +176,13 @@ export const OQCPaletTable = ({ refresh }: IOQCPaletTable): JSX.Element => {
         dataInfo={palets}
       />
       {/* Modal para imprimir palet */}
-      <ModalCompoment openPopup={form} setOpenPopup={setForm} title="Imprimir palet">
+      <ModalCompoment
+        openPopup={form}
+        setOpenPopup={setForm}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Impresión de datos del palet"
+        title="Imprimir palet">
         <OQCPaletPrint closeModal={setForm} refresh={refresh} />
       </ModalCompoment>
       {/* Modal para imprimir palet */}

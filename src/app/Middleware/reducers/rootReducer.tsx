@@ -162,14 +162,15 @@ import { ctrlPlacasHallazgosSlice } from "./CtrlPlacasHallazgosSlice";
 import { TrazaUnit_History2Slice } from "./TrazaUnit_History2Slice";
 
 import { AndonPlacasSlice } from "app/features/tableros/modules/andonStockPlacasAutomatica/reducers/AndonPlacasSlice";
-import { statesListDataForAuditoriasSlice } from "app/features/auditorias/slices/ListaDatosParaAuditoriasSlice";
-import { auditoriaValoresSlice } from "app/features/auditorias/slices/AuditoriaValoresSlice";
-import { auditoriaListaValoresSlice } from "app/features/auditorias/slices/AuditoriaListaValoresSlice";
-import { auditoriaGrupoItemsSlice } from "app/features/auditorias/slices/AuditoriaGrupoItemsSlice";
-import { estadoDeRenderizadosSlice } from "app/features/auditorias/slices/EstadoDeRenderizadosSlice";
-import { auditoriaAsignadaSlice } from "app/features/auditorias/slices/AuditoriaAsignadaSlice";
-import { statesForActiveFetchsSlice } from "app/features/auditorias/slices/StatesForActiveFetchsSlice";
-import { auditoriaSlice } from "app/features/auditorias/slices/AuditoriaSlice";
+import {
+  auditoriasUISlice,
+  auditoriaValoresSlice,
+  auditoriaListaValoresSlice,
+  auditoriaTipoSlice,
+  auditoriaGrupoItemsSlice,
+  auditoriaAsignadaSlice,
+  auditoriaSlice
+} from "app/features/auditorias";
 import { CLIContenedorItemsRecepcionBloqSlice } from "app/features/cli/Middlewares/CLIContenedorItemsRecepcionBloqSlice";
 import { CLIContenedorItemsSlice } from "app/features/cli/Middlewares/CLIContenedorItemsSlice";
 import { cliUbicacionSectoresSlice } from "app/features/cli/Middlewares/CLIUbiacacionSectorSlice";
@@ -229,14 +230,13 @@ export const rootReducer = {
   auditComentario: AuditComentarioSlice.reducer,
 
   //AUDITORIAS V2.0 REDUCERS
-  listaDatosParaAuditorias: statesListDataForAuditoriasSlice.reducer,
+  auditoriasUI: auditoriasUISlice.reducer,
   auditoriaValores: auditoriaValoresSlice.reducer,
   auditoriaListaValores: auditoriaListaValoresSlice.reducer,
+  auditoriaTipo: auditoriaTipoSlice.reducer,
   auditoriaGrupoItems: auditoriaGrupoItemsSlice.reducer,
   auditoria: auditoriaSlice.reducer,
-  estadoDeRenderizados: estadoDeRenderizadosSlice.reducer,
   auditoriaAsignada: auditoriaAsignadaSlice.reducer,
-  statesForFetchs: statesForActiveFetchsSlice.reducer,
 
   //-----AUTH REDUCER -----
   firstLogin: FirstLoginSlice.reducer,

@@ -4,16 +4,18 @@ import React, { useEffect, useState } from "react";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { Control, FieldErrors, FieldValues, UseFormReset, UseFormSetValue, UseFormTrigger } from "react-hook-form";
-import { IEmailGroup, IPlant } from "app/models";
+import { IAppUser, IEmailGroup, IPlant } from "app/models";
+import { IAuditoriaTipo } from "../../../models/IAuditoriaTipo";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { EmailGroupSliceRequests } from "app/Middleware/reducers/EmailGroupSlice";
+import { AuditoriaTipoSliceRequest } from "../../../slices/AuditoriaTipoSlice";
 import { ListItem, IconButton, ListItemText, Collapse, List, Button } from "@mui/material";
 import { AddCircle, DeleteRounded, MailRounded } from "@mui/icons-material";
 import { TransitionGroup } from "react-transition-group";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useHistory, useParams } from "react-router-dom";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { useInputValidations } from "app/shared/hooks/useInputValidations";
 import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
@@ -59,8 +61,9 @@ export const CreacionAuditoriaPrimerPaso: React.FC<Props> = ({
   triggerFather
 }) => {
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
-  const { listaEmails } = useAppSelector((state) => state.listaDatosParaAuditorias);
+  const { listaEmails } = useAppSelector((state) => state.auditoriasUI);
   const planta = useAppSelector((state) => state.plant.object as IPlant);
+  const infoUser: IAppUser = useAppSelector<IAppUser>((state) => state.appUser.data as IAppUser);
 
   const params = useParams<{ id: string }>();
   const buttonClases = MaterialButtons();
@@ -78,6 +81,19 @@ export const CreacionAuditoriaPrimerPaso: React.FC<Props> = ({
   const [emails, setEmails] = useState<IEmailGroup[]>([]);
 
   const [activeFecth, setActiveFecth] = useState<boolean>(false);
+
+  const [tiposAuditoria, setTiposAuditoria] = useState<IAuditoriaTipo[]>([]);
+
+  FetchApi<IAuditoriaTipo[]>(
+    AuditoriaTipoSliceRequest.GetTiposByRolId,
+    infoUser.permisos.rolId,
+    false,
+    true,
+    setTiposAuditoria,
+    true,
+    false,
+    false
+  );
 
   FetchApi<IEmailGroup[]>(
     EmailGroupSliceRequests.getAllByPlantIdRequest,
@@ -128,7 +144,7 @@ export const CreacionAuditoriaPrimerPaso: React.FC<Props> = ({
 
   useEffect(() => {
     if (grupoSeleccionado) {
-      dispatch(statesListDataForAuditoriasSlice.actions.setListaEmails(grupoSeleccionado as string));
+      dispatch(auditoriasUISlice.actions.setListaEmails(grupoSeleccionado as string));
     }
   }, [grupoSeleccionado]);
 
@@ -160,6 +176,17 @@ export const CreacionAuditoriaPrimerPaso: React.FC<Props> = ({
           errors={errosFather}
         />
       </div>
+      <SelectComponent
+        control={controlFather}
+        nameSelect="tipoAuditoria"
+        inputLabel="Seleccione un tipo de auditoria"
+        listaObjetos={tiposAuditoria}
+        valueLabel={(value) => value.nombre}
+        valueSelect={(value) => value.id}
+        ValueSave={(value) => dispatch(auditoriasUISlice.actions.setTipoAuditoria(value as number))}
+        defaultValue={params && auditoria ? auditoria.auditoria?.tipoAuditoriaId : ""}
+        valueKey={(value) => value}
+      />
       <SelectComponent
         control={controlFather}
         nameSelect="listaEmails"

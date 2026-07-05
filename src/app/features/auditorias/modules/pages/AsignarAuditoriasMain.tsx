@@ -10,15 +10,15 @@ import { plantSlice, PlantSliceRequests } from "app/Middleware/reducers";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import { Button } from "@mui/material";
 import { AddCircle, DeleteRounded, VisibilityRounded } from "@mui/icons-material";
-import { IAuditoria } from "../../../models/IAuditoria";
-import { auditoriaSlice, AuditoriaSliceRequest } from "../../../slices/AuditoriaSlice";
+import { IAuditoria } from "../../models/IAuditoria";
+import { auditoriaSlice, AuditoriaSliceRequest } from "../../slices/AuditoriaSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
-import { CrearNuevaAsignacion } from "../../modals/asignarAuditorias/CrearNuevaAsignacion";
-import { ExaminarAuditoriasAsignadasModal } from "../../modals/asignarAuditorias/ExaminarAuditoriasAsignadasModal";
+import { CrearNuevaAsignacion } from "../modals/asignarAuditorias/CrearNuevaAsignacion";
+import { ExaminarAuditoriasAsignadasModal } from "../modals/asignarAuditorias/ExaminarAuditoriasAsignadasModal";
 
 export const AsignarAuditoriasMain = () => {
   const { control } = useForm();

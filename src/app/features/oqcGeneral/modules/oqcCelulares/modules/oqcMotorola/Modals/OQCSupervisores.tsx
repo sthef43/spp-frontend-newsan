@@ -122,6 +122,9 @@ export const EditarSupervisores: React.FC<Props> = ({ setOpenModal, openModal })
       <ModalCompoment
         setOpenPopup={setOpenModalAgregarSupervisores}
         openPopup={openModalAgregarSupervisores}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Administración de supervisores de planta"
         title={`${edicionActiva ? "Editar Supervisor" : "Agregar Supervisor"}`}>
         <AgregarEditarSupervisoresModal
           setListaSupervisores={setListaSupervisores}

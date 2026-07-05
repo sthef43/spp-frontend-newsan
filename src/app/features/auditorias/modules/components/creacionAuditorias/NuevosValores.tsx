@@ -10,8 +10,7 @@ import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPag
 import { IAuditoriaValores } from "../../../models/IAuditoriaValores";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
-import { estadoDeRenderizadosSlice } from "../../../slices/EstadoDeRenderizadosSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
 
 interface Props {
@@ -27,7 +26,7 @@ export const NuevosValores: React.FC<Props> = ({ setOpenModal }) => {
     formState: { errors, isValid }
   } = useForm();
 
-  const { tipoProductoId } = useAppSelector((state) => state.listaDatosParaAuditorias);
+  const { tipoProductoId } = useAppSelector((state) => state.auditoriasUI);
 
   const dispatch = useAppDispatch();
   const buttonClases = MaterialButtons();
@@ -61,8 +60,8 @@ export const NuevosValores: React.FC<Props> = ({ setOpenModal }) => {
         "Cancelar"
       )
     ) {
-      dispatch(statesListDataForAuditoriasSlice.actions.setListaValoresPreview(listaItems));
-      dispatch(estadoDeRenderizadosSlice.actions.setMostrarListaValores(true));
+      dispatch(auditoriasUISlice.actions.setListaValoresPreview(listaItems));
+      dispatch(auditoriasUISlice.actions.setMostrarListaValores(true));
       setOpenModal(false);
     }
   };

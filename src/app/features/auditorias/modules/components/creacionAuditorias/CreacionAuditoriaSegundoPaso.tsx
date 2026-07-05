@@ -10,14 +10,12 @@ import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser } from "app/models";
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { AuditoriaListaValoresSliceRequest } from "../../../slices/AuditoriaListaValoresSlice";
 import { IAuditoriaListaValores } from "../../../models/IAuditoriaListaValores";
 import { IAuditoriaValores } from "../../../models/IAuditoriaValores";
 import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
 import { useParams } from "react-router-dom";
-import { statesForActiveFetchsSlice } from "../../../slices/StatesForActiveFetchsSlice";
-import { estadoDeRenderizadosSlice } from "../../../slices/EstadoDeRenderizadosSlice";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 
@@ -31,10 +29,10 @@ interface Props {
 
 export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather }) => {
   const infoUser: IAppUser = useAppSelector<IAppUser>((state) => state.appUser.data as IAppUser);
-  const { listaValores } = useAppSelector((state) => state.listaDatosParaAuditorias);
-  const { activeFetchTipoAuditoria } = useAppSelector((state) => state.statesForFetchs);
+  const { listaValores } = useAppSelector((state) => state.auditoriasUI);
+  const { activeFetchTipoAuditoria } = useAppSelector((state) => state.auditoriasUI);
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
-  const { estadoModalNuevoTipo } = useAppSelector((state) => state.estadoDeRenderizados);
+  const { estadoModalNuevoTipo } = useAppSelector((state) => state.auditoriasUI);
 
   const params = useParams();
   const dispatch = useAppDispatch();
@@ -55,7 +53,7 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
     false,
     false,
     () => {
-      dispatch(statesForActiveFetchsSlice.actions.setActiveFetchTipoAuditoria(false));
+      dispatch(auditoriasUISlice.actions.setActiveFetchTipoAuditoria(false));
     }
   );
 
@@ -95,7 +93,7 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
       }
       return value;
     });
-    dispatch(statesListDataForAuditoriasSlice.actions.setListaValores(cambiarObjeto));
+    dispatch(auditoriasUISlice.actions.setListaValores(cambiarObjeto));
   };
 
   const renderInputCambiarEstado = (estado: boolean, elemento: IAuditoriaValores, objetoValue: string) => {
@@ -123,11 +121,11 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
     if (tipoAuditoriaSeleccionada !== 0) {
       const listaPadre = listaTipoAuditorias.find((item) => item.id === tipoAuditoriaSeleccionada);
       const valoresBloq = listaPadre.auditoriaValoresListaBloq.flatMap((elementos) => elementos.auditoriaValores);
-      dispatch(statesListDataForAuditoriasSlice.actions.setListaValores(valoresBloq));
-      dispatch(statesListDataForAuditoriasSlice.actions.setListaValoresPadre(listaPadre));
+      dispatch(auditoriasUISlice.actions.setListaValores(valoresBloq));
+      dispatch(auditoriasUISlice.actions.setListaValoresPadre(listaPadre));
     } else if (auditoria) {
       dispatch(
-        statesListDataForAuditoriasSlice.actions.setListaValores(
+        auditoriasUISlice.actions.setListaValores(
           auditoria.auditoriaListaValoresResult.auditoriaValoresResult
         )
       );
@@ -150,7 +148,7 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
           disabled={params && auditoria ? true : false}
           ValueSave={(e) => {
             setTipoAuditoriaSeleccionada(e);
-            dispatch(statesListDataForAuditoriasSlice.actions.setTipoAuditoria(e as number));
+            dispatch(auditoriasUISlice.actions.setTipoAuditoria(e as number));
           }}
           valueKey={(e) => e}
           estilosPersonalizados={{
@@ -166,11 +164,11 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
         />
         <div
           onClick={() => {
-            dispatch(estadoDeRenderizadosSlice.actions.setEstadoModalNuevoTipo(params && auditoria ? false : true));
-            dispatch(statesListDataForAuditoriasSlice.actions.setListaValoresPreview([]));
-            dispatch(statesListDataForAuditoriasSlice.actions.setListaValoresPadre());
-            dispatch(statesListDataForAuditoriasSlice.actions.setTipoAuditoria(0));
-            dispatch(estadoDeRenderizadosSlice.actions.setMostrarListaValores(false));
+            dispatch(auditoriasUISlice.actions.setEstadoModalNuevoTipo(params && auditoria ? false : true));
+            dispatch(auditoriasUISlice.actions.setListaValoresPreview([]));
+            dispatch(auditoriasUISlice.actions.setListaValoresPadre());
+            dispatch(auditoriasUISlice.actions.setTipoAuditoria(0));
+            dispatch(auditoriasUISlice.actions.setMostrarListaValores(false));
           }}
           className={`${
             params && auditoria
@@ -230,11 +228,11 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
       <ModalCompoment
         showModalCenterPage
         openPopup={estadoModalNuevoTipo}
-        setOpenPopup={() => dispatch(estadoDeRenderizadosSlice.actions.setEstadoModalNuevoTipo())}
+        setOpenPopup={() => dispatch(auditoriasUISlice.actions.setEstadoModalNuevoTipo())}
         title="Agregar nuevo tipo de Auditoria"
         titleModalStyle="Audit">
         <AgregarTipoAuditoria
-          setOpenModal={() => dispatch(estadoDeRenderizadosSlice.actions.setEstadoModalNuevoTipo())}
+          setOpenModal={() => dispatch(auditoriasUISlice.actions.setEstadoModalNuevoTipo())}
           openModal={estadoModalNuevoTipo}
         />
       </ModalCompoment>

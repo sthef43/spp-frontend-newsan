@@ -24,6 +24,13 @@ class AuditDispositivoClassSlice extends GenericSlice<IAuditDispositivo> {
       return await errorNotification(() => this.service.GetAllByPlantAndTable(data.table, data.plantId), info);
     }
   );
+  GetAllByPlant = createAsyncThunk<IAuditDispositivo[], number>(
+    `AuditDispositivo/GetAllByPlant`,
+
+    async (plantId, info) => {
+      return await errorNotification(() => this.service.GetAllByPlant(plantId), info);
+    }
+  );
 }
 export const AuditDispositivoSliceRequests = new AuditDispositivoClassSlice(auditDispositivoService);
 
@@ -51,6 +58,13 @@ export const AuditDispositivoSlice = createSlice({
       state.dataAll = action.payload;
     });
     builder.addCase(AuditDispositivoSliceRequests.GetAllByPlantAndTable.rejected, (state, action) => {
+      state.loading = "rejected";
+    });
+    builder.addCase(AuditDispositivoSliceRequests.GetAllByPlant.fulfilled, (state, action) => {
+      state.loading = "fulfilled";
+      state.dataAll = action.payload;
+    });
+    builder.addCase(AuditDispositivoSliceRequests.GetAllByPlant.rejected, (state, action) => {
       state.loading = "rejected";
     });
     //nuevos manejos de asyncthunk aqui

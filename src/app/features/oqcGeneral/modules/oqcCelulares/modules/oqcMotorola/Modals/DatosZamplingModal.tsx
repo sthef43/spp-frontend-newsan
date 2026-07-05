@@ -1,5 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { ContextApp } from "../../../Context/Context";
@@ -24,6 +24,7 @@ import { oqcSupervisoresMotorolaSlice } from "app/features/oqcGeneral/slices/Oqc
 import { IDatesMotorola } from "app/models/sfcsplus/IDatesMotorola";
 import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
+import { limpiarPalet } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 
 //Interface que se usa para el useForm
 interface defaultValues {
@@ -86,6 +87,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
 
   const [openModalHallazgos, setOpenModalHallazgos] = useState(false);
 
+  const inputRefs = useRef<(HTMLInputElement | HTMLTextAreaElement | null)[]>([]);
   const { openNotificationUI } = useNotificationUI();
   const contextoGlobal = useContext(ContextApp);
   const dispatch = useAppDispatch();
@@ -193,15 +195,17 @@ export const DatosZamplingModal: React.FC<prop> = ({
       nuevoOqcDesignadoresultado.oqcHallazgoResult.forEach((elementos) => {
         delete elementos.oqcBloqueHallazgo;
       });
-      const actualizarPallet = { ...oqcPalet, cantidadEquipos: cantidadEquipos, cantidadMasterBox: contadorMasterBox };
-      delete actualizarPallet.operator;
-      delete actualizarPallet.oqcDesignada;
-      delete actualizarPallet.oqcModelo;
+      const actualizarPallet = limpiarPalet({ ...oqcPalet, cantidadEquipos: cantidadEquipos, cantidadMasterBox: contadorMasterBox }) as IOQCPalet;
       const response = unwrapResult(await dispatch(OQCPaletSliceRequests.PutRequest(actualizarPallet)));
-      dispatch(oqcPaletSlice.actions.setObject(response));
-      responseOqcDesignadoResultado = unwrapResult(
-        await dispatch(OQCDesignadaResultadoSliceRequests.PostRequest(nuevoOqcDesignadoresultado))
-      );
+      try {
+        responseOqcDesignadoResultado = unwrapResult(
+          await dispatch(OQCDesignadaResultadoSliceRequests.PostRequest(nuevoOqcDesignadoresultado))
+        );
+      } catch (postError) {
+        const revertirPalet = limpiarPalet({ ...oqcPalet, cantidadEquipos: oqcPalet.cantidadEquipos, cantidadMasterBox: oqcPalet.cantidadMasterBox }) as IOQCPalet;
+        await dispatch(OQCPaletSliceRequests.PutRequest(revertirPalet));
+        throw postError;
+      }
       if (oqc.email) {
         if (!oqc.emailNG) {
           await dispatch(EmailSliceRequest.SendEmailNewOQC(responseOqcDesignadoResultado));
@@ -217,11 +221,11 @@ export const DatosZamplingModal: React.FC<prop> = ({
           }
         }
       }
-      openNotificationUI("Se Realizo el OQC con Exitor", "success");
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
+      openNotificationUI("Se Realizo el OQC con Exito", "success");
     } catch (error) {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
       openNotificationUI(error, "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
     listaMuestrasIngresadas();
     aniadirLista(responseOqcDesignadoResultado);
@@ -303,11 +307,13 @@ export const DatosZamplingModal: React.FC<prop> = ({
   };
 
   const [datosMotorola, setDatosMotorola] = useState<IDatesMotorola[]>([]);
+  const obtenerInput = (index: number) => inputRefs.current[index];
+
   const manejarEnter = async (event, index) => {
     if (event.key === "Enter") {
       event.preventDefault();
-      const inputs = document.querySelectorAll(".inputsDatosZapling");
-      const inputActual = inputs[index] as HTMLInputElement;
+      const inputActual = obtenerInput(index);
+      if (!inputActual) return;
       const esvalido = await trigger(inputActual.name);
       if (!esvalido) {
         inputActual.select();
@@ -321,16 +327,15 @@ export const DatosZamplingModal: React.FC<prop> = ({
           setDatosMotorola(responseMotorola);
         }
       }
-      const siguienteInput = inputs[index + 1];
-      if (siguienteInput && siguienteInput instanceof HTMLElement) {
+      const siguienteInput = obtenerInput(index + 1);
+      if (siguienteInput) {
         siguienteInput.focus();
       }
     }
   };
 
-  const seleccionarImeis = (index) => {
-    const inputs = document.querySelectorAll(".inputsDatosZapling");
-    const inputActual = inputs[index] as HTMLInputElement;
+  const seleccionarImeis = (index: number) => {
+    const inputActual = obtenerInput(index);
     if (inputActual) {
       inputActual.focus();
     }
@@ -417,10 +422,10 @@ export const DatosZamplingModal: React.FC<prop> = ({
   }, [contextoGlobal.obaTest, contextoGlobal.supervisor, contextoGlobal.estetica, contextoGlobal.packing]);
 
   return (
-    <main className="w-[75vw] h-[70vh]">
+    <main className="w-[75vw] max-h-[80vh] overflow-y-auto">
       <section className="rounded-md m-auto text-textColor">
         <section className="w-full relative">
-          <div className="w-full flex flex-row gap-x-3 justify-between p-3 rounded-md shadow-shadowBox border-gray-200 border">
+          <div className="w-full flex flex-row flex-wrap gap-x-3 gap-y-1 justify-start p-3 rounded-md shadow-shadowBox border-gray-200 border">
             <div>
               <p className="datosCelualresZapling">
                 Fecha:{" "}
@@ -449,7 +454,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
           {/*Comienzo de el formulario donde estan los inputs donde se ingresa el codigo de serie y sus numero de referencia*/}
           <form onSubmit={handleSubmit(sendForm)} className="flex flex-row justify-between gap-2 mt-2">
             <div
-              className={`${tiene2Imeis ? "h-[26rem]" : "h-full"} bg-secondaryNew w-1/2 rounded-md shadow-shadowBox`}>
+              className={`${tiene2Imeis ? "min-h-[26rem]" : "h-full"} bg-secondaryNew w-1/2 rounded-md shadow-shadowBox`}>
               <div className="flex w-[100.3%] justify-between border border-[#85CDD9] bg-[#85CDD9] p-2 rounded-t-md text-sm">
                 <p>{datosPallet[0].nroOp}</p>
                 <p>Registro: {oqcPalet.registro}</p>
@@ -502,6 +507,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
+                        ref={(el) => { inputRefs.current[0] = el; }}
                         onKeyUp={(event) => {
                           manejarEnter(event, 0);
                         }}
@@ -540,6 +546,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
+                        ref={(el) => { inputRefs.current[1] = el; }}
                         onKeyUp={(event) => {
                           manejarEnter(event, 1);
                         }}
@@ -583,6 +590,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
+                        ref={(el) => { inputRefs.current[2] = el; }}
                         onKeyUp={(event) => {
                           manejarEnter(event, 2);
                         }}
@@ -627,6 +635,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               }
                             }
                           })}
+                          ref={(el) => { inputRefs.current[3] = el; }}
                           onKeyUp={(event) => {
                             manejarEnter(event, tiene2Imeis ? 3 : 99);
                           }}
@@ -669,6 +678,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
+                        ref={(el) => { inputRefs.current[tiene2Imeis ? 4 : 3] = el; }}
                         onKeyUp={(event) => {
                           manejarEnter(event, tiene2Imeis ? 4 : 3);
                         }}
@@ -709,6 +719,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
+                        ref={(el) => { inputRefs.current[tiene2Imeis ? 5 : 4] = el; }}
                         type="text"
                         className="inputsDatosZapling"
                         placeholder="Track ID"
@@ -756,6 +767,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
+                        ref={(el) => { inputRefs.current[tiene2Imeis ? 6 : 5] = el; }}
                         onKeyUp={(event) => {
                           manejarEnter(event, tiene2Imeis ? 6 : 5);
                         }}
@@ -800,6 +812,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               }
                             }
                           })}
+                          ref={(el) => { inputRefs.current[tiene2Imeis ? 7 : 6] = el; }}
                           onKeyUp={(event) => {
                             manejarEnter(event, tiene2Imeis ? 7 : 6);
                           }}
@@ -876,7 +889,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               </option>
                             ))}
                           </select>
-                          <ArrowDropDown className="absolute right-5 col-start-1" />
+                          <ArrowDropDown className="absolute right-5 col-start-1 pointer-events-none" />
                         </div>
                         <div>
                           <Tooltip title="Editar Supervisores">
@@ -931,7 +944,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               </option>
                             ))}
                           </select>
-                          <ArrowDropDown className="absolute right-5 col-start-1" />
+                          <ArrowDropDown className="absolute right-5 col-start-1 pointer-events-none" />
                         </div>
                       )}
                     />
@@ -971,7 +984,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               </option>
                             ))}
                           </select>
-                          <ArrowDropDown className="absolute right-5 col-start-1" />
+                          <ArrowDropDown className="absolute right-5 col-start-1 pointer-events-none" />
                         </div>
                       )}
                     />
@@ -1011,7 +1024,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               </option>
                             ))}
                           </select>
-                          <ArrowDropDown className="absolute right-5 col-start-1" />
+                          <ArrowDropDown className="absolute right-5 col-start-1 pointer-events-none" />
                         </div>
                       )}
                     />
@@ -1040,7 +1053,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                   <button
                     className={`${
                       isValid && verificarEstado() ? "bg-green-500" : "bg-gray-500"
-                    } w-40 px-4 py-2 rounded-md text-white font-semibold shadow-shadowBox`}
+                    } min-w-[10rem] px-4 py-2 rounded-md text-white font-semibold shadow-shadowBox whitespace-nowrap`}
                     type="submit"
                     disabled={!isValid}>
                     GUARDAR
@@ -1048,7 +1061,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
                 </div>
                 <div className="flex w-full gap-x-4 justify-center mt-3">
                   <button
-                    className="bg-red-500 w-40 px-4 py-2 rounded-md text-white font-semibold shadow-shadowBox cursor-pointer"
+                    className="bg-red-500 min-w-[10rem] px-4 py-2 rounded-md text-white font-semibold shadow-shadowBox cursor-pointer whitespace-nowrap"
                     type="button"
                     onClick={() => {
                       cerrarDatosZamplingAndRefres();
@@ -1062,12 +1075,21 @@ export const DatosZamplingModal: React.FC<prop> = ({
         </section>
       </section>
       {/*Modal para confirmar el cierre de si se va ah seguir ingresando muestras de una misma master box o se va a terminar el ingreso de muestras*/}
-      <ModalCompoment setOpenPopup={setOpenModalHallazgos} openPopup={openModalHallazgos} title="Lista Hallazgos">
+      <ModalCompoment
+        setOpenPopup={setOpenModalHallazgos}
+        openPopup={openModalHallazgos}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Hallazgos registrados durante la inspección"
+        title="Lista Hallazgos">
         <ModalHallazgos setOpenModal={setOpenModalHallazgos} openModal={openModalHallazgos}></ModalHallazgos>
       </ModalCompoment>
       <ModalCompoment
         setOpenPopup={setOpenModalSupervisores}
         openPopup={openModalSupervisores}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Supervisores disponibles para asignación"
         title="Lista Supervisores Dispinibles">
         <EditarSupervisores setOpenModal={setOpenModalSupervisores} openModal={openModalSupervisores} />
       </ModalCompoment>

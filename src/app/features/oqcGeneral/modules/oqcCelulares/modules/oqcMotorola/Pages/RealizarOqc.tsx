@@ -15,6 +15,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { IOQCPalet } from "app/models/IOQCPalet";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
 
 export const RealizarOqc = () => {
@@ -128,10 +129,10 @@ export const RealizarOqc = () => {
   }, []);
 
   useEffect(() => {
-    if (contextGlobal.modeloSeleccionadoId || contextGlobal.datosZampling || contextGlobal.eliminarMuestra) {
+    if (modeloSeleccionado?.id) {
       getPallets();
     }
-  }, [contextGlobal.modeloSeleccionadoId, contextGlobal.datosZampling, contextGlobal.eliminarMuestra]);
+  }, [modeloSeleccionado, contextGlobal.datosZampling, contextGlobal.eliminarMuestra]);
 
   useEffect(() => {
     if (contextGlobal.lineaSeleccionadaId || contextGlobal.plantaId) {
@@ -150,19 +151,16 @@ export const RealizarOqc = () => {
   });
 
   return (
-    //Este es el componente principal ya que desde aca podemos ver la informacion de cada uno de los palet, añadir muestras a un palet en concreto, examinar el estado de las muestras y poder cerrar un palet
-    <main className="w-screen h-screen">
-      <section className="w-[97%] m-auto mt-4 border border-gray-200 rounded-sm shadow-shadowBox bg-secondaryNew">
-        <header className="bg-newsan text-center">
+    <ContainerForPages activeEffectVisible optionsLayout="page">
+      <section className="w-full h-full bg-secondaryNew rounded-sm shadow-shadowBox flex flex-col">
+        <header className="bg-newsan text-center rounded-t-sm">
           <h2 className="text-white font-semibold text-xl py-2">Ingreso de Datos</h2>
         </header>
-        <div className="flex flex-col">
-          {/*Este componente es lo que muestra la planta, linea, modelo y el boton de nuevo registro*/}
-          <div className="flex flex-row mt-8">
+        <div className="flex flex-col flex-1 min-h-0 p-4">
+          <div className="flex flex-row flex-wrap gap-2 mt-2">
             <SupervisorPlantaProducto palletsCerrados={palletsCerrados} />
           </div>
-          {/*Este componente es lo que muestra la planta, linea, modelo y el boton de nuevo registro*/}
-          <div className="mt-2 p-4">
+          <div className="mt-2 overflow-x-auto">
             <TableComponent
               Dense={windowWidth <= 1520 ? true : false}
               IDcolumn="id"
@@ -289,6 +287,9 @@ export const RealizarOqc = () => {
       <ModalCompoment
         setOpenPopup={contextGlobal.setMasterBox}
         openPopup={contextGlobal.masterBox}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Creación de un nuevo palet para OQC"
         title="Inicio Nuevo Palet"
         onCloseDynamic>
         <NuevoRegistroDePalletModal
@@ -302,6 +303,9 @@ export const RealizarOqc = () => {
       <ModalCompoment
         setOpenPopup={contextGlobal.setContinuarPallet}
         openPopup={contextGlobal.continuarPallet}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Continuar con el muestreo de un palet existente"
         title="Continuar Palet"
         onCloseDynamic>
         <ContinuarPalletModal
@@ -314,9 +318,12 @@ export const RealizarOqc = () => {
 
       {/* Modal para examinar muestras */}
       <ModalCompoment
-        title="Examinar Muestras"
+        setOpenPopup={setOpenModalExaminarMuestras}
         openPopup={openModalExaminarMuestras}
-        setOpenPopup={setOpenModalExaminarMuestras}>
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Detalle de las muestras cargadas en el palet"
+        title="Examinar Muestras">
         <ExaminarMuestrasDelPalletModal
           refreshPallet={getPallets}
           openModal={openModalExaminarMuestras}
@@ -328,13 +335,16 @@ export const RealizarOqc = () => {
       {/* Modal para examinar cantidad cargadas segun las master box*/}
       {/* Y cerrar el pallet */}
       <ModalCompoment
-        title="Muestas En Pallet Sin Finalizar"
+        setOpenPopup={contextGlobal.setMuestrasPallet}
         openPopup={contextGlobal.muestrasPallet}
-        setOpenPopup={contextGlobal.setMuestrasPallet}>
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Gestión de muestras pendientes y cierre de palet"
+        title="Muestas En Pallet Sin Finalizar">
         <MuestrasPalletModal refreshPallet={getPallets} />
       </ModalCompoment>
       {/* Modal para examinar cantidad cargadas segun las master box*/}
       {/* Y cerrar el pallet */}
-    </main>
+    </ContainerForPages>
   );
 };

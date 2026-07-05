@@ -20,6 +20,7 @@ import { OQCPaletPrint } from "../../../global/modals/OQCPaletPrint";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";
 import { OQCPaletPrintSliceRequests, oqcPaletPrintSlice } from "app/features/oqcGeneral/slices/OQCPaletPrintSlice";
+import { limpiarPaletPrint } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 interface IOQCPaletPrintTable {
   closeModal: (state: boolean) => void;
 }
@@ -39,11 +40,7 @@ export const OQCPaletPrintTable = ({ closeModal }: IOQCPaletPrintTable): JSX.Ele
       if (await getConfirmation("Dar de baja OQC", "Esta seguro de dar de baja el resultado del oqc")) {
         dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
         const operator = unwrapResult(await dispatch(OperatorSliceRequests.getInfoByDni(GetInfoUser().dni | 0)));
-        const objectSubmit = { ...paletPrint, operatorCanceledId: operator.id, canceled: true };
-        delete objectSubmit.operator;
-        delete objectSubmit.oqcPalet;
-        delete objectSubmit.operatorCanceled;
-        delete objectSubmit.turno;
+        const objectSubmit = { ...limpiarPaletPrint(paletPrint), operatorCanceledId: operator.id, canceled: true } as IOQCPaletPrint;
         await dispatch(OQCPaletPrintSliceRequests.PutRequest(objectSubmit));
         await dispatch(OQCPaletPrintSliceRequests.getAllByPalet(objectSubmit.oqcPaletId));
         dispatch(LoadingUISlice.actions.LoadingUIClose());
@@ -82,8 +79,8 @@ export const OQCPaletPrintTable = ({ closeModal }: IOQCPaletPrintTable): JSX.Ele
   }, []);
 
   return (
-    <ContainerForPages optionsLayout="personalized" classNamePersonalized="w-[90vw]">
-      <ContainerForPages optionsLayout="Table">
+    <ContainerForPages activeEffectVisible optionsLayout="personalized" classNamePersonalized="w-[90vw]">
+      <ContainerForPages activeEffectVisible optionsLayout="Table">
         <TableComponent
           IDcolumn="id"
           Dense
@@ -171,6 +168,9 @@ export const OQCPaletPrintTable = ({ closeModal }: IOQCPaletPrintTable): JSX.Ele
         <ModalCompoment
           openPopup={openModalReimpresion}
           setOpenPopup={setOpenModalReimpresion}
+          showModalCenterPage
+          titleModalStyle="Audit"
+          subTitle="Reimpresión de ticket para reproceso"
           title="Imprimir Ticket Reproceso">
           <OQCPaletPrint
             ultimaMuestraOQC={ultimaMuestraOQC}

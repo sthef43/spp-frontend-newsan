@@ -10,7 +10,7 @@ import { TableComponent } from "../../../../../shared/components/Table/TableComp
 import { IAuditRegistry } from "app/models";
 import { unwrapResult } from "@reduxjs/toolkit";
 import moment from "moment";
-import { HistoricAuditPerformed } from "app/features/auditorias/modules/components/reporteAuditoria/HistoricAuditPerformed";
+import { HistoricAuditPerformed } from "app/features/auditorias";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { IconButton, Tooltip } from "@mui/material";
 import { ModalCompoment } from "app/shared/components/ModalComponent";

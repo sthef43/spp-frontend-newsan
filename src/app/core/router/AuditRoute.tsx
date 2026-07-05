@@ -8,7 +8,7 @@ import { AuditTableOfPerformed } from "app/features/audit/modules/reporteDeAudit
 import { AuditTodo } from "app/features/audit/modules/asignacionAuditorias/pages/AuditTodo";
 import { AuditTodoRegistry } from "app/features/audit/modules/realizarAuditoriasDelDia/pages/AuditTodoRegistry";
 import { AuditTrackerPage } from "app/features/audit/modules/seguimientoDeAuditorias/pages/AuditTrackerPage";
-import HistoricPerformedAudit from "app/features/auditorias/modules/pages/reporteAuditoria/HistoricPerformedAudit";
+import { HistoricPerformedAudit } from "app/features/auditorias";
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 export const AuditRoute = (props: any): JSX.Element => {

@@ -12,90 +12,187 @@
 
 - **React** v17.0.0 - Librería UI principal
 - **TypeScript** v4.1.3 - Tipado estático
-- **Redux Toolkit** - Gestión de estado global
+- **Redux Toolkit** v1.5.1 - Gestión de estado global
 - **React Router DOM** v5.2.0 - Enrutamiento
 - **Material-UI** v5.16.7 - Componentes UI
 - **Tailwind CSS** v3.0.9 - Framework de estilos utility-first
 - **Vite** v5.0.0 - Build tool y dev server
+- **Vitest** v4.0.18 - Framework de testing
 
 ### Características Adicionales
 
 - **Firebase** v12.4.0 - Autenticación y servicios
 - **SignalR** v9.0.6 - Comunicación en tiempo real
-- **Chart.js** v4.4.5 - Gráficos y visualizaciones
+- **Chart.js** v4.4.5 / **ApexCharts** v3.54.0 / **Recharts** v2.7.2 - Gráficos y visualizaciones
 - **Workbox** v7.4.0 - Service Worker y PWA
 - **React Hook Form** v7.52.2 - Gestión de formularios
 - **Axios** v0.21.1 - Cliente HTTP
-- **Moment.js** v2.29.1 - Manipulación de fechas
+- **Moment.js** v2.30.1 / **Day.js** v1.11.19 - Manipulación de fechas
 - **Lottie React** v2.4.1 - Animaciones
+- **Kendo React Excel Export** v4.13.0 - Exportación a Excel
+- **React PDF** v7.2.0 - Visualización y generación de PDFs
 
 ## 📁 Estructura del Proyecto
 
 ```
-ClientApp/
+spp-frontend-newsan/
 ├── src/
 │   ├── app/
-│   │   ├── Middleware/         # Redux store, slices y middlewares
-│   │   ├── models/             # Interfaces y tipos TypeScript
-│   │   ├── routers/            # Configuración de rutas y lazy loading
-│   │   ├── services/           # Servicios de API
-│   │   └── shared/             # Componentes, páginas y utilidades compartidas
-│   │       ├── components/     # Componentes reutilizables
-│   │       ├── Pages/          # Páginas de módulos específicos
-│   │       ├── helpers/        # Funciones auxiliares
-│   │       └── hooks/          # Custom React hooks
-│   ├── assets/                 # Recursos estáticos (imágenes, animations)
-│   ├── styles.css             # Estilos globales
-│   ├── index.tsx              # Punto de entrada
-│   └── service-worker.ts      # Service Worker para PWA
-├── public/                     # Archivos públicos estáticos
-├── vite.config.mjs            # Configuración de Vite
-├── tsconfig.json              # Configuración de TypeScript
-├── tailwind.config.js         # Configuración de Tailwind
-└── package.json               # Dependencias y scripts
+│   │   ├── Middleware/             # Redux store, reducers y helpers de middleware
+│   │   │   ├── reducers/           # Reducers globales
+│   │   │   └── HelperMidleware/    # Helpers del middleware
+│   │   ├── config/                 # Configuraciones globales (moment, etc.)
+│   │   ├── core/                   # Núcleo de la aplicación
+│   │   │   ├── router/             # Todos los routers por módulo (AppRouter, lazy loading)
+│   │   │   │   └── LazyLoadingRoutes/  # Componentes lazy de rutas
+│   │   │   └── store/              # Configuración del Redux store
+│   │   ├── features/               # Módulos funcionales de negocio
+│   │   │   ├── admin/
+│   │   │   ├── audit/
+│   │   │   ├── auditorias/         # Ejemplo de estructura de feature
+│   │   │   │   ├── composables/    # Lógica reutilizable del módulo
+│   │   │   │   ├── models/         # Interfaces y tipos del módulo
+│   │   │   │   ├── services/       # Servicios de API del módulo
+│   │   │   │   ├── slices/         # Redux slices del módulo
+│   │   │   │   └── modules/        # Sub-módulos visuales
+│   │   │   │       ├── components/ # Componentes del módulo
+│   │   │   │       ├── layouts/    # Layouts del módulo
+│   │   │   │       ├── modals/     # Modales del módulo
+│   │   │   │       └── pages/      # Páginas del módulo
+│   │   │   ├── baterias/
+│   │   │   ├── calidad/
+│   │   │   ├── camiones/
+│   │   │   ├── cli/
+│   │   │   ├── contenedor/
+│   │   │   ├── cuenta/
+│   │   │   ├── dobladora/
+│   │   │   ├── ebs/
+│   │   │   ├── etiquetas/
+│   │   │   ├── gerencia/
+│   │   │   ├── informes/
+│   │   │   ├── ingenieria/
+│   │   │   ├── manejoSistema/
+│   │   │   ├── oqcGeneral/
+│   │   │   ├── otrasPaginas/
+│   │   │   ├── planProdSpp/
+│   │   │   ├── produccion/
+│   │   │   ├── productionOrdersMes/
+│   │   │   ├── programacionIndustrial/
+│   │   │   ├── seguridadEHigiene/
+│   │   │   ├── sgi/
+│   │   │   ├── soldadura/
+│   │   │   ├── supermercado/
+│   │   │   ├── tableros/
+│   │   │   ├── tickets/
+│   │   │   └── trazabilidad/
+│   │   ├── firebase/               # Configuración de Firebase
+│   │   ├── models/                 # Interfaces y tipos TypeScript globales
+│   │   ├── services/               # Servicios de API globales (289+ servicios)
+│   │   └── shared/                 # Elementos transversales de la app
+│   │       ├── components/         # Componentes reutilizables
+│   │       │   ├── auth/           # Componentes de autenticación
+│   │       │   ├── dashboard/      # Componentes de dashboard
+│   │       │   ├── helpComponents/ # Componentes de ayuda
+│   │       │   ├── main/           # Layout y componentes principales
+│   │       │   ├── material-ui/    # Wrappers de Material-UI
+│   │       │   ├── notFoundComponent/
+│   │       │   ├── Table/          # Componente de tabla genérica
+│   │       │   └── ui/             # Componentes UI genéricos
+│   │       ├── helpers/            # Funciones auxiliares
+│   │       └── hooks/              # Custom React hooks
+│   │           └── hooksServices/  # Hooks que consumen servicios
+│   ├── assets/                     # Recursos estáticos (imágenes, animaciones)
+│   ├── axiosConfig.ts              # Configuración global de Axios
+│   ├── CalendarApp.tsx             # Componente raíz del calendario
+│   ├── index.tsx                   # Punto de entrada de la aplicación
+│   ├── media.css                   # Estilos de media queries
+│   ├── service-worker.ts           # Service Worker para PWA
+│   ├── serviceWorkerRegistration.ts# Registro del Service Worker
+│   └── styles.css                  # Estilos globales
+├── public/                         # Archivos públicos estáticos
+├── docs/                           # Documentación adicional
+├── index.html                      # HTML principal (raíz de Vite)
+├── vite.config.mjs                 # Configuración de Vite
+├── tsconfig.json                   # Configuración de TypeScript
+├── tsconfig.base.json              # Configuración base de TypeScript
+├── tailwind.config.js              # Configuración de Tailwind CSS
+├── postcss.config.js               # Configuración de PostCSS
+├── pnpm-workspace.yaml             # Configuración del workspace pnpm
+├── .eslintrc.json                  # Reglas de ESLint
+├── .prettierrc                     # Reglas de Prettier
+└── package.json                    # Dependencias y scripts
 ```
 
 ## 🏗️ Arquitectura
 
 ### Patrón de Diseño
 
-El proyecto sigue una arquitectura modular basada en:
+El proyecto sigue una arquitectura **Feature-Based Modular** con separación clara de responsabilidades:
 
+- **Feature Modules:** Cada módulo funcional (ej: `auditorias/`, `calidad/`) encapsula sus propios `models/`, `services/`, `slices/` y `modules/` (components, pages, modals, layouts)
+- **Core:** Contiene el `store` de Redux y todos los `routers` de la aplicación
+- **Shared:** Componentes, hooks y helpers reutilizables a través de toda la app
 - **Lazy Loading de Rutas:** Los módulos se cargan bajo demanda para optimizar el rendimiento
-- **Redux Toolkit:** Gestión centralizada del estado con slices
-- **Component-Based Architecture:** Componentes reutilizables y composables
-- **Service Layer:** Separación de lógica de negocio en servicios
-- **Custom Hooks:** Lógica reutilizable extraída en hooks personalizados
+- **Redux Toolkit:** Gestión centralizada del estado con slices por módulo
+- **Service Layer:** Separación de lógica de negocio en servicios (global en `app/services/` y por módulo en `features/<module>/services/`)
+
+### Estructura interna de un Feature
+
+Cada módulo dentro de `features/` sigue esta convención:
+
+```
+features/<modulo>/
+├── composables/    # Lógica reutilizable y composable del módulo
+├── models/         # Interfaces y tipos TypeScript locales al módulo
+├── services/       # Servicios de API propios del módulo
+├── slices/         # Redux slices (estado + reducers + thunks)
+└── modules/        # Parte visual del módulo
+    ├── components/ # Componentes React del módulo
+    ├── layouts/    # Layouts específicos del módulo
+    ├── modals/     # Modales del módulo
+    └── pages/      # Páginas/vistas del módulo
+```
 
 ### Módulos Principales
 
 El sistema está dividido en módulos funcionales:
 
-- **Administración** - Gestión de usuarios y configuración
-- **Auditoría** - Sistema de auditorías
-- **Baterías** - Control de baterías
-- **Calidad** - Control de calidad y defectos
-- **Contenedor** - Gestión de contenedores
-- **Dobladora** - Control de dobladora
-- **EBS/MES** - Enterprise Business System / Manufacturing Execution System
-- **Etiquetas** - Sistema de etiquetado
-- **Informes** - Generación de reportes
-- **Ingeniería** - Módulo de ingeniería
-- **Materiales** - Gestión de materiales
-- **OQC** - Outgoing Quality Control
-- **Producción** - Control de producción
-- **Seguridad e Higiene** - SGI (Sistema de Gestión Integral)
-- **Soldadura** - Control de soldadura
-- **Tableros** - Dashboards y visualizaciones
-- **Tickets** - Sistema de tickets
-- **Trazabilidad** - Trazabilidad de productos
+| Módulo | Carpeta | Descripción |
+|---|---|---|
+| **Administración** | `admin/` | Gestión de usuarios y configuración del sistema |
+| **Auditoría** | `audit/` / `auditorias/` | Sistema de auditorías multi-planta |
+| **Ayuda** | `ayuda/` | Módulo de ayuda y documentación interna |
+| **Baterías** | `baterias/` | Control y seguimiento de baterías |
+| **Calidad** | `calidad/` | Control de calidad y gestión de defectos |
+| **Camiones** | `camiones/` | Gestión de camiones y logística |
+| **CLI** | `cli/` | Interfaz de línea de comandos interna |
+| **Contenedor** | `contenedor/` | Gestión de contenedores y embarques |
+| **Cuenta** | `cuenta/` | Gestión de cuenta de usuario |
+| **Dobladora** | `dobladora/` | Control de herramentales y maquinaria dobladora |
+| **EBS/MES** | `ebs/` / `productionOrdersMes/` | Enterprise Business System / Manufacturing Execution System |
+| **Etiquetas** | `etiquetas/` | Sistema de etiquetado ZPL e impresiones |
+| **Gerencia** | `gerencia/` | Dashboards y vistas de gerencia |
+| **Informes** | `informes/` | Generación de reportes y exportaciones |
+| **Ingeniería** | `ingenieria/` | Módulo de ingeniería y pautas técnicas |
+| **Manejo del Sistema** | `manejoSistema/` | Administración y configuración avanzada |
+| **OQC** | `oqcGeneral/` | Outgoing Quality Control |
+| **Plan de Producción** | `planProdSpp/` | Planificación y cálculo de producción |
+| **Producción** | `produccion/` | Control y seguimiento de líneas de producción |
+| **Prog. Industrial** | `programacionIndustrial/` | Programación industrial y dotaciones |
+| **Seguridad e Higiene** | `seguridadEHigiene/` | Gestión de extintores, minutas y SGI |
+| **SGI** | `sgi/` | Sistema de Gestión Integral |
+| **Soldadura** | `soldadura/` | Control de procesos de soldadura |
+| **Supermercado** | `supermercado/` | Gestión del supermercado de materiales |
+| **Tableros** | `tableros/` | Dashboards y visualizaciones por línea |
+| **Tickets** | `tickets/` | Sistema de tickets multi-planta |
+| **Trazabilidad** | `trazabilidad/` | Trazabilidad completa de productos |
 
 ## ⚙️ Configuración y Setup
 
 ### Requisitos Previos
 
 - Node.js >= 14.x
-- Yarn >= 1.22.22 (recomendado) o npm
+- **pnpm** >= 8.x (gestor de paquetes del proyecto)
 - Git
 
 ### Instalación
@@ -105,19 +202,23 @@ El sistema está dividido en módulos funcionales:
 git clone <repository-url>
 
 # Navegar al directorio del proyecto
-cd Spp-Vite/SPP.Api/ClientApp
+cd spp-frontend-newsan
 
-# Instalar dependencias
-yarn install
-# o
-npm install
+# Instalar dependencias con pnpm
+pnpm install
 ```
+
+> ⚠️ **Importante:** Este proyecto usa **pnpm** como gestor de paquetes. Está configurado con `pnpm-workspace.yaml` y `.npmrc`. Se recomienda no usar npm o yarn para evitar conflictos de lockfile.
 
 ### Variables de Entorno
 
-Crear un archivo `.env` en la raíz del proyecto:
+El proyecto usa archivos de entorno separados por ambiente:
+
+- `.env.development` - Variables para desarrollo local
+- `.env.production` - Variables para producción
 
 ```env
+# Ejemplo de variables utilizadas
 VITE_API_URL=<URL_DE_TU_API>
 VITE_SPP_URL=<URL_SPP>
 ```
@@ -125,25 +226,40 @@ VITE_SPP_URL=<URL_SPP>
 ### Scripts Disponibles
 
 ```bash
-# Desarrollo - Inicia el servidor de desarrollo en puerto 3000
-yarn dev
+# Desarrollo - Inicia el servidor en puerto 3000
+pnpm dev
 # o
-npm run dev
+pnpm start
 
-# Build - Compila el proyecto para producción
-yarn build
-# o
-npm run build
+# Build - Compila el proyecto para producción (genera en /build)
+pnpm build
 
 # Preview - Vista previa del build de producción
-yarn preview
-# o
-npm preview
+pnpm preview
 
-# Lint - Ejecuta el linter
-yarn lint
-# o
-npm run lint
+# Lint - Ejecuta ESLint
+pnpm lint
+
+# Testing - Ejecuta tests con Vitest
+pnpm test
+
+# Testing con UI interactiva
+pnpm test:ui
+
+# Coverage de tests
+pnpm coverage
+```
+
+### Path Alias
+
+El proyecto tiene configurado el alias `app` en Vite que apunta a `./src/app`:
+
+```typescript
+// En lugar de:
+import { something } from "../../app/shared/hooks/useFetchApi";
+
+// Se puede usar:
+import { something } from "app/shared/hooks/useFetchApi";
 ```
 
 ## 🎨 Características del Sistema
@@ -152,44 +268,44 @@ npm run lint
 
 - Modo claro/oscuro con persistencia en `localStorage`
 - Estilos personalizados con Material-UI y Tailwind CSS
+- Hook `useDarkMode` para gestión de tema
 
 ### Responsive Design
 
 - Diseño adaptativo para móviles, tablets y desktop
-- Breakpoints personalizados con Tailwind
+- Breakpoints personalizados con Tailwind (configurados en `tailwind.config.js`)
+- Media queries centralizadas en `src/media.css`
 
 ### PWA (Progressive Web App)
 
-- Service Worker para funcionamiento offline
+- Service Worker implementado en `src/service-worker.ts`
+- Registro automático vía `src/serviceWorkerRegistration.ts`
 - Cacheo estratégico con Workbox
 - Instalable en dispositivos
 
-### Internacionalización
-
-- Soporte para múltiples idiomas (configurable)
-- Formateo de fechas con Moment.js
-
 ### Seguridad
 
-- Autenticación con Firebase
-- Tokens JWT para autorización
-- Encriptación con crypto-ts
+- Autenticación con Firebase (`src/app/firebase/config.js`)
+- Tokens JWT para autorización (`jwt-decode`)
+- Encriptación con `crypto-ts`
+- Rutas protegidas con `PrivateRoute.tsx` y `ProtectedRoute.tsx`
 
 ## 🔄 Flujo de Datos
 
 ### Redux Store
 
-El estado global se maneja con Redux Toolkit:
+El estado global se maneja con Redux Toolkit (`src/app/core/store/store.tsx`):
 
-- **Slices:** Cada módulo tiene su propio slice
+- **Slices:** Cada módulo tiene su propio slice en `features/<modulo>/slices/`
+- **Reducers globales:** En `app/Middleware/reducers/`
 - **Thunks:** Acciones asíncronas para llamadas API
-- **Middleware:** Redux Thunk para side effects
 
 ### API Integration
 
-- Cliente Axios configurado con interceptores
-- Manejo centralizado de errores
-- Tipos TypeScript para requests/responses
+- Cliente Axios configurado globalmente en `src/axiosConfig.ts` con interceptores
+- Servicios globales en `app/services/` (289+ servicios)
+- Servicios por módulo en `features/<modulo>/services/`
+- Tipos TypeScript para requests/responses en `models/`
 
 ## 📊 Diagramas de Flujo
 
@@ -274,7 +390,7 @@ export const MyComponent: React.FC<Props> = ({ title, onClose }) => {
 #### Redux Slices
 
 ```typescript
-// ✅ Estructura de slice
+// ✅ Estructura de slice (en features/<modulo>/slices/)
 import { createSlice } from "@reduxjs/toolkit";
 
 const mySlice = createSlice({
@@ -291,17 +407,17 @@ const mySlice = createSlice({
 
 ### Estilo de Código
 
-- **ESLint:** Configurado con reglas de Google y Prettier
-- **Prettier:** Formateo automático de código
+- **ESLint:** Configurado en `.eslintrc.json` con reglas de Google y Prettier
+- **Prettier:** Formateo automático en `.prettierrc`
 - **Tailwind:** Preferir utility classes sobre CSS personalizado
 - **CSS Modules:** Para estilos específicos de componentes cuando sea necesario
 
 ### Lazy Loading de Rutas
 
-Para optimizar el rendimiento, las rutas se cargan de forma perezosa:
+Para optimizar el rendimiento, las rutas se cargan de forma perezosa desde `src/app/core/router/LazyLoadingRoutes/`:
 
 ```typescript
-// ✅ Definir componentes lazy FUERA del componente
+// ✅ Definir componentes lazy FUERA del componente de rutas
 const MyLazyComponent = React.lazy(() =>
   import("./MyComponent").then(m => ({ default: m.MyComponent }))
 );
@@ -313,15 +429,28 @@ export const Routes = () => {
 };
 ```
 
-### Hooks Personalizados
+### Custom Hooks Disponibles
 
-El proyecto incluye varios hooks útiles:
+Los hooks se ubican en `src/app/shared/hooks/`:
 
-- `useTitleOfApp` - Cambiar título de la aplicación
-- `useNotificationUI` - Mostrar notificaciones
-- `useConfirmationDialog` - Diálogos de confirmación
-- `useFetchApiMultiResults` - Fetching de datos
-- `useDarkModeClass` - Gestión de tema
+| Hook | Descripción |
+|---|---|
+| `UseTitleOfApp` | Cambiar el título de la pestaña del navegador |
+| `useNotificationUI` | Mostrar notificaciones (SweetAlert2) |
+| `useConfirmationDialog` | Diálogos de confirmación |
+| `UseFetchApiMultiResults` | Fetching de datos con múltiples resultados |
+| `useFetchApi` | Fetching de datos simple |
+| `useFetchApiCallback` | Fetching de datos con callback |
+| `useDarkMode` | Gestión del tema claro/oscuro |
+| `usePrefersDarkMode` | Detección de preferencia del sistema |
+| `useInputValidations` | Validaciones de inputs de formularios |
+| `useFileChange` | Gestión de carga de archivos |
+| `useGeneratorCodesForLabels` | Generación de códigos para etiquetas |
+| `useUtilsHooks` | Utilidades varias |
+| `useSafeLocalStorage` | Acceso seguro al localStorage |
+| `useAwaitFetchApi` | Fetching con await |
+| `useObjectHook` | Gestión de objetos de estado |
+| `useCounterHook` | Contador de estado simple |
 
 ## 🐛 Debugging
 
@@ -331,40 +460,53 @@ Instalar la extensión de React Developer Tools para Chrome/Firefox
 
 ### Redux DevTools
 
-El proyecto está configurado con Redux DevTools para inspeccionar el estado
+El proyecto está configurado con Redux DevTools (`@redux-devtools/core`) para inspeccionar el estado global
 
 ### Source Maps
 
 Los source maps están habilitados en desarrollo para debugging
+
+### Proxy de Desarrollo
+
+El servidor de desarrollo tiene un proxy configurado en `vite.config.mjs`:
+
+```
+/robott → http://192.168.19.72
+```
 
 ## 📦 Build y Deployment
 
 ### Build de Producción
 
 ```bash
-yarn build
+pnpm build
 ```
 
-Los archivos se generan en la carpeta `build/`
+Los archivos se generan en la carpeta `build/` (configurado en `vite.config.mjs`).
 
 ### Optimizaciones
 
-- Code splitting automático por rutas
-- Minificación de JS/CSS
+- Code splitting automático por rutas (lazy loading)
+- Minificación de JS/CSS con Vite/esbuild
 - Tree shaking de código no utilizado
 - Compresión de assets
 
 ## 🧪 Testing
 
-El proyecto está configurado con:
-
-- **Jest** - Framework de testing
-- **React Testing Library** - Testing de componentes
+El proyecto usa **Vitest** (compatible con la API de Jest):
 
 ```bash
-# Ejecutar tests (cuando estén implementados)
-yarn test
+# Ejecutar tests
+pnpm test
+
+# Ejecutar con interfaz visual de Vitest
+pnpm test:ui
+
+# Generar reporte de coverage
+pnpm coverage
 ```
+
+Los tests se ubican en `src/app/shared/hooks/Test/` y junto a los archivos de cada módulo.
 
 ## 📝 Notas Importantes
 
@@ -377,11 +519,11 @@ El proyecto fue migrado de Create React App (Webpack) a Vite para mejor rendimie
 
 ### Service Worker
 
-El service worker está implementado para funcionalidad PWA. Se registra automáticamente en producción.
+El service worker (`src/service-worker.ts`) está implementado para funcionalidad PWA y se registra automáticamente en producción mediante `serviceWorkerRegistration.ts`.
 
-### Proxy de Desarrollo
+### Gestor de Paquetes
 
-El servidor de desarrollo tiene un proxy configurado para `/robott` que apunta a `http://192.168.19.72`
+El proyecto usa **pnpm** con `pnpm-workspace.yaml`. El lockfile es `pnpm-lock.yaml`. No mezclar con `npm` o `yarn`.
 
 ## 👥 Equipo de Desarrollo
 

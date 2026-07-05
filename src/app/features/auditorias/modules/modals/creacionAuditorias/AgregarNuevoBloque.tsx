@@ -23,7 +23,7 @@ import { AuditoriaGrupoItemsBloqSliceRequest } from "../../../slices/AuditoriaGr
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { TransitionGroup } from "react-transition-group";
 import { IAuditoriaGrupoItemsResult } from "../../../models/IAuditoriaGrupoItemsResult";
-import { statesForActiveFetchsSlice } from "../../../slices/StatesForActiveFetchsSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { AuditoriaItemsResultSliceRequest } from "../../../slices/AuditoriaItemsResultSlice";
 import { AuditoriaAsignadaSliceRequest } from "../../../slices/AuditoriaAsignadaSlice";
 import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
@@ -58,7 +58,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
     formState: { isValid, errors }
   } = useForm();
 
-  const edicionActiva = useAppSelector((state) => state.estadoDeRenderizados.edicionActiva);
+  const edicionActiva = useAppSelector((state) => state.auditoriasUI.edicionActiva);
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
 
   const buttonClases = MaterialButtons();
@@ -138,7 +138,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
     FetchPost(AuditoriaGrupoItemsBloqSliceRequest.multiPostRequest, listaBloques, false, (response) => {
       if (response) {
         openNotificationUI("Lista de valores creada exitosamente", "success");
-        dispatch(statesForActiveFetchsSlice.actions.setActiveBloqItems(true));
+        dispatch(auditoriasUISlice.actions.setActiveBloqItems(true));
         setOpenModal(false);
       }
     });

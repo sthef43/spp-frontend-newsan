@@ -879,7 +879,13 @@ export const OQCReprocesoSampling: React.FC<Props> = ({
         </div>
       </div>
       {/* Modal para marcar los hallazgos de la muestra */}
-      <ModalCompoment setOpenPopup={setOpenModalHallazgos} openPopup={openModalHallazgos} title="Carga Hallazgos">
+      <ModalCompoment
+        setOpenPopup={setOpenModalHallazgos}
+        openPopup={openModalHallazgos}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Registro de hallazgos para el equipo"
+        title="Carga Hallazgos">
         <OQCHallazgos
           setOpenModal={setOpenModalHallazgos}
           cancelarOpciones={cancelarHallazgos}
@@ -891,7 +897,13 @@ export const OQCReprocesoSampling: React.FC<Props> = ({
       {/* Modal para marcar los hallazgos de la muestra */}
 
       {/* Modal para imprimir ticket */}
-      <ModalCompoment openPopup={openModalTicket} setOpenPopup={setOpenModalTicket} title="Imprimir Ticket Reproceso">
+      <ModalCompoment
+        openPopup={openModalTicket}
+        setOpenPopup={setOpenModalTicket}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Impresión de ticket de reproceso"
+        title="Imprimir Ticket Reproceso">
         <OQCPaletPrint
           reproceso={true}
           closeModal={setOpenModalTicket}

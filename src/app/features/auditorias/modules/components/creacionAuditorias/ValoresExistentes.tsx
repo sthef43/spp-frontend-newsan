@@ -26,9 +26,8 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IAuditoriaValores } from "../../../models/IAuditoriaValores";
 import { AuditoriaValoresSliceRequest } from "../../../slices/AuditoriaValoresSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { estadoDeRenderizadosSlice } from "../../../slices/EstadoDeRenderizadosSlice";
+import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import FetchApi from "app/shared/helpers/FetchApi";
-import { statesListDataForAuditoriasSlice } from "../../../slices/ListaDatosParaAuditoriasSlice";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;
@@ -51,7 +50,7 @@ export const ValoresExistentes: React.FC<Props> = ({ setOpenModal }) => {
 
   const listadoValores = useAppSelector<IAuditoriaValores[]>((state) => state.auditoriaValores.dataAll);
 
-  const { tipoProductoId } = useAppSelector((state) => state.listaDatosParaAuditorias);
+  const { tipoProductoId } = useAppSelector((state) => state.auditoriasUI);
 
   const [checked, setChecked] = useState<number[]>([]);
 
@@ -88,8 +87,8 @@ export const ValoresExistentes: React.FC<Props> = ({ setOpenModal }) => {
         "Cancelar"
       )
     ) {
-      dispatch(statesListDataForAuditoriasSlice.actions.setListaValoresPreview(listadoResult));
-      dispatch(estadoDeRenderizadosSlice.actions.setMostrarListaValores(true));
+      dispatch(auditoriasUISlice.actions.setListaValoresPreview(listadoResult));
+      dispatch(auditoriasUISlice.actions.setMostrarListaValores(true));
       setOpenModal(false);
     }
   };

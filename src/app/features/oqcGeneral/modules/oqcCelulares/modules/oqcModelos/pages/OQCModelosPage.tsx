@@ -35,7 +35,7 @@ export const OQCModelosPage = (): JSX.Element => {
   }, [linea]);
 
   return (
-    <ContainerForPages optionsLayout="page">
+    <ContainerForPages activeEffectVisible optionsLayout="page">
       <SelectOFPlantAndProducts selectLineas activeLayoutGeneric />
       {linea && <OQCModeloTable />}
     </ContainerForPages>

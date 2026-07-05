@@ -248,13 +248,22 @@ export const ExaminarMuestrasDelPalletModal: React.FC<Props> = ({ refreshPallet,
       <ModalCompoment
         setOpenPopup={contextGlobal.setEliminarMuestra}
         openPopup={contextGlobal.eliminarMuestra}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Registro de motivo de eliminación de muestra"
         title="Agregar Causa De Eliminacion">
         <EliminarRegistroModal
           refresh={muestrasPallet}
           setOpenModalEliminar={contextGlobal.setEliminarMuestra}
           muestraEliminada={muestraEliminada}></EliminarRegistroModal>
       </ModalCompoment>
-      <ModalCompoment setOpenPopup={setOpenModalPrint} openPopup={openModalPrint} title="Imprimir Ticket">
+      <ModalCompoment
+        setOpenPopup={setOpenModalPrint}
+        openPopup={openModalPrint}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Impresión de ticket de muestreo"
+        title="Imprimir Ticket">
         <OQCPaletPrint
           reproceso={false}
           estadoReimpresion={false}

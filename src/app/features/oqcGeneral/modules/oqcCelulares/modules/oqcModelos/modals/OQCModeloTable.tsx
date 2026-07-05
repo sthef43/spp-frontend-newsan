@@ -68,7 +68,7 @@ export const OQCModeloTable = (): JSX.Element => {
   };
 
   return (
-    <ContainerForPages optionsLayout="Table">
+    <ContainerForPages activeEffectVisible optionsLayout="Table">
       <TableComponent
         IDcolumn="id"
         columns={[
@@ -145,7 +145,7 @@ export const OQCModeloTable = (): JSX.Element => {
         buscar
         dataInfo={modelos}
       />
-      <ModalCompoment openPopup={form} setOpenPopup={setForm} title="Agregar/editar un modelo">
+      <ModalCompoment titleModalStyle="Audit" showModalCenterPage onCloseDynamic openPopup={form} setOpenPopup={setForm} title="Agregar/editar un modelo" subTitle="Formulario de modelo OQC">
         <OQCModeloForm closeModal={setForm} />
       </ModalCompoment>
     </ContainerForPages>

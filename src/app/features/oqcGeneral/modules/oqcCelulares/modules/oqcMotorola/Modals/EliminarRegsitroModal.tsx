@@ -10,6 +10,7 @@ import { ContextApp } from "../../../Context/Context";
 import { IAppUser } from "app/models";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";
+import { limpiarOQCDesignadaResultado } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 
 interface Props {
   setOpenModalEliminar: (newValue: boolean) => void;
@@ -56,18 +57,13 @@ export const EliminarRegistroModal: React.FC<Props> = ({ setOpenModalEliminar, m
   };
 
   const generarMuestraEliminad = () => {
-    const objectSubmit: IOQCDesignadaResultado = {
-      ...muestraEliminada,
+    const objectSubmit: Partial<IOQCDesignadaResultado> = {
+      ...limpiarOQCDesignadaResultado(muestraEliminada),
       operatorCanceledId: infoUser.operatorId,
       canceled: true,
       canceledComentario: watchComentarioBaja,
       deleted: true
     };
-    delete objectSubmit.operator;
-    delete objectSubmit.oqcDesignada;
-    delete objectSubmit.oqcHallazgoResult;
-    delete objectSubmit.oqcPalet;
-    delete objectSubmit.operatorCanceled;
     return objectSubmit;
   };
 

@@ -2,7 +2,7 @@ import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState, useEffect } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { FormControl, FormHelperText, TextField } from "@mui/material";
+import { FormControl, FormHelperText, TextField, Grow } from "@mui/material";
 import { FormButtons } from "app/shared/helpers/FormButtons";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";
 import { IModelo } from "app/models/IModelo";
@@ -101,7 +101,7 @@ export const MantenimientoLineaComponent = ({ open, handleClose, familiaId, refr
 
   return (
     <div className="p-4 m-2 rounded-lg shadow-elevation-2 bg-secondaryNew">
-      {showModal && (
+      <Grow in={showModal} timeout={500}>
         <main className="w-full border border-gray-300 rounded-md shadow-lg">
           <header className="relative text-center border-b border-[#a9a9a9] my-4">
             <span
@@ -191,7 +191,7 @@ export const MantenimientoLineaComponent = ({ open, handleClose, familiaId, refr
             <FormButtons onCancel={() => handleClose(false)} />
           </form>
         </main>
-      )}
+      </Grow>
     </div>
   );
 };
