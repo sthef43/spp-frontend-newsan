@@ -10,7 +10,7 @@ import {
 import { unwrapResult } from "@reduxjs/toolkit";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import React, { useEffect, useState } from "react";

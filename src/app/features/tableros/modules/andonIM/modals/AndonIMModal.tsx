@@ -14,7 +14,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { LineaProduccionSliceRequests, lineaProduccionSlice } from "app/Middleware/reducers/lineaProducionSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";

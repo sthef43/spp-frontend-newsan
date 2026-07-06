@@ -1,4 +1,4 @@
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { AgregarFamiliaForm } from "./AgregarFamiliaForm";

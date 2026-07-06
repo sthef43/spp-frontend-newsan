@@ -6,7 +6,7 @@ import { HoraExtraSliceRequests } from "app/Middleware/reducers/HoraExtraSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { HorasExtrasForm } from "app/features/produccion/modules/horasExtras/modals/HorasExtrasForm";
 import { HorasExtrasProduccionTable } from "app/features/produccion/modules/horasExtras/components/HorasExtrasProduccionTable";

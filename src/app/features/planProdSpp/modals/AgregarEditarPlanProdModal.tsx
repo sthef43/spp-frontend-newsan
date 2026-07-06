@@ -4,7 +4,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { useForm } from "react-hook-form";
 import { AgregarNuevoModeloModal } from "./AgregarNuevoModeloModal";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
 import { LayoutCrearLote } from "../Layouts/LayoutCrearLote";
 import { Check } from "@mui/icons-material";

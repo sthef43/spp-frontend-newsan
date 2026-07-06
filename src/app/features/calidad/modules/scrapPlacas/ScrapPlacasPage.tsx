@@ -20,7 +20,7 @@ import OutlinedInput from "@mui/material/OutlinedInput";
 import { IScrapPlacas } from "app/services/scrapPlacas.service";
 import { SemielaboradoIASliceRequest } from "app/Middleware/reducers/semielaboradoIaSlice";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { Controller, useForm } from "react-hook-form";
 import { IPlanProd } from "app/models";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

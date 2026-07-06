@@ -12,7 +12,7 @@ import { IEtiquetasImagen } from "app/models/IEtiquetasImagen";
 import { ActualizarImagenModal } from "app/features/calidad/modules/cargaImagenesEtiquetas/Components/ActualizarImagenModal";
 import { AgregarImagenModal } from "app/features/calidad/modules/cargaImagenesEtiquetas/Components/AgregarImagenModal";
 import { VerImagenCargadaModal } from "app/features/calidad/modules/cargaImagenesEtiquetas/Components/VerImagenCargadaModal";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { SelectLineaAndPlant } from "app/shared/helpers/SelectLineaAndPlant";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

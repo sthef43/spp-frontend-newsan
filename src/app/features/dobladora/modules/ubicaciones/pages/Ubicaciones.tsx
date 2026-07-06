@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { DobHUbicacionSliceRequests } from "app/Middleware/reducers/DobHUbicacionSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDobHUbicacion } from "app/models/IDobHUbicacion";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { UbicacionesForm } from "app/features/dobladora/modules/ubicaciones/modals/UbicacionesForm";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

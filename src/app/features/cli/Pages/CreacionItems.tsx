@@ -1,7 +1,7 @@
 import FetchApi from "app/shared/helpers/FetchApi";
 import React, { useEffect, useState } from "react";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { AgregarItems } from "../Modals/CrearNuevosItemsModals/AgregarItems";
 import { useAppDispatch } from "app/core/store/store";

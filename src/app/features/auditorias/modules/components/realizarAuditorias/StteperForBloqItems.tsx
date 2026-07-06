@@ -24,7 +24,7 @@ import { IAuditoriaGrupoItemsHistorico } from "../../../models/IAuditoriaGrupoIt
 import { useHistory } from "react-router-dom";
 import { useFileChange } from "app/shared/hooks/useFileChange";
 import { ButtonForFiles } from "app/shared/helpers/ButtonForFiles";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ExaminarImagenGenericModal } from "app/shared/helpers/ModalsGenerics/ExaminarImagenGenericModal";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";

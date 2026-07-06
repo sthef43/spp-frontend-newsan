@@ -1,5 +1,5 @@
 import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
-import { PaniolPISliceRequests } from "app/Middleware/reducers/PaniolPISlice";
+import { PaniolPISliceRequests } from "app/features/programacionIndustrial/slices/PaniolPISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";

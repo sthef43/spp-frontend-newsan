@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { EtiquetasIndicadoresModeloSliceRequests } from "app/Middleware/reducers/EtiquetasIndicadoresModeloSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IEtiquetasIndicadoresModelo } from "app/models/IEtiquetasIndicadoresModelo";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

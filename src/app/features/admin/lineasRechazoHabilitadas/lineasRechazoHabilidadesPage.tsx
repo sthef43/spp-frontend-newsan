@@ -3,7 +3,7 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { IconButton, Tooltip } from "@mui/material";
 import { LineasRechazoHabilitadasSliceRequest } from "app/Middleware/reducers/LineasRechazoHabilitadasSlice";
 import { ILineasRechazoHabilitadas } from "app/models/ILineasRechazoHablitadas";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

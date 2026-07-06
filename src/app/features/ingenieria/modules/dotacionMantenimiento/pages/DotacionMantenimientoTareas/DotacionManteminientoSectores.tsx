@@ -1,11 +1,11 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Button, IconButton, Tooltip } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotacionSliceRequests } from "app/Middleware/reducers/DotacionSlice";
+import { DotacionSliceRequests } from "app/features/ingenieria/slices/DotacionSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

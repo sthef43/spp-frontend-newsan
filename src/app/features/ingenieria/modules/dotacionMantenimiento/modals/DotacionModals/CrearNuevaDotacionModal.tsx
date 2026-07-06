@@ -2,8 +2,8 @@
 import { Button } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { PlantSliceRequests } from "app/Middleware/reducers";
-import { DotacionModeloSliceRequests } from "app/Middleware/reducers/DotacionModeloSlice";
-import { DotacionSliceRequests } from "app/Middleware/reducers/DotacionSlice";
+import { DotacionModeloSliceRequests } from "app/features/ingenieria/slices/DotacionModeloSlice";
+import { DotacionSliceRequests } from "app/features/ingenieria/slices/DotacionSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IPlant } from "app/models";

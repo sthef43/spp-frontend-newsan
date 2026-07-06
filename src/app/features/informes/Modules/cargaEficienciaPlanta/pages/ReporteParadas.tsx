@@ -6,7 +6,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useForm } from "react-hook-form";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { ParadaSliceRequests } from "app/Middleware/reducers/ParadaSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ParadasForm } from "app/features/informes/Modules/cargaEficienciaPlanta/modals/ParadasForm";
 import moment from "moment";
 import { Button, IconButton, TextField, Tooltip } from "@mui/material";

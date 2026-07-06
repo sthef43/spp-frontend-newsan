@@ -11,7 +11,7 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { lineaProduccionFamiliaSlice } from "../../../../../Middleware/reducers/LineaProduccionFamiliaSlice";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IDefectoImagen } from "app/models/IDefectoImagen";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { DefectoImagenTable } from "../Components/DefectoImagenTable";

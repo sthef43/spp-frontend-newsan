@@ -13,7 +13,7 @@ import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResult
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { AsignarBateasModal } from "../modals/GenerarLpnPadre/AsignarBateasModal";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ImprimirLpnPadreModal } from "../modals/GenerarLpnPadre/ImprimirLpnPadreModal";
 import { CLIContenedorItemsRecepcionBloqSliceRequest } from "app/features/cli/Middlewares/CLIContenedorItemsRecepcionBloqSlice";
 import { ICLIContendorItems } from "app/features/cli/Models/ICLIContenedorItems";

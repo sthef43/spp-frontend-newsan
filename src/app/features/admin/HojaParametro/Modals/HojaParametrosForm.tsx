@@ -29,7 +29,7 @@ import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { IAppUser } from "app/models";
 import { ProductoSliceRequests } from "app/Middleware/reducers";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface initialState {
   productoId?: number | null;

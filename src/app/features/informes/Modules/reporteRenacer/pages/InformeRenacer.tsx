@@ -8,7 +8,7 @@ import { ReporteRenacer } from "app/models/Stored Procdure/ReporteRenacer";
 import { ReporteRenacerLpn } from "app/models/Stored Procdure/ReporteRenacerLpn";
 import { ExportExcel } from "app/shared/components/helpComponents/ExportExcel";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

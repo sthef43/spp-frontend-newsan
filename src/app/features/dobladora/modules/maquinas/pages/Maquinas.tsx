@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDobHMaquina } from "app/models/IDobHMaquina";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaquinasForm } from "app/features/dobladora/modules/maquinas/modals/MaquinasForm";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";

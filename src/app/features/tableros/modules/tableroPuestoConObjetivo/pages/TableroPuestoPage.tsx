@@ -3,7 +3,7 @@ import { BinariosIdentificadoresSlice } from "app/Middleware/reducers/BinariosId
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { SelectTableroPuesto } from "app/features/tableros/components/SelectTableroPuesto";
 import { TableroPuestoBody } from "app/features/tableros/modules/tableroPuestoConObjetivo/components/TableroPuestoBody";
 import { TableroPuestoHead } from "app/features/tableros/modules/tableroPuestoConObjetivo/components/TableroPuestoHead";

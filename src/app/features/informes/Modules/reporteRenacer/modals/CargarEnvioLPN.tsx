@@ -16,7 +16,7 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { Sliders } from "app/shared/components/Sliders";
+import { Sliders } from "app/shared/components/ui/Sliders";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import React, { useEffect, useRef, useState } from "react";
 import { Controller, useForm } from "react-hook-form";

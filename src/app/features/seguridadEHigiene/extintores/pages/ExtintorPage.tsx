@@ -14,7 +14,7 @@ import { IExtintorAgente } from "app/models/IExtintorAgente";
 import { IExtintorProceso } from "app/models/IExtintorProceso";
 import { IExtintorSitio } from "app/models/IExtintorSitio";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ExtintorForm } from "app/features/seguridadEHigiene/extintores/modals/ExtintorForm";
 import { SPAForm } from "app/features/seguridadEHigiene/extintores/modals/SPAForm";
 import { TableComponent } from "app/shared/components/Table/TableComponent";

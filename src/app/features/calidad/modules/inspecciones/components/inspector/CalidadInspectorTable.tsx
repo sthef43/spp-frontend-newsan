@@ -3,7 +3,7 @@ import { CalidadInspectorSliceRequest } from "app/Middleware/reducers/CalidadIns
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ICalidadInspector } from "app/models/ICalidadInspector";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";

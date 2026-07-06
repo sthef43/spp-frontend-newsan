@@ -4,7 +4,7 @@ import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Text
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { PuestoSliceRequests } from "app/Middleware/reducers/PuestoSlice";
+import { PuestoSliceRequests } from "app/features/trazabilidad/slices/PuestoSlice";
 import { IAppUser, IPlant, IPuesto } from "app/models";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import useFetchApi from "app/shared/hooks/useFetchApi";

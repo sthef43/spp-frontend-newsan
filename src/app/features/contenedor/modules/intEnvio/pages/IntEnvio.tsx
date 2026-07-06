@@ -12,7 +12,7 @@ import { IIntRemito } from "app/models/IIntRemito";
 import { IIntRemitoPadre } from "app/models/IIntRemitoPadre";
 import { IntEnviarMaterialForm } from "app/features/contenedor/modules/intEnvio/modals/IntEnviarMaterialForm";
 import { IntImprimirRemitoPadre } from "app/features/contenedor/components/IntImprimirRemitoPadre";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 // import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

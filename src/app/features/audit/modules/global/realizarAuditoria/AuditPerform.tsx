@@ -38,7 +38,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { AudithAutocomplete } from "app/features/audit/modules/global/components/AudithAutocomplete";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
-import { TodoSliceRequests } from "app/Middleware/reducers/TodoSlice";
+import { TodoSliceRequests } from "app/features/audit/slices/TodoSlice";
 import { AuditPerformPrint } from "../components/AuditPerformPrint";
 import { UploadMultipleImage } from "app/shared/helpers/UploadMultipleImage";
 import { IAuditHistorico } from "app/models/IAuditHistorico";

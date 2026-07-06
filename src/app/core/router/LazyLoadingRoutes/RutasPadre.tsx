@@ -10,11 +10,11 @@ interface Props {
 // para evitar que se recreen en cada render (lo cual causaba que se recargara MainView al cambiar el tema)
 
 const MainViewComponent = React.lazy(() =>
-  import("../../../shared/components/main/MainView.component").then((m) => ({ default: m.MainViewComponent }))
+  import("../../../core/components/main/MainView.component").then((m) => ({ default: m.MainViewComponent }))
 );
 
 const AccesoDenegado = React.lazy(() =>
-  import("../../../shared/components/AccesoDenegado").then((m) => ({ default: m.AccesoDenegado }))
+  import("../../../shared/components/guards/AccesoDenegado").then((m) => ({ default: m.AccesoDenegado }))
 );
 
 const TablerosRouter = React.lazy(() => import("../TablerosRouter").then((m) => ({ default: m.TablerosRouter })));

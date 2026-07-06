@@ -1,7 +1,7 @@
 import React from "react";
 import { CheckCircle, Info } from "@mui/icons-material";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { PedidoMaterialCalidadDialog } from "app/features/gerencia/pedidoMateriales/modals/PedidoMaterialCalidadDialog";
 import { IPedidoMaterialesCalidad } from "app/models/IPedidoMaterialesCalidad";
 import { useAppDispatch } from "app/core/store/store";

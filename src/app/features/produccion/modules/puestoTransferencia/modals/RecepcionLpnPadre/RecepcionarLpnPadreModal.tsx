@@ -7,7 +7,7 @@ import {
   CLIContenedorItemsRecepcionBloqSliceRequest
 } from "app/features/cli/Middlewares/CLIContenedorItemsRecepcionBloqSlice";
 import { Box, Button, Step, StepLabel, Stepper } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { IAppUser } from "app/models";

@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { Control, FieldErrors, FieldValues, UseFormReset, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { AddCircleRounded, InfoRounded } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarTipoAuditoria } from "../../modals/creacionAuditorias/AgregarTipoAuditoria";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";

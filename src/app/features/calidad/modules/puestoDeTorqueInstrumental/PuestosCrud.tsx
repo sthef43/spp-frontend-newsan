@@ -5,7 +5,7 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useAppDispatch } from "app/core/store/store";
 import { IInstpuesto } from "app/models";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { PuestoDialog } from "./PuestoDialog";

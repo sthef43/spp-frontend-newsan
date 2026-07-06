@@ -20,7 +20,7 @@ import {
 import Tooltip from "@mui/material/Tooltip";
 import { Settings, SubdirectoryArrowRight } from "@mui/icons-material";
 import { ILineaPuesto } from "app/models/ILineaPuesto";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { PuestoTableroCRUDPage } from "./PuestoTableroCRUDPage";
 import { LineaPuestoTableroSlice } from "app/Middleware/reducers/LineaPuestoTableroSlice";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";

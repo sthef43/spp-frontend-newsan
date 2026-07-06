@@ -14,7 +14,7 @@ import moment from "moment";
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { IAppUser } from "app/models";
 import { AppUserSliceRequests } from "app/Middleware/reducers/AppUserSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CargaEtiquetasFijaForm } from "app/features/etiquetas/impresionEtiquetas/modals/CargaEtiquetasFijaForm";
 import { ZPL_ImpresionesEtiquetaFijaSliceRequests } from "app/Middleware/reducers/ZPL_ImpresionesEtiquetaFijaSlice";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";

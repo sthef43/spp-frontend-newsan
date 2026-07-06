@@ -5,7 +5,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { RoutesAyudaSliceRequest } from "app/features/ayuda/middleware/RoutesAyudaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IRoutesAyuda } from "app/features/ayuda/models/IRoutesAyuda";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

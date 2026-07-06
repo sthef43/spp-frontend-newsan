@@ -1,0 +1,53 @@
+# Services moved to features/
+
+| Service | Destination |
+|---|---|
+| bloq.service | `features/audit/services/bloq.service.tsx` |
+| line.service | `features/audit/services/line.service.tsx` |
+| lista.service | `features/audit/services/lista.service.tsx` |
+| todo.service | `features/audit/services/todo.service.tsx` |
+| dotacionModelo.service | `features/ingenieria/services/dotacionModelo.service.tsx` |
+| dotacion.service | `features/ingenieria/services/dotacion.service.tsx` |
+| dotaFamilia.service | `features/ingenieria/services/dotaFamilia.service.tsx` |
+| dotaHistorico.service | `features/ingenieria/services/dotaHistorico.service.tsx` |
+| dotaPuesto.service | `features/ingenieria/services/dotaPuesto.service.tsx` |
+| dotaSectorPuesto.service | `features/ingenieria/services/dotaSectorPuesto.service.tsx` |
+| dotaSector.service | `features/ingenieria/services/dotaSector.service.tsx` |
+| informesPI.service | `features/programacionIndustrial/services/informesPI.service.tsx` |
+| paniolPI.service | `features/programacionIndustrial/services/paniolPI.service.tsx` |
+| sector.service | `features/programacionIndustrial/services/sector.service.tsx` |
+| producto.service | `features/trazabilidad/services/producto.service.tsx` |
+| puesto.service | `features/trazabilidad/services/puesto.service.tsx` |
+| tipoMaterial.service | `features/trazabilidad/services/tipoMaterial.service.tsx` |
+| trazaProductoPuesto.service | `features/trazabilidad/services/trazaProductoPuesto.service.tsx` |
+| rechazoImagen.service | `features/admin/services/rechazoImagen.service.tsx` |
+| whatsappMsg.service | `features/admin/services/whatsappMsg.service.tsx` |
+| whatsappMsgAppUser.service | `features/admin/services/whatsappMsgAppUser.service.tsx` |
+| whatsappMsgOpcionAsignacion.service | `features/admin/services/whatsappMsgOpcionAsignacion.service.tsx` |
+| whatsappMsgTiempo.service | `features/admin/services/whatsappMsgTiempo.service.tsx` |
+| registry.service | `features/auditorias/services/registry.service.tsx` |
+| audit.service | `features/audit/services/audit.service.tsx` |
+| auditBloq.service | `features/audit/services/auditBloq.service.tsx` |
+| auditComentario.service | `features/audit/services/auditComentario.service.tsx` |
+| auditCriterio.service | `features/audit/services/auditCriterio.service.tsx` |
+| auditDispositivo.service | `features/audit/services/auditDispositivo.service.tsx` |
+| auditHistorico.service | `features/audit/services/auditHistorico.service.tsx` |
+| auditImagenesHistorico.service | `features/audit/services/auditImagenesHistorico.service.tsx` |
+| auditMail.service | `features/audit/services/auditMail.service.tsx` |
+| auditPagedPaginator.service | `features/audit/services/auditPagedPaginator.service.tsx` |
+| auditRegistry.service | `features/audit/services/auditRegistry.service.tsx` |
+| auditRegistryImage.service | `features/audit/services/auditRegistryImage.service.tsx` |
+| auditRegistryResult.service | `features/audit/services/auditRegistryResult.service.tsx` |
+| auditTable.service | `features/audit/services/auditTable.service.tsx` |
+| auditTracking.service | `features/audit/services/auditTracking.service.tsx` |
+| auditType.service | `features/audit/services/auditType.service.tsx` |
+| auditValoresResult.service | `features/audit/services/auditValoresResult.service.tsx` |
+| valorAuditType.service | `features/audit/services/valorAuditType.service.tsx` |
+| rechazoMultiple.service | `features/calidad/services/rechazoMultiple.service.tsx` |
+| reporteCalidad.service | `features/calidad/services/reporteCalidad.service.tsx` |
+| trazaUnit2.service | `features/calidad/services/trazaUnit2.service.tsx` |
+| verificacionDiaria.service | `features/calidad/services/verificacionDiaria.service.tsx` |
+| whatsappMsgTiempoPlant | `features/admin/services/whatsappMsgTiempoPlant.service.tsx` |
+| Dashboard.Service | `features/gerencia/services/Dashboard.Service.tsx` |
+
+Remaining services (213 files) stay here until migrated to their respective features.

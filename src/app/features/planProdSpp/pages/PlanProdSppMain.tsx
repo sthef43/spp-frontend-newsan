@@ -12,7 +12,7 @@ import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button, TextField } from "@mui/material";
 import { SelectLineaAndPlant } from "app/shared/helpers/SelectLineaAndPlant";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarEditarPlanProdModal } from "../modals/AgregarEditarPlanProdModal";
 import { lineaProduccionSlice, LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { ILineaProduccion } from "app/models/ILineaProduccion";

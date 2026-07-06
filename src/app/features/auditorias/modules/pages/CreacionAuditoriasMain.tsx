@@ -19,7 +19,7 @@ import { IAuditoria } from "../../models/IAuditoria";
 import { auditoriaAsignadaSlice } from "../../slices/AuditoriaAsignadaSlice";
 import { auditoriasUISlice } from "../../slices/auditoriasUISlice";
 import { useGetAllAuditsFatherByRolAndPlantId } from "../../composables/useAuditoriasApi";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ExaminarBloquesAuditoria } from "../modals/creacionAuditorias/ExaminarBloquesAuditoria";
 import { ExaminarValoresAudiutoria } from "../modals/creacionAuditorias/ExaminarValoresAuditoria";
 import { useGetAllListValuesByAuditIdExcute } from "../../composables/useAuditoriaListaValoresResultApi";

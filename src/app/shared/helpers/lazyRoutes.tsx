@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { Suspense, ComponentType, lazy } from "react";
 import { Route } from "react-router-dom";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 

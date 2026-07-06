@@ -1,7 +1,7 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { Button, IconButton, Tooltip } from "@mui/material";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";

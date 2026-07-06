@@ -9,7 +9,7 @@ import FetchApi from "app/shared/helpers/FetchApi";
 import { IBateasDTO } from "../../models/IBateasDTO";
 import { IconButton, Tooltip } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { PlacasBateasModal } from "../GenerarLpnPadre/PlacasBateasModal";
 
 interface Props {

@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Edit, Delete } from "@mui/icons-material";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { PuestoSliceRequests } from "app/Middleware/reducers/PuestoSlice";
+import { PuestoSliceRequests } from "app/features/trazabilidad/slices/PuestoSlice";
 
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { IAppUser } from "app/models/IAppUser";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TrazabilidadPuestoForm } from "app/features/trazabilidad/modules/puestosLinea/modal/TrazabilidadPuestoForm";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

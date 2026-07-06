@@ -8,7 +8,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import Switch from "@mui/material/Switch";
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, Typography } from "@mui/material";
 import { ILinea, IPlant } from "app/models";
-import { WhatsappMsgSliceRequests } from "app/Middleware/reducers/WhatsappMsgSlice";
+import { WhatsappMsgSliceRequests } from "app/features/admin/slices/WhatsappMsgSlice";
 import { IWhatsappMsg } from "app/models/IWhatsappMsg";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { unwrapResult } from "@reduxjs/toolkit";

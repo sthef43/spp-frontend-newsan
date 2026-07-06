@@ -24,7 +24,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { TicketEstadosSliceRequets, ticketsEstadoSlice } from "../reducers/TicketsEstado.service";
 import { ITicketsColaboradoresBloque } from "../models/ITicketsColaboradoresBloque";
 import { TicketsColaboradoresBloqueSliceRequest } from "../reducers/TicketsColaboradoresBloqueSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarColaboradoModal } from "../modals/DetallesTicketModal/AgregarColaboradorModal";
 import { IAppUser } from "app/models";
 import { TicketsSliceRequest } from "../reducers/TicketsSlice";

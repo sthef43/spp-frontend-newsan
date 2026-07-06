@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { ControlRfidPage } from "app/features/etiquetas/controlImpresionRfid/ControlRfidPage";
 import { ControlEtiquetas } from "app/features/etiquetas/impresionEtiquetas/modules/ControlEtiquetas";
 import { CreacionSerieLg } from "app/features/etiquetas/creacionSerieLg/pages/CreacionSerieLg";

@@ -6,7 +6,7 @@ import React from "react";
 import { useAppDispatch } from "app/core/store/store";
 import { IControlLote } from "app/models/IControlLote";
 import moment from "moment";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { NoConformesDialog } from "app/features/calidad/modules/noConformes/Modals/NoConformesDialog";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { unwrapResult } from "@reduxjs/toolkit";

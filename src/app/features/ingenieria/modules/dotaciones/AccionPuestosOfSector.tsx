@@ -1,5 +1,5 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotaPuestoSliceRequests } from "app/Middleware/reducers/DotaPuestoSlice";
+import { DotaPuestoSliceRequests } from "app/features/ingenieria/slices/DotaPuestoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDotaSector } from "app/models/IDotaSector";
 import { TableComponent } from "app/shared/components/Table/TableComponent";

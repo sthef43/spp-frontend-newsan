@@ -4,7 +4,7 @@ import { Button, FormControl, InputLabel, FormHelperText, Select, MenuItem } fro
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { TrazaProductoPuestoSliceRequests } from "app/Middleware/reducers/TrazaProductoPuestoSlice";
+import { TrazaProductoPuestoSliceRequests } from "app/features/trazabilidad/slices/TrazaProductoPuestoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { LineaPuestoSliceRequest } from "app/Middleware/reducers/LineaPuestoSlice";
 

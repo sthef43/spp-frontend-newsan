@@ -23,7 +23,7 @@ import { ILinea, IPlanProd, IModelos, IInicio } from "app/models";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { ReportePorDiaTable } from "app/features/informes/components/ReportePorDiaTable";
 import { ImpresionPorModelo } from "app/features/informes/Modules/reporteProduccionPorModelo/components/ImpresionPorModelo";
-// import { ModalCompoment } from "app/shared/components/ModalComponent";
+// import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useReactToPrint } from "react-to-print";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";

@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button, IconButton, Tooltip } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarUbicacionesModal } from "../Modals/AsignacionUbicacionesModals/AgregarUbicacionesModal";
 import { useAppDispatch } from "app/core/store/store";
 import { Delete, Visibility } from "@mui/icons-material";

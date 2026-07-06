@@ -6,7 +6,7 @@ import { ICLIUbicaciones } from "app/features/cli/Models/ICLIUbicaciones";
 import { useAppDispatch } from "app/core/store/store";
 import { CLIStock_PlantaForm } from "app/features/contenedor/modules/cliUbicaciones/modals/CLIStock_PlantaForm";
 import { CLIUbicacionesForm } from "app/features/contenedor/modules/cliUbicaciones/modals/CLIUbicacionesForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

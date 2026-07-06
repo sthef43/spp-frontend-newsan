@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "app/core/store/store";
 
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";

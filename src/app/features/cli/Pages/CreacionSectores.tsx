@@ -4,7 +4,7 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import React, { useEffect, useState } from "react";
 import { EditSectores } from "../Modals/CreacionSectoresModal/EditSectores";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarSector } from "../Modals/CreacionSectoresModal/AgregarSector";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { ICLISectores } from "../Models/ICLISectores";

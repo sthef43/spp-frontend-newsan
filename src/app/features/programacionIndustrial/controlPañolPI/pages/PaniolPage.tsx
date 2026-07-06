@@ -1,6 +1,6 @@
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from "@mui/material";
 import { PlantSliceRequests } from "app/Middleware/reducers";
-import { PaniolPISliceRequests } from "app/Middleware/reducers/PaniolPISlice";
+import { PaniolPISliceRequests } from "app/features/programacionIndustrial/slices/PaniolPISlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IPlant } from "app/models";
 import { PaniolTable } from "app/features/programacionIndustrial/controlPañolPI/components/PaniolTable";

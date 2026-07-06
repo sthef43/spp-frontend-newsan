@@ -24,7 +24,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "app/core/store/store";
 import { RechazoSliceRequests } from "app/Middleware/reducers/RechazoSlice";
 import { RechazoModal } from "./RechazoModal";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IconButtons, MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { IRechazo } from "app/models/IRechazo";
 

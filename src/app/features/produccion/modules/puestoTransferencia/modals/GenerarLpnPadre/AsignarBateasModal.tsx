@@ -11,7 +11,7 @@ import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResult
 import FetchApi from "app/shared/helpers/FetchApi";
 import { IconButton, Tooltip } from "@mui/material";
 import { Visibility } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { PlacasBateasModal } from "./PlacasBateasModal";
 import { empq_declarationsSliceRequests } from "app/Middleware/reducers/Empq_declarationsSlice";
 import { CLIContenedorItemsSliceRequest } from "app/features/cli/Middlewares/CLIContenedorItemsSlice";

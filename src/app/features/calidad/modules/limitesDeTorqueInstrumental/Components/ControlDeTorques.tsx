@@ -8,7 +8,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { ILinea, IGenerico, ILimites } from "app/models";
-// import { ModalCompoment } from "app/shared/components/ModalComponent";
+// import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";

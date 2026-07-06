@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { ProductionOrdersMesPage } from "app/features/productionOrdersMes/pages/ProductionOrdersMesPage";
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";

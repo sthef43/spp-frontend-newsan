@@ -21,7 +21,7 @@ import {
   Cell,
   LabelList
 } from "recharts";
-import { ReporteCalidadService } from "app/services/reporteCalidad.service";
+import { ReporteCalidadService } from "../../services/reporteCalidad.service";
 
 //_______TYPES______//
 type RowCalidad = {

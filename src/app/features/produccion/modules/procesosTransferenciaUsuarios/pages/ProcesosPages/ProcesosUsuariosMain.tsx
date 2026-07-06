@@ -6,7 +6,7 @@ import { CLISectoresSliceRequest } from "app/features/cli/Middlewares/CliSectore
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { TransferenciaUsuariosProcesosSliceRequest } from "../../slices/TransferenciaUsuariosProcesosSlice";

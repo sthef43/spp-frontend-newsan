@@ -7,7 +7,7 @@ import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { ControlLoteSliceRequests } from "app/Middleware/reducers/ControlLoteSlice";
 import { IControlLote } from "app/models/IControlLote";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import {
   Accordion,
   AccordionSummary,

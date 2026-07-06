@@ -22,7 +22,7 @@ import { useAppDispatch } from "app/core/store/store";
 import { IMotivo } from "app/models/IMotivo";
 import { ILineaSfcsplus } from "app/models/sfcsplus/ILineaSfcsplis";
 import { IPlantaSfcsplus } from "app/models/sfcsplus/IPlantaSfcsplis";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { CargaMotivosAccion } from "app/features/produccion/modules/controlParadas/modals/CargaMotivosAccion";
 import moment from "moment";

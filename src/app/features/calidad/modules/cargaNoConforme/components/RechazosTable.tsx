@@ -7,11 +7,11 @@ import { ControlLoteSliceRequests } from "app/Middleware/reducers/ControlLoteSli
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { IControlLote } from "app/models/IControlLote";
-import { RechazosSlice } from "app/Middleware/reducers/RechazosSlice";
+import { RechazosSlice } from "app/features/calidad/slices/RechazosSlice";
 import { IconButton } from "@mui/material";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RechazoEditDialog } from "app/features/calidad/modules/noConformePlacas/Modals/RechazoEditDialog";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { AccionVisualizarRechazos } from "app/features/calidad/modules/noConformePlacas/Modals/AccionVisualizarRechazos";

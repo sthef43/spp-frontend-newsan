@@ -19,7 +19,7 @@ import { IOQCPalet } from "app/models/IOQCPalet";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { IOQCBloqueHallazgo } from "app/models/IOQCBloqueHallazgo";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { oqcSupervisoresMotorolaSlice } from "app/features/oqcGeneral/slices/OqcSupervisoresMotorola";
 import { IDatesMotorola } from "app/models/sfcsplus/IDatesMotorola";
 import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";

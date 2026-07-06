@@ -17,7 +17,7 @@ import {
   TableRow,
   Tooltip
 } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EliminarRegistroModal } from "./EliminarRegsitroModal";
 import { OQCPaletPrint } from "app/features/oqcGeneral/modules/oqcCelulares/global/modals/OQCPaletPrint";
 import { NumerosNewsanDTO } from "app/models/DTO/NumerosNewsanDTO";

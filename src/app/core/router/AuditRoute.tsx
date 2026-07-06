@@ -1,6 +1,6 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { AuditCRUDPage } from "app/features/audit/modules/creacionEdicionAuditorias/submodules/AuditCRUDPage";
 import AuditPerform from "app/features/audit/modules/global/realizarAuditoria/AuditPerform";
 import { AuditTableOfAudits } from "app/features/audit/modules/creacionEdicionAuditorias/pages/AuditTableOfAudits";

@@ -9,7 +9,7 @@ import { useAppDispatch } from "app/core/store/store";
 import { ILinea } from "app/models";
 import { ICodigoRechazos } from "app/models/ICodigoRechazos";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import React, { useEffect, useState } from "react";

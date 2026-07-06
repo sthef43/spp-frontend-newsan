@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { SuperCargalineaSliceRequests } from "app/Middleware/reducers/SuperCargalineaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ISuperCargalinea } from "app/models";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ComercialTable } from "app/features/supermercado/generaradorEtiquetas/components/ComercialTable";
 import { GeneradorEtiquetasTable } from "app/features/supermercado/generaradorEtiquetas/components/GeneradorEtiquetasTable";
 import { SelectModelo } from "app/shared/helpers/SelectModelo";

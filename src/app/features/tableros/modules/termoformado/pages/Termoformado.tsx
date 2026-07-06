@@ -1,6 +1,6 @@
 import { SeleccionarLineas } from "app/features/tableros/modules/termoformado/components/SeleccionarLineas";
 import { TablaTermoformado } from "app/features/tableros/modules/termoformado/components/TablaTermoformado";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import React, { useEffect, useState } from "react";
 import { TablaAcumulado } from "app/features/tableros/modules/termoformado/components/TablaAcumulado";

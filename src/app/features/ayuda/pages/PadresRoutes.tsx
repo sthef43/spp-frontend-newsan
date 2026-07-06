@@ -10,7 +10,7 @@ import FetchApi from "app/shared/helpers/FetchApi";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EditarPadre } from "../modals/EditarPadre";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";

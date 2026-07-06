@@ -1,8 +1,8 @@
 import { Button, InputLabel, MenuItem, Select, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { PlantSliceRequests } from "app/Middleware/reducers";
-import { DotaPuestoSliceRequests } from "app/Middleware/reducers/DotaPuestoSlice";
-import { DotaSectorSliceRequests } from "app/Middleware/reducers/DotaSectorSlice";
+import { DotaPuestoSliceRequests } from "app/features/ingenieria/slices/DotaPuestoSlice";
+import { DotaSectorSliceRequests } from "app/features/ingenieria/slices/DotaSectorSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IPlant } from "app/models";
 import { IDotaPuesto } from "app/models/IDotaPuesto";

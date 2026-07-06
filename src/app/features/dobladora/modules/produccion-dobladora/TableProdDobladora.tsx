@@ -5,7 +5,7 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { IconButton } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TablaMovimientosDeclaradosDobladora } from "./TablaMovimientosDeclaradosDobladora";
 
 interface Props {

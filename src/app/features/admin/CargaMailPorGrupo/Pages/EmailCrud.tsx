@@ -17,7 +17,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { EmailGroupSliceRequests } from "app/Middleware/reducers/EmailGroupSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { IconButtons } from "app/shared/components/material-ui/MaterialButtons";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

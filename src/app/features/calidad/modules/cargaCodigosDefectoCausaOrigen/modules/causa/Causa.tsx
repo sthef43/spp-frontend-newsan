@@ -7,7 +7,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ICausa } from "app/models/ICausa";
 import { CodRechazoForm } from "app/features/calidad/modules/cargaCodigosDefectoCausaOrigen/modules/components/CodRechazoForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

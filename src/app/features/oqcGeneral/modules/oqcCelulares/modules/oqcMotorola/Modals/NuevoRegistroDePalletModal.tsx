@@ -14,7 +14,7 @@ import { IPlant } from "app/models";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { IOQCPalet } from "app/models/IOQCPalet";
 import { IXXE_WIP_ITF_SERIE } from "app/models/IXXE_WIP_ITF_SERIE";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCNuevoPalletSliceRequest } from "app/features/oqcGeneral/slices/OQCNuevoPalletSlice";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
 import { AyudaEtiquetaModal } from "../Components/AyudaEtiquetaModal";

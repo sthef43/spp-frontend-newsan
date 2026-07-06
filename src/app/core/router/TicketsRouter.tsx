@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { LayoutServiceDeskAgente } from "app/features/tickets/layout/LayoutServiceDeskAgente";
 import { LayoutServiceDeskMantenimiento } from "app/features/tickets/layout/LayoutServiceDeskMantenimiento";
 import { LayoutServiceDeskUsuario } from "app/features/tickets/layout/LayoutServiceDeskUsuario";

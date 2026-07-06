@@ -3,7 +3,7 @@ import { IconButton, Tooltip } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState } from "react";

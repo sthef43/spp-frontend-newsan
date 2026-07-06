@@ -5,7 +5,7 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { ModelosCrudPage } from "app/features/produccion/modules/creacionModelos/pages/ModelosCrudPage";
 import { ParadasDeLineaPage } from "app/features/produccion/modules/paradasLinea/pages/ParadasDeLineaPage";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { GraficoProduccionPorHora } from "app/features/produccion/modules/graficoProduccion/pages/GraficoProduccionPorHora";
 import { HistorialEquipos } from "app/features/produccion/modules/reporteHistorialEquipo/pages/HistorialEquipos";
 import { HorasExtrasPage } from "app/features/produccion/modules/horasExtras/pages/HorasExtrasPage";

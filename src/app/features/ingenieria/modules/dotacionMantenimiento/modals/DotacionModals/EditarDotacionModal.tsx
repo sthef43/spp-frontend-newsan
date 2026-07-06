@@ -6,13 +6,13 @@ import { IDotacion } from "../../models/IDotacion";
 import { Button } from "@mui/material";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
-import { DotacionModeloSliceRequests } from "app/Middleware/reducers/DotacionModeloSlice";
+import { DotacionModeloSliceRequests } from "app/features/ingenieria/slices/DotacionModeloSlice";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { IDotacionModelo } from "../../models/IDotacionModelo";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotacionSliceRequests } from "app/Middleware/reducers/DotacionSlice";
+import { DotacionSliceRequests } from "app/features/ingenieria/slices/DotacionSlice";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;

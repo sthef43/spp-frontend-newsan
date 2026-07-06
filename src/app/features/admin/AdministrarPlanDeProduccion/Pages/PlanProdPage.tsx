@@ -22,7 +22,7 @@ import { useAppDispatch } from "app/core/store/store";
 import { ILinea, IPlanProd, IPlant } from "app/models";
 import { IFamilia } from "app/models/IFamilia";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ProduccionEditDialog } from "../Modals/ProduccionEditDialog";
 import { ProduccionNuevoLote } from "../Modals/ProduccionNuevoLote";
 import { ProduccionNuevoLoteSemielaborado } from "../Modals/ProduccionNuevoLoteSemielaborado";

@@ -15,7 +15,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { InformePlacasAutomotrizSP, tipoDato } from "../Interfaces/InformePlacasAutomotrizSP";
 import { AutomotrizJigSliceRequest } from "../reducers/AutomotrizJigSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { GraficoPruebasPlacaModal } from "../modals/GraficoPruebasPlacaModal";
 import { TablaDeAGSModal } from "../modals/TablaDeAGSModal";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

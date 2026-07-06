@@ -3,7 +3,7 @@ import { useAppDispatch } from "app/core/store/store";
 import React, { useState } from "react";
 import { ITickets } from "../models/ITickets";
 import { ticketsItemsProcesosResultadosSlice } from "app/features/tickets/reducers/TicketsItemsProcesosResultadosSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EliminarTicketModal } from "../modals/EliminarTicketModal";
 import { TrazabilidadTicketModal } from "../modals/TrazabilidadTicketModal";
 import { PopperTicket } from "./Componentes Internos/PopperTicket";

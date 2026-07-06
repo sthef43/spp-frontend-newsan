@@ -15,7 +15,7 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IRutas } from "app/models/IRutas";
-// import { PuestoSliceRequests } from "app/Middleware/reducers/PuestoSlice";
+// import { PuestoSliceRequests } from "app/features/trazabilidad/slices/PuestoSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { Delete } from "@mui/icons-material";
 // import { unwrapResult } from "@reduxjs/toolkit";

@@ -8,7 +8,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { IAppUser } from "app/models/IAppUser";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TrazabilidadPlantaForm } from "app/features/trazabilidad/modules/plantas/modal/TrazabilidadPlantaForm";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

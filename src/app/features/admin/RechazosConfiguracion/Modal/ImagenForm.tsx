@@ -9,7 +9,7 @@ import { Imagen } from "app/shared/helpers/Imagen";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import produce from "immer";
 import React, { useEffect, useRef, useState } from "react";
-import { RechazoImagenSliceRequests } from "app/Middleware/reducers/RechazoImagenSlice";
+import { RechazoImagenSliceRequests } from "app/features/admin/slices/RechazoImagenSlice";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 

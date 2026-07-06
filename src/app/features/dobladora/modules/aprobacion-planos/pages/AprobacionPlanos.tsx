@@ -11,7 +11,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { DobPlanoSliceRequests } from "app/Middleware/reducers/DobPlanoSlice";
 import moment from "moment";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IDobPlano } from "app/models/IDobPlano";
 import AprobacionPlanosComentarios from "app/features/dobladora/modals/AprobacionPlanosComentarios";
 import { AprobacionPlanosEstadoForm } from "app/features/dobladora/modules/aprobacion-planos/modal/AprobacionPlanosEstadoForm";

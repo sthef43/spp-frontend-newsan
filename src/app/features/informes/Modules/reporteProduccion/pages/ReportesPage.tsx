@@ -26,7 +26,7 @@ import { ILinea, IPlanProd } from "app/models";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { ReportePorDiaTable } from "app/features/informes/components/ReportePorDiaTable";
 // import { ImpresionInforme } from "app/shared/components/informes/ImpresionInforme";
-// import { ModalCompoment } from "app/shared/components/ModalComponent";
+// import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useReactToPrint } from "react-to-print";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import _ from "lodash";

@@ -7,7 +7,7 @@ import { Control, FieldErrors, FieldValues, UseFormReset, UseFormSetValue, UseFo
 import { AddCircleRounded, DeleteRounded, SettingsRounded } from "@mui/icons-material";
 import { Button } from "@mui/material";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarNuevoBloque } from "../../modals/creacionAuditorias/AgregarNuevoBloque";
 import { IAuditoriaGrupoItems } from "../../../models/IAuditoriaGrupoItems";
 import FetchApi from "app/shared/helpers/FetchApi";

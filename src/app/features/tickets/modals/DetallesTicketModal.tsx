@@ -40,7 +40,7 @@ import { HubConnectionBuilder } from "@microsoft/signalr";
 import { ITicketsTrazabilidad } from "../models/ITicketsTrazabilidad";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { ImagenMensajeAsincrona } from "../components/ImagenMensajeAsincronico";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TicketsArchivosSliceRequest } from "../reducers/TicketsArchivosSlice";
 import { TicketsColaboradoresBloqueSliceRequest } from "../reducers/TicketsColaboradoresBloqueSlice";
 import { TicketsItemsProcesosResultadosSliceRequest } from "../reducers/TicketsItemsProcesosResultadosSlice";

@@ -12,7 +12,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCSeguimientoSelect } from "app/features/oqcGeneral/modules/oqc/reporteOqc/components/OQCSeguimientoSelect";
 import { IPlanProd } from "app/models";
 import { Rechazos } from "../../../../../calidad/modules/cargaNoConforme/components/Rechazos";

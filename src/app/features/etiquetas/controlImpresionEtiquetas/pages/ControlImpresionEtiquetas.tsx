@@ -9,7 +9,7 @@ import { ILinea, IPlanProd } from "app/models";
 import { IImpresionEtiqueta } from "app/models/IImpresionEtiqueta";
 import { ITipoEtiqueta } from "app/models/ITipoEtiqueta";
 import { EtiquetasComponent } from "app/features/etiquetas/controlImpresionEtiquetas/components/Etiquetas.component";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

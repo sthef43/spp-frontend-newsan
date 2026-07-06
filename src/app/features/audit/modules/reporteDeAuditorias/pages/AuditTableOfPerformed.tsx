@@ -13,7 +13,7 @@ import moment from "moment";
 import { HistoricAuditPerformed } from "app/features/auditorias";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { IconButton, Tooltip } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AuditTracking } from "app/features/audit/modules/reporteDeAuditorias/modals/AuditTracking";
 import { SelectOFPlant } from "app/shared/helpers/SelectOfPlant";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

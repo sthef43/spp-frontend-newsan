@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import CalidadInspeccionTareaForm from "./CalidadInspeccionTareaForm";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { CalidadInspeccionTareaSliceRequest } from "app/Middleware/reducers/CalidadInspeccionTareaSlice";

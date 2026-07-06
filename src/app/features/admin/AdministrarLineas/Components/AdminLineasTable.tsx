@@ -5,7 +5,7 @@ import { ILinea } from "app/models";
 import { IconButton, TablePagination } from "@mui/material";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import EditIcon from "@mui/icons-material/Edit";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AdminLineasForm } from "../Modals/AdminLineasForm";
 
 interface Props {

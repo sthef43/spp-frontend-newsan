@@ -15,7 +15,7 @@ import { auditoriaTipoSlice, AuditoriaTipoSliceRequest } from "../../slices/Audi
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarTipoAuditoriaForm } from "../modals/tiposAuditoria/AgregarTipoAuditoriaForm";
 
 export const TiposAuditoriaMain = () => {

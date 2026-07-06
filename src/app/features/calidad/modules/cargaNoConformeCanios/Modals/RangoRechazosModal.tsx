@@ -24,7 +24,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
 import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ListaArchivosModal } from "./ListaArchivosModal";
 
 interface Props {

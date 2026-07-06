@@ -15,7 +15,7 @@ import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { OrganizacionSliceRequests } from "app/Middleware/reducers/OrganizacionSlice";
 import { IOrganizacion } from "app/models/IOrganizacion";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OpsTable } from "app/features/produccion/modals/OpsTable";
 
 interface props {

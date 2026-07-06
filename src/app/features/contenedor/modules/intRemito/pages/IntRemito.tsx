@@ -11,7 +11,7 @@ import { IIntRemito } from "app/models/IIntRemito";
 import { IntImprimirRemito } from "app/features/contenedor/components/IntImprimirRemito";
 import { IntRemitoForm } from "app/features/contenedor/modules/intRemito/modals/IntRemitoForm";
 import { IntVerContenido } from "app/features/contenedor/modals/IntVerContenido";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { SelectOfDate } from "app/shared/helpers/SelectOfDate";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

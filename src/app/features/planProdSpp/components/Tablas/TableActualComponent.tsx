@@ -39,7 +39,7 @@ import { PlanProdSppEmbarqueSliceRequest, PlanProdSppEmbarqueSlice } from "../..
 import { PlanProdSppSliceRequest, PlanProdSppSlice } from "../../reducers/PlanProdSppSlice";
 import { IObjectFormPlan } from "../../models/IObjectFormPlan";
 import { StatesFormModalsSlice } from "../../reducers/StatesForModalsSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarEditarPlanProdModal } from "../../modals/AgregarEditarPlanProdModal";
 import { IGeneratePlanProd } from "../../models/DTOS/IGeneratePlanProd";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

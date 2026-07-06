@@ -25,7 +25,7 @@ import { PlantSliceRequests } from "app/Middleware/reducers";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { InformesPITable } from "app/features/programacionIndustrial/informesProgramacionIndustrial/components/InformesPITable";
 import { IPlant, ITurno } from "app/models";
-import { InformesPISliceRequest } from "app/Middleware/reducers/InformesPISlice";
+import { InformesPISliceRequest } from "app/features/programacionIndustrial/slices/InformesPISlice";
 import { TurnoSliceRequests } from "app/Middleware/reducers/TurnoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { OperatorSliceRequests } from "app/Middleware/reducers/OperatorSlice";

@@ -20,7 +20,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
 import useFetchApi from "app/shared/hooks/useFetchApi";
 import { IAuditBloq } from "app/models/IAuditBloq";
-import { BloqSliceRequests } from "app/Middleware/reducers/BloqSlice";
+import { BloqSliceRequests } from "app/features/audit/slices/BloqSlice";
 import { IBloq } from "app/models/IBloq";
 import CloseIcon from "@mui/icons-material/Close";
 import produce from "immer";

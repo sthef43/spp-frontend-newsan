@@ -18,7 +18,7 @@ import { RechazoSliceRequests } from "app/Middleware/reducers/RechazoSlice";
 import { ReporteProduccionAutomotriz } from "app/models/Stored Procdure/ReporteProduccionAutomotriz";
 import { ExportExcel } from "app/shared/components/helpComponents/ExportExcel";
 import { Button } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AltaPlacasMasivamenteModal } from "../Modals/AltaPlacasMasivamenteModal";
 
 export const AltaAutomotriz: React.FC = () => {

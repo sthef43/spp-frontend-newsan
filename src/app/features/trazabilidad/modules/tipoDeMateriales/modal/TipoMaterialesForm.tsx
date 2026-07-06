@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Button } from "@mui/material";
-import { TipoMaterialSliceRequests } from "app/Middleware/reducers/TipoMaterialSlice";
+import { TipoMaterialSliceRequests } from "app/features/trazabilidad/slices/TipoMaterialSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ITipoMaterial } from "app/models/ITipoMaterial";
 import { GenericFieldsGenerator } from "app/shared/helpers/GenericFieldsGenerator";

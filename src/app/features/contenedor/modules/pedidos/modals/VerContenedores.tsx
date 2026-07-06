@@ -5,7 +5,7 @@ import { ContContenedorSliceRequests } from "app/Middleware/reducers/ContContene
 import { useAppDispatch } from "app/core/store/store";
 import { IContContenedor } from "app/models/IContContenedor";
 import { IContEmbarque } from "app/models/IContEmbarque";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { ContenedorForm } from "app/features/contenedor/modules/pedidos/modals/ContenedorForm";
 import { HistorialContenedorForm } from "app/features/contenedor/modules/pedidos/modals/HistorialContenedorForm";

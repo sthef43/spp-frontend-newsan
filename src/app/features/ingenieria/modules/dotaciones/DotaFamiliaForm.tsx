@@ -1,6 +1,6 @@
 import { TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotaFamiliaSliceRequests } from "app/Middleware/reducers/DotaFamiliaSlice";
+import { DotaFamiliaSliceRequests } from "app/features/ingenieria/slices/DotaFamiliaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDotaFamilia } from "app/models/IDotaFamilia";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
@@ -10,7 +10,7 @@ import React, { useState, useEffect } from "react";
 import { Button, IconButton, Tooltip } from "@mui/material";
 import { Edit, Label } from "@mui/icons-material";
 import { AccionLineasOfFamilia } from "./AccionLineasOfFamilia";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 export const DotaFamiliaForm = (props: any) => {
   const classesButtons = MaterialButtons();

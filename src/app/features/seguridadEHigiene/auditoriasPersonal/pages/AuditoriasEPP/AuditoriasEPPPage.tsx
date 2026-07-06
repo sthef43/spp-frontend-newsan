@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { SEH_EPP } from "../../interfaces/SEH_EPP";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EPPForm } from "../../components/EPPForm";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { SEHEPPSliceRequest } from "../../reducers/SEH_EPPSlice";

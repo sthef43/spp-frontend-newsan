@@ -16,7 +16,7 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CrearNuevaAsignacion } from "../modals/asignarAuditorias/CrearNuevaAsignacion";
 import { ExaminarAuditoriasAsignadasModal } from "../modals/asignarAuditorias/ExaminarAuditoriasAsignadasModal";
 

@@ -1,6 +1,6 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
-import { InformesPISliceRequest } from "app/Middleware/reducers/InformesPISlice";
+import { InformesPISliceRequest } from "app/features/programacionIndustrial/slices/InformesPISlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IInformesPI } from "app/models/IInformesPI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

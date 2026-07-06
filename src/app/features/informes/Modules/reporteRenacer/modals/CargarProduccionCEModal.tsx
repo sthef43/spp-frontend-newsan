@@ -17,7 +17,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { RenacerProduccionCESliceRequest } from "app/Middleware/reducers/RenacerProduccionCESlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { Sliders } from "app/shared/components/Sliders";
+import { Sliders } from "app/shared/components/ui/Sliders";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 

@@ -1,6 +1,6 @@
 import { IDobProdDeclaracion } from 'app/models/IDobProdDeclaracion';
 import { IXXE_WIP_OT } from 'app/models/IXXE_WIP_OT';
-import { ModalCompoment } from 'app/shared/components/ModalComponent';
+import { ModalCompoment } from 'app/shared/components/ui/ModalComponent';
 import React, { useEffect, useMemo, useState } from 'react';
 import { DeclararProdDIalog } from './DeclararProdDialog';
 

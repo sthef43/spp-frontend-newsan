@@ -15,7 +15,7 @@ import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { TargetsSliceRequests } from "app/Middleware/reducers/TargetsSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import Edit from "@mui/icons-material/Edit";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { TargetForm } from "../Modals/TargetForm";
 

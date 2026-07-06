@@ -4,7 +4,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { RechazoPuestoSliceRequests } from "app/Middleware/reducers/RechazoPuestoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IRechazoPuesto } from "app/models/IRechazoPuesto";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { SelectOFPlantAndProducts } from "app/shared/helpers/SelectOFPlantAndProducts";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

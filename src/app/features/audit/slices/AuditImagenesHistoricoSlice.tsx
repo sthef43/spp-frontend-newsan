@@ -3,7 +3,7 @@ import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { IIniState } from "app/models";
 import { SubirImagenesAuditHistoricoDTO } from "app/models/DTO/SubirImagenesAuditHistoricoDTO";
 import { IAuditImagenesHistorico } from "../../../models/IAuditImagenesHistorico";
-import { AuditImagenesHistoricoService } from "../../../services/auditImagenesHistorico.service";
+import { AuditImagenesHistoricoService } from "../services/auditImagenesHistorico.service";
 import { errorNotification } from "../../../Middleware/HelperMidleware/errorNotifications";
 
 const auditImagenesHistoricoService = new AuditImagenesHistoricoService();

@@ -1,6 +1,6 @@
 import { Button, Input, InputLabel, Typography } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotaSectorPuestoSliceRequests } from "app/Middleware/reducers/DotaSectorPuestoSlice";
+import { DotaSectorPuestoSliceRequests } from "app/features/ingenieria/slices/DotaSectorPuestoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDotaSectorPuesto } from "app/models/IDotaSectorPuesto";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";

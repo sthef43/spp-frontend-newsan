@@ -21,7 +21,7 @@ import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { LineaProduccionFamiliaSliceRequests } from "app/Middleware/reducers/LineaProduccionFamiliaSlice";
 import { ILineaProduccionFamilia } from "app/models";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EditaSemielaboradoIA } from "app/features/admin/AdministrarPlanDeProduccion/Modals/EditaSemielaboradoIA";
 
 interface Props {

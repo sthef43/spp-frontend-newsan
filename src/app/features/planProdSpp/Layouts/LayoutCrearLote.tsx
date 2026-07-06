@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { FC, useState } from "react";

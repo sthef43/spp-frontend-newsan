@@ -15,7 +15,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IRenacerIngresoPlacas } from "app/models/IRenacerIngresoPlacas";
 import { RenacerIngresoPlacaSliceRequest } from "app/Middleware/reducers/RenacerIngresoPlacasSlice";
-import { Sliders } from "app/shared/components/Sliders";
+import { Sliders } from "app/shared/components/ui/Sliders";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 

@@ -3,7 +3,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { LineaPuestoSliceRequest } from "app/Middleware/reducers/LineaPuestoSlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 

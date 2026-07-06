@@ -1,6 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import { Autocomplete, Button, TextField } from "@mui/material";
-import { TipoMaterialSliceRequests } from "app/Middleware/reducers/TipoMaterialSlice";
+import { TipoMaterialSliceRequests } from "app/features/trazabilidad/slices/TipoMaterialSlice";
 import { ValidarMaterialSliceRequests } from "app/Middleware/reducers/ValidarMaterialSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IValidarMaterial } from "app/models/IValidarMaterial";

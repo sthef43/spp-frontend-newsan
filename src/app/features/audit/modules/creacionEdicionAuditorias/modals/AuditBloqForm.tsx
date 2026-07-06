@@ -8,7 +8,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { ItemSliceRequests } from "app/Middleware/reducers/ItemSlice";
 import useFetchApi from "app/shared/hooks/useFetchApi";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
-import { BloqSliceRequests } from "app/Middleware/reducers/BloqSlice";
+import { BloqSliceRequests } from "app/features/audit/slices/BloqSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IBloq } from "app/models/IBloq";
 import { NivelItemSliceRequests } from "app/Middleware/reducers/NivelItemSlice";

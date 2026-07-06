@@ -3,7 +3,7 @@ import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScre
 import { useContext } from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { PlanProdSppMain } from "app/features/planProdSpp/pages/PlanProdSppMain";
 
 export const PlanProdSppRouter = () => {

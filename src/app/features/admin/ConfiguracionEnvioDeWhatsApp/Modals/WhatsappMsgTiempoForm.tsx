@@ -8,7 +8,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { Button } from "@mui/material";
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
-import { WhatsappMsgTiempoSliceRequests } from "app/Middleware/reducers/WhatsappMsgTiempoSlice";
+import { WhatsappMsgTiempoSliceRequests } from "app/features/admin/slices/WhatsappMsgTiempoSlice";
 
 interface props {
   refresh: any;

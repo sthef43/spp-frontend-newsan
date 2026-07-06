@@ -3,7 +3,7 @@ import { FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip } from "
 import { unwrapResult } from "@reduxjs/toolkit";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AuditDispositivosForm } from "app/features/seguridadEHigiene/formularioDispositivos/modals/AuditDispositivosForm";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

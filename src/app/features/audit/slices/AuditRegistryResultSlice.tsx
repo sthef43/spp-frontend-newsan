@@ -1,6 +1,6 @@
 import { IAuditRegistryResult } from "app/models/IAuditRegistryResult";
 import { IIniState } from "app/models/IIniState";
-import { AuditRegistryResultService } from "app/services/auditRegistryResult.service";
+import { AuditRegistryResultService } from "../services/auditRegistryResult.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 //<IAuth, IAuthUser>
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";

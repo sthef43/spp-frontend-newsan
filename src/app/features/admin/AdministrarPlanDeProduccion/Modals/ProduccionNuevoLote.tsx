@@ -42,7 +42,7 @@ import { IOrganizacion } from "app/models/IOrganizacion";
 import { OrganizacionSliceRequests } from "app/Middleware/reducers/OrganizacionSlice";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { IFamilia } from "app/models/IFamilia";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { UltimosLotesTable } from "app/features/produccion/components/UltimosLotesTable";
 import { ModeloCRUDAndList } from "app/features/produccion/modals/ModeloCRUDAndList";

@@ -13,7 +13,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IRenacerReparaciones } from "app/models/IRenacerReparaciones";
 import { RenacerReparacionesSliceRequest } from "app/Middleware/reducers/RenacerReparacioneSlice";
-import { Sliders } from "app/shared/components/Sliders";
+import { Sliders } from "app/shared/components/ui/Sliders";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 
 interface Props {

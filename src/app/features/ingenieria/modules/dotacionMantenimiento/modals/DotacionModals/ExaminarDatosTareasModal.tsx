@@ -1,4 +1,4 @@
-import { DotacionSliceRequests } from "app/Middleware/reducers/DotacionSlice";
+import { DotacionSliceRequests } from "app/features/ingenieria/slices/DotacionSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import React, { useState } from "react";

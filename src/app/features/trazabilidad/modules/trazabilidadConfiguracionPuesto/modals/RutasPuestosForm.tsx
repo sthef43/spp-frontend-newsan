@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { MapasRutasCamposSliceRequest } from "app/Middleware/reducers/MapasRutasCamposSlice";
-import { TipoMaterialSliceRequests } from "app/Middleware/reducers/TipoMaterialSlice";
+import { TipoMaterialSliceRequests } from "app/features/trazabilidad/slices/TipoMaterialSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IMapasRutas } from "app/models/IMapasRutas";
 import { IMapasRutasCampos } from "app/models/IMapasRutasCampos";

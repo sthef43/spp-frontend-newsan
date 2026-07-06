@@ -6,7 +6,7 @@ import { DefectoImagenForm } from "./DefectoImagenForm";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 
 interface IDefectoImagenTable {

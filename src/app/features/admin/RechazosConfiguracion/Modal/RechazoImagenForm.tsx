@@ -4,7 +4,7 @@
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { Button, FormControl, InputLabel, Select, FormHelperText, MenuItem, Input } from "@mui/material";
-import { RechazoImagenSliceRequests } from "app/Middleware/reducers/RechazoImagenSlice";
+import { RechazoImagenSliceRequests } from "app/features/admin/slices/RechazoImagenSlice";
 import _ from "lodash";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppSelector, useAppDispatch } from "app/core/store/store";

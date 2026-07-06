@@ -1,6 +1,6 @@
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
 import { GestionCaniosPage } from "app/features/soldadura/gestionDeCaños/pages/GestionCaniosPage";
 import { CodigoSoldadura } from "app/features/soldadura/cargarImagenReparador/pages/CodigoSoldadura";

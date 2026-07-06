@@ -4,7 +4,7 @@ import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import { useAppDispatch } from "app/core/store/store";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useNotificationUI } from "../hooks/useNotificationUI";
-import { DashboardService } from "app/services/Dashboard.Service";
+import { DashboardService } from "../../features/gerencia/services/Dashboard.Service";
 
 type Props = {
   plantId?: number;

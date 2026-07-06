@@ -5,7 +5,7 @@ import { PlantSliceRequests } from "app/Middleware/reducers";
 import { ReparadoresSliceRequests } from "app/Middleware/reducers/ReparadoresSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IReparadores } from "app/models/IReparadores";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { IconButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { ReparadoresForm } from "app/features/trazabilidad/modules/cargarReparadores/modal/ReparadoresForm";
@@ -252,7 +252,7 @@ export const Reparadores = (): JSX.Element => {
 // import { PlantSliceRequests } from "app/Middleware/reducers";
 // import { ReparadoresSliceRequests } from "app/Middleware/reducers/ReparadoresSlice";
 // import { useAppDispatch } from "app/Middleware/store/store";
-// import { ModalCompoment } from "app/shared/components/ModalComponent";
+// import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 // import { TableComponent } from "app/shared/components/Table/TableComponent";
 // import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 // import { ReparadoresForm } from "app/shared/components/trazabilidad/reparadores/ReparadoresForm";

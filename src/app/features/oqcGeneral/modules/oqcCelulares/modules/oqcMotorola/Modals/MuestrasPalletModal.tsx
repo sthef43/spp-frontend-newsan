@@ -4,7 +4,7 @@ import { ContextApp } from "../../../Context/Context";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCPaletPrint } from "app/features/oqcGeneral/modules/oqcCelulares/global/modals/OQCPaletPrint";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { Controller, useForm } from "react-hook-form";

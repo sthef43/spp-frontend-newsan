@@ -1,6 +1,6 @@
 import { FormControl, Select, MenuItem, Button } from "@mui/material";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
-import { RechazoImagenSliceRequests } from "app/Middleware/reducers/RechazoImagenSlice";
+import { RechazoImagenSliceRequests } from "app/features/admin/slices/RechazoImagenSlice";
 import React, { useCallback, useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IAppUser } from "app/models";
@@ -10,7 +10,7 @@ import { PlantSliceRequests, plantSlice } from "app/Middleware/reducers/PlantSli
 import { IPlant } from "app/models/IPlant";
 import { IProducto } from "app/models/IProducto";
 //agrego imports para la tabla/modales/buscador (lógica)
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { RechazoPuestoSliceRequests } from "app/Middleware/reducers/RechazoPuestoSlice";
@@ -28,7 +28,7 @@ import { RechazoImagenForm } from "../Modal/RechazoImagenForm";
 // import { RechazoImagenForm } from "app/shared/components/calidad/rechazo/RechazoImagenForm";
 // import { SelectOFPlantAndProducts } from "app/shared/helpers/SelectOFPlantAndProducts";
 // import { ImagenForm } from "app/shared/components/calidad/rechazo/ImagenForm";
-// import { ModalCompoment } from "app/shared/components/ModalComponent";
+// import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 type FormState = {
   plantId: number;
