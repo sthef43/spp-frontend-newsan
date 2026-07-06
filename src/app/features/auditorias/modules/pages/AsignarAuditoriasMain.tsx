@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
@@ -11,7 +11,7 @@ import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import { Button } from "@mui/material";
 import { AddCircle, DeleteRounded, VisibilityRounded } from "@mui/icons-material";
 import { IAuditoria } from "../../models/IAuditoria";
-import { auditoriaSlice, AuditoriaSliceRequest } from "../../slices/AuditoriaSlice";
+import { AuditoriaSliceRequest, auditoriaSlice } from "../../slices/AuditoriaSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
@@ -53,6 +53,15 @@ export const AsignarAuditoriasMain = () => {
     () => setActiveRefresh(!activeRefresh)
   );
 
+  const deleteAuditoriaPadre = (id: number) => {
+    FetchDelete({
+      sliceRequest: AuditoriaSliceRequest.deleteRequest,
+      deleteId: id,
+      consoleLog: false,
+      functionAdd: () => setActiveRefresh((prev) => !prev)
+    });
+  };
+
   useEffect(() => {
     TitleChanger("Asignar Auditorias");
     dispatch(auditoriaSlice.actions.setListaAuditorias([]));
@@ -87,16 +96,13 @@ export const AsignarAuditoriasMain = () => {
       </div>
       <ContainerForPages optionsLayout="Table" activeEffectVisible>
         {auditorias.length === 0 ? (
-          <div className="w-full text-center py-10 text-gray-500 text-lg">
-            No se encontraron auditorías asignadas
-          </div>
+          <div className="w-full text-center py-10 text-gray-500 text-lg">No se encontraron auditorías asignadas</div>
         ) : (
-        <TableComponent
-          dataInfo={auditorias}
-          IDcolumn="id"
-          buscar
-          columns={useMemo(
-            () => [
+          <TableComponent
+            dataInfo={auditorias}
+            IDcolumn="id"
+            buscar
+            columns={[
               {
                 title: "Fecha",
                 field: "",
@@ -134,12 +140,7 @@ export const AsignarAuditoriasMain = () => {
                         titleTooltip="Eliminar"
                         typeTooltip="normal"
                         onClick={() => {
-                          FetchDelete({
-                            sliceRequest: AuditoriaSliceRequest.deleteRequest,
-                            deleteId: value.id,
-                            consoleLog: false,
-                            functionAdd: () => setActiveRefresh((prev) => !prev)
-                          });
+                          deleteAuditoriaPadre(value.id);
                         }}
                         componenteIcono={<DeleteRounded color="error" />}
                       />
@@ -147,10 +148,8 @@ export const AsignarAuditoriasMain = () => {
                   );
                 }
               }
-            ],
-            [formatDateHourOrMinutes, FetchDelete]
-          )}
-        />
+            ]}
+          />
         )}
       </ContainerForPages>
       <ModalCompoment

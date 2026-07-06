@@ -5,10 +5,8 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { Control, FieldErrors, FieldValues, UseFormReset, UseFormSetValue, UseFormTrigger } from "react-hook-form";
 import { IAppUser, IEmailGroup, IPlant } from "app/models";
-import { IAuditoriaTipo } from "../../../models/IAuditoriaTipo";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { EmailGroupSliceRequests } from "app/Middleware/reducers/EmailGroupSlice";
-import { AuditoriaTipoSliceRequest } from "../../../slices/AuditoriaTipoSlice";
 import { ListItem, IconButton, ListItemText, Collapse, List, Button } from "@mui/material";
 import { AddCircle, DeleteRounded, MailRounded } from "@mui/icons-material";
 import { TransitionGroup } from "react-transition-group";
@@ -81,19 +79,6 @@ export const CreacionAuditoriaPrimerPaso: React.FC<Props> = ({
   const [emails, setEmails] = useState<IEmailGroup[]>([]);
 
   const [activeFecth, setActiveFecth] = useState<boolean>(false);
-
-  const [tiposAuditoria, setTiposAuditoria] = useState<IAuditoriaTipo[]>([]);
-
-  FetchApi<IAuditoriaTipo[]>(
-    AuditoriaTipoSliceRequest.GetTiposByRolId,
-    infoUser.permisos.rolId,
-    false,
-    true,
-    setTiposAuditoria,
-    true,
-    false,
-    false
-  );
 
   FetchApi<IEmailGroup[]>(
     EmailGroupSliceRequests.getAllByPlantIdRequest,
@@ -176,17 +161,6 @@ export const CreacionAuditoriaPrimerPaso: React.FC<Props> = ({
           errors={errosFather}
         />
       </div>
-      <SelectComponent
-        control={controlFather}
-        nameSelect="tipoAuditoria"
-        inputLabel="Seleccione un tipo de auditoria"
-        listaObjetos={tiposAuditoria}
-        valueLabel={(value) => value.nombre}
-        valueSelect={(value) => value.id}
-        ValueSave={(value) => dispatch(auditoriasUISlice.actions.setTipoAuditoria(value as number))}
-        defaultValue={params && auditoria ? auditoria.auditoria?.tipoAuditoriaId : ""}
-        valueKey={(value) => value}
-      />
       <SelectComponent
         control={controlFather}
         nameSelect="listaEmails"

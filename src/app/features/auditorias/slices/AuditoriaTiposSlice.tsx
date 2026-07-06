@@ -32,7 +32,11 @@ const initialState: IIniState<IAuditoriaTipos> = {
 export const auditoriaTiposSlice = createSlice({
   name: "AuditoriaTipos",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    setListaTipos: (state, action) => {
+      state.dataAll = action.payload;
+    }
+  },
   extraReducers: (builder) => {
     AuditoriaTiposSliceRequest.builderAll(builder);
   }

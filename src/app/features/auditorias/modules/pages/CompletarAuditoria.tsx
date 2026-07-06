@@ -320,8 +320,8 @@ export const CompletarAuditoria: React.FC = () => {
   }, [params.estado]);
 
   const auditoriaTipoId =
-    (auditResult as IAuditoriaAsignada)?.auditoria?.auditoriaTipoId ??
-    (auditResult as IAuditoriasHistorico)?.auditoriaAsignada?.auditoria?.auditoriaTipoId;
+    (auditResult as IAuditoriaAsignada)?.auditoria?.auditoriaTiposId ??
+    (auditResult as IAuditoriasHistorico)?.auditoriaAsignada?.auditoria?.auditoriaTiposId;
 
   const codigoProductoValue = watch("codigoProducto");
   const selectedDispositivo = dispositivos.find((d) => d.codigo === codigoProductoValue);
@@ -360,7 +360,7 @@ export const CompletarAuditoria: React.FC = () => {
               </div>
             </ContainerForPages>
           </header>
-          {auditoriaTipoId === 3 && selectedDispositivo && (
+          {auditoriaTipoId === 4 && selectedDispositivo && (
             <section className="mt-6 p-4 bg-secondaryNew rounded-lg shadow-md border border-gray-200">
               <h3 className="text-lg font-semibold mb-3">Dispositivo Seleccionado</h3>
               <div className="grid grid-cols-2 gap-4">
@@ -408,8 +408,8 @@ export const CompletarAuditoria: React.FC = () => {
             </div>
             <div className="w-1/2">
               <ContainerForPages optionsLayout="Selects">
-                {auditoriaTipoId === 3 ? (
-                  <div className="flex flex-col gap-y-4">
+                {auditoriaTipoId === 4 ? (
+                  <div className="flex flex-col gap-y-4 w-full">
                     <SelectComponent
                       control={control}
                       listaObjetos={plants}
@@ -461,7 +461,7 @@ export const CompletarAuditoria: React.FC = () => {
               </ContainerForPages>
             </div>
           </section>
-          {(auditoriaTipoId !== 3 || !!codigoProductoValue) && (
+          {(auditoriaTipoId !== 4 || !!codigoProductoValue) && (
             <StteperForBloqItems
               idAuditoriaAsignada={parseInt(params.id)}
               setListaUrlsProp={setearUrls}

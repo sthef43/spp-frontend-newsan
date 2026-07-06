@@ -166,7 +166,6 @@ import {
   auditoriasUISlice,
   auditoriaValoresSlice,
   auditoriaListaValoresSlice,
-  auditoriaTipoSlice,
   auditoriaGrupoItemsSlice,
   auditoriaAsignadaSlice,
   auditoriaSlice
@@ -195,6 +194,7 @@ import { oqcSlice } from "app/features/oqcGeneral/slices/OQCSlice";
 import { oqcTargetSlice } from "app/features/oqcGeneral/slices/OQCTargetSlice";
 import { oqcSupervisoresMotorolaSlice } from "app/features/oqcGeneral/slices/OqcSupervisoresMotorola";
 import { ticketsItemsProcesosResultadosSlice } from "app/features/tickets/reducers/TicketsItemsProcesosResultadosSlice";
+import { auditoriaTiposSlice } from "app/features/auditorias/slices/AuditoriaTiposSlice";
 
 // import { authenticationSlice } from "./AuthenticationSlice";
 
@@ -233,7 +233,7 @@ export const rootReducer = {
   auditoriasUI: auditoriasUISlice.reducer,
   auditoriaValores: auditoriaValoresSlice.reducer,
   auditoriaListaValores: auditoriaListaValoresSlice.reducer,
-  auditoriaTipo: auditoriaTipoSlice.reducer,
+  auditoriaTipo: auditoriaTiposSlice.reducer,
   auditoriaGrupoItems: auditoriaGrupoItemsSlice.reducer,
   auditoria: auditoriaSlice.reducer,
   auditoriaAsignada: auditoriaAsignadaSlice.reducer,

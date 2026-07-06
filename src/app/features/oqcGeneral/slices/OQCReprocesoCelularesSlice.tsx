@@ -49,22 +49,6 @@ export const oqcReprocesoCelularesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     OQCReprocesoCelularesSliceRequest.builderAll(builder);
-    builder.addCase(OQCReprocesoCelularesSliceRequest.PutRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCReprocesoCelularesSliceRequest.PutRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
-    builder.addCase(OQCReprocesoCelularesSliceRequest.PostRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCReprocesoCelularesSliceRequest.PostRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
     builder.addCase(OQCReprocesoCelularesSliceRequest.GetSampleByTrackId.fulfilled, (state, action) => {
       state.loading = "fulfilled";
       state.object = action.payload;

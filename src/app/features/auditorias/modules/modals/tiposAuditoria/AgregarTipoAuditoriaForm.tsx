@@ -2,14 +2,14 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import { useAppSelector } from "app/core/store/store";
 import { IAppUser, IPlant } from "app/models";
-import { IAuditoriaTipo } from "../../../models/IAuditoriaTipo";
 import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
 import { FormButtons } from "app/shared/helpers/FormButtons";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { AuditoriaTipoSliceRequest } from "../../../slices/AuditoriaTipoSlice";
+import { IAuditoriaTipos } from "app/features/auditorias/models/IAuditoriaTipos";
+import { AuditoriaTiposSliceRequest } from "app/features/auditorias/slices/AuditoriaTiposSlice";
 
 export interface IAuditoriaTipoFormInputs {
   nombre: string;
@@ -27,7 +27,7 @@ interface Props {
   setOpenModal: (newValue: boolean) => void;
   setActiveRefresh: (newValue: boolean) => void;
   edicionActiva?: boolean;
-  tipoSeleccionado?: IAuditoriaTipo;
+  tipoSeleccionado?: IAuditoriaTipos;
 }
 
 export const AgregarTipoAuditoriaForm: React.FC<Props> = ({
@@ -44,34 +44,32 @@ export const AgregarTipoAuditoriaForm: React.FC<Props> = ({
     defaultValues: edicionActiva
       ? {
           nombre: tipoSeleccionado?.nombre || "",
-          descripcion: tipoSeleccionado?.descripcion || "",
-          plantId: tipoSeleccionado?.plantId || 0
+          descripcion: tipoSeleccionado?.descripcion || ""
         }
       : defaultValues
   });
 
   const infoUser = useAppSelector((state) => state.appUser.data as IAppUser);
   const plants = useAppSelector((state) => state.plant.dataAll as IPlant[]);
-  const { FetchPost, FetchPut } = useFetchApiMultiResults<IAuditoriaTipo>();
+  const { FetchPost, FetchPut } = useFetchApiMultiResults<IAuditoriaTipos>();
   const { openNotificationUI } = useNotificationUI();
 
   const onSubmit = async (data: IAuditoriaTipoFormInputs) => {
-    const payload: IAuditoriaTipo = {
+    const payload: IAuditoriaTipos = {
       nombre: data.nombre,
       descripcion: data.descripcion,
-      rolId: infoUser.permisos.rolId,
-      plantId: data.plantId
+      rolId: infoUser.permisos.rolId
     };
 
     if (!edicionActiva) {
-      FetchPost(AuditoriaTipoSliceRequest.PostRequest, payload, false, () => {
+      FetchPost(AuditoriaTiposSliceRequest.PostRequest, payload, false, () => {
         openNotificationUI("Tipo de auditoría creado correctamente", "success");
         setActiveRefresh(true);
         setOpenModal(false);
       });
     } else {
       FetchPut({
-        sliceRequest: AuditoriaTipoSliceRequest.PutRequest,
+        sliceRequest: AuditoriaTiposSliceRequest.PutRequest,
         modelPut: { ...payload, id: tipoSeleccionado?.id },
         consoleLog: false,
         functionAdd: () => {
@@ -99,16 +97,6 @@ export const AgregarTipoAuditoriaForm: React.FC<Props> = ({
           label="Descripción"
           placeholder="Ingrese una descripción"
           rules={{ required: "La descripción es obligatoria" }}
-        />
-        <SelectComponentForm
-          name="plantId"
-          control={control}
-          label="Planta"
-          listItems={plants}
-          valueLabel={(item) => item.name}
-          valueSelect={(item) => item.id}
-          rules={{ required: "Seleccione una planta", validate: (value) => Number(value) > 0 || "Seleccione una planta" }}
-          disabled={false}
         />
         <FormButtons onCancel={() => setOpenModal(false)} disabled={!isValid} />
       </form>

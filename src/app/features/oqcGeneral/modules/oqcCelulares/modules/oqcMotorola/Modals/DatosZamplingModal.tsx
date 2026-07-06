@@ -195,14 +195,22 @@ export const DatosZamplingModal: React.FC<prop> = ({
       nuevoOqcDesignadoresultado.oqcHallazgoResult.forEach((elementos) => {
         delete elementos.oqcBloqueHallazgo;
       });
-      const actualizarPallet = limpiarPalet({ ...oqcPalet, cantidadEquipos: cantidadEquipos, cantidadMasterBox: contadorMasterBox }) as IOQCPalet;
+      const actualizarPallet = limpiarPalet({
+        ...oqcPalet,
+        cantidadEquipos: cantidadEquipos,
+        cantidadMasterBox: contadorMasterBox
+      }) as IOQCPalet;
       const response = unwrapResult(await dispatch(OQCPaletSliceRequests.PutRequest(actualizarPallet)));
       try {
         responseOqcDesignadoResultado = unwrapResult(
           await dispatch(OQCDesignadaResultadoSliceRequests.PostRequest(nuevoOqcDesignadoresultado))
         );
       } catch (postError) {
-        const revertirPalet = limpiarPalet({ ...oqcPalet, cantidadEquipos: oqcPalet.cantidadEquipos, cantidadMasterBox: oqcPalet.cantidadMasterBox }) as IOQCPalet;
+        const revertirPalet = limpiarPalet({
+          ...oqcPalet,
+          cantidadEquipos: oqcPalet.cantidadEquipos,
+          cantidadMasterBox: oqcPalet.cantidadMasterBox
+        }) as IOQCPalet;
         await dispatch(OQCPaletSliceRequests.PutRequest(revertirPalet));
         throw postError;
       }
@@ -425,7 +433,7 @@ export const DatosZamplingModal: React.FC<prop> = ({
     <main className="w-[75vw] max-h-[80vh] overflow-y-auto">
       <section className="rounded-md m-auto text-textColor">
         <section className="w-full relative">
-          <div className="w-full flex flex-row flex-wrap gap-x-3 gap-y-1 justify-start p-3 rounded-md shadow-shadowBox border-gray-200 border">
+          <div className="w-full flex flex-row justify-between flex-wrap gap-x-3 gap-y-1 p-3 rounded-md shadow-shadowBox border-gray-200 border">
             <div>
               <p className="datosCelualresZapling">
                 Fecha:{" "}
@@ -454,7 +462,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
           {/*Comienzo de el formulario donde estan los inputs donde se ingresa el codigo de serie y sus numero de referencia*/}
           <form onSubmit={handleSubmit(sendForm)} className="flex flex-row justify-between gap-2 mt-2">
             <div
-              className={`${tiene2Imeis ? "min-h-[26rem]" : "h-full"} bg-secondaryNew w-1/2 rounded-md shadow-shadowBox`}>
+              className={`${
+                tiene2Imeis ? "min-h-[26rem]" : "h-full"
+              } bg-secondaryNew w-1/2 rounded-md shadow-shadowBox`}>
               <div className="flex w-[100.3%] justify-between border border-[#85CDD9] bg-[#85CDD9] p-2 rounded-t-md text-sm">
                 <p>{datosPallet[0].nroOp}</p>
                 <p>Registro: {oqcPalet.registro}</p>
@@ -507,7 +517,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
-                        ref={(el) => { inputRefs.current[0] = el; }}
+                        ref={(el) => {
+                          inputRefs.current[0] = el;
+                        }}
                         onKeyUp={(event) => {
                           manejarEnter(event, 0);
                         }}
@@ -546,7 +558,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
-                        ref={(el) => { inputRefs.current[1] = el; }}
+                        ref={(el) => {
+                          inputRefs.current[1] = el;
+                        }}
                         onKeyUp={(event) => {
                           manejarEnter(event, 1);
                         }}
@@ -590,7 +604,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
-                        ref={(el) => { inputRefs.current[2] = el; }}
+                        ref={(el) => {
+                          inputRefs.current[2] = el;
+                        }}
                         onKeyUp={(event) => {
                           manejarEnter(event, 2);
                         }}
@@ -635,7 +651,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               }
                             }
                           })}
-                          ref={(el) => { inputRefs.current[3] = el; }}
+                          ref={(el) => {
+                            inputRefs.current[3] = el;
+                          }}
                           onKeyUp={(event) => {
                             manejarEnter(event, tiene2Imeis ? 3 : 99);
                           }}
@@ -678,7 +696,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
-                        ref={(el) => { inputRefs.current[tiene2Imeis ? 4 : 3] = el; }}
+                        ref={(el) => {
+                          inputRefs.current[tiene2Imeis ? 4 : 3] = el;
+                        }}
                         onKeyUp={(event) => {
                           manejarEnter(event, tiene2Imeis ? 4 : 3);
                         }}
@@ -719,7 +739,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
-                        ref={(el) => { inputRefs.current[tiene2Imeis ? 5 : 4] = el; }}
+                        ref={(el) => {
+                          inputRefs.current[tiene2Imeis ? 5 : 4] = el;
+                        }}
                         type="text"
                         className="inputsDatosZapling"
                         placeholder="Track ID"
@@ -767,7 +789,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                             }
                           }
                         })}
-                        ref={(el) => { inputRefs.current[tiene2Imeis ? 6 : 5] = el; }}
+                        ref={(el) => {
+                          inputRefs.current[tiene2Imeis ? 6 : 5] = el;
+                        }}
                         onKeyUp={(event) => {
                           manejarEnter(event, tiene2Imeis ? 6 : 5);
                         }}
@@ -812,7 +836,9 @@ export const DatosZamplingModal: React.FC<prop> = ({
                               }
                             }
                           })}
-                          ref={(el) => { inputRefs.current[tiene2Imeis ? 7 : 6] = el; }}
+                          ref={(el) => {
+                            inputRefs.current[tiene2Imeis ? 7 : 6] = el;
+                          }}
                           onKeyUp={(event) => {
                             manejarEnter(event, tiene2Imeis ? 7 : 6);
                           }}

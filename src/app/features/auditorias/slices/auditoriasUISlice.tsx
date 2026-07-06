@@ -13,7 +13,7 @@ interface AuditoriasUIState {
   mostrarListaValores: boolean;
   bloques: (IAuditoriaGrupoItems | IAuditoriaGrupoItemsResult)[];
   listaEmails: string;
-  listaValores: (IAuditoriaValores | IAuditoriaValoresResult)[];
+  listaValores: IAuditoriaValores[];
   listaValoresPreview: IAuditoriaValores[];
   listaValoresPadre: IAuditoriaListaValores | null;
   tipoProductoId: number;

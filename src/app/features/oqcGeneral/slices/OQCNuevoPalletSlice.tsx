@@ -50,22 +50,6 @@ export const oqcNuevoPalletSlice = createSlice({
   },
   extraReducers: (builder) => {
     OQCNuevoPalletSliceRequest.builderAll(builder);
-    builder.addCase(OQCNuevoPalletSliceRequest.PutRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCNuevoPalletSliceRequest.PutRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
-    builder.addCase(OQCNuevoPalletSliceRequest.PostRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCNuevoPalletSliceRequest.PostRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
     builder.addCase(OQCNuevoPalletSliceRequest.GetAllByLpn.fulfilled, (state, action) => {
       state.loading = "fulfilled";
       state.dataAll = action.payload;

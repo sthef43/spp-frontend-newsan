@@ -8,8 +8,8 @@ const OQCCelularesRoutes: LazyRouteConfig[] = [
   {
     path: "/oqc-mantenimiento",
     importFn: () =>
-      import("app/features/oqcGeneral/modules/oqcCelulares/modules/oqcMantenimientoLinea/MantenimientoLineaComponent"),
-    exportName: "MantenimientoLineaComponent",
+      import("app/features/oqcGeneral/modules/oqcCelulares/modules/oqcMantenimientoLinea/MantenimientoLinea"),
+    exportName: "MantenimientoLinea",
     permission: "oqc-celulares/oqc-mantenimiento"
   },
   {

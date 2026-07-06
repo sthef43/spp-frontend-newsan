@@ -269,213 +269,219 @@ export const MantenimientoLinea = () => {
       <nav ref={navbarRef}></nav>
       <figure
         className={`${
-          !mostarFondo
-            ? ""
-            : "w-[100%] h-[400vh] bg-black/50 absolute top-0 z-10 overflow-hidden left-0 right-0 m-auto"
+          !mostarFondo ? "" : "w-[100%] h-[400vh] bg-black/50 absolute top-0 z-10 overflow-hidden left-0 right-0 m-auto"
         }`}></figure>
-      <div className="flex flex-col gap-1 bg-secondaryNew px-20 py-2">
-          <TitleUIComponent title="Ingreso de datos" />
-          <SelectOFPlantAndProducts selectLineas>
-            <>
-              <Tooltip title="Agregar Sales Model">
-                <IconButton onClick={agregarLinea} size="small" style={{ position: "relative" }}>
-                  <Add sx={{ color: "white", background: "#1976d2", borderRadius: "100%" }} />
-                </IconButton>
-              </Tooltip>
-              <Controller
-                control={control}
-                name="familia"
-                render={({ field, fieldState: { error } }) => (
-                  <FormControl fullWidth>
-                    <InputLabel>Seleccione Model Number</InputLabel>
-                    <Select {...field} variant="standard">
-                      {lineaProdFamilia &&
-                        linea &&
-                        lineaProdFamilia.map((lineaprodFam) => (
-                          <MenuItem
-                            key={lineaprodFam.id}
-                            value={
-                              linea.id == 7 || linea.id == 10
+      <div className="flex flex-col gap-1 bg-secondaryNew p-4">
+        <TitleUIComponent title="Ingreso de datos" />
+        <SelectOFPlantAndProducts selectLineas>
+          <>
+            <Tooltip title="Agregar Sales Model">
+              <IconButton onClick={agregarLinea} size="small" style={{ position: "relative" }}>
+                <Add sx={{ color: "white", background: "#1976d2", borderRadius: "100%" }} />
+              </IconButton>
+            </Tooltip>
+            <Controller
+              control={control}
+              name="familia"
+              render={({ field, fieldState: { error } }) => (
+                <FormControl fullWidth>
+                  <InputLabel>Seleccione Model Number</InputLabel>
+                  <Select {...field} variant="standard">
+                    {lineaProdFamilia &&
+                      linea &&
+                      lineaProdFamilia.map((lineaprodFam) => (
+                        <MenuItem
+                          key={lineaprodFam.id}
+                          value={
+                            linea.id == 7 || linea.id == 10
+                              ? "M" + lineaprodFam.familia.nombre
+                              : lineaprodFam.familia.nombre
+                          }>
+                          <div className="w-full">
+                            <div>
+                              {linea.id == 7 || linea.id == 10
                                 ? "M" + lineaprodFam.familia.nombre
-                                : lineaprodFam.familia.nombre
-                            }>
-                            <div className="w-full">
-                              <div>
-                                {linea.id == 7 || linea.id == 10
-                                  ? "M" + lineaprodFam.familia.nombre
-                                  : lineaprodFam.familia.nombre}
-                              </div>
+                                : lineaprodFam.familia.nombre}
                             </div>
-                          </MenuItem>
-                        ))}
-                    </Select>
-                  </FormControl>
-                )}
-              />
-              <Tooltip title="agregar Model Number">
-                <IconButton onClick={agregarFamiliaOpen} size="small" style={{ position: "relative" }}>
-                  <Add sx={{ color: "white", background: "#1976d2", borderRadius: "100%" }} />
-                </IconButton>
-              </Tooltip>
-            </>
-          </SelectOFPlantAndProducts>
+                          </div>
+                        </MenuItem>
+                      ))}
+                  </Select>
+                </FormControl>
+              )}
+            />
+            <Tooltip title="agregar Model Number">
+              <IconButton onClick={agregarFamiliaOpen} size="small" style={{ position: "relative" }}>
+                <Add sx={{ color: "white", background: "#1976d2", borderRadius: "100%" }} />
+              </IconButton>
+            </Tooltip>
+          </>
+        </SelectOFPlantAndProducts>
 
-          <div className="mt-6 ml-2">
-            <Button
-              className={classes.blueButton}
-              variant="contained"
-              onClick={agregarModelo}
-              disabled={BottonDisabled}>
-              Agregar Sales Model
-            </Button>
-          </div>
+        <div className="mt-2 ml-2 mb-4">
+          <Button className={classes.blueButton} variant="contained" onClick={agregarModelo} disabled={BottonDisabled}>
+            Agregar Sales Model
+          </Button>
+        </div>
 
-          {/* agregar nuevo modelos */}
-          <MantenimientoLineaComponent
-            open={openModelo} // para abrir el moda lde agregar nuevo modelo
+        {/* agregar nuevo modelos */}
+        <MantenimientoLineaComponent
+          open={openModelo} // para abrir el moda lde agregar nuevo modelo
+          handleClose={handleCloseModelo}
+          familiaId={selectedFamily} // pasar la familia seleccionada como prop para agregarle un modelo
+          refresh={getModels} //para cuando se agrege un modelo nuevo se actualice
+          editState={editModelo}
+          lineaId={lineaId}
+        />
+
+        {/* AGREGAR LINEA  */}
+        <AgregarLineaModal
+          open={open}
+          handleClose={handleClose}
+          plant={planta?.id}
+          productId={producto?.id}
+          editState={editState}
+          refresh={getLineas} //refest para cuando se agrege una nueva linea
+        />
+
+        {/* Agregar nueva familia */}
+        <AgregarFamiliaModal
+          subirHastaArriba={subirHastaArriba}
+          setMostrarFondo={setMostrarFondo}
+          open={openFamilia}
+          handleClose={agregarFamiliaOFF}
+          plant={planta}
+          productId={producto}
+          refreshfam={getFamilias}
+        />
+
+        <div>
+          <TitleUIComponent title="LISTADO DE SALES MODEL" />
+          <TableComponent
+            IDcolumn="id"
+            columns={[
+              // {
+              //   title: "ID ",
+              //   field: "id"
+              // },
+              {
+                title: "Fecha",
+                field: "createdDate",
+                render: (rowData) => formatDate(rowData.createdDate) //traigo de la hora de creacion y lo filtro
+              },
+              {
+                title: "Turno",
+                field: "turno",
+                render: (rowData) => TurnoCreation(rowData.createdDate)
+              },
+              // {
+              //   title: "Auditor",
+              //   field: "operatorId",
+              //   render: (row: IModelo) => <>{row.operator?.name + " " + row.operator?.surname}</> //Muestro nombre y apellido de la persona que subio el modelo
+              // },
+              {
+                title: "Sales Model",
+                field: "nombre"
+              },
+              {
+                title: "EANCODE",
+                field: "eancode"
+              },
+              {
+                title: "Muestras",
+                field: "muestras"
+              },
+              {
+                title: "Compañia",
+                field: "compania"
+              },
+
+              {
+                title: "Acciones",
+                field: "",
+                render: (row) => {
+                  return (
+                    <div className="flex w-full justify-end sm:justify-start gap-4">
+                      <div>
+                        <Tooltip title="Editar">
+                          <IconButton
+                            onClick={() => {
+                              editar(row); //aca envio el objecto completo para editar
+                              setModalOpen(true); // abro el modal para editar con los datos de row
+                            }}
+                            size="small"
+                            style={{ position: "relative" }}>
+                            <Edit color="primary" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                      <div>
+                        <Tooltip title="Clonar">
+                          <IconButton
+                            onClick={() => {
+                              editar(row);
+                              setmodalClon(true);
+                            }}
+                            size="small"
+                            style={{ position: "relative" }}>
+                            <ContentCopy color="primary" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                      <div>
+                        <Tooltip title="Eliminar">
+                          <IconButton
+                            onClick={() => {
+                              deleteFamilia(row.id);
+                            }}
+                            size="small"
+                            style={{ position: "relative" }}>
+                            <Delete color="error" />
+                          </IconButton>
+                        </Tooltip>
+                      </div>
+                    </div>
+                  );
+                }
+              }
+            ]}
+            dataInfo={dataOpen}
+            buscar
+          />
+        </div>
+        <ModalCompoment
+          title={"Editar Modelo"}
+          openPopup={ModalOpen}
+          setOpenPopup={setModalOpen}
+          titleModalStyle="Audit"
+          showModalCenterPage
+          onCloseDynamic>
+          <EditarModelo
+            lineaId={linea?.id}
+            setOpenPopup={setModalOpen}
             handleClose={handleCloseModelo}
             familiaId={selectedFamily} // pasar la familia seleccionada como prop para agregarle un modelo
-            refresh={getModels} //para cuando se agrege un modelo nuevo se actualice
+            refresh={getModels} //para cuando se edite un modelo nuevo se actualice
             editState={editModelo}
+          />
+        </ModalCompoment>
+
+        <ModalCompoment
+          title={"Clonar Modelo"}
+          openPopup={modalClon}
+          setOpenPopup={setmodalClon}
+          titleModalStyle="Audit"
+          showModalCenterPage
+          onCloseDynamic>
+          <ClonarModelo
             lineaId={lineaId}
+            setOpenPopup={setmodalClon}
+            handleClose={handleCloseModelo}
+            familiaId={selectedFamily} // pasar la familia seleccionada como prop para agregarle un modelo
+            refresh={getModels} //para cuando se clona un modelo nuevo se actualice
+            editState={editModelo}
           />
-
-          {/* AGREGAR LINEA  */}
-          <AgregarLineaModal
-            open={open}
-            handleClose={handleClose}
-            plant={planta?.id}
-            productId={producto?.id}
-            editState={editState}
-            refresh={getLineas} //refest para cuando se agrege una nueva linea
-          />
-
-          {/* Agregar nueva familia */}
-          <AgregarFamiliaModal
-            subirHastaArriba={subirHastaArriba}
-            setMostrarFondo={setMostrarFondo}
-            open={openFamilia}
-            handleClose={agregarFamiliaOFF}
-            plant={planta}
-            productId={producto}
-            refreshfam={getFamilias}
-          />
-
-          <div>
-            <TitleUIComponent title="LISTADO DE SALES MODEL" />
-            <TableComponent
-              IDcolumn="id"
-              columns={[
-                // {
-                //   title: "ID ",
-                //   field: "id"
-                // },
-                {
-                  title: "Fecha",
-                  field: "createdDate",
-                  render: (rowData) => formatDate(rowData.createdDate) //traigo de la hora de creacion y lo filtro
-                },
-                {
-                  title: "Turno",
-                  field: "turno",
-                  render: (rowData) => TurnoCreation(rowData.createdDate)
-                },
-                // {
-                //   title: "Auditor",
-                //   field: "operatorId",
-                //   render: (row: IModelo) => <>{row.operator?.name + " " + row.operator?.surname}</> //Muestro nombre y apellido de la persona que subio el modelo
-                // },
-                {
-                  title: "Sales Model",
-                  field: "nombre"
-                },
-                {
-                  title: "EANCODE",
-                  field: "eancode"
-                },
-                {
-                  title: "Muestras",
-                  field: "muestras"
-                },
-                {
-                  title: "Compañia",
-                  field: "compania"
-                },
-
-                {
-                  title: "Acciones",
-                  field: "",
-                  render: (row) => {
-                    return (
-                      <div className="flex w-full justify-end sm:justify-start gap-4">
-                        <div>
-                          <Tooltip title="Editar">
-                            <IconButton
-                              onClick={() => {
-                                editar(row); //aca envio el objecto completo para editar
-                                setModalOpen(true); // abro el modal para editar con los datos de row
-                              }}
-                              size="small"
-                              style={{ position: "relative" }}>
-                              <Edit color="primary" />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                        <div>
-                          <Tooltip title="Clonar">
-                            <IconButton
-                              onClick={() => {
-                                editar(row);
-                                setmodalClon(true);
-                              }}
-                              size="small"
-                              style={{ position: "relative" }}>
-                              <ContentCopy color="primary" />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                        <div>
-                          <Tooltip title="Eliminar">
-                            <IconButton
-                              onClick={() => {
-                                deleteFamilia(row.id);
-                              }}
-                              size="small"
-                              style={{ position: "relative" }}>
-                              <Delete color="error" />
-                            </IconButton>
-                          </Tooltip>
-                        </div>
-                      </div>
-                    );
-                  }
-                }
-              ]}
-              dataInfo={dataOpen}
-              buscar
-            />
-          </div>
-          <ModalCompoment title={"Editar Modelo"} openPopup={ModalOpen} setOpenPopup={setModalOpen} titleModalStyle="Audit" showModalCenterPage onCloseDynamic>
-            <EditarModelo
-              lineaId={linea?.id}
-              setOpenPopup={setModalOpen}
-              handleClose={handleCloseModelo}
-              familiaId={selectedFamily} // pasar la familia seleccionada como prop para agregarle un modelo
-              refresh={getModels} //para cuando se edite un modelo nuevo se actualice
-              editState={editModelo}
-            />
-          </ModalCompoment>
-
-          <ModalCompoment title={"Clonar Modelo"} openPopup={modalClon} setOpenPopup={setmodalClon} titleModalStyle="Audit" showModalCenterPage onCloseDynamic>
-            <ClonarModelo
-              lineaId={lineaId}
-              setOpenPopup={setmodalClon}
-              handleClose={handleCloseModelo}
-              familiaId={selectedFamily} // pasar la familia seleccionada como prop para agregarle un modelo
-              refresh={getModels} //para cuando se clona un modelo nuevo se actualice
-              editState={editModelo}
-            />
-          </ModalCompoment>
+        </ModalCompoment>
       </div>
     </ContainerForPages>
   );

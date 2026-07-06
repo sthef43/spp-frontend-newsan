@@ -49,7 +49,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
   } = useForm();
 
   const infoUser: IAppUser = useAppSelector((state) => state.appUser.data as IAppUser);
-  const { listaValores, listaValoresResult, bloques, listaValoresPadre, listaEmails } = useAppSelector(
+  const { listaValores, listaValoresResult, bloques, listaValoresPadre, listaEmails, tipoAuditoriaId } = useAppSelector(
     (state) => state.auditoriasUI
   );
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
@@ -199,8 +199,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
     const { nombreAuditoria, tipoAuditoria, numeroRegistro } = data;
     const nuevaAuditoria: IAuditoria | IAuditoriaAsignada = {
       nombre: nombreAuditoria,
-      tipoAuditoriaId: tipoAuditoria,
-      auditoriaTipoId: tipoAuditoria,
+      auditoriaTiposId: tipoAuditoriaId,
       numeroRegistro: numeroRegistro,
       rolId: infoUser.permisos.rolId,
       plantId: infoUser.operator.plantaId,

@@ -121,14 +121,11 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
     if (tipoAuditoriaSeleccionada !== 0) {
       const listaPadre = listaTipoAuditorias.find((item) => item.id === tipoAuditoriaSeleccionada);
       const valoresBloq = listaPadre.auditoriaValoresListaBloq.flatMap((elementos) => elementos.auditoriaValores);
+      dispatch(auditoriasUISlice.actions.setTipoAuditoria(listaPadre.auditoriaTiposId));
       dispatch(auditoriasUISlice.actions.setListaValores(valoresBloq));
       dispatch(auditoriasUISlice.actions.setListaValoresPadre(listaPadre));
     } else if (auditoria) {
-      dispatch(
-        auditoriasUISlice.actions.setListaValores(
-          auditoria.auditoriaListaValoresResult.auditoriaValoresResult
-        )
-      );
+      dispatch(auditoriasUISlice.actions.setListaValores(auditoria.auditoriaListaValoresResult.auditoriaValoresResult));
     }
   }, [tipoAuditoriaSeleccionada, auditoria]);
 
@@ -148,7 +145,6 @@ export const CreacionAuditoriaSegundoPaso: React.FC<Props> = ({ controlFather })
           disabled={params && auditoria ? true : false}
           ValueSave={(e) => {
             setTipoAuditoriaSeleccionada(e);
-            dispatch(auditoriasUISlice.actions.setTipoAuditoria(e as number));
           }}
           valueKey={(e) => e}
           estilosPersonalizados={{

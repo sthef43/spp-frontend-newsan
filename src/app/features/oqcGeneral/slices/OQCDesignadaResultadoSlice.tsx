@@ -139,23 +139,6 @@ export const oqcDesignadaResultadoSlice = createSlice({
   },
   extraReducers: (builder) => {
     OQCDesignadaResultadoSliceRequests.builderAll(builder);
-    builder.addCase(OQCDesignadaResultadoSliceRequests.PutRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCDesignadaResultadoSliceRequests.PutRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
-    builder.addCase(OQCDesignadaResultadoSliceRequests.PostRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCDesignadaResultadoSliceRequests.PostRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
-    //nuevos manejos de asyncthunk aqui
     builder.addCase(
       OQCDesignadaResultadoSliceRequests.getAllByDateAndLineaAndTurnoRequest.fulfilled,
       (state, action) => {

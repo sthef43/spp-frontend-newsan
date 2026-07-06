@@ -10,19 +10,19 @@ import { plantSlice, PlantSliceRequests } from "app/Middleware/reducers";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import { Button } from "@mui/material";
 import { AddCircle, DeleteRounded, EditRounded } from "@mui/icons-material";
-import { IAuditoriaTipo } from "../../models/IAuditoriaTipo";
-import { auditoriaTipoSlice, AuditoriaTipoSliceRequest } from "../../slices/AuditoriaTipoSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { ModalCompoment } from "app/shared/components/ModalComponent";
 import { AgregarTipoAuditoriaForm } from "../modals/tiposAuditoria/AgregarTipoAuditoriaForm";
+import { IAuditoriaTipos } from "../../models/IAuditoriaTipos";
+import { AuditoriaTiposSliceRequest, auditoriaTiposSlice } from "../../slices/AuditoriaTiposSlice";
 
 export const TiposAuditoriaMain = () => {
   const { control } = useForm();
 
   const infoUser = useAppSelector((state) => state.appUser.data as IAppUser);
-  const tipos = useAppSelector((state) => state.auditoriaTipo.dataAll as IAuditoriaTipo[]);
+  const tipos = useAppSelector((state) => state.auditoriaTipo.dataAll as IAuditoriaTipos[]);
   const { object, dataAll: plants } = useAppSelector((state) => state.plant);
 
   const buttonClasses = MaterialButtons();
@@ -33,13 +33,13 @@ export const TiposAuditoriaMain = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [activeRefresh, setActiveRefresh] = useState<boolean>(false);
   const [edicionActiva, setEdicionActiva] = useState<boolean>(false);
-  const [tipoSeleccionado, setTipoSeleccionado] = useState<IAuditoriaTipo | undefined>(undefined);
+  const [tipoSeleccionado, setTipoSeleccionado] = useState<IAuditoriaTipos | undefined>(undefined);
 
   FetchApi(PlantSliceRequests.getAllRequest, null, false, null, null, false, false, false);
 
-  FetchApi<IAuditoriaTipo[]>(
-    AuditoriaTipoSliceRequest.GetTiposByRolAndPlantId,
-    { rolId: infoUser.permisos?.rolId, plantId: object?.id ? object.id : 0 },
+  FetchApi<IAuditoriaTipos[]>(
+    AuditoriaTiposSliceRequest.GetAllAuditTypesByRolId,
+    infoUser.permisos?.rolId || 0,
     false,
     object?.id || activeRefresh ? object.id : 0,
     null,
@@ -51,7 +51,7 @@ export const TiposAuditoriaMain = () => {
 
   useEffect(() => {
     TitleChanger("Tipos de Auditoría");
-    dispatch(auditoriaTipoSlice.actions.setListaTipos([]));
+    dispatch(auditoriaTiposSlice.actions.setListaTipos([]));
   }, []);
 
   const handleOpenCreate = () => {
@@ -60,7 +60,7 @@ export const TiposAuditoriaMain = () => {
     setOpenModal(true);
   };
 
-  const handleOpenEdit = (tipo: IAuditoriaTipo) => {
+  const handleOpenEdit = (tipo: IAuditoriaTipos) => {
     setEdicionActiva(true);
     setTipoSeleccionado(tipo);
     setOpenModal(true);
@@ -71,17 +71,9 @@ export const TiposAuditoriaMain = () => {
       { title: "Nombre", field: "nombre" },
       { title: "Descripción", field: "descripcion" },
       {
-        title: "Planta",
-        field: "",
-        render: (value: IAuditoriaTipo) => {
-          const plant = plants.find((p) => p.id === value.plantId);
-          return plant?.name || "-";
-        }
-      },
-      {
         title: "Acción",
         field: "",
-        render: (value: IAuditoriaTipo) => (
+        render: (value: IAuditoriaTipos) => (
           <div className="flex flex-row items-center gap-x-2">
             <TooltipComponent
               titleTooltip="Editar"
@@ -94,7 +86,7 @@ export const TiposAuditoriaMain = () => {
               typeTooltip="normal"
               onClick={() => {
                 FetchDelete({
-                  sliceRequest: AuditoriaTipoSliceRequest.deleteRequest,
+                  sliceRequest: AuditoriaTiposSliceRequest.deleteRequest,
                   deleteId: value.id,
                   consoleLog: false,
                   functionAdd: () => setActiveRefresh(true)
@@ -138,16 +130,9 @@ export const TiposAuditoriaMain = () => {
       </div>
       <ContainerForPages optionsLayout="Table" activeEffectVisible>
         {tipos.length === 0 ? (
-          <div className="w-full text-center py-10 text-gray-500 text-lg">
-            No se encontraron tipos de auditoría
-          </div>
+          <div className="w-full text-center py-10 text-gray-500 text-lg">No se encontraron tipos de auditoría</div>
         ) : (
-          <TableComponent
-            dataInfo={tipos}
-            IDcolumn="id"
-            buscar
-            columns={columns}
-          />
+          <TableComponent dataInfo={tipos} IDcolumn="id" buscar columns={columns} />
         )}
       </ContainerForPages>
       <ModalCompoment

@@ -7,6 +7,5 @@ export { auditoriaSlice } from "./slices/AuditoriaSlice";
 export { auditoriaAsignadaSlice } from "./slices/AuditoriaAsignadaSlice";
 export { auditoriaGrupoItemsSlice } from "./slices/AuditoriaGrupoItemsSlice";
 export { auditoriaListaValoresSlice } from "./slices/AuditoriaListaValoresSlice";
-export { auditoriaTipoSlice } from "./slices/AuditoriaTipoSlice";
 export { auditoriaValoresSlice } from "./slices/AuditoriaValoresSlice";
 export { auditoriasUISlice } from "./slices/auditoriasUISlice";

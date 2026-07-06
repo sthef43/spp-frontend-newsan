@@ -8,9 +8,8 @@ export interface IAuditoria extends IBaseEntity {
   nombre: string;
   numeroRegistro: string;
   auditoriaMailGroup: string;
-  tipoAuditoriaId: number;
-  tipoAuditoria?: IAuditoriaTipos;
-  auditoriaTipoId: number;
+  auditoriaTiposId: number;
+  auditoriaTipos?: IAuditoriaTipos;
   rolId: number;
   rol?: IRol;
   plantId?: number;

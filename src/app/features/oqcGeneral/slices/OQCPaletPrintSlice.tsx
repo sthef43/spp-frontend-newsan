@@ -42,23 +42,6 @@ export const oqcPaletPrintSlice = createSlice({
     }
   },
   extraReducers: (builder) => {
-    OQCPaletPrintSliceRequests.builderAll(builder);
-    builder.addCase(OQCPaletPrintSliceRequests.PutRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCPaletPrintSliceRequests.PutRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
-    builder.addCase(OQCPaletPrintSliceRequests.PostRequest.fulfilled, (state, action) => {
-      state.loading = "fulfilled";
-      state.data = action.payload;
-      state.object = action.payload;
-    });
-    builder.addCase(OQCPaletPrintSliceRequests.PostRequest.rejected, (state) => {
-      state.loading = "rejected";
-    });
     //nuevos manejos de asyncthunk aqui
     builder.addCase(OQCPaletPrintSliceRequests.getAllByPalet.fulfilled, (state, action) => {
       state.loading = "fulfilled";
