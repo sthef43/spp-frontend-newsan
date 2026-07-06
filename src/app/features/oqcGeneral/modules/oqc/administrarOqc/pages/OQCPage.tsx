@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { OQCSliceRequests } from "app/features/oqcGeneral/slices/OQCSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { OQCModeloPrefijoForm } from "app/features/oqcGeneral/modules/oqc/administrarOqc/components/OQCModeloPrefijoForm";
 import { OqcTable } from "app/features/oqcGeneral/modules/oqc/administrarOqc/components/OqcTable";

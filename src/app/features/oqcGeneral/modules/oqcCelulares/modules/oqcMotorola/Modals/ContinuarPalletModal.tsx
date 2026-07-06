@@ -10,7 +10,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { Check, Close } from "@mui/icons-material";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IXXE_WIP_ITF_SERIE } from "app/models/IXXE_WIP_ITF_SERIE";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";
 import { OQCNuevoPalletSliceRequest } from "app/features/oqcGeneral/slices/OQCNuevoPalletSlice";
 import { AyudaEtiquetaModal } from "../Components/AyudaEtiquetaModal";

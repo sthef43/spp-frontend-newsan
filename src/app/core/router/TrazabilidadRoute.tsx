@@ -14,7 +14,7 @@ import { TipoMaterialPage } from "app/features/trazabilidad/modules/tipoDeMateri
 import { ValidarMaterialesPage } from "app/features/trazabilidad/modules/materialesAValidar/pages/ValidarMaterialesPage";
 import { BinariosPage } from "app/features/trazabilidad/modules/binariosHeladera/pages/BinariosPage";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 
 import { SemielaboradoPage } from "app/features/trazabilidad/modules/agregarSemielaboradImParaDeclarar/pages/SemielaboradoPage";
 import { ValidarQrLg } from "app/features/trazabilidad/modules/validarQrLg/pages/ValidarQrLg";

@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { DobHHerramentalSliceRequests } from "app/Middleware/reducers/DobHHerramentalSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDobHHerramental } from "app/models/IDobHHerramental";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { HerramentalesForm } from "app/features/dobladora/modules/gestionHerramental/modals/HerramentalesForm";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

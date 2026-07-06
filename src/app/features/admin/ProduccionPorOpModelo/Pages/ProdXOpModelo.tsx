@@ -16,7 +16,7 @@ import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IInicio } from "app/models";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";

@@ -8,7 +8,7 @@ import { useAppDispatch } from "app/core/store/store";
 import { IPlant } from "app/models";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

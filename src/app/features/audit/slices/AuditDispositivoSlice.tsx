@@ -1,6 +1,6 @@
 import { IAuditDispositivo } from "app/models/IAuditDispositivo";
 import { IIniState } from "app/models/IIniState";
-import { AuditDispositivoService } from "app/services/auditDispositivo.service";
+import { AuditDispositivoService } from "../services/auditDispositivo.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { errorNotification } from "../../../Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>

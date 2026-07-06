@@ -18,7 +18,7 @@ import {
 } from "@mui/material";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

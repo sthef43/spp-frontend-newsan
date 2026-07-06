@@ -5,7 +5,7 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IProducto } from "app/models/IProducto";
-import { ProductoSliceRequests } from "app/Middleware/reducers/ProductoSlice";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
 interface props {
   setOpenPopup: any;
   editState?: IProducto | null;

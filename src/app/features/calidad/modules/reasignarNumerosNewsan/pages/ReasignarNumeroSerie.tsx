@@ -13,7 +13,7 @@ import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { SwapHorizRounded } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ReasignarNumeroTraza } from "../modals/ReasignarNumeroTraza";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";

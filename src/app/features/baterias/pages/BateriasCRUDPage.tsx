@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
 import { BateriasCodigoSliceRequests } from "app/features/baterias/middleware/BateriasCodigoSlice";
-import { EstacionesBateriaSliceRequests } from "app/Middleware/reducers/EstacionesBateriaSlice copy";
-import { EstacionesCodigoSliceRequests } from "app/Middleware/reducers/EstacionesCodigoSlice";
+import { EstacionesBateriaSliceRequests } from "app/features/baterias/slices/EstacionesBateriaSlice copy";
+import { EstacionesCodigoSliceRequests } from "app/features/baterias/slices/EstacionesCodigoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IBateriasCodigo } from "app/features/baterias/models/IBateriasCodigo";
 import { IEstacionesBateria } from "app/features/baterias/models/IEstacionesBateria";

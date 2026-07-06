@@ -16,7 +16,7 @@ import { plantSlice, PlantSliceRequests } from "app/Middleware/reducers";
 import { CtrlPlacasSliceRequests } from "app/Middleware/reducers/CtrlPlacasSlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { RegistrarMuestraPlacaForm } from "app/features/calidad/modules/registroMuestrasPlacas/Modal/RegistrarMuestraPlacaForm";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";

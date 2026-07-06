@@ -1,7 +1,7 @@
 import React from "react";
 import { Switch, Route, Redirect } from "react-router-dom";
-import { LoginScreen } from "app/shared/components/auth/LoginScreen";
-import { SignInUser } from "app/shared/components/auth/SignInUser.page";
+import { LoginScreen } from "app/features/cuenta/components/LoginScreen";
+import { SignInUser } from "app/features/cuenta/components/SignInUser.page";
 
 const AuthRouter = (props: any) => {
   return (

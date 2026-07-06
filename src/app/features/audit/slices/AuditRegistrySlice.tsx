@@ -1,6 +1,6 @@
 import { IAuditRegistry } from "app/models/IAuditRegistry";
 import { IIniState } from "app/models/IIniState";
-import { AuditRegistryService } from "app/services/auditRegistry.service";
+import { AuditRegistryService } from "../services/auditRegistry.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { errorNotification } from "../../../Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>

@@ -2,10 +2,10 @@
 import React from "react";
 import { ITodo } from "app/models/ITodo";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { TodoSliceRequests } from "app/Middleware/reducers/TodoSlice";
+import { TodoSliceRequests } from "app/features/audit/slices/TodoSlice";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AuditTodoForm } from "app/features/audit/modules/asignacionAuditorias/components/AuditTodoForm";
 import { SelectOFPlant } from "app/shared/helpers/SelectOfPlant";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";

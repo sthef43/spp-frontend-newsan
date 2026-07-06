@@ -9,7 +9,7 @@ import { useAppDispatch } from "app/core/store/store";
 import { IPlant, IProducto } from "app/models";
 import { IFamilia } from "app/models/IFamilia";
 import { IValidarMaterial } from "app/models/IValidarMaterial";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { ValidarMaterialesForm } from "app/features/trazabilidad/modules/materialesAValidar/modal/ValidarMaterialesForm";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

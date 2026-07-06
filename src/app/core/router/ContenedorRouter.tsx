@@ -1,6 +1,6 @@
 import * as React from "react";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { Pedidos } from "app/features/contenedor/modules/pedidos/pages/Pedidos";
 import { ImportarPlanProd } from "app/features/contenedor/modules/importarPlanProd/ImportarPlanProd";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";

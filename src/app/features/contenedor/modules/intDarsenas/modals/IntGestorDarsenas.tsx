@@ -5,7 +5,7 @@ import { IntDarsenaSliceRequests } from "app/Middleware/reducers/IntDarsenaSlice
 import { useAppDispatch } from "app/core/store/store";
 import { IIntDarsena } from "app/models/IIntDarsena";
 import { IntGestorDarsenasForm } from "app/features/contenedor/modules/intDarsenas/modals/IntGestorDarsenasForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

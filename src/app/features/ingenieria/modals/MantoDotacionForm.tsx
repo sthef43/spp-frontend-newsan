@@ -4,7 +4,7 @@ import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { Controller, useForm } from "react-hook-form";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotacionSliceRequests } from "app/Middleware/reducers/DotacionSlice";
+import { DotacionSliceRequests } from "app/features/ingenieria/slices/DotacionSlice";
 import { Button, FormControl, FormHelperText, Grid, Input, InputLabel, TextField } from "@mui/material";
 
 interface props {

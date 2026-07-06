@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { ConsultaNumerosSerie } from "app/features/ebs/pages/ConsultaNumerosSerie";
 import { ConsultaEBSPage } from "app/features/ebs/pages/ConsultaEBSPage";
 import { ConsultaPorOPPage } from "app/features/ebs/pages/ConsultaPorOPPage";

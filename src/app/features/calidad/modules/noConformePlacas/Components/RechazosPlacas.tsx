@@ -24,7 +24,7 @@ import { IAppUser, IEstadoLote, ILinea, IPlanProd } from "app/models";
 import { ICodigoRechazos } from "app/models/ICodigoRechazos";
 import { IControlLotePlacas } from "app/models/IControlLotePlacas";
 import { IPuesto } from "app/models/IPuesto";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { RowRechazosForm } from "app/features/calidad/modules/noConformePlacas/Modals/RowRechazosForm";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";

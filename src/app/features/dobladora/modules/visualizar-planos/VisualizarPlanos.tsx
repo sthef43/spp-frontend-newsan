@@ -6,7 +6,7 @@ import { DobPlanoSliceRequests } from "app/Middleware/reducers/DobPlanoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import AprobacionPlanosComentarios from "app/features/dobladora/modals/AprobacionPlanosComentarios";
 import { VerImpresionesPlanosForm } from "app/features/dobladora/modals/VerImpresionesPlanosForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

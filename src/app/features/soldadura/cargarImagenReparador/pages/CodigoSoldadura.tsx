@@ -5,7 +5,7 @@ import { CodigoSoldaduraSliceRequests } from "app/Middleware/reducers/CodigoSold
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ICodigoSoldadura } from "app/models/ICodigoSoldadura";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CodigoSoldaduraForm } from "app/features/soldadura/cargarImagenReparador/modals/CodigoSoldaduraForm";
 // import { VisualizarImagen } from "app/shared/components/soldadura/codigoSoldadura/VisualizarImagen";
 import { TableComponent } from "app/shared/components/Table/TableComponent";

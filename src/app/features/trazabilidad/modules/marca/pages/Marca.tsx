@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { MarcaSliceRequests } from "app/Middleware/reducers/MarcaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IMarca } from "app/models/IMarca";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MarcaForm } from "app/features/trazabilidad/modules/marca/modal/MarcaForm";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

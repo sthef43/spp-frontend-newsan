@@ -18,7 +18,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { Controller, useForm } from "react-hook-form";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { IPlant } from "app/models";
-import { DotaFamiliaSliceRequests } from "app/Middleware/reducers/DotaFamiliaSlice";
+import { DotaFamiliaSliceRequests } from "app/features/ingenieria/slices/DotaFamiliaSlice";
 
 interface props {
   dotaFamiliaSelected: number;

@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { VisualizarPlanos } from "app/features/dobladora/modules/visualizar-planos/VisualizarPlanos";
 import { Piezas } from "app/features/dobladora/modules/piezas/pages/Piezas";
 import * as React from "react";

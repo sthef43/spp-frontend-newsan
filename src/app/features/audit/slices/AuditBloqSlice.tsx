@@ -1,6 +1,6 @@
 import { IAuditBloq } from "app/models/IAuditBloq";
 import { IIniState } from "app/models/IIniState";
-import { AuditBloqService } from "app/services/auditBloq.service";
+import { AuditBloqService } from "../services/auditBloq.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 //<IAuth, IAuthUser>
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";

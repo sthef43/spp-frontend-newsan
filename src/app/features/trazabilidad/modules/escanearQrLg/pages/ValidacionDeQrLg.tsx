@@ -15,7 +15,7 @@ import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reduce
 import { ValidarQrLgSliceRequests } from "app/Middleware/reducers/ValidarQrLgSlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { ValidarCodigoQrLgForm } from "app/features/trazabilidad/modules/escanearQrLg/modal/ValidarCodigoQrLgForm";

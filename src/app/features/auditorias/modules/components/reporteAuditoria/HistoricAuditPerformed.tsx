@@ -10,7 +10,7 @@ import { useHistory } from "react-router";
 import { IAppUser } from "app/models/IAppUser";
 import { IPermisos, IRegistry } from "app/models";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { RegistrySliceRequests } from "app/Middleware/reducers/RegistrySlice";
+import { RegistrySliceRequests } from "app/features/auditorias/slices/RegistrySlice";
 import { IQuery, IQueryResult } from "app/models/IQuery";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import moment from "moment";

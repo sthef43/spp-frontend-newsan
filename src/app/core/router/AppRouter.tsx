@@ -1,7 +1,7 @@
 import React from "react";
 import { useAppSelector } from "app/core/store/store";
 import { NotificationComponent } from "app/shared/components/helpComponents/NotificationComponent";
-import { Theme, StyledEngineProvider, CssBaseline } from "@mui/material";
+import { StyledEngineProvider, CssBaseline } from "@mui/material";
 import { BrowserRouter as Router, Switch, Route, Redirect } from "react-router-dom";
 import { PrivateRoute } from "./PrivateRoute";
 import { DialogAlertComponent } from "app/shared/components/helpComponents/DialogAlertComponent";
@@ -14,10 +14,6 @@ import AuthRouter from "./AuthRouter";
 import dayjs from "dayjs";
 import "dayjs/locale/es";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-declare module "@mui/styles/defaultTheme" {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface
-  interface DefaultTheme extends Theme {}
-}
 
 dayjs.locale("es");
 export const AppRouter = (): JSX.Element => {

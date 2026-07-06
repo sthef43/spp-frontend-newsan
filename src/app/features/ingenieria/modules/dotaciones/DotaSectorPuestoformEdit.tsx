@@ -8,19 +8,19 @@ import { IPlant } from "app/models";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { IDotaSector } from "app/models/IDotaSector";
-import { DotaSectorSliceRequests } from "app/Middleware/reducers/DotaSectorSlice";
+import { DotaSectorSliceRequests } from "app/features/ingenieria/slices/DotaSectorSlice";
 import { IDotaPuesto } from "app/models/IDotaPuesto";
-import { DotaPuestoSliceRequests } from "app/Middleware/reducers/DotaPuestoSlice";
+import { DotaPuestoSliceRequests } from "app/features/ingenieria/slices/DotaPuestoSlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { IDotaFamilia } from "app/models/IDotaFamilia";
-import { DotaFamiliaSliceRequests } from "app/Middleware/reducers/DotaFamiliaSlice";
+import { DotaFamiliaSliceRequests } from "app/features/ingenieria/slices/DotaFamiliaSlice";
 import { SectorAndPuestosSelected } from "./SectorAndPuestosSelected";
 import { IDotaFamiliaLineaProduccion } from "app/models/IDotaFamiliaLineaProduccion";
 import { DotaFamiliaLineaProduccionSliceRequests } from "app/Middleware/reducers/DotaFamiliaLineaProduccionSlice";
 import { Typography } from "@mui/material";
 import { IDotaSectorPuesto } from "app/models/IDotaSectorPuesto";
-import { DotaSectorPuestoSliceRequests } from "app/Middleware/reducers/DotaSectorPuestoSlice";
+import { DotaSectorPuestoSliceRequests } from "app/features/ingenieria/slices/DotaSectorPuestoSlice";
 
 interface props {
   dotaFamiliaLineaProduccion: IDotaFamiliaLineaProduccion;

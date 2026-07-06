@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { OQCTargetPage } from "app/features/sgi/targetSgi/pages/OQCTargetPage";
 import { SGIReporteOQCpage } from "app/features/sgi/sgiOqc/pages/SGIReporteOQCpage";
 import ReporteSGI from "app/features/sgi/reporteSgi/pages/ReporteSGI";

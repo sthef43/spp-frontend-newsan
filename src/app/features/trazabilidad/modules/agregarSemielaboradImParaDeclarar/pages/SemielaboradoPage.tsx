@@ -5,7 +5,7 @@ import { SemielaboradoSliceRequests } from "app/Middleware/reducers/Semielaborad
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { ILinea } from "app/models";
 import { ISemielaborado } from "app/models/ISemielaborado";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { SemielaboradoForm } from "app/features/trazabilidad/modules/agregarSemielaboradImParaDeclarar/modal/SemielaboradoForm";
 import { SemielaboradosTable } from "app/features/trazabilidad/modules/agregarSemielaboradImParaDeclarar/components/SemielaboradosTable";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

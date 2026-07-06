@@ -6,7 +6,7 @@ import { IngresoEgresoMaterialesPage } from "../../features/supermercado/egresoM
 
 import { SupermercadoMaterialesPage } from "app/features/supermercado/supermercado/supermercadoMateriales";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { GeneradorEtiquetasPage } from "app/features/supermercado/generaradorEtiquetas/pages/GeneradorEtiquetasPage";
 export const MaterialesRoute = (props: any): JSX.Element => {
   const auditoria = "materiales";

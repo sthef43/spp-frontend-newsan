@@ -1,6 +1,6 @@
 import { Button } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotacionSliceRequests } from "app/Middleware/reducers/DotacionSlice";
+import { DotacionSliceRequests } from "app/features/ingenieria/slices/DotacionSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";

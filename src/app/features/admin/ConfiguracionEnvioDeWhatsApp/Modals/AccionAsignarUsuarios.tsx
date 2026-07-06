@@ -3,7 +3,7 @@
 import { AssignmentTurnedIn } from "@mui/icons-material";
 import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { WhatsappMsgappUserSliceRequests } from "app/Middleware/reducers/WhatsappMsgAppUserSlice";
+import { WhatsappMsgappUserSliceRequests } from "app/features/admin/slices/WhatsappMsgAppUserSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser, IPlant } from "app/models";
 import { IWhatsappMsg } from "app/models/IWhatsappMsg";

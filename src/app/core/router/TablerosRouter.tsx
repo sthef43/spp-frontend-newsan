@@ -4,7 +4,7 @@ import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-route
 import { TablerosPage } from "app/features/tableros/modules/andonGeneral/TablerosPage";
 import { useAppDispatch } from "app/core/store/store";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { BinarioPage } from "app/features/tableros/modules/tableroControlBinario/pages/BinarioPage";
 import { Termoformado } from "app/features/tableros/modules/termoformado/pages/Termoformado";
 import { SemielaboradoProduccionxhs } from "app/features/tableros/modules/tableroIM/pages/SemielaboradoProduccionxhs";

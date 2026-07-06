@@ -3,7 +3,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 //<IAuth, IAuthUser>
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";
 import { errorNotification } from "../../../Middleware/HelperMidleware/errorNotifications";
-import { AuditRegistryImageService } from "app/services/auditRegistryImage.service";
+import { AuditRegistryImageService } from "../services/auditRegistryImage.service";
 import { IAuditRegistryImage } from "app/models/IAuditRegistryImage";
 import { IAuditImage } from "app/models/IAuditImage";
 const auditRegistryImageService = new AuditRegistryImageService();

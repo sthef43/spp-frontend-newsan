@@ -1,6 +1,6 @@
 import { IAuditMail } from "app/models/IAuditMail";
 import { IIniState } from "app/models/IIniState";
-import { AuditMailService } from "app/services/auditMail.service";
+import { AuditMailService } from "../services/auditMail.service";
 import { createSlice } from "@reduxjs/toolkit";
 //<IAuth, IAuthUser>
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";

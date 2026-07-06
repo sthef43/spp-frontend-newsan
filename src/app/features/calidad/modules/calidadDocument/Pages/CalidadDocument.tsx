@@ -24,7 +24,7 @@ import { IFamilia } from "app/models/IFamilia";
 import { IModelo } from "app/models/IModelo";
 import { CalidadDocumentForm } from "app/features/calidad/modules/calidadDocument/Components/CalidadDocumentForm";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

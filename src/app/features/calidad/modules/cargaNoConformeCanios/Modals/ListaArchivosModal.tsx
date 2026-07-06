@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { ContainerForItems } from "app/shared/helpers/Containers/ContainerForItems";
 import { DeleteIconEdited, ImageIconEdited } from "app/shared/helpers/ComponentsMUIModify/IconsModified";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ExaminarImagenGenericModal } from "app/shared/helpers/ModalsGenerics/ExaminarImagenGenericModal";
 import { IRechazoDobladora } from "../Models/IRechazoDobladora";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";

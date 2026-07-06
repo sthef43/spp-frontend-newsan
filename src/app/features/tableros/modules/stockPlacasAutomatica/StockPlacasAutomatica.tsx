@@ -1,6 +1,6 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, TextField } from "@mui/material";
 import { tableCellClasses } from "@mui/material/TableCell";
-import { styled } from "@mui/styles";
+import { styled } from "@mui/material/styles";
 import { useAppDispatch } from "app/core/store/store";
 import { IDatos } from "app/models/AOI/IDatos";
 import { IDatos2 } from "app/models/AOI/IDatos2";

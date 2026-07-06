@@ -13,7 +13,7 @@ import { AddCircle, DeleteRounded, EditRounded } from "@mui/icons-material";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarTipoAuditoriaForm } from "../modals/tiposAuditoria/AgregarTipoAuditoriaForm";
 import { IAuditoriaTipos } from "../../models/IAuditoriaTipos";
 import { AuditoriaTiposSliceRequest, auditoriaTiposSlice } from "../../slices/AuditoriaTiposSlice";

@@ -5,7 +5,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { Sliders } from "app/shared/components/Sliders";
+import { Sliders } from "app/shared/components/ui/Sliders";
 import React, { useState } from "react";
 import { IDotacionGrupoSectores } from "../../models/IDotacionGrupoSectores";
 import { IDotacionGrupoSectoresBloque } from "../../models/IDotacionGrupoSectoresBloque";

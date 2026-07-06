@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import { Visibility } from "@mui/icons-material";
-import { RechazoImagenSliceRequests } from "app/Middleware/reducers/RechazoImagenSlice";
+import { RechazoImagenSliceRequests } from "app/features/admin/slices/RechazoImagenSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { TableComponent } from "app/shared/components/Table/TableComponent";

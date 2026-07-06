@@ -20,7 +20,7 @@ import { Check, Clear, Compare, Delete, Edit, SyncAlt } from "@mui/icons-materia
 import { MapasRutasCamposSliceRequest } from "app/Middleware/reducers/MapasRutasCamposSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { RutasPuestosForm } from "app/features/trazabilidad/modules/trazabilidadConfiguracionPuesto/modals/RutasPuestosForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { RutasSubensambleForm } from "app/features/trazabilidad/modules/trazabilidadConfiguracionPuesto/modals/RutasSubensambleForm";
 import { LineaProduccionRutasSliceRequest } from "app/Middleware/reducers/LineaProduccionRutasSlice";

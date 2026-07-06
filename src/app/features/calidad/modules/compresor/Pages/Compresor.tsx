@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 import { Delete, Edit } from "@mui/icons-material";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

@@ -1,4 +1,4 @@
-import { EstacionesBateriaSliceRequests } from "app/Middleware/reducers/EstacionesBateriaSlice copy";
+import { EstacionesBateriaSliceRequests } from "app/features/baterias/slices/EstacionesBateriaSlice copy";
 import { useAppDispatch } from "app/core/store/store";
 import { IEstacionesBateria } from "app/features/baterias/models/IEstacionesBateria";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";

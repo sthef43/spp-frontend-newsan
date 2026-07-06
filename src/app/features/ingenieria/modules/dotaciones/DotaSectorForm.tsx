@@ -1,6 +1,6 @@
 import { TextField, InputLabel, Select, MenuItem } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DotaSectorSliceRequests } from "app/Middleware/reducers/DotaSectorSlice";
+import { DotaSectorSliceRequests } from "app/features/ingenieria/slices/DotaSectorSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDotaSector } from "app/models/IDotaSector";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
@@ -9,7 +9,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState, useEffect } from "react";
 import { Button, IconButton, Tooltip } from "@mui/material";
 import { Edit, Label } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AccionPuestosOfSector } from "./AccionPuestosOfSector";
 import { IPlant } from "app/models";
 import { PlantSliceRequests } from "app/Middleware/reducers";

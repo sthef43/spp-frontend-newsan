@@ -8,7 +8,7 @@ import React, { useEffect, useState } from "react";
 import { Select, MenuItem, InputLabel, FormControl, Button, Tooltip, IconButton } from "@mui/material";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { IPlant } from "app/models";
-import { WhatsappMsgTiempoPlantSliceRequests } from "app/Middleware/reducers/WhatsappMsgTiempoPlantSlice";
+import { WhatsappMsgTiempoPlantSliceRequests } from "app/features/admin/slices/WhatsappMsgTiempoPlantSlice";
 import { IWhatsappMsgTiempo } from "app/models/IWhatsappMsgTiempo";
 import { IWhatsappMsgTiempoPlant } from "app/models/WhatsappMsgTiempoPlant";
 import { PlantSliceRequests } from "app/Middleware/reducers";

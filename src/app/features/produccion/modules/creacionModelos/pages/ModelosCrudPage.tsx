@@ -5,7 +5,7 @@ import { ModelosSliceRequests } from "app/Middleware/reducers/ModelosSlice";
 import { SgsmodeloSliceRequests } from "app/Middleware/reducers/SgsmodeloSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ISgsmodelo } from "app/models/ISgsmodelo";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ModeloCRUD } from "app/features/produccion/modules/creacionModelos/modals/ModeloCRUD";
 import { SgsModelosCRUD } from "app/features/produccion/modules/creacionModelos/modals/SgsModelosCRUD";
 import { TableComponent } from "app/shared/components/Table/TableComponent";

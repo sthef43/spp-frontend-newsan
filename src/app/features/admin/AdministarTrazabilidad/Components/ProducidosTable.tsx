@@ -13,7 +13,7 @@ import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { Delete, Edit } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 
 interface props {

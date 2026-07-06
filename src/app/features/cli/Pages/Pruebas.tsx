@@ -1,7 +1,7 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import React, { Suspense, useEffect, useState } from "react";
 import FetchApi from "app/shared/helpers/FetchApi";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ModalPruebas } from "../Modals/Pruebas/ModalPruebas";
 import { UseGeneratorCodesForLabels } from "app/shared/hooks/useGeneratorCodesForLabels";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";

@@ -2,7 +2,7 @@ import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select } fro
 import { unwrapResult } from "@reduxjs/toolkit";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { useAppDispatch } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 

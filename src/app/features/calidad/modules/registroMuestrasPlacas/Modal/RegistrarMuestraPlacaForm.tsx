@@ -11,7 +11,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { CtrlPlacasHallazgosSliceRequests } from "app/Middleware/reducers/CtrlPlacasHallazgosSlice";
 import { TrazaOperacionesSliceRequests, TrazaOperacionSlice } from "app/Middleware/reducers/TrazaOperacionesSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RegistrarHallazgoForm } from "app/features/calidad/modules/registroMuestrasPlacas/Modal/RegistrarHallazgoForm";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { IAppUser, IPlant } from "app/models";

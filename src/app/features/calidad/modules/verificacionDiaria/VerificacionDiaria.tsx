@@ -11,7 +11,7 @@ import {
   CreateSeguridadElectricaRegistroDto,
   MaquinaTestDto,
   SeguridadElectricaConfigDto
-} from "app/services/verificacionDiaria.service";
+} from "../../services/verificacionDiaria.service";
 
 type Turno = "MAÑANA" | "TARDE" | "NOCHE";
 

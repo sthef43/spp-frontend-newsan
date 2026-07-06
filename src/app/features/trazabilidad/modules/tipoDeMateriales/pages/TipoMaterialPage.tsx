@@ -3,11 +3,11 @@ import { FormControl, IconButton, InputLabel, MenuItem, Select, Tooltip } from "
 import { unwrapResult } from "@reduxjs/toolkit";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
-import { TipoMaterialSliceRequests } from "app/Middleware/reducers/TipoMaterialSlice";
+import { TipoMaterialSliceRequests } from "app/features/trazabilidad/slices/TipoMaterialSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IPlant, IProducto } from "app/models";
 import { ITipoMaterial } from "app/models/ITipoMaterial";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TipoMaterialesForm } from "app/features/trazabilidad/modules/tipoDeMateriales/modal/TipoMaterialesForm";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

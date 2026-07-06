@@ -17,7 +17,7 @@ import { ContPlantaSliceRequests } from "app/Middleware/reducers/ContPlantaSlice
 import { useAppDispatch } from "app/core/store/store";
 import { IContEmbarque } from "app/models/IContEmbarque";
 import { IContPlanProduccion } from "app/models/IContPlanProduccion";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { PedidosForm } from "app/features/contenedor/modules/pedidos/modals/PedidosForm";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

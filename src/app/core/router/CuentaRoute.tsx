@@ -1,5 +1,5 @@
 import { ResetPasswordPage } from "app/features/cuenta/ResetPasswordPage";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
 import React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";

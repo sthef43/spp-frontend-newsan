@@ -1,6 +1,6 @@
 import { IAuditCriterio } from "app/models/IAuditCriterio";
 import { IIniState } from "app/models/IIniState";
-import { AuditCriterioService } from "app/services/auditCriterio.service";
+import { AuditCriterioService } from "../services/auditCriterio.service";
 import { createSlice } from "@reduxjs/toolkit";
 //<IAuth, IAuthUser>
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";

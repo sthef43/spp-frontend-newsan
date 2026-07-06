@@ -2,7 +2,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { ZPL_TipoEtiquetasSliceRequests } from "app/Middleware/reducers/ZPL_TipoEtiquetasSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IZPL_Etiquetas } from "app/models/IZPL_Etiquetas";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import React, { useEffect, useState } from "react";
 import { EtiquetasForm } from "../form/EtiquetasForm";

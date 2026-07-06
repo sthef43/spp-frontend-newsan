@@ -8,7 +8,7 @@ import { ITransferenciaUsuariosPermitidos } from "../../models/ITransferenciaUsu
 import { TransferenciaUsuariosPermitidosSliceRequest } from "../../slices/TransferenciaUsuariosPermitidosSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarEditarUsuario } from "../../modals/usuariosModals/AgregarEditarUsuario";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

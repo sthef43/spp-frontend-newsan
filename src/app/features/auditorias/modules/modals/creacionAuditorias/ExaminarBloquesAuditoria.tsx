@@ -2,7 +2,7 @@ import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPag
 import { IAuditoria } from "../../../models/IAuditoria";
 import { DragIndicatorRounded, FormatListNumberedRounded } from "@mui/icons-material";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useState } from "react";
 import { ExaminarTareasAuditoria } from "./ExaminarTareasAuditoria";
 import { IAuditoriaItemsResult } from "../../../models/IAuditoriaItemsResult";

@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { BateriasCRUDPage } from "app/features/baterias/pages/BateriasCRUDPage";
 import { BateriasViewPage } from "app/features/baterias/pages/BateriasViewPage";
 import * as React from "react";

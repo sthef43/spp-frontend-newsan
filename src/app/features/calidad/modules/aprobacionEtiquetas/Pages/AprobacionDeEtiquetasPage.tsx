@@ -9,7 +9,7 @@ import { ILinea, IPlant } from "app/models";
 import { IImpresionEtiqueta } from "app/models/IImpresionEtiqueta";
 import { AprobarEtiquetasModal } from "app/features/calidad/modules/aprobacionEtiquetas/Components/AprobarEtiquetasModal";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import React, { useEffect, useState } from "react";

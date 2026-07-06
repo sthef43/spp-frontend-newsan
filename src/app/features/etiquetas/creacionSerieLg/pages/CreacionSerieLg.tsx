@@ -25,7 +25,7 @@ import { ISerieLg } from "app/models/ISerieLg";
 import { CreacionSerieLgExl } from "app/features/etiquetas/creacionSerieLg/modals/CreacionSerieLgExl";
 import { SerieLgForm } from "app/features/etiquetas/creacionSerieLg/modals/SerieLgForm";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

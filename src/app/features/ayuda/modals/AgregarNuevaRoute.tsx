@@ -12,7 +12,7 @@ import { IRoutesAyudaPadres } from "app/features/ayuda/models/IRoutesAyudaPadres
 import FetchApi from "app/shared/helpers/FetchApi";
 import { RoutesAyudaPadresSliceRequest } from "app/features/ayuda/middleware/RoutesAyudaPadresSlice";
 import { Add } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AñadirPadre } from "./AñadirPadre";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";

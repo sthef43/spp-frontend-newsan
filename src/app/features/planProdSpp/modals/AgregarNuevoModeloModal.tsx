@@ -12,7 +12,7 @@ import { Button, IconButton, Tooltip } from "@mui/material";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { IModelo } from "app/models/IModelo";
 import { Delete, Edit } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarTipoUnidadModal } from "./AgregarTipoUnidadModal";
 import { modeloSlice, ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";
 import { EditarModeloModal } from "./EditarModeloModal";

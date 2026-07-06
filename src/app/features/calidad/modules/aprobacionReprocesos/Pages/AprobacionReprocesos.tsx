@@ -9,7 +9,7 @@ import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { ControlLoteSliceRequests } from "app/Middleware/reducers/ControlLoteSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { RemoveRedEye } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IControlLote, ILinea, IPlant } from "app/models";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";

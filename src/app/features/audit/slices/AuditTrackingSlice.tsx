@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IIniState } from "app/models";
 import { IAuditTracking } from "app/models/IAuditTracking";
-import { AuditTrackingService } from "app/services/auditTracking.service";
+import { AuditTrackingService } from "../services/auditTracking.service";
 import { errorNotification } from "../../../Middleware/HelperMidleware/errorNotifications";
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";
 

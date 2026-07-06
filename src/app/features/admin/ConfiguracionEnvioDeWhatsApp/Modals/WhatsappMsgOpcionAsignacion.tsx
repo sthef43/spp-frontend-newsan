@@ -4,7 +4,7 @@ import React from "react";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch } from "app/core/store/store";
 import { useForm } from "react-hook-form";
-import { WhatsappMsgOpcionAsignacionSliceRequest } from "app/Middleware/reducers/WhatsappMsgOpcionAsignacionSlice";
+import { WhatsappMsgOpcionAsignacionSliceRequest } from "app/features/admin/slices/WhatsappMsgOpcionAsignacionSlice";
 import { IWhatsappMsgOpcionAsignacion } from "app/models/IWhatsappMsgOpcionAsignacion";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button } from "@mui/material";

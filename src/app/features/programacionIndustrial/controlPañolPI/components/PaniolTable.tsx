@@ -1,7 +1,7 @@
 import { Delete, Edit, ImportExport } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { PaniolPISliceRequests } from "app/Middleware/reducers/PaniolPISlice";
+import { PaniolPISliceRequests } from "app/features/programacionIndustrial/slices/PaniolPISlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IPaniolPI } from "app/models/IPaniolPI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";

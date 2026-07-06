@@ -11,7 +11,7 @@ import { DobMaestroPiezaliceRequests } from "app/Middleware/reducers/DobMaestroP
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { IDobMaestroPieza } from "app/models/IDobMaestroPieza";
 import { MaestroPiezaForm } from "app/features/dobladora/modules/maestroPieza/modals/MaestroPiezaForm";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { MaestroPiezaExl } from "app/features/dobladora/modules/maestroPieza/modals/MaestroPiezaExl";
 

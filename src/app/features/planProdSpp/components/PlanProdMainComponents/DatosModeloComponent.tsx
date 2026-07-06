@@ -9,7 +9,7 @@ import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IPlanProd } from "app/models";
 import { IModelo } from "app/models/IModelo";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";

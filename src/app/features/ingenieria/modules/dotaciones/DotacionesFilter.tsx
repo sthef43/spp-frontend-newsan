@@ -10,7 +10,7 @@ import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProdu
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { IDotaFamilia } from "app/models/IDotaFamilia";
-import { DotaFamiliaSliceRequests } from "app/Middleware/reducers/DotaFamiliaSlice";
+import { DotaFamiliaSliceRequests } from "app/features/ingenieria/slices/DotaFamiliaSlice";
 
 interface props {
   setDatosFiltro: any;

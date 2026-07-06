@@ -10,7 +10,7 @@ import { IPlant } from "app/models";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { IMinutas } from "app/models/IMinutas";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MinutasForm } from "app/features/produccion/modules/cargaMinutas/modals/MinutasForm";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { SelectOfDate } from "app/shared/helpers/SelectOfDate";

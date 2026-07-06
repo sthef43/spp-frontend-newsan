@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { PermissionsRoutesPage } from "app/features/manejoSistema/permisosUsuarios/pages/permissionsRoutes.pages";
 import { PermissionsUserPage } from "app/features/manejoSistema/permisosUsuarios/pages/PermissionsUserPage";
 import { AltaOperariosPage } from "app/features/manejoSistema/altaOperarios/pages/AltaOperariosPage";

@@ -12,7 +12,7 @@ import { IInicio } from "app/models";
 import produce from "immer";
 import { IconButton } from "@mui/material";
 import { AddCircle } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { AgregarTrazabilidad } from "app/features/admin/AdministarTrazabilidad/Components/AgregarTrazabilidad";
 

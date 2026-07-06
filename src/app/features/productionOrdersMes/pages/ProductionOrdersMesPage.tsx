@@ -6,7 +6,7 @@ import { IFamilies } from "app/models/mes/IFamilies";
 import { IProductionOrders } from "app/models/mes/IProductionOrders";
 import { IProductLines } from "app/models/mes/IProductLines";
 import { IProducts } from "app/models/mes/IProducts";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ModalProductionOrdersMes } from "app/features/productionOrdersMes/components/ModalProductionOrdersMes.component";
 import { TableProductionOrdersMes } from "app/features/productionOrdersMes/components/TableProductionOrdersMes.component";
 import useFetchApi from "app/shared/hooks/useFetchApi";

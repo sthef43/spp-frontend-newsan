@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { Dotacion } from "app/features/ingenieria/modules/dotacionMantenimiento/pages/Dotacion/Dotacion";
 import { LayoutDotacionMantenimiento } from "app/features/ingenieria/modules/dotacionMantenimiento/layout/LayoutDotacionMantenimiento";
 import { MaestroPage } from "app/features/ingenieria/modules/maestro/pages/MaestroPage";

@@ -8,7 +8,7 @@ import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import _ from "lodash";
 import { IRoutes } from "../../../../models/IRoutes";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ManejoSistemaForm } from "app/features/manejoSistema/administarRutas/forms/ManejoSistemaForm";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 

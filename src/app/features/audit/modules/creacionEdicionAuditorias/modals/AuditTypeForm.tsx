@@ -5,9 +5,9 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { ILista } from "app/models/ILista";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ListaSliceRequests } from "app/Middleware/reducers/ListaSlice";
+import { ListaSliceRequests } from "app/features/audit/slices/ListaSlice";
 import useFetchApi from "app/shared/hooks/useFetchApi";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ListaTypeForm } from "./ListaTypeForm";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { AuditTypeSliceRequests } from "app/features/audit/slices/AuditTypeSlice";

@@ -38,7 +38,7 @@ import { ModelosSliceRequests } from "app/Middleware/reducers/ModelosSlice";
 import { SemielaboradoModelosSliceRequests } from "app/Middleware/reducers/SemielaboradoModelosSlice";
 import { SemielaboradoTipoSliceRequests } from "app/Middleware/reducers/SemielaboradoTipoSlice";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { UltimosLotesTable } from "app/features/produccion/components/UltimosLotesTable";
 import { ModeloCRUDAndList } from "app/features/produccion/modals/ModeloCRUDAndList";

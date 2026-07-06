@@ -14,7 +14,7 @@ import { ContinuarPalletModal } from "../Modals/ContinuarPalletModal";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { IOQCPalet } from "app/models/IOQCPalet";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { OQCPaletSliceRequests, oqcPaletSlice } from "app/features/oqcGeneral/slices/OQCPaletSlice";
 

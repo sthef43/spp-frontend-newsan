@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { IIniState } from "app/models";
 import { IAuditHistorico } from "../../../models/IAuditHistorico";
-import { AuditHistoricoService } from "../../../services/auditHistorico.service";
+import { AuditHistoricoService } from "../services/auditHistorico.service";
 
 const auditHistoricoService = new AuditHistoricoService();
 

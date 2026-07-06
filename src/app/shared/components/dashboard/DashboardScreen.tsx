@@ -7,7 +7,7 @@ import { Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { FirstLoginSlice } from "app/Middleware/reducers/FirstLoginSlice";
+import { FirstLoginSlice } from "app/features/cuenta/slices/FirstLoginSlice";
 import * as _ from "lodash";
 
 // import { onValue, ref } from "firebase/database";

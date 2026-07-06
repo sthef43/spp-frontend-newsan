@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable unused-imports/no-unused-vars */
-import { WhatsappMsgSliceRequests } from "app/Middleware/reducers/WhatsappMsgSlice";
+import { WhatsappMsgSliceRequests } from "app/features/admin/slices/WhatsappMsgSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import React, { useEffect, useState } from "react";
 import { WhatsappMsgForm } from "../Modals/WhatsappMsgFrom";
@@ -16,7 +16,7 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { plantSlice, PlantSliceRequests } from "app/Middleware/reducers";
 import { ILinea, IPlant } from "app/models";
 import { WhatsappMsgOpcionAsignacion } from "../Modals/WhatsappMsgOpcionAsignacion";
-import { WhatsappMsgOpcionAsignacionSliceRequest } from "app/Middleware/reducers/WhatsappMsgOpcionAsignacionSlice";
+import { WhatsappMsgOpcionAsignacionSliceRequest } from "app/features/admin/slices/WhatsappMsgOpcionAsignacionSlice";
 import { IWhatsappMsgOpcionAsignacion } from "app/models/IWhatsappMsgOpcionAsignacion";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { useForm } from "react-hook-form";

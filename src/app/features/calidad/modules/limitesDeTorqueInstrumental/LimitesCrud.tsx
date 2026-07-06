@@ -5,7 +5,7 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useAppDispatch } from "app/core/store/store";
 import { IGenerico } from "app/models";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { LimiteDialog } from "app/features/calidad/modules/limitesDeTorqueInstrumental/Components/LimiteDialog";
 import { LimiteCreate } from "app/features/calidad/modules/limitesDeTorqueInstrumental/Components/LimiteCreate";

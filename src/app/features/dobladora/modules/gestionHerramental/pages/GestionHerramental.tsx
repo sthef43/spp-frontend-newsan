@@ -4,7 +4,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { DobHHistorialSliceRequests } from "app/Middleware/reducers/DobHHistorialSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDobHHistorial } from "app/models/IDobHHistorial";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { GestionHerramentalForm } from "app/features/dobladora/modules/gestionHerramental/modals/GestionHerramentalForm";
 import { MovimientosMasivosForm } from "app/features/dobladora/modules/gestionHerramental/modals/MovimientosMasivosForm";

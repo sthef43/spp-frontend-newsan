@@ -19,7 +19,7 @@ import { HojaParametroSliceRequests } from "app/Middleware/reducers/HojaParametr
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser } from "app/models";
 import { IHojaParametro } from "app/models/IHojaParametro";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

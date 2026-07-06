@@ -11,7 +11,7 @@ import { ComercialGenerador } from "app/features/ingenieria/components/Comercial
 import { ComercialPrint } from "app/features/ingenieria/components/ComercialPrint";
 import { ComercialTable } from "app/features/supermercado/generaradorEtiquetas/components/ComercialTable";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

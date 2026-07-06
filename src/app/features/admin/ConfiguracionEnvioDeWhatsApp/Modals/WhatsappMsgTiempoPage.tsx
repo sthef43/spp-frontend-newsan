@@ -2,7 +2,7 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { WhatsappMsgTiempoSliceRequests } from "app/Middleware/reducers/WhatsappMsgTiempoSlice";
+import { WhatsappMsgTiempoSliceRequests } from "app/features/admin/slices/WhatsappMsgTiempoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
@@ -10,7 +10,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import { WhatsappMsgTiempoForm } from "./WhatsappMsgTiempoForm";
 import { IWhatsappMsgTiempo } from "app/models/IWhatsappMsgTiempo";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AccionAsignarPlanta } from "./AccionAsignarPlanta";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 

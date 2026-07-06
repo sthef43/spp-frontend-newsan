@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { IIniState } from "app/models";
 import { IAuditValoresResult } from "../../../models/IAuditValoresResult";
-import { AuditValoresResultService } from "../../../services/auditValoresResult.service";
+import { AuditValoresResultService } from "../services/auditValoresResult.service";
 
 const auditValoresResultService = new AuditValoresResultService();
 

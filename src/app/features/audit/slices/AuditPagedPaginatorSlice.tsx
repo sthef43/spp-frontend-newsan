@@ -1,6 +1,6 @@
 import { IAuditPagedPaginator } from "app/models/IAuditPagedPaginator";
 import { IIniState } from "app/models/IIniState";
-import { AuditPagedPaginatorService } from "app/services/auditPagedPaginator.service";
+import { AuditPagedPaginatorService } from "../services/auditPagedPaginator.service";
 import { createSlice } from "@reduxjs/toolkit";
 //<IAuth, IAuthUser>
 import { GenericSlice } from "../../../Middleware/reducers/genericSlice";

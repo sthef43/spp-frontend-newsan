@@ -8,7 +8,7 @@ import { AgregarFamiliaForm } from "app/features/trazabilidad/modules/lineaDePro
 import { LineaProduccionFamiliaSliceRequests } from "app/Middleware/reducers/LineaProduccionFamiliaSlice";
 import { Checkbox, FormControlLabel, IconButton, Tooltip, Chip } from "@mui/material";
 import { Add, Info } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { FamiliaInfo } from "app/features/trazabilidad/modules/lineaDeProduccion/modals/FamiliaInfo";
 import { ILineaProduccionFamilia } from "app/models/ILineaProduccionFamilia";
 import { IFamilia } from "app/models/IFamilia";

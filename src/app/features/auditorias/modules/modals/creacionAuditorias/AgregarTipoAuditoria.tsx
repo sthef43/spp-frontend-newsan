@@ -10,7 +10,7 @@ import { IAppUser } from "app/models";
 import { IAuditoriaListaValores } from "../../../models/IAuditoriaListaValores";
 import { AuditoriaListaValoresSliceRequest } from "../../../slices/AuditoriaListaValoresSlice";
 import { AddCircleRounded, InfoRounded } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AgregarAsignarValores } from "./AgregarAsignarValores";
 import { Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";

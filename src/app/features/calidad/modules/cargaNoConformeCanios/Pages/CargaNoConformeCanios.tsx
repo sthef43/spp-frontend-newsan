@@ -10,7 +10,7 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { DeleteRounded, EditRounded, PrintRounded } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RangoRechazosModal } from "../Modals/RangoRechazosModal";
 import { NoConformePDFImpresion } from "../Components/NoConformePDFImpresion";
 import FetchApi from "app/shared/helpers/FetchApi";

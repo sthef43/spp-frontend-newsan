@@ -18,7 +18,7 @@ import { TicketsGrupoProcesosSliceRequest } from "app/features/tickets/reducers/
 import { TicketsItemsProcesosResultadosSliceRequest } from "app/features/tickets/reducers/TicketsItemsProcesosResultadosSlice";
 import { TicketsSliceRequest } from "app/features/tickets/reducers/TicketsSlice";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ListaArchivosPreCargados } from "../../modals/DetallesTicketModal/ListaArchivosPreCargados";
 import { TicketsArchivosSliceRequest } from "app/features/tickets/reducers/TicketsArchivosSlice";
 import { TicketsCategoriaSliceRequest } from "app/features/tickets/reducers/TicketsCategoriaSlice";

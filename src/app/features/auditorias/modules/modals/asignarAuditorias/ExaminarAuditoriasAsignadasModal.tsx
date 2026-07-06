@@ -9,7 +9,7 @@ import { Avatar } from "@mui/material";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { EditRounded } from "@mui/icons-material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CrearNuevaAsignacion } from "./CrearNuevaAsignacion";
 
 interface Props {

@@ -9,7 +9,7 @@ import {
   Visibility
 } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { VerImagenCargadaModal } from "../VerImagenCargadaModal";
 import React, { useState } from "react";
 import { ITicketsArchivos } from "../../models/ITicketsArchivos";

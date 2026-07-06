@@ -9,7 +9,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { Receipt } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RecepcionarLpnPadreModal } from "../modals/RecepcionLpnPadre/RecepcionarLpnPadreModal";
 import { CLIContenedorItemsRecepcionBloqSliceRequest } from "app/features/cli/Middlewares/CLIContenedorItemsRecepcionBloqSlice";
 import { unwrapResult } from "@reduxjs/toolkit";

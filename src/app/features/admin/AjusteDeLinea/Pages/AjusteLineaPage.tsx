@@ -4,7 +4,7 @@ import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { ILinea, IPlant } from "app/models";
 import { IAjuste } from "app/models/IAjuste";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";

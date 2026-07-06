@@ -1,5 +1,5 @@
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { LotesPendientes } from "app/features/gerencia/lotesPendientes/LotesPendientes";
 import { PedidoMaterialesPage } from "app/features/gerencia/pedidoMateriales/pages/PedidoMaterialesPage";
 import { DashboardMain } from "app/features/gerencia/dashboard/DashboardPage";

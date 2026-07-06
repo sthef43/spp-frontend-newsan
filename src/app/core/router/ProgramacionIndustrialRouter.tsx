@@ -2,7 +2,7 @@ import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { InformesPIPage } from "app/features/programacionIndustrial/informesProgramacionIndustrial/pages/InformesPIPage";
 import { PaniolPage } from "app/features/programacionIndustrial/controlPañolPI/pages/PaniolPage";
 export const ProgramacionIndustrialRouter = (props: any): JSX.Element => {

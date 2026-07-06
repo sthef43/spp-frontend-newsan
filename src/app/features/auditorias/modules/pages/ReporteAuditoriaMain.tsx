@@ -14,7 +14,7 @@ import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
 import { PersonAddAlt1Rounded, ThumbDownAltRounded, Visibility } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AsignarSeguimiento } from "../modals/reporteAuditoria/AsignarSeguimiento";
 import { IAuditoriasHistorico } from "../../models/IAuditoriasHistorico";
 import { DarBajaAuditoria } from "../modals/reporteAuditoria/DarBajaAuditoria";

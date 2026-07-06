@@ -4,7 +4,7 @@ import React, { useContext, useState } from "react";
 import { ContextApp } from "../../../Context/Context";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { IOQCSupervisoresMotorola } from "app/models/IOQCSupervisoresMotorola";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { Delete, Edit } from "@mui/icons-material";
 import { AgregarEditarSupervisoresModal } from "./AgregarEditarSupervisoresModal";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";

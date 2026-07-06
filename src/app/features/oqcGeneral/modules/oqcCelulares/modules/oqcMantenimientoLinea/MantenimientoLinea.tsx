@@ -22,7 +22,7 @@ import { IModelo } from "app/models/IModelo";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EditarModelo } from "./EditarModelo";
 import { IOperator } from "app/models";
 import { ClonarModelo } from "./ClonarModelo";

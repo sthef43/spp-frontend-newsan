@@ -1,12 +1,8 @@
 /* eslint-disable unused-imports/no-unused-vars */
-
 import { colors } from "@mui/material";
-import {
-  alpha,
-} from "@mui/material/styles";
-import { makeStyles } from "@mui/styles";
+import { alpha } from "@mui/material/styles";
 
-export const MaterialButtons = makeStyles((theme) => ({
+const buttonStyles = {
   purpleButton: {
     color: "white",
     backgroundColor: colors.purple[500],
@@ -62,7 +58,6 @@ export const MaterialButtons = makeStyles((theme) => ({
       backgroundColor: alpha(colors.grey[600], 0.12)
     }
   },
-  //Tickets, lo unico que cambia es que si el fondo es completamente negro, estos se adaptan para que se distinga entre los botones disabled
   orangeButton: {
     color: "white",
     backgroundColor: colors.orange[600],
@@ -70,7 +65,7 @@ export const MaterialButtons = makeStyles((theme) => ({
       backgroundColor: colors.orange[700]
     },
     "&:disabled": {
-      color: "White",
+      color: "white",
       backgroundColor: alpha(colors.grey[500], 0.12)
     }
   },
@@ -107,9 +102,9 @@ export const MaterialButtons = makeStyles((theme) => ({
       backgroundColor: alpha(colors.grey[500], 0.12)
     }
   }
-}));
+};
 
-export const IconButtons = makeStyles((theme) => ({
+const iconStyles = {
   purpleIcon: {
     color: colors.purple[500],
     "&:hover": {
@@ -129,6 +124,80 @@ export const IconButtons = makeStyles((theme) => ({
     color: colors.yellow[500],
     "&:hover": {
       backgroundColor: alpha(colors.yellow[500], 0.1)
-    },
+    }
   }
-}));
+};
+
+function styleObjectToCss(selector: string, styles: any): string {
+  let css = `${selector} {`;
+  const nestedRules: string[] = [];
+
+  for (const [key, value] of Object.entries(styles)) {
+    if (typeof value === "object" && value !== null) {
+      const nestedParts = key
+        .split(",")
+        .map((part) => {
+          let p = part.replace(/&/g, selector);
+          if (p.includes(":disabled")) {
+            p = `${p}, ${p.replace(":disabled", ".Mui-disabled")}`;
+          }
+          return p;
+        })
+        .join(",");
+      nestedRules.push(styleObjectToCss(nestedParts, value));
+    } else {
+      const cssKey = key.replace(/([A-Z])/g, "-$1").toLowerCase();
+      css += `${cssKey}: ${value}; `;
+    }
+  }
+
+  css += "}";
+  return css + "\n" + nestedRules.join("\n");
+}
+
+let isStylesInjected = false;
+
+function injectStyles() {
+  if (isStylesInjected || typeof document === "undefined") return;
+
+  let cssString = "";
+
+  for (const [className, styles] of Object.entries(buttonStyles)) {
+    cssString += styleObjectToCss(`.mui-btn-${className}`, styles) + "\n";
+  }
+
+  for (const [className, styles] of Object.entries(iconStyles)) {
+    cssString += styleObjectToCss(`.mui-icon-${className}`, styles) + "\n";
+  }
+
+  const styleTag = document.createElement("style");
+  styleTag.setAttribute("data-mui-buttons", "true");
+  styleTag.innerHTML = cssString;
+  document.head.appendChild(styleTag);
+
+  isStylesInjected = true;
+}
+
+export const MaterialButtons = () => {
+  injectStyles();
+  return {
+    purpleButton: "mui-btn-purpleButton",
+    greenButton: "mui-btn-greenButton",
+    yellowButton: "mui-btn-yellowButton",
+    blueButton: "mui-btn-blueButton",
+    redButton: "mui-btn-redButton",
+    orangeButton: "mui-btn-orangeButton",
+    blueButtonTickets: "mui-btn-blueButtonTickets",
+    greenButtonTickets: "mui-btn-greenButtonTickets",
+    purpleButtonTickets: "mui-btn-purpleButtonTickets"
+  };
+};
+
+export const IconButtons = () => {
+  injectStyles();
+  return {
+    purpleIcon: "mui-icon-purpleIcon",
+    greenIcon: "mui-icon-greenIcon",
+    yellowIcon: "mui-icon-yellowIcon"
+  };
+};

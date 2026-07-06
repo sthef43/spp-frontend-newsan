@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 import { AuditDispositivosPage } from "app/features/seguridadEHigiene/formularioDispositivos/pages/AuditDispositivosPage";
-import { ProtectedRoute } from "app/shared/components/ProtectedRoute";
+import { ProtectedRoute } from "app/shared/components/guards/ProtectedRoute";
 import { RoutesUserContext } from "app/shared/components/dashboard/DashboardScreen";
 import { ExtintorPage } from "app/features/seguridadEHigiene/extintores/pages/ExtintorPage";
 import { AuditoriasPage } from "app/features/seguridadEHigiene/auditoriasPersonal/pages/auditorias/pages/auditoriaDetallePage/AuditoriasPage";

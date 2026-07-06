@@ -10,7 +10,7 @@ import { IIntRemitoPadre } from "app/models/IIntRemitoPadre";
 import { IntDarsenaProgramar } from "app/features/contenedor/modules/intDarsenas/modals/IntDarsenaProgramar";
 import { IntVerContenidoRemitoPadre } from "app/features/contenedor/modules/intDarsenas/modals/IntVerContenidoRemitoPadre";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";

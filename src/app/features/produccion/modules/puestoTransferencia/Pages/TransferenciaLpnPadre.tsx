@@ -12,7 +12,7 @@ import FetchApi from "app/shared/helpers/FetchApi";
 import { IconButton, Tooltip } from "@mui/material";
 import { MultipleStop, Visibility } from "@mui/icons-material";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ExaminarContenidoModal } from "../modals/TransferirPlacas/ExaminarContenidoModal";
 import { TransferirPlacasModal } from "../modals/TransferirPlacas/TransferirPlacasModal";
 import { unwrapResult } from "@reduxjs/toolkit";

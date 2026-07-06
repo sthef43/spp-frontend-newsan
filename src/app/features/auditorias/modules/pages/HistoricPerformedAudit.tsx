@@ -11,7 +11,7 @@ import { Stepper } from "@mui/material";
 import { StepConnector } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
-import { RegistrySliceRequests } from "app/Middleware/reducers/RegistrySlice";
+import { RegistrySliceRequests } from "app/features/auditorias/slices/RegistrySlice";
 import { IRegistry } from "app/models/IRegistry";
 import { IAppUser } from "app/models/IAppUser";
 import { AuditTypeMatcher } from "app/features/audit/modules/global/components/AuditTypeMatcher";

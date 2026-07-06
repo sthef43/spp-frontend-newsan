@@ -12,7 +12,7 @@ import { Accordion, AccordionDetails, AccordionSummary, Icon, ListItemIcon } fro
 import { useHistory } from "react-router-dom";
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import { authenticationSlice } from "app/Middleware/reducers/AuthenticationSlice";
+import { authenticationSlice } from "app/features/cuenta/slices/AuthenticationSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IOperator, IPermisos } from "app/models";
 

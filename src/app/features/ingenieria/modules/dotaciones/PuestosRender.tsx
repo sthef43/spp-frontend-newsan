@@ -2,11 +2,11 @@ import { IconButton, Typography } from "@mui/material";
 import React, { useState } from "react";
 import { IDotaSector } from "app/models/IDotaSector";
 import { IDotaSectorPuesto } from "app/models/IDotaSectorPuesto";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { DotacionEditCantidad } from "./DotacionEditCantidad";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "app/core/store/store";
-import { DotaSectorPuestoSliceRequests } from "app/Middleware/reducers/DotaSectorPuestoSlice";
+import { DotaSectorPuestoSliceRequests } from "app/features/ingenieria/slices/DotaSectorPuestoSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { Delete, Edit } from "@mui/icons-material";
 interface props {

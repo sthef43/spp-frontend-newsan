@@ -1,7 +1,7 @@
 import { Accordion, AccordionDetails, AccordionSummary, Button, Typography } from "@mui/material";
 import React, { useState } from "react";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { DotaPuestoForm } from "./DotaPuestoForm";
 import { DotaSectorForm } from "./DotaSectorForm";
 import { DotaFamiliaForm } from "./DotaFamiliaForm";

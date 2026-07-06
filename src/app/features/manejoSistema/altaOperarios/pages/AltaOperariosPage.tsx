@@ -1,5 +1,5 @@
 import { OperatorSliceRequests } from "app/Middleware/reducers/OperatorSlice";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import React, { useEffect, useState } from "react";
 import { AltaOperarioForm } from "../form/AltaOperarioForm";

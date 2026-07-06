@@ -21,7 +21,7 @@ import {
   getRechazoComponent
 } from "app/shared/helpers/resumenRechazoFunciones";
 import ModalRechazoGrupal from "../modals/ModalRechazoGrupal";
-import { ModalCompoment } from "app/shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RechazoMultipleSliceRequests } from "app/Middleware/reducers/rechazoMultipleSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "app/core/store/store";
