@@ -4,7 +4,6 @@ import { Button, FormControl, InputLabel, MenuItem, Select, TextField, Theme } f
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { IEstadoLote } from "app/models/IEstadoLote";
-import { EstadoLoteSliceRequests } from "app/Middleware/reducers/EstadoLoteSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { IPlanProd } from "app/models/IPlanProd";
@@ -35,6 +34,7 @@ import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";
 import { NumerosSinInicio } from "app/features/calidad/modules/cargaNoConforme/modal/NumerosSinInicio";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { oqcDesignadaResultadoSlice } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";
+import { EstadoLoteSliceRequests } from "app/features/calidad/slices/EstadoLoteSlice";
 
 interface props {
   ultimaTraza?: IInicio;

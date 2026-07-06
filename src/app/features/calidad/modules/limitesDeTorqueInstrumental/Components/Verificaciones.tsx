@@ -1,6 +1,5 @@
 import { Button, Divider, FormControl, FormControlLabel, FormGroup, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { LimitesSliceRequests } from "app/Middleware/reducers/LimitesSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { ILimites } from "app/models";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
@@ -17,6 +16,7 @@ import { LimitesTrazaSliceRequests } from "app/Middleware/reducers/LimitesTrazaS
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { OperatorSliceRequests } from "app/Middleware/reducers/OperatorSlice";
+import { LimitesSliceRequests } from "app/features/calidad/slices/LimitesSlice";
 
 interface props {
   limite: number;

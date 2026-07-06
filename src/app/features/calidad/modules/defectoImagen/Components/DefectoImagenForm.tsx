@@ -1,9 +1,9 @@
 import { Autocomplete, FormControl, FormHelperText, TextField } from "@mui/material";
-import { DefectoImagenSliceRequest } from "app/Middleware/reducers/DefectoImagenSlice";
-import { DefectoSliceRequest } from "app/Middleware/reducers/DefectoSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
-import { OrigenesSliceRequest } from "app/Middleware/reducers/OrigenSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
+import { DefectoImagenSliceRequest } from "app/features/calidad/slices/DefectoImagenSlice";
+import { DefectoSliceRequest } from "app/features/calidad/slices/DefectoSlice";
+import { OrigenesSliceRequest } from "app/features/calidad/slices/OrigenSlice";
 import { IDefecto } from "app/models/IDefecto";
 import { IDefectoImagen } from "app/models/IDefectoImagen";
 import { IOrigenes } from "app/models/IOrigen";

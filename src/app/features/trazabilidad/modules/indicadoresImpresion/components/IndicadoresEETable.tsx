@@ -7,7 +7,7 @@ import { IEtiquetasIndicadoresEE } from "app/models/IEtiquetasIndicadoresEE";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React from "react";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import { IndicadoresEEForm } from "./IndicadoresEEForm";
 interface Props {

@@ -1,5 +1,5 @@
 import { IDotacion } from "app/features/ingenieria/modules/dotacionMantenimiento/models/IDotacion";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 import { IDotacionGrupoSectoresBloque } from "app/features/ingenieria/modules/dotacionMantenimiento/models/IDotacionGrupoSectoresBloque";
 import { DatosDotacionDto } from "app/features/ingenieria/modules/dotacionMantenimiento/models/DTOS/DatosDotacionDTO";
@@ -14,7 +14,7 @@ export class DotacionService extends GenericService<IDotacion> {
       axios
         .get<IDotacion[]>(
           `${import.meta.env.VITE_API_URL}/${
-            this.url
+            this.Url
           }/GetAllByMPLPDH/${modelo}/${proveedor}/${linea}/${potencia}/${fechaDesde}/${fechaHasta}`
         )
         .then(function (response) {
@@ -29,7 +29,7 @@ export class DotacionService extends GenericService<IDotacion> {
   public GetAllByDates(fechaDesde: string, fechaHasta: string): Promise<IDotacion[]> {
     return new Promise((resolve, reject) => {
       axios
-        .get<IDotacion[]>(`${import.meta.env.VITE_API_URL}/${this.url}/GetAllByDates/${fechaDesde}/${fechaHasta}`)
+        .get<IDotacion[]>(`${import.meta.env.VITE_API_URL}/${this.Url}/GetAllByDates/${fechaDesde}/${fechaHasta}`)
         .then(function (response) {
           resolve(response.data);
         })
@@ -43,7 +43,7 @@ export class DotacionService extends GenericService<IDotacion> {
     return new Promise((resolve, reject) => {
       axios
         .get<IDotacionGrupoSectoresBloque[]>(
-          `${import.meta.env.VITE_API_URL}/${this.url}/GetDotacionBySector/${dotacionId}`
+          `${import.meta.env.VITE_API_URL}/${this.Url}/GetDotacionBySector/${dotacionId}`
         )
         .then(function (response) {
           resolve(response.data);

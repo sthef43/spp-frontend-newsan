@@ -4,7 +4,7 @@ import { IOQC } from "app/models/IOQC";
 import React, { useEffect, useState } from "react";
 import { TableComponent } from "../../../../../../shared/components/Table/TableComponent";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCForm } from "./OQCForm";
 import { OQCAsignarForm } from "./OQCAsignarForm";
 import { OQCAsignadas } from "./OQCAsignadas";

@@ -10,7 +10,7 @@ import { ICtrlPlacasTipoMuestra } from "app/models/ICtrlPlacasTipoMuestra";
 import { Button, IconButton, Tooltip } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { CtrlPlacasTipoMuestraSliceRequest } from "app/Middleware/reducers/CtrlPlacasTipoMuestraSlice";
+import { CtrlPlacasTipoMuestraSliceRequest } from "app/features/calidad/slices/CtrlPlacasTipoMuestraSlice";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;

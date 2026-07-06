@@ -9,7 +9,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import produce from "immer";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "../../../../shared/components/Table/TableComponent";
 import { PaniolForm } from "../modals/PaniolForm";
 import { PaniolMovimiento } from "../modals/PaniolMovimiento";

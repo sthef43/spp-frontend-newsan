@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { IIniState } from "app/models";
-import { ICtrlPlacasTipoMuestra } from "../../models/ICtrlPlacasTipoMuestra";
-import { CtrlPlacasTipoMuestraService } from "../../services/ctrlPlacasTipoMuestra.service";
+import { ICtrlPlacasTipoMuestra } from "app/models/ICtrlPlacasTipoMuestra";
+import { CtrlPlacasTipoMuestraService } from "app/features/calidad/services/ctrlPlacasTipoMuestra.service";
 
 const ctrlPlacasTipoMuestraService = new CtrlPlacasTipoMuestraService()
 

@@ -10,9 +10,9 @@ import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { OrigenesSliceRequest } from "app/Middleware/reducers/OrigenSlice";
 import { IOrigenes } from "app/models/IOrigen";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { OrigenesSliceRequest } from "app/features/calidad/slices/OrigenSlice";
 
 interface props {
   codRechazoId: string;

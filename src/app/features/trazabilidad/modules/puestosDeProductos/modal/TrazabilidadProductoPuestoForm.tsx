@@ -5,7 +5,9 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { ITrazaProductoPuesto } from "app/models";
-import { PuestoSliceRequests, TrazaProductoPuestoSliceRequests } from "app/Middleware/reducers";
+import { PuestoSliceRequests } from "app/features/trazabilidad/slices/PuestoSlice";
+import { TrazaProductoPuestoSliceRequests } from "app/features/trazabilidad/slices/TrazaProductoPuestoSlice";
+
 import { unwrapResult } from "@reduxjs/toolkit";
 interface props {
   setOpenPopup: any;

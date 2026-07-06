@@ -1,8 +1,8 @@
 import { IReprocesoLote } from "app/models/IReprocesoLote";
 import { IIniState } from "app/models/IIniState";
-import { ReprocesoLoteService } from "app/services/reprocesoLote.service";
+import { ReprocesoLoteService } from "app/features/calidad/services/reprocesoLote.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>
 const reprocesoLoteService = new ReprocesoLoteService();
 

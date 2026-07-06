@@ -9,7 +9,7 @@ import { Button, FormControl, FormHelperText, TextField } from "@mui/material";
 import { IIntRemito } from "app/models/IIntRemito";
 import { IntRemitoSliceRequests } from "app/Middleware/reducers/IntRemitoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IntVerContenido } from "../../../modals/IntVerContenido";
 interface props {
   setOpenPopup: any;

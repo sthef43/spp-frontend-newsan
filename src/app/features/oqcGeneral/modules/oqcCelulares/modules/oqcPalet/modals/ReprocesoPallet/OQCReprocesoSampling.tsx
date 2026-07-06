@@ -10,7 +10,7 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MaterialButtons } from "../../../../../../../../shared/components/material-ui/MaterialButtons";
 import { IOQCNuevoPallet } from "app/models/IOQCNuevoPallet";
-import { ModalCompoment } from "../../../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCHallazgos } from "./OQCHallazgos";
 import { IOQCBloqueHallazgo } from "app/models/IOQCBloqueHallazgo";
 import { IOQCDesignadaResultado } from "app/models/IOQCDesignadaResultado";

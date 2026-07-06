@@ -1,5 +1,5 @@
-import { GenericService } from "./generic.service";
 import { IWhatsappMsg } from "app/models/IWhatsappMsg";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 
 export class WhatsappMsgService extends GenericService<IWhatsappMsg> {
@@ -12,8 +12,12 @@ export class WhatsappMsgService extends GenericService<IWhatsappMsg> {
     return new Promise<IWhatsappMsg[]>((resolve, reject) => {
       axios
         .get<IWhatsappMsg[]>(`${import.meta.env.VITE_API_URL}/${this.Url}/GetAllByWhatsapAsignacionId/${asignacionId}`)
-        .then((response) => { resolve(response.data) })
-        .catch((error) => { reject(error) })
-    })
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
   }
 }

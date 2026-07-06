@@ -26,7 +26,7 @@ import { IntRemitoSliceRequests } from "app/Middleware/reducers/IntRemitoSlice";
 import { IntDetalleSliceRequests } from "app/Middleware/reducers/IntDetalleSlice";
 import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IIntRecepcionBloq } from "app/models/IIntRecepcionBloq";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { IntRecepcionBloqSliceRequest } from "app/Middleware/reducers/IntRecepcionBloqSlice";

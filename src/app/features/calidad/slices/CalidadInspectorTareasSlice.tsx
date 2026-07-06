@@ -1,9 +1,9 @@
 import { IIniState } from "app/models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GenericSlice } from "./genericSlice";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { ICalidadInspectorTareas } from "app/models/ICalidadInspectorTareas";
-import { CalidadInspectorTareasService } from "app/services/calidad-inspector-tareas.service";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { CalidadInspectorTareasService } from "app/features/calidad/services/calidad-inspector-tareas.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 
 const calidadInspectorTareasService = new CalidadInspectorTareasService();
 

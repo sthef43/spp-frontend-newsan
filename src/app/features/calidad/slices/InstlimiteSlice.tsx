@@ -1,8 +1,8 @@
 import { IInstlimite } from "app/models";
 import { IIniState } from "app/models/IIniState";
-import { InstlimiteService } from "app/services/instlimite.service";
+import { InstlimiteService } from "app/features/calidad/services/instlimite.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>
 const instlimiteService = new InstlimiteService();
 

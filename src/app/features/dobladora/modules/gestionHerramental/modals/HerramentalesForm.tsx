@@ -27,7 +27,7 @@ import { DobHProveedorSliceRequests } from "app/Middleware/reducers/DobHProveedo
 import { DobHRadioMedioSliceRequests } from "app/Middleware/reducers/DobHRadioMedioSlice";
 import { DobHEstadoSliceRequests } from "app/Middleware/reducers/DobHEstadoSlice";
 import { Image } from "@mui/icons-material";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { HerramentalImage } from "../../../modals/HerramentalImage";
 import { GenericImageUploadSliceRequests } from "app/Middleware/reducers/GenericImageUploadSlice";
 interface props {

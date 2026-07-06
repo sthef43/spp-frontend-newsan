@@ -9,7 +9,8 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { IProducto } from "app/models";
-import { ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+
 import { IconButton, Tooltip, useTheme } from "@mui/material";
 import { Delete, Edit, TouchApp, Visibility } from "@mui/icons-material";
 import { AsignacionLinea } from "./AsignacionLinea";

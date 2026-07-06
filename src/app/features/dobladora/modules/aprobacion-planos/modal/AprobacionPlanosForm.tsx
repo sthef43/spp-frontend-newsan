@@ -20,7 +20,7 @@ import { AppUserSliceRequests } from "app/Middleware/reducers/AppUserSlice";
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { DobEstadoPlanoSliceRequests } from "app/Middleware/reducers/DobEstadoPlanoSlice";
 import { Image } from "@mui/icons-material";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AprobacionPlanosImage } from "./AprobacionPlanosImage";
 import { GenericImageUploadSliceRequests } from "app/Middleware/reducers/GenericImageUploadSlice";
 import { RolSliceRequests } from "app/features/manejoSistema/slices/RolSlice";

@@ -13,8 +13,8 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
-import { ModalCompoment } from "../../ModalComponent";
 import { CambiarModuloPrioridadModal } from "../Modals/CambiarModuloPrioridadModal";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface Props {
   listaRoutes: IRoutes[];

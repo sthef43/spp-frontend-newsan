@@ -1,16 +1,15 @@
 import { IIniState } from "app/models/IIniState";
-import {  createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
 import { ICalidadInspeccionTarea } from "app/models/ICalidadInspeccionTarea";
-import { CalidadInspeccionTareaService } from "app/services/calidadInspeccionTarea.service";
-import { GenericSlice } from "./genericSlice";
-
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { CalidadInspeccionTareaService } from "../services/calidadInspeccionTarea.service";
 
 const calidadInspeccionTareaService = new CalidadInspeccionTareaService();
 
-class CalidadInspeccionTareaClassSlice  extends GenericSlice<ICalidadInspeccionTarea> { 
+class CalidadInspeccionTareaClassSlice extends GenericSlice<ICalidadInspeccionTarea> {
   constructor(private service: CalidadInspeccionTareaService) {
-    super("CalidadInspeccionTarea",service)
+    super("CalidadInspeccionTarea", service);
   }
   //Nuevos endpoints que no heredan de generic
 }

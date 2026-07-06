@@ -1,12 +1,12 @@
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { MainRegSliceRequests } from "app/Middleware/reducers/MainRegSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IMainReg } from "app/models/IMainReg";
 import { BaseCajaVerificacionTable } from "app/features/calidad/modules/verificarEquipos/components/Tables/BaseCajaVerificacionTable";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import _ from "lodash";
 import React, { useMemo, useState } from "react";
+import { MainRegSliceRequests } from "app/features/calidad/slices/MainRegSlice";
 
 export const BaseCajaVerificacionPage = (): JSX.Element => {
   const dispatch = useAppDispatch();

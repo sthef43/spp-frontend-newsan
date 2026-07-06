@@ -13,7 +13,7 @@ import { MQfunc } from "../../../shared/components/material-ui/breakpoints";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { TableComponent } from "../../../shared/components/Table/TableComponent";
 import { TipoUnidadSliceRequests } from "app/Middleware/reducers/TipoUnidadSlice";
-import { ModalCompoment } from "../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CrudTipoUnidad } from "./CrudTipoUnidad";
 import { Edit } from "@mui/icons-material";
 import { IModelos } from "app/models";

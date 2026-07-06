@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { GestionCaniosForm } from "./GestionCaniosForm";
 import { IDobCaniosSub } from "app/models/IDobCaniosSub";
 import { Controller, useForm } from "react-hook-form";

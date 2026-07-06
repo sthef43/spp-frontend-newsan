@@ -2,15 +2,15 @@ import React, { useEffect } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { Check, Clear, Verified } from "@mui/icons-material";
 import { ILimites, ILimitesTraza } from "app/models";
-import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
 import { Verificaciones } from "./Verificaciones";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useAppDispatch } from "app/core/store/store";
 import { LimitesTrazaSliceRequests } from "app/Middleware/reducers/LimitesTrazaSlice";
 import moment from "moment";
 import produce from "immer";
-import TitleUIComponent from "../../../../../shared/components/helpComponents/TitleUIComponent";
+import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
+import { TableComponent } from "app/shared/components/Table/TableComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface props {
   limites: ILimites[];

@@ -1,8 +1,8 @@
 import { IAtornilladoraFormato } from "app/models";
 import { IIniState } from "app/models/IIniState";
-import { AtornilladoraFormatoService } from "app/services/atornilladoraFormato.service";
+import { AtornilladoraFormatoService } from "app/features/calidad/services/atornilladoraFormato.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>
 const atornilladoraFormatoService = new AtornilladoraFormatoService();
 

@@ -4,7 +4,7 @@ import { TableComponent } from "../../../../../shared/components/Table/TableComp
 import moment from "moment";
 import { IconButton } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AutomotrizTesteosModal } from "./automotrizTesteosModal";
 
 interface Props {

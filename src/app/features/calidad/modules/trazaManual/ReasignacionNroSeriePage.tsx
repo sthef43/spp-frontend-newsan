@@ -9,14 +9,14 @@ import "animate.css";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { TrazaManualSliceRequests } from "app/Middleware/reducers/TrazaManualSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { ITrazaManual } from "app/models/ITrazaManual";
-import { TrazaManualHistorySliceRequests } from "app/Middleware/reducers/TrazaManualHistorySlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { ITrazaManualHistory } from "app/models/ITrazaManualHistory";
 import _ from "lodash";
 import moment from "moment";
+import { TrazaManualHistorySliceRequests } from "../../slices/TrazaManualHistorySlice";
+import { TrazaManualSliceRequests } from "../../slices/TrazaManualSlice";
 
 const initialState = {
   codigoNewsan: "",

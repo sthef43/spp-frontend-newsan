@@ -5,7 +5,7 @@ import { IOQCDesignada } from "app/models/IOQCDesignada";
 import { IconButton, Tooltip } from "@mui/material";
 import { CheckBoxOutlined, GradingRounded } from "@mui/icons-material";
 import { useHistory } from "react-router-dom";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCPalet } from "./OQCPalet";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { oqcDesignadaSlice } from "app/features/oqcGeneral/slices/OQCDesignadaSlice";

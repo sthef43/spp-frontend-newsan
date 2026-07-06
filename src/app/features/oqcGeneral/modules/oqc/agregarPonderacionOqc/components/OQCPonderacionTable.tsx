@@ -4,7 +4,7 @@ import { IOQCPonderacion } from "app/models/IOQCPonderacion";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState } from "react";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import { TableComponent } from "../../../../../../shared/components/Table/TableComponent";
 import { OQCPonderacionForm } from "./OQCPonderacionForm";

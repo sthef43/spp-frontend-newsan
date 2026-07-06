@@ -4,7 +4,7 @@ import { IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { TableComponent } from "../../../shared/components/Table/TableComponent";
 import { IPlanProd } from "app/models";
-import { ModalCompoment } from "../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ProduccionDialog } from "../../produccion/modules/gestionProduccion/modals/ProduccionDialog";
 
 interface props {

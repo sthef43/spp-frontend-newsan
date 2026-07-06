@@ -17,7 +17,6 @@ import {
 import Skeleton from "@mui/material/Skeleton";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
 import useFetchApi from "app/shared/hooks/useFetchApi";
 import { IAuditBloq } from "app/models/IAuditBloq";
 import { BloqSliceRequests } from "app/features/audit/slices/BloqSlice";
@@ -34,6 +33,8 @@ import { AuditImageBloq } from "app/features/audit/modules/creacionEdicionAudito
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { AuditBloqForm } from "../modals/AuditBloqForm";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
+
 export const ArrAuditBloqSelector = (props: {
   callback: (ArrAuditBloq: IAuditBloq[]) => void;
   showButton: boolean;

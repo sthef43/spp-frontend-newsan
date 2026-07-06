@@ -1,8 +1,8 @@
 import { Button, FormControl, FormControlLabel, FormHelperText, Switch, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CalidadInspeccionTareaSliceRequest } from "app/Middleware/reducers/CalidadInspeccionTareaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
+import { CalidadInspeccionTareaSliceRequest } from "app/features/calidad/slices/CalidadInspeccionTareaSlice";
 import { ICalidadInspeccionTarea } from "app/models/ICalidadInspeccionTarea";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

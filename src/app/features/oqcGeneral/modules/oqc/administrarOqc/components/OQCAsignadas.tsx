@@ -7,7 +7,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { IOQC } from "app/models/IOQC";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCAsignarForm } from "./OQCAsignarForm";
 import { OQCDesignadaSliceRequests, oqcDesignadaSlice } from "app/features/oqcGeneral/slices/OQCDesignadaSlice";
 interface IOQCAsignadas {

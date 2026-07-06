@@ -1,6 +1,6 @@
 import { IAuditTracking } from "app/models/IAuditTracking";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class AuditTrackingService extends GenericService<IAuditTracking> {
   url = "AuditTracking";

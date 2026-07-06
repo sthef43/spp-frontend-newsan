@@ -12,7 +12,8 @@ import { FormControl, IconButton, InputLabel, MenuItem, Select } from "@mui/mate
 import { Delete, Edit } from "@mui/icons-material";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { IPlant, IProducto } from "app/models";
-import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+import { PlantSliceRequests } from "app/Middleware/reducers";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import _ from "lodash";
 

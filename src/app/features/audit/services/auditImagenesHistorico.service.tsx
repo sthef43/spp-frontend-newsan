@@ -1,7 +1,7 @@
 import { SubirImagenesAuditHistoricoDTO } from "app/models/DTO/SubirImagenesAuditHistoricoDTO";
 import { GenericService } from "app/services/generic.service";
 import axios from "axios";
-import { IAuditImagenesHistorico } from "../models/IAuditImagenesHistorico";
+import { IAuditImagenesHistorico } from "app/models/IAuditImagenesHistorico";
 
 export class AuditImagenesHistoricoService extends GenericService<IAuditImagenesHistorico> {
   Url = "AuditImagenesHistorico";

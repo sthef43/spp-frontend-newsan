@@ -1,12 +1,12 @@
 import { TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CajaElectricaLGSliceRequests } from "app/Middleware/reducers/CajaElectricaLGSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IcajaElectricaLG } from "app/models/IcajaElectricaLG";
 import { TestingLGVerificacionTable } from "app/features/calidad/modules/verificarEquipos/components/Tables/TestingLGVerificacionTable";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import _ from "lodash";
 import React, { useEffect, useMemo, useState } from "react";
+import { CajaElectricaLGSliceRequests } from "app/features/calidad/slices/CajaElectricaLGSlice";
 
 export const TestingLGVerificacionPage = (): JSX.Element => {
   const dispatch = useAppDispatch();

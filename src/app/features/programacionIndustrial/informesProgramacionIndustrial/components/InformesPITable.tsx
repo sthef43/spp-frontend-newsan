@@ -7,7 +7,7 @@ import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState } from "react";
 import TitleUIComponent from "../../../../shared/components/helpComponents/TitleUIComponent";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "../../../../shared/components/Table/TableComponent";
 import { InformesPIForm } from "../modals/InformesPIForm";
 interface Props {

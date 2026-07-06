@@ -1,5 +1,4 @@
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CalidadInspectorSliceRequest } from "app/Middleware/reducers/CalidadInspectorSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ICalidadInspector } from "app/models/ICalidadInspector";
@@ -11,6 +10,7 @@ import CalidadInspectorForm from "./CalidadInspectorForm";
 import { Edit, Delete } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
+import { CalidadInspectorSliceRequest } from "app/features/calidad/slices/CalidadInspectorSlice";
 
 const CalidadInspectorTable = () => {
   const dispatch = useAppDispatch();

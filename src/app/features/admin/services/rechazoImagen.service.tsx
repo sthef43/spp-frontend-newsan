@@ -1,5 +1,5 @@
-import { GenericService } from "./generic.service";
-import { IRechazoImagen } from "../models/IRechazoImagen";
+import { IRechazoImagen } from "app/models/IRechazoImagen";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 export class RechazoImagenService extends GenericService<IRechazoImagen> {
   url = "RechazoImagen";

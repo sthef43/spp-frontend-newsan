@@ -1,7 +1,7 @@
 import { IIniState } from "app/models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { CompresorService } from "app/services/compresor.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { CompresorService } from "app/features/calidad/services/compresor.service";
 import { ICompresor } from "app/models/ICompresor";
 //<IAuth, IAuthUser>
 const compresorService = new CompresorService();

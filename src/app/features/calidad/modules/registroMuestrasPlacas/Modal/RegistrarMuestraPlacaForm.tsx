@@ -9,7 +9,6 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CtrlPlacasHallazgosSliceRequests } from "app/Middleware/reducers/CtrlPlacasHallazgosSlice";
 import { TrazaOperacionesSliceRequests, TrazaOperacionSlice } from "app/Middleware/reducers/TrazaOperacionesSlice";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RegistrarHallazgoForm } from "app/features/calidad/modules/registroMuestrasPlacas/Modal/RegistrarHallazgoForm";
@@ -20,7 +19,6 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { SelectComponent } from "app/features/cli/Components/SelectComponent";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { ICtrlPlacasTipoMuestra } from "app/models/ICtrlPlacasTipoMuestra";
-import { CtrlPlacasTipoMuestraSliceRequest } from "app/Middleware/reducers/CtrlPlacasTipoMuestraSlice";
 import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
 import { ICtrlPlacasHallazgos } from "app/models/ICtrlPlacasHallazgos";
 import { Tooltip } from "@mui/material";
@@ -35,6 +33,8 @@ import { ICtrlPlacas } from "app/models/ICtrlPlacas";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { RegistrarTipoMuestraForm } from "./RegistrarTipoMuestraForm";
+import { CtrlPlacasHallazgosSliceRequests } from "app/features/calidad/slices/CtrlPlacasHallazgosSlice";
+import { CtrlPlacasTipoMuestraSliceRequest } from "app/features/calidad/slices/CtrlPlacasTipoMuestraSlice";
 
 interface props {
   setOpenPopup?: any;

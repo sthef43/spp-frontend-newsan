@@ -1,5 +1,5 @@
 import { IAudit } from "app/models/IAudit";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 
 export class AuditService extends GenericService<IAudit> {

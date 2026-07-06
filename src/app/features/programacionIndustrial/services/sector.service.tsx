@@ -1,5 +1,5 @@
 import { ISector } from "app/models/ISector";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class SectorService extends GenericService<ISector> {
   Url = "Sector";

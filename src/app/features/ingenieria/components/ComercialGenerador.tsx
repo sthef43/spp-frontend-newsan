@@ -13,7 +13,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MaterialButtons } from "../../../shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OperatorSliceRequests } from "app/Middleware/reducers/OperatorSlice";
 interface Props {
   modelo?: string;

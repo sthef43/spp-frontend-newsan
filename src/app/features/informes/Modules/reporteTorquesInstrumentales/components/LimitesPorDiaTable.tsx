@@ -3,7 +3,7 @@ import { IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import { ILimitesTraza } from "app/models";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import moment from "moment";
 import { LimitesTrazaDialog } from "app/features/calidad/modules/limitesDeTorqueInstrumental/Components/LimitesTrazaDialog";
 

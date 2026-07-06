@@ -9,11 +9,11 @@ import { ControlLoteSliceRequests } from "app/Middleware/reducers/ControlLoteSli
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { IReprocesoLinea } from "app/models/IReprocesoLinea";
 import { ReprocesoLineaSliceRequests } from "app/Middleware/reducers/ReprocesoLineaSlice";
-import { ReprocesoLoteSliceRequests } from "app/Middleware/reducers/ReprocesoLoteSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { GroupEmailForm } from "app/shared/helpers/GroupEmailForm";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { OperatorSliceRequests } from "app/Middleware/reducers/OperatorSlice";
+import { ReprocesoLoteSliceRequests } from "app/features/calidad/slices/ReprocesoLoteSlice";
 
 interface props {
   idControlLote: number;

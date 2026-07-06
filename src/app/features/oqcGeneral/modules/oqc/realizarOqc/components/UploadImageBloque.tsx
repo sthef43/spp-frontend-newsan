@@ -3,7 +3,7 @@ import { Button, Tooltip } from "@mui/material";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IOQCDesignadaResultadoImagen } from "app/models/IOQCDesignadaResultadoImagen";
 import React, { useEffect, useRef, useState } from "react";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCDesignadaResultadoImage } from "./OQCDesignadaResultadoImage";
 import { oqcDesignadaResultadoImagenSlice } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoImagenSlice";
 interface IUploadImageBloque {

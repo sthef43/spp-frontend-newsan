@@ -6,7 +6,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { AuditTypeSliceRequests } from "app/features/audit/slices/AuditTypeSlice";
 import { IAuditType } from "app/models/IAuditType";
 import { AuditTypeForm } from "../modals/AuditTypeForm";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IAuditTable } from "app/models/IAuditTable";
 import useFetchApi from "app/shared/hooks/useFetchApi";
 import { IAuditMail } from "app/models/IAuditMail";

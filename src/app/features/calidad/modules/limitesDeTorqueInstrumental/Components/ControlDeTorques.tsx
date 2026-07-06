@@ -13,9 +13,9 @@ import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";
 import { LimitesTable } from "./LimitesTable";
-import { LimitesSliceRequests } from "app/Middleware/reducers/LimitesSlice";
 import _ from "lodash";
 import { SelectOFPlantAndProducts } from "app/shared/helpers/SelectOFPlantAndProducts";
+import { LimitesSliceRequests } from "app/features/calidad/slices/LimitesSlice";
 
 export const ControlDeTorques = (): JSX.Element => {
   const initialState = {

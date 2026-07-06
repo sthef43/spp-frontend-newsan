@@ -1,5 +1,5 @@
 import { IPuestosParametro } from "app/models/IPuestosParametro";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class PuestosParametroService extends GenericService<IPuestosParametro> {
   Url = "PuestosParametro";

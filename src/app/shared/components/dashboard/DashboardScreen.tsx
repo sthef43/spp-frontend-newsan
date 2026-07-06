@@ -68,8 +68,6 @@ export const DashboardScreen = (): JSX.Element => {
 
   //Prueba Firebase
 
-  console.log(routesUser);
-
   useEffect(() => {
     console.log("aca?");
 

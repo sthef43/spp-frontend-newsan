@@ -7,7 +7,7 @@ import { IProducto } from "app/models";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { TableComponent } from "../../../../../../shared/components/Table/TableComponent";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCHallazgosForm } from "./OQCHallazgosForm";
 import { OQCHallazgoImage } from "./OQCHallazgoImage";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";

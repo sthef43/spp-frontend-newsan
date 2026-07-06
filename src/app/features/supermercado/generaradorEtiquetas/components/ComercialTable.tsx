@@ -5,7 +5,7 @@ import { TableComponent } from "../../../../shared/components/Table/TableCompone
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import { Button, Checkbox, IconButton, Tooltip } from "@mui/material";
 import { Print, PrintOutlined } from "@mui/icons-material";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { GeneradorEtiquetasTable } from "./GeneradorEtiquetasTable";
 import { MaterialButtons } from "../../../../shared/components/material-ui/MaterialButtons";
 import { useAppSelector } from "app/core/store/store";

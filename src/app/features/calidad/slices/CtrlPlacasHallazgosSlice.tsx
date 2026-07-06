@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { GenericSlice } from "./genericSlice";
 import { IIniState } from "app/models/IIniState";
 import { ICtrlPlacasHallazgos } from "app/models/ICtrlPlacasHallazgos";
-import { CtrlPlacasHallazgosService } from "app/services/ctrlPlacasHallazgos.service";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { CtrlPlacasHallazgosService } from "../services/ctrlPlacasHallazgos.service";
 
 const ctrlPlacasHallazgosService = new CtrlPlacasHallazgosService();
 class ctrlPlacasHallazgosClassSlice extends GenericSlice<ICtrlPlacasHallazgos> {

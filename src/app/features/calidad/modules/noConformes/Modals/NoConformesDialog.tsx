@@ -1,6 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { ReprocesoLoteTable } from "app/features/calidad/modules/noConformes/Components/ReprocesoLoteTable";
-import { EstadoLoteSliceRequests } from "app/Middleware/reducers/EstadoLoteSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IControlLote } from "app/models/IControlLote";
 import { IEstadoLote } from "app/models/IEstadoLote";
@@ -29,7 +28,6 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
 import { IReprocesoLote } from "app/models/IReprocesoLote";
-import { ReprocesoLoteSliceRequests } from "app/Middleware/reducers/ReprocesoLoteSlice";
 import { useReactToPrint } from "react-to-print";
 import { Impresion } from "app/features/calidad/modules/noConformes/Components/Impresion";
 import { ControlLoteSliceRequests } from "app/Middleware/reducers/ControlLoteSlice";
@@ -41,11 +39,13 @@ import { ControlLoteMaterialesSliceRequests } from "app/Middleware/reducers/Cont
 import { IAppUser, IControlLoteMateriales, ISuperCargalinea } from "app/models";
 import { MateriablesTable } from "../Components/MateriablesTable";
 import { MaterialesDialog } from "../../../components/MaterialesDialog";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
 import { ReprocesadosModal } from "./ReprocesadosModal";
 import { IReprocesoLinea } from "app/models/IReprocesoLinea";
 import { ReprocesoLineaSliceRequests } from "app/Middleware/reducers/ReprocesoLineaSlice";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
+import { EstadoLoteSliceRequests } from "app/features/calidad/slices/EstadoLoteSlice";
+import { ReprocesoLoteSliceRequests } from "app/features/calidad/slices/ReprocesoLoteSlice";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface props {
   controlLote: IControlLote;

@@ -19,11 +19,11 @@ import {
 } from "@mui/material";
 import { RemoveCircle } from "@mui/icons-material";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
-import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 import { DobHUbicacionSliceRequests } from "app/Middleware/reducers/DobHUbicacionSlice";
 import { isEmpty, isObject } from "lodash";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import moment from "moment";
+import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 interface props {
   setOpenPopup: any;
   refresh?: any;

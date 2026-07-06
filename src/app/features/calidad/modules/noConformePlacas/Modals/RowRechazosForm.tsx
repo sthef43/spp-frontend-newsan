@@ -18,11 +18,11 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { IControlLotePlacas } from "app/models/IControlLotePlacas";
 import { IEstadoLote } from "app/models";
-import { EstadoLoteSliceRequests } from "app/Middleware/reducers/EstadoLoteSlice";
 import moment from "moment";
 import { RechazoSliceRequests } from "app/Middleware/reducers/RechazoSlice";
-import { ControlLotePlacasSliceRequests } from "app/Middleware/reducers/ControlLotePlacasSlice";
-import { TrazaUnit2SliceRequest } from "app/Middleware/reducers/trazaUnit2Slice";
+import { ControlLotePlacasSliceRequests } from "app/features/calidad/slices/ControlLotePlacasSlice";
+import { EstadoLoteSliceRequests } from "app/features/calidad/slices/EstadoLoteSlice";
+import { TrazaUnit2SliceRequest } from "app/features/calidad/slices/trazaUnit2Slice";
 interface props {
   rowRechazado?: IControlLotePlacas;
   refresh?: any | null;

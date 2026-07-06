@@ -6,7 +6,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCCategoriaForm } from "./OQCCategoriaForm";
 import { OQCCategoriaSliceRequests, oqcCategoriaSlice } from "app/features/oqcGeneral/slices/OQCCategoriaSlice";
 

@@ -17,13 +17,13 @@ import {
   TextField
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { InstlimiteSliceRequests } from "app/Middleware/reducers/InstlimiteSlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";
+import { InstlimiteSliceRequests } from "app/features/calidad/slices/InstlimiteSlice";
+import { InstpuestoSliceRequests } from "app/features/calidad/slices/InstpuestoSlice";
 // import { GenericFieldsGenerator } from "app/shared/helpers/GenericFieldsGenerator";
-import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 
 interface props {
   limite: IInstlimite;

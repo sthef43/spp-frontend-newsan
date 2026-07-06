@@ -1,8 +1,8 @@
-import { IScrapPlacas, ScrapPlacasService } from "../../services/scrapPlacas.service";
-import { GenericSlice } from "./genericSlice";
-import { IIniState } from "../../models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { IIniState } from "app/models";
+import { ScrapPlacasService, IScrapPlacas } from "../services/scrapPlacas.service";
 
 const scrapPlacasService = new ScrapPlacasService();
 class scrapPlacasClassSlice extends GenericSlice<IScrapPlacas> {

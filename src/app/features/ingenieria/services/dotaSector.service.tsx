@@ -1,5 +1,5 @@
 import { IDotaSector } from "app/models/IDotaSector";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class DotaSectorService extends GenericService<IDotaSector> {
   url = "DotaSector";

@@ -1,10 +1,10 @@
-import { IDotacion } from "../../features/ingenieria/modules/dotacionMantenimiento/models/IDotacion";
 import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { DotacionService } from "../services/dotacion.service";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 import { IDotacionGrupoSectoresBloque } from "app/features/ingenieria/modules/dotacionMantenimiento/models/IDotacionGrupoSectoresBloque";
 import { DatosDotacionDto } from "app/features/ingenieria/modules/dotacionMantenimiento/models/DTOS/DatosDotacionDTO";
+import { IDotacion } from "../modules/dotacionMantenimiento/models/IDotacion";
 
 const dotacionService = new DotacionService();
 class dotacionClassSlice extends GenericSlice<IDotacion> {

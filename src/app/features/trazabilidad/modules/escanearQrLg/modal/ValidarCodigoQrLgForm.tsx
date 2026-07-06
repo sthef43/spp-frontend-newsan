@@ -6,8 +6,8 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ValidarQrLgSliceRequests } from "app/Middleware/reducers/ValidarQrLgSlice";
 import { ValidadosQrLgSliceRequests } from "app/Middleware/reducers/ValidadosQrLgSlice";
+import { ValidarQrLgSliceRequests } from "app/Middleware/reducers/ValidarQrLgSlice";
 interface props {
   setOpenPopup: any;
   refresh?: any;

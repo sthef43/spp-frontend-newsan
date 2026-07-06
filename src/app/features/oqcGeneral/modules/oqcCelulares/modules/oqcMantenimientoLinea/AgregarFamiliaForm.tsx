@@ -1,6 +1,7 @@
 import { FormControl, Button, InputLabel, Select, MenuItem, FormHelperText, Input } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+import { PlantSliceRequests } from "app/Middleware/reducers";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IFamilia } from "app/models/IFamilia";

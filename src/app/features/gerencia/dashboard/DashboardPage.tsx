@@ -11,7 +11,7 @@ import DashboardService, {
   UnitDetailRow,
   ProducedDetailRow,
   SeasonRange
-} from "../../services/Dashboard.Service";
+} from "app/features/gerencia/services/Dashboard.Service";
 import * as XLSX from "xlsx";
 import {
   ResponsiveContainer,

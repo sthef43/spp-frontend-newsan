@@ -14,20 +14,20 @@ import {
   TextField,
   Tooltip
 } from "@mui/material";
-import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IAtornilladoraAlim, IAtornilladoraFormato, IColor, IGenerico, IInstpuesto, ILinea } from "app/models";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ColorSliceRequests } from "app/Middleware/reducers/ColorSlice";
-import { AtornilladoraAlimSliceRequests } from "app/Middleware/reducers/AtornilladoraAlimSlice";
-import { AtornilladoraFormatoSliceRequests } from "app/Middleware/reducers/AtornilladoraFormatoSlice";
-import { LimitesSliceRequests } from "app/Middleware/reducers/LimitesSlice";
 import _ from "lodash";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
 import { PuestoCreate } from "../../puestoDeTorqueInstrumental/PuestoCreate";
 import { Add } from "@mui/icons-material";
+import { AtornilladoraAlimSliceRequests } from "app/features/calidad/slices/AtornilladoraAlimSlice";
+import { AtornilladoraFormatoSliceRequests } from "app/features/calidad/slices/AtornilladoraFormatoSlice";
+import { ColorSliceRequests } from "app/features/calidad/slices/ColorSlice";
+import { InstpuestoSliceRequests } from "app/features/calidad/slices/InstpuestoSlice";
+import { LimitesSliceRequests } from "app/features/calidad/slices/LimitesSlice";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface props {
   callback: any;

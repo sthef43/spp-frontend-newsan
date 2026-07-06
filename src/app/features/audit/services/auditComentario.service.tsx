@@ -1,5 +1,5 @@
 import { IAuditComentario } from "app/models/IAuditComentario";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class AuditComentarioService extends GenericService<IAuditComentario> {
   url = "AuditComentario";

@@ -1,6 +1,6 @@
 import React from "react";
 import { FestividadesComponent } from "../ui/FestividadesComponent";
-import error404 from "../../../assets/animated/pagina_en_mantenimiento.json";
+import error404 from "../../../../assets/animated/pagina_en_mantenimiento.json";
 import { Button } from "@mui/material";
 import { MaterialButtons } from "../material-ui/MaterialButtons";
 import { useHistory } from "react-router";

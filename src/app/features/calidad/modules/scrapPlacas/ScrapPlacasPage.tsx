@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ScrapPlacasSliceRequests } from "app/Middleware/reducers/scrapPlacasSlice";
 import { useAppDispatch } from "app/core/store/store";
 import React, { useEffect, useRef, useState } from "react";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
@@ -17,7 +16,6 @@ import {
   Tooltip
 } from "@mui/material";
 import OutlinedInput from "@mui/material/OutlinedInput";
-import { IScrapPlacas } from "app/services/scrapPlacas.service";
 import { SemielaboradoIASliceRequest } from "app/Middleware/reducers/semielaboradoIaSlice";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
@@ -34,6 +32,8 @@ import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { DesktopDatePicker } from "@mui/x-date-pickers";
 import TitleUIComponent from "app/shared/components/helpComponents/TitleUIComponent";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
+import { IScrapPlacas } from "../../services/scrapPlacas.service";
+import { ScrapPlacasSliceRequests } from "../../slices/scrapPlacasSlice";
 
 const ScrapPlacasPage = (): JSX.Element => {
   const buttonClasses = MaterialButtons();

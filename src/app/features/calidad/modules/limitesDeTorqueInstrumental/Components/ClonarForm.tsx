@@ -3,12 +3,12 @@ import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select } fro
 import { unwrapResult } from "@reduxjs/toolkit";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";
 import { useAppDispatch } from "app/core/store/store";
+import { LimitesSliceRequests } from "app/features/calidad/slices/LimitesSlice";
 import { IGenerico, ILimites } from "app/models";
+import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
-import { LimitesSliceRequests } from "app/Middleware/reducers/LimitesSlice";
 interface IClonarProps {
   refresh: () => void;
   closeModal: (state: boolean) => void;

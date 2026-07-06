@@ -1,5 +1,5 @@
-import { IPuesto } from "../models/IPuesto";
-import { GenericService } from "./generic.service";
+import { IPuesto } from "app/models/IPuesto";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 
 export class PuestoService extends GenericService<IPuesto> {
@@ -10,7 +10,7 @@ export class PuestoService extends GenericService<IPuesto> {
   public GetListByTipo(tipo: string): Promise<IPuesto[]> {
     return new Promise((resolve, reject) => {
       axios
-        .get<IPuesto[]>(`${import.meta.env.VITE_API_URL}/${this.url}/GetListByTipo/${tipo}`)
+        .get<IPuesto[]>(`${import.meta.env.VITE_API_URL}/${this.Url}/GetListByTipo/${tipo}`)
         .then(function (response) {
           resolve(response.data);
         })

@@ -7,9 +7,9 @@ import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { DobHUbicacionSliceRequests } from "app/Middleware/reducers/DobHUbicacionSlice";
-import { DobHTipoUbicacionSliceRequests } from "app/Middleware/reducers/DobHTipoUbicacionSlice";
 import { IDobHUbicacion } from "app/models/IDobHUbicacion";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { DobHTipoUbicacionSliceRequests } from "app/Middleware/reducers/DobHTipoUbicacionSlice";
 interface props {
   setOpenPopup: any;
   editState?: IDobHUbicacion | null;

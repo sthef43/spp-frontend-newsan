@@ -1,7 +1,7 @@
 import { PayloadAction, createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IIniState } from "app/models";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { DefectoImagenService } from "app/services/defectoImagen.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { DefectoImagenService } from "app/features/calidad/services/defectoImagen.service";
 import { IDefectoImagen } from "app/models/IDefectoImagen";
 
 const defectoImagenService = new DefectoImagenService();

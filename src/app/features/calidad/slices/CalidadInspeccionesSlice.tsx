@@ -1,13 +1,13 @@
 import { IIniState } from "app/models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GenericSlice } from "./genericSlice";
-import { InspeccionesGroupedDTO } from "app/services/calidad-inspector-tareas.service";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { InspeccionesGroupedDTO } from "app/features/calidad/services/calidad-inspector-tareas.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 import {
   CalidadInspeccionesService,
   ICalidadInspecciones,
   ICalidadInspeccionRechazoMultiple
-} from "app/services/calidad-inspecciones.service";
+} from "app/features/calidad/services/calidad-inspecciones.service";
 
 const calidadInspeccionesService = new CalidadInspeccionesService();
 

@@ -1,9 +1,9 @@
 import { ILimites } from "app/models";
 import { IIniState } from "app/models/IIniState";
-import { LimitesService } from "app/services/limites.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { GenericSlice } from "./genericSlice";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { LimitesService } from "../services/limites.service";
 //<IAuth, IAuthUser>
 const limitesService = new LimitesService();
 

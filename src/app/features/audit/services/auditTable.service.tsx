@@ -1,5 +1,5 @@
 import { IAuditTable } from "app/models/IAuditTable";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class AuditTableService extends GenericService<IAuditTable> {
   Url = "AuditTable";

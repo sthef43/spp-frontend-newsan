@@ -1,9 +1,9 @@
 import { IEstadoLote } from "app/models/IEstadoLote";
 
 import { IIniState } from "app/models/IIniState";
-import { EstadoLoteService } from "app/services/estadoLote.service";
+import { EstadoLoteService } from "app/features/calidad/services/estadoLote.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>
 const estadoLoteService = new EstadoLoteService();
 

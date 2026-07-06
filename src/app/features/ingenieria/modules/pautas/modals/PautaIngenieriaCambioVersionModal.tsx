@@ -7,7 +7,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { PautaIngenieriaAprobadaSliceRequest } from "app/Middleware/reducers/PautaIngenieriaAprobadaSlice";
 import { ChangeCircle, Delete } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { Hoja0Form } from "./Hoja0Form";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { IPautaIngenieriaAprobada } from "app/models/IPautaIngenieriaAprobada";

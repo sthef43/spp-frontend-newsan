@@ -1,5 +1,4 @@
 import { ControlLoteSliceRequests } from "app/Middleware/reducers/ControlLoteSlice";
-import { EstadoLoteSliceRequests } from "app/Middleware/reducers/EstadoLoteSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IControlLote } from "app/models/IControlLote";
 import { IEstadoLote } from "app/models/IEstadoLote";
@@ -13,6 +12,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import React from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
+import { EstadoLoteSliceRequests } from "app/features/calidad/slices/EstadoLoteSlice";
 
 interface props {
   controlLote: IControlLote;

@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import axios from "axios";
 import { IInstpuesto } from "app/models/IInstpuesto";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class InstpuestoService extends GenericService<IInstpuesto> {
   Url = "Instpuesto";

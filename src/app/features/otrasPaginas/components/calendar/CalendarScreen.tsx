@@ -3,13 +3,13 @@ import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "moment/locale/es";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import { messages } from "../../helpers/calendar-messages";
 import { CalendarEvent } from "./CalendarEvent";
 import { CalendarModal } from "./CalendarModal";
 //import { AddNewFab } from "../ui/AddNewFab";
 import { useAppDispatch } from "app/core/store/store";
 //import { uiSlice } from "app/Middleware/reducers/uiSlice";
 import { calendarSlice } from "app/Middleware/reducers/calendarSlice";
+import { messages } from "app/shared/helpers/calendar-messages";
 //import { authentificationSlice, getInformacionPersona } from "app/Middleware/reducers/authentificationSlice";
 moment.locale("es");
 

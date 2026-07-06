@@ -2,7 +2,6 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CausaSliceRequest } from "app/Middleware/reducers/CausaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ICausa } from "app/models/ICausa";
@@ -13,6 +12,7 @@ import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import React, { useState } from "react";
+import { CausaSliceRequest } from "app/features/calidad/slices/CausaSlice";
 
 interface props {
   codRechazoId: string;

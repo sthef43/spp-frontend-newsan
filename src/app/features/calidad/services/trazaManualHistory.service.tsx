@@ -1,6 +1,6 @@
 import { ITrazaManualHistory } from "app/models/ITrazaManualHistory";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class TrazaManualHistoryService extends GenericService<ITrazaManualHistory> {
   Url = "TrazaManualHistory";

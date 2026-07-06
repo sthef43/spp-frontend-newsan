@@ -29,7 +29,7 @@ import { limpiarPalet } from "app/features/oqcGeneral/helpers/limpiarEntidad";
 import { IOQCSupervisoresMotorola } from "app/models/IOQCSupervisoresMotorola";
 import { OQCSupervisoresMotorolaSliceRequest } from "app/features/oqcGeneral/slices/OqcSupervisoresMotorola";
 import { MaterialButtons } from "../../../../../../shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { NumerosNewsanDTO } from "app/models/DTO/NumerosNewsanDTO";
 import { InfoRounded } from "@mui/icons-material";
 import { OQCConsultaMasterBoxEBS } from "./OQCConsultaMasterBoxEBS";

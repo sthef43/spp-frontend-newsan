@@ -1,5 +1,5 @@
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 import { IDotaHistorico } from "app/models/IDotaHistorico";
 
 export class DotaHistoricoService extends GenericService<IDotaHistorico> {

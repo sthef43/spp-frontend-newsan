@@ -1,8 +1,8 @@
 import axios from "axios";
-import { GenericService } from "./generic.service";
 import { ITrazaUnit } from "app/models/ITrazaUnit";
 import { IEMPQDeclarations } from "app/models/IEMPQDeclarations";
 import { ReporteProduccionAutomotriz } from "app/models/Stored Procdure/ReporteProduccionAutomotriz";
+import { GenericService } from "app/services/generic.service";
 
 export class TrazaUnit2Service extends GenericService<ITrazaUnit> {
   Url = "TrazaUnit2";

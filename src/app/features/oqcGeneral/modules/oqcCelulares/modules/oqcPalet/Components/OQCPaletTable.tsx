@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TableComponent } from "../../../../../../../shared/components/Table/TableComponent";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "../../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { IOQCPalet } from "app/models/IOQCPalet";
 import { OQCPaletPrint } from "../../../global/modals/OQCPaletPrint";
 import moment from "moment";

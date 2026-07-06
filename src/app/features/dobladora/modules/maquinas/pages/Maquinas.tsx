@@ -1,7 +1,6 @@
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { IDobHMaquina } from "app/models/IDobHMaquina";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
@@ -12,6 +11,7 @@ import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
+import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 
 export const Maquinas = (): JSX.Element => {
   const { TitleChanger } = useTitleOfApp();

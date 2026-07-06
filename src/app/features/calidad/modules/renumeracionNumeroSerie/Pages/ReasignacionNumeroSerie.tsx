@@ -15,10 +15,9 @@ import _ from "lodash";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { InicioHistoryTable } from "app/features/calidad/modules/renumeracionNumeroSerie/Components/InicioHistoryTable";
 import { InicioHistorySliceRequests } from "app/Middleware/reducers/InicioHistorySlice";
-import { TrazaManualSliceRequests } from "app/Middleware/reducers/TrazaManualSlice";
-// import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { ITrazaManual } from "app/models/ITrazaManual";
-import { TrazaManualHistorySliceRequests } from "app/Middleware/reducers/TrazaManualHistorySlice";
+import { TrazaManualHistorySliceRequests } from "app/features/calidad/slices/TrazaManualHistorySlice";
+import { TrazaManualSliceRequests } from "app/features/calidad/slices/TrazaManualSlice";
 
 export const ReasignacionNumeroSerie = (): JSX.Element => {
   const classes = MaterialButtons();

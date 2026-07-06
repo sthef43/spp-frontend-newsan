@@ -9,7 +9,7 @@ import moment from "moment";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CargaMotivosForm } from "./CargaMotivosForm";
 import { IMotivo } from "app/models/IMotivo";
 import { ResponsableInicioLineaSliceRequests } from "app/Middleware/reducers/ResponsableInicioLineaSlice";

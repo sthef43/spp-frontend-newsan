@@ -1,0 +1,1 @@
+import{G as c,k as r,n as s}from"./index-BkiOUA73.js";class t extends c{constructor(){super("Marca"),this.Url="Marca"}}const i=new t;class l extends r{constructor(a){super("Marca",a),this.service=a}}const n=new l(i),o={loading:null,data:null};s({name:"Marca",initialState:o,reducers:{},extraReducers:e=>{n.builderAll(e)}});export{n as M};

@@ -1,5 +1,5 @@
 import { IAuditRegistryImage } from "app/models/IAuditRegistryImage";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 import { IAuditImage } from "app/models/IAuditImage";
 

@@ -10,7 +10,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { ICompresor } from "app/models/ICompresor";
 import { CompresorForm } from "../Components/CompresorForm";
-import { CompresorSliceRequests } from "app/Middleware/reducers/CompresorSlice";
+import { CompresorSliceRequests } from "app/features/calidad/slices/CompresorSlice";
 
 export const Compresor = (): JSX.Element => {
   const dispatch = useAppDispatch();

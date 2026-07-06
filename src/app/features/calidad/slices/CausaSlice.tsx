@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IIniState } from "app/models";
 import { ICausa } from "app/models/ICausa";
-import { CausaService } from "app/services/causa.service";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { CausaService } from "app/features/calidad/services/causa.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 
 const causaService = new CausaService();
 class CausaSliceClass {

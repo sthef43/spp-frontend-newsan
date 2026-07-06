@@ -12,13 +12,9 @@ import {
   Select
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { PuestoSliceRequests } from "app/Middleware/reducers";
 import { CodigoRechazosSliceRequest } from "app/Middleware/reducers/CodigoRechazosSlice";
-import { ControlLotePlacasSliceRequests } from "app/Middleware/reducers/ControlLotePlacasSlice";
 import { empq_declarationsSliceRequests } from "app/Middleware/reducers/Empq_declarationsSlice";
-import { EstadoLoteSliceRequests } from "app/Middleware/reducers/EstadoLoteSlice";
 import { RechazoSliceRequests } from "app/Middleware/reducers/RechazoSlice";
-import { TrazaUnit2SliceRequest } from "app/Middleware/reducers/trazaUnit2Slice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser, IEstadoLote, ILinea, IPlanProd } from "app/models";
 import { ICodigoRechazos } from "app/models/ICodigoRechazos";
@@ -34,6 +30,10 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { ControlLotePlacasSliceRequests } from "app/features/calidad/slices/ControlLotePlacasSlice";
+import { EstadoLoteSliceRequests } from "app/features/calidad/slices/EstadoLoteSlice";
+import { TrazaUnit2SliceRequest } from "app/features/calidad/slices/trazaUnit2Slice";
+import { PuestoSliceRequests } from "app/features/trazabilidad/slices/PuestoSlice";
 
 interface props {
   plan: IPlanProd;

@@ -10,7 +10,6 @@ import { MapasRutasCamposSliceRequest } from "app/Middleware/reducers/MapasRutas
 import { IMapasRutas } from "app/models/IMapasRutas";
 import { IMapasRutasCampos } from "app/models/IMapasRutasCampos";
 import { Button, TextField } from "@mui/material";
-import { TrazaUnit2SliceRequest } from "app/Middleware/reducers/trazaUnit2Slice";
 import { ILineaPuesto } from "app/models/ILineaPuesto";
 import { LineaPuestoSliceRequest } from "app/Middleware/reducers/LineaPuestoSlice";
 import moment from "moment";
@@ -27,6 +26,7 @@ import { ISemielaboradoIA } from "app/models";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { EncabezadoPlantasLineas } from "../Components/EncabezadoPlantasLineas";
+import { TrazaUnit2SliceRequest } from "app/features/calidad/slices/trazaUnit2Slice";
 
 export const ReemplazarCodigoPlacasPage = () => {
   const { handleSubmit } = useForm<{ codigo: string }>({

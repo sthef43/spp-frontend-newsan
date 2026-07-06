@@ -1,7 +1,7 @@
 import { Close, Upload, Visibility } from "@mui/icons-material";
 import { Button, IconButton } from "@mui/material";
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from "react";
-import { ModalCompoment } from "../components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AuditImage } from "../../features/audit/modules/creacionEdicionAuditorias/components/AuditImage";
 import { MaterialButtons } from "../components/material-ui/MaterialButtons";
 import { useConfirmationDialog } from "../hooks/useConfirmationDialog";

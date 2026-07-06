@@ -1,8 +1,8 @@
 import { IColor } from "app/models";
 import { IIniState } from "app/models/IIniState";
-import { ColorService } from "app/services/color.service";
+import { ColorService } from "app/features/calidad/services/color.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>
 const colorService = new ColorService();
 

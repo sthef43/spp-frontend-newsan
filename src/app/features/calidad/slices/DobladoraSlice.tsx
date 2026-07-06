@@ -1,8 +1,8 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { GenericSlice } from "app/Middleware/reducers/genericSlice";
 import { IIniState } from "app/models";
-import { IDobladora } from "../../models/IDobladora";
-import { DobladoraService } from "../../services/dobladora.service";
+import { IDobladora } from "app/models/IDobladora";
+import { DobladoraService } from "app/features/calidad/services/dobladora.service";
 
 const dobladoraService = new DobladoraService();
 

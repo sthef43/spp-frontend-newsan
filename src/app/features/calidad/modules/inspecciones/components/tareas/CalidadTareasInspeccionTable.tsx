@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import CalidadInspeccionTareaForm from "./CalidadInspeccionTareaForm";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CalidadInspeccionTareaSliceRequest } from "app/Middleware/reducers/CalidadInspeccionTareaSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
@@ -11,6 +10,7 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { Edit, Delete } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { CalidadInspeccionTareaSliceRequest } from "app/features/calidad/slices/CalidadInspeccionTareaSlice";
 
 const CalidadTareasInspeccionTable = () => {
   const [openModal, setOpenModal] = useState(false);

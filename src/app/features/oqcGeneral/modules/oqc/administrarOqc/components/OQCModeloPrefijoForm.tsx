@@ -11,7 +11,7 @@ import { Delete, Edit } from "@mui/icons-material";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { IOQCModeloPrefijo } from "app/models/IOQCModeloPrefijo";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { EditarOQCModeloPrefijoModal } from "./EditarOQCModeloPrefijoModal";
 import { OQCModeloPrefijoSliceRequests } from "app/features/oqcGeneral/slices/OQCModeloPrefijoSlice";
 

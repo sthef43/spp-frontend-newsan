@@ -27,9 +27,9 @@ import { GenericImageUploadSliceRequests } from "app/Middleware/reducers/Generic
 import { GroupEmailForm } from "app/shared/helpers/GroupEmailForm";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { IAppUser } from "app/models";
-import { ProductoSliceRequests } from "app/Middleware/reducers";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
 
 interface initialState {
   productoId?: number | null;

@@ -1,9 +1,9 @@
 import { IIniState } from "app/models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { GenericSlice } from "./genericSlice";
-import { TrazaManualHistoryService } from "app/services/trazaManualHistory.service";
 import { ITrazaManualHistory } from "app/models/ITrazaManualHistory";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { TrazaManualHistoryService } from "../services/trazaManualHistory.service";
 //<IAuth, IAuthUser>
 const trazaManualHistoryService = new TrazaManualHistoryService();
 

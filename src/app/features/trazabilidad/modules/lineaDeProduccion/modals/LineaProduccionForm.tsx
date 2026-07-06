@@ -19,7 +19,8 @@ import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProdu
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
-import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+import { PlantSliceRequests } from "app/Middleware/reducers";
 interface props {
   setOpenPopup: any;
   editState?: ILineaProduccion | null;

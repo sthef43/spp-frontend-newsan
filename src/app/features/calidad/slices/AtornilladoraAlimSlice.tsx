@@ -1,8 +1,8 @@
 import { IAtornilladoraAlim } from "app/models";
 import { IIniState } from "app/models/IIniState";
-import { AtornilladoraAlimService } from "app/services/atornilladoraAlim.service";
+import { AtornilladoraAlimService } from "app/features/calidad/services/atornilladoraAlim.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 //<IAuth, IAuthUser>
 const atornilladoraAlimService = new AtornilladoraAlimService();
 

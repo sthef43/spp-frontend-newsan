@@ -1,4 +1,4 @@
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 import { IDotaPuesto } from "app/models/IDotaPuesto";
 
 export class DotaPuestoService extends GenericService<IDotaPuesto> {

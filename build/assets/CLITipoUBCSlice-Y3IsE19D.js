@@ -1,0 +1,1 @@
+import{G as s,k as c,n as r}from"./index-BkiOUA73.js";class t extends s{constructor(){super("CLITipoUBC"),this.Url="CLITipoUBC"}}const l=new t;class o extends c{constructor(i){super("CLITipoUBC",i),this.service=i}}const n=new o(l),C={loading:null,data:null};r({name:"CLITipoUBC",initialState:C,reducers:{},extraReducers:e=>{n.builderAll(e)}});export{n as C};

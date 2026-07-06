@@ -14,7 +14,6 @@ import { UseGeneratorCodesForLabels } from "app/shared/hooks/useGeneratorCodesFo
 import { IDobladora } from "app/models/IDobladora";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import FetchApi from "app/shared/helpers/FetchApi";
-import { DobladoraSliceRequest } from "app/Middleware/reducers/DobladoraSlice";
 import { DobMaestroPiezaliceRequests } from "app/Middleware/reducers/DobMaestroPiezaSlice";
 import { IDobMaestroPieza } from "app/models/IDobMaestroPieza";
 import { InputsForm } from "../Components/InputsForm";
@@ -26,6 +25,7 @@ import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/Selec
 import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ListaArchivosModal } from "./ListaArchivosModal";
+import { DobladoraSliceRequest } from "app/features/calidad/slices/DobladoraSlice";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;

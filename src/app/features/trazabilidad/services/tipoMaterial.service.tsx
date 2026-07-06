@@ -1,6 +1,6 @@
 import axios from "axios";
 import { ITipoMaterial } from "app/models/ITipoMaterial";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class TipoMaterialService extends GenericService<ITipoMaterial> {
   Url = "TipoMaterial";

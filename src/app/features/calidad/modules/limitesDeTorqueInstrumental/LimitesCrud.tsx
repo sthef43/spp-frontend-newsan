@@ -10,7 +10,6 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { LimiteDialog } from "app/features/calidad/modules/limitesDeTorqueInstrumental/Components/LimiteDialog";
 import { LimiteCreate } from "app/features/calidad/modules/limitesDeTorqueInstrumental/Components/LimiteCreate";
 import moment from "moment";
-import { LimitesSliceRequests } from "app/Middleware/reducers/LimitesSlice";
 import { ILimites } from "app/models/ILimites";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
@@ -18,6 +17,7 @@ import { SelectOFPlantAndProducts } from "app/shared/helpers/SelectOFPlantAndPro
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { ClonarForm } from "app/features/calidad/modules/limitesDeTorqueInstrumental/Components/ClonarForm";
+import { LimitesSliceRequests } from "../../slices/LimitesSlice";
 
 export const LimitesCrud = (): JSX.Element => {
   const { openNotificationUI } = useNotificationUI();

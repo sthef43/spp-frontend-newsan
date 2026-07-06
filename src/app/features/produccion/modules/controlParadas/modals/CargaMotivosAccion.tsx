@@ -5,7 +5,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { MotivoSliceRequests } from "app/Middleware/reducers/MotivoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from "@mui/material";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CargaMotivosForm } from "../../../../informes/Modules/cargaEficienciaPlanta/modals/CargaMotivosForm";
 import { useForm, Controller } from "react-hook-form";
 import { DesktopDatePicker } from "@mui/x-date-pickers";

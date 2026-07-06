@@ -6,7 +6,6 @@ import { useAppDispatch } from "app/core/store/store";
 import { IInstpuesto } from "app/models";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
-import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { PuestoDialog } from "./PuestoDialog";
 import { PuestoCreate } from "./PuestoCreate";
@@ -14,6 +13,7 @@ import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { SelectOFPlantAndProducts } from "app/shared/helpers/SelectOFPlantAndProducts";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { InstpuestoSliceRequests } from "../../slices/InstpuestoSlice";
 // import { ProduccionDialog } from "../produccion/produccionDialog/ProduccionDialog";
 
 export const PuestosCrud = (): JSX.Element => {

@@ -12,8 +12,6 @@ import {
   Tooltip
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reducers";
-import { CalidadDocumentSliceRequests } from "app/Middleware/reducers/CalidadDocumentSlice";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";
 import { SemielaboradoIASliceRequest } from "app/Middleware/reducers/semielaboradoIaSlice";
@@ -32,6 +30,9 @@ import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
+import { PlantSliceRequests } from "app/Middleware/reducers";
+import { CalidadDocumentSliceRequests } from "app/features/calidad/slices/CalidadDocumentSlice";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
 
 export const CalidadDocument = (): JSX.Element => {
   const { TitleChanger } = useTitleOfApp();

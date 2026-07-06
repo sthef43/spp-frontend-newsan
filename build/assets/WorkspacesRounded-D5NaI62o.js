@@ -1,0 +1,1 @@
+import{g as s,j as o}from"./index-BkiOUA73.js";const a=s(o.jsx("path",{d:"M6 13c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4m6-10C9.8 3 8 4.8 8 7s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4m6 10c-2.2 0-4 1.8-4 4s1.8 4 4 4 4-1.8 4-4-1.8-4-4-4"}),"WorkspacesRounded");export{a as W};

@@ -4,11 +4,11 @@ import { useAppDispatch } from "app/core/store/store";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import React, { useEffect, useState } from "react";
 import PersonSearchIcon from "@mui/icons-material/PersonSearch";
-import { CalidadInspeccionesSliceRequest } from "app/Middleware/reducers/CalidadInspeccionesSlice";
-import { InspeccionesGroupedDTO } from "app/services/calidad-inspector-tareas.service";
 import { useHistory } from "react-router-dom";
 import moment from "moment";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { InspeccionesGroupedDTO } from "app/features/calidad/services/calidad-inspecciones.service";
+import { CalidadInspeccionesSliceRequest } from "app/features/calidad/slices/CalidadInspeccionesSlice";
 
 type Props = {
   from: string;

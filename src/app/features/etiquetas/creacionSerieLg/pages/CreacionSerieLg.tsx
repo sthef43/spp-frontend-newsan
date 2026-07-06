@@ -12,7 +12,8 @@ import {
   Tooltip
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { ModeloSliceRequest } from "app/Middleware/reducers/ModeloSlice";

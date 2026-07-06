@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { OQCBloqueGroupImage } from "../../administrarOqc/components/OQCBloqueGroupImage";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { Visibility } from "@mui/icons-material";
 import { Button, Tooltip } from "@mui/material";
 interface IViewOQCBloqueGroupImage {

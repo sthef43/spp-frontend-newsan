@@ -1,12 +1,12 @@
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { TrazaManualSliceRequests } from "app/Middleware/reducers/TrazaManualSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { ITrazaManual } from "app/models/ITrazaManual";
 import { TrazaManualVerificacionTable } from "app/features/calidad/modules/verificarEquipos/components/Tables/TrazaManualVerificacionTable";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import _ from "lodash";
 import React, { useMemo, useState } from "react";
+import { TrazaManualSliceRequests } from "app/features/calidad/slices/TrazaManualSlice";
 
 export const TrazaManualVerificacionPage = (): JSX.Element => {
   const dispatch = useAppDispatch();

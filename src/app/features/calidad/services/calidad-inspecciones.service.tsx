@@ -1,8 +1,8 @@
 import { ICalidadInspectorTareas } from "app/models/ICalidadInspectorTareas";
 import axios from "axios";
-import { GenericService } from "./generic.service";
 import { IBaseEntity } from "app/models";
 import { IRechazoMultiple } from "./rechazoMultiple.service";
+import { GenericService } from "app/services/generic.service";
 
 export interface InspeccionesGroupedDTO {
   codigo: string;

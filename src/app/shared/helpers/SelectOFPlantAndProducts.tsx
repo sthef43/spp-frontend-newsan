@@ -13,7 +13,8 @@ import { LineaProduccionSliceRequests, lineaProduccionSlice } from "../../Middle
 import { LoadingUISlice } from "../../Middleware/reducers/LoadingUISlice";
 import { ILineaProduccion } from "app/models/ILineaProduccion";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
-import { productoSlice } from "app/Middleware/reducers";
+import { productoSlice } from "app/features/trazabilidad/slices/ProductoSlice";
+
 import { ContainerForPages } from "./Containers/ContainerForPages";
 
 interface ISelectOFPlantAndProducts {

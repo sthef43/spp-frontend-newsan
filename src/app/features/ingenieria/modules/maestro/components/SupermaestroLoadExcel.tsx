@@ -7,7 +7,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 interface Props {
   generico: string;
 }

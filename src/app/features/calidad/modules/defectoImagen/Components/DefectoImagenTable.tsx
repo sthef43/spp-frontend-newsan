@@ -1,13 +1,13 @@
 import { useAppDispatch } from "app/core/store/store";
 import { IDefectoImagen } from "app/models/IDefectoImagen";
 import React, { useState } from "react";
-import { DefectoImagenSlice, DefectoImagenSliceRequest } from "app/Middleware/reducers/DefectoImagenSlice";
 import { DefectoImagenForm } from "./DefectoImagenForm";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
+import { DefectoImagenSlice, DefectoImagenSliceRequest } from "app/features/calidad/slices/DefectoImagenSlice";
 
 interface IDefectoImagenTable {
   refresh: () => void;

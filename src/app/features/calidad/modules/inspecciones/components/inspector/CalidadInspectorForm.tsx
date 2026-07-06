@@ -1,9 +1,6 @@
 import { FormControl, TextField, FormHelperText, Autocomplete, IconButton, Chip, Button } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { AppUserSliceRequests } from "app/Middleware/reducers/AppUserSlice";
-import { CalidadInspeccionTareaSliceRequest } from "app/Middleware/reducers/CalidadInspeccionTareaSlice";
-import { CalidadInspectorSliceRequest } from "app/Middleware/reducers/CalidadInspectorSlice";
-import { CalidadInspectorTareasSliceRequest } from "app/Middleware/reducers/CalidadInspectorTareasSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
@@ -13,6 +10,9 @@ import _ from "lodash";
 import React, { useState, useEffect } from "react";
 import { useForm, Controller } from "react-hook-form";
 import AddIcon from "@mui/icons-material/Add";
+import { CalidadInspeccionTareaSliceRequest } from "app/features/calidad/slices/CalidadInspeccionTareaSlice";
+import { CalidadInspectorSliceRequest } from "app/features/calidad/slices/CalidadInspectorSlice";
+import { CalidadInspectorTareasSliceRequest } from "app/features/calidad/slices/CalidadInspectorTareasSlice";
 
 interface CalidadInspeccionTareaFormProps {
   refresh: () => void;

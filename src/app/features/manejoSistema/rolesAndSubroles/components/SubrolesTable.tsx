@@ -5,7 +5,7 @@ import { IPermisos, ISubRol } from "app/models";
 import { Checkbox } from "@mui/material";
 import { Bookmark, BookmarkBorder } from "@mui/icons-material";
 import _ from "lodash";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { SubrolForm } from "../form/SubrolForm";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

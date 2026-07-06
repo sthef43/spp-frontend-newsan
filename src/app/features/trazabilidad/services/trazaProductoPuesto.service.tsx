@@ -1,6 +1,6 @@
 import { ITrazaProductoPuesto } from "app/models/ITrazaProductoPuesto";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class TrazaProductoPuestoService extends GenericService<ITrazaProductoPuesto> {
   Url = "TrazaProductoPuesto";

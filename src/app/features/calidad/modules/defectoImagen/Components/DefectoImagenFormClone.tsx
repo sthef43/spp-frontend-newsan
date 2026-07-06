@@ -5,12 +5,12 @@ import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { DefectoImagenSliceRequest } from "app/Middleware/reducers/DefectoImagenSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { LineaProduccionFamiliaSliceRequests } from "app/Middleware/reducers/LineaProduccionFamiliaSlice";
 import { ILineaProduccionFamilia } from "app/models";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
+import { DefectoImagenSliceRequest } from "app/features/calidad/slices/DefectoImagenSlice";
 
 interface Props {
   setOpenModalClone: (newValue: boolean) => void;

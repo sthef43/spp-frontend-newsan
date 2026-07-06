@@ -6,7 +6,6 @@ import { useAppDispatch } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import FetchApi from "app/shared/helpers/FetchApi";
-import { TrazaUnit2SliceRequest } from "app/Middleware/reducers/trazaUnit2Slice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
@@ -20,6 +19,7 @@ import { ExportExcel } from "app/shared/components/helpComponents/ExportExcel";
 import { Button } from "@mui/material";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AltaPlacasMasivamenteModal } from "../Modals/AltaPlacasMasivamenteModal";
+import { TrazaUnit2SliceRequest } from "app/features/calidad/slices/trazaUnit2Slice";
 
 export const AltaAutomotriz: React.FC = () => {
   const buttonClases = MaterialButtons();

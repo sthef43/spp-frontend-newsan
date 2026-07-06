@@ -12,7 +12,7 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { TrazaOperacionesSliceRequests } from "app/Middleware/reducers/TrazaOperacionesSlice";
 import { AutomotrizTabLaVerificacion } from "../components/AutmotrizTablaVerificacion";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 
 const styleSxRoot = {

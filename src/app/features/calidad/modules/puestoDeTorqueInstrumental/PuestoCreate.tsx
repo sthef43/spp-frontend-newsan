@@ -16,9 +16,9 @@ import {
   Select,
   TextField
 } from "@mui/material";
-import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IInstpuesto } from "app/models";
+import { InstpuestoSliceRequests } from "../../slices/InstpuestoSlice";
 
 interface props {
   callback: any;

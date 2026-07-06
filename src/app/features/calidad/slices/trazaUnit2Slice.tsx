@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { GenericSlice } from "./genericSlice";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 import { TrazaUnit2Service } from "../services/trazaUnit2.service";
 import { ITrazaUnit } from "app/models/ITrazaUnit";
 import { IEMPQDeclarations } from "app/models/IEMPQDeclarations";

@@ -7,13 +7,13 @@ import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPag
 import { SelectOfDate } from "app/shared/helpers/SelectOfDate";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { ITrazaUnit2 } from "app/models/ITrazaUnit2";
-import { TrazaUnit2SliceRequest } from "app/Middleware/reducers/trazaUnit2Slice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { Button } from "@mui/material";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { RechazoSliceRequests } from "app/Middleware/reducers/RechazoSlice";
+import { TrazaUnit2SliceRequest } from "app/features/calidad/slices/trazaUnit2Slice";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;

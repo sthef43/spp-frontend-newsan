@@ -1,9 +1,8 @@
 import { IIniState } from "app/models/IIniState";
 import { createSlice } from "@reduxjs/toolkit";
-import { GenericSlice } from "./genericSlice";
-
-import { PuestosParametroService } from "app/services/puestosParametro.service";
 import { IPuestosParametro } from "app/models/IPuestosParametro";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { PuestosParametroService } from "../services/puestosParametro.service";
 
 const puestosParametroService = new PuestosParametroService();
 class puestosParametroClassSlice extends GenericSlice<IPuestosParametro> {

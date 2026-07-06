@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import { Sliders } from "../../../shared/components/Sliders";
 import { ViewerPdf } from "../components/ViewerPdf";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { RoutesAyudaSliceRequest } from "app/features/ayuda/middleware/RoutesAyudaSlice";
@@ -7,6 +6,7 @@ import { IRoutesAyuda } from "app/features/ayuda/models/IRoutesAyuda";
 import { RoutesAyudaPadresSliceRequest } from "app/features/ayuda/middleware/RoutesAyudaPadresSlice";
 import { IRoutesAyudaPadres } from "app/features/ayuda/models/IRoutesAyudaPadres";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
+import { Sliders } from "../components/Sliders";
 
 export const AyudaPage = () => {
   const { TitleChanger } = useTitleOfApp();

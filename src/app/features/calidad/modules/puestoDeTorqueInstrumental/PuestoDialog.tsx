@@ -6,9 +6,9 @@ import { IInstpuesto } from "app/models";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
+import { InstpuestoSliceRequests } from "../../slices/InstpuestoSlice";
 
 interface props {
   puesto: IInstpuesto;

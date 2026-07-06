@@ -1,4 +1,4 @@
-import { authenticationSlice } from "../reducers/AuthenticationSlice";
+import { authenticationSlice } from "app/features/cuenta/slices/AuthenticationSlice";
 import { NotificationSlice } from "../reducers/notificationUISlice";
 import { mensajeDeErrorHttp } from "./statusErrors";
 

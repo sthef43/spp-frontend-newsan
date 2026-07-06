@@ -1,5 +1,5 @@
 import { ILine } from "app/models/ILine";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
 
 export class LineService extends GenericService<ILine> {
@@ -22,7 +22,7 @@ export class LineService extends GenericService<ILine> {
   public GetListByPlantaId(plantaId: number): Promise<ILine[]> {
     return new Promise((resolve, reject) => {
       axios
-        .get<ILine[]>(`${import.meta.env.VITE_API_URL}/${this.url}/GetListByPlantaId/${plantaId}`)
+        .get<ILine[]>(`${import.meta.env.VITE_API_URL}/${this.Url}/GetListByPlantaId/${plantaId}`)
         .then(function (response) {
           resolve(response.data);
         })

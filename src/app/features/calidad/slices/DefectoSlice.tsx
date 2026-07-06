@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IIniState } from "app/models";
 import { IDefecto } from "app/models/IDefecto";
-import { DefectoService } from "app/services/defecto.service";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { DefectoService } from "app/features/calidad/services/defecto.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 
 const defectoService = new DefectoService();
 class DefectoClass {

@@ -15,7 +15,8 @@ import { IModelo } from "app/models/IModelo";
 import { IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit, PowerSettingsNewRounded } from "@mui/icons-material";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
-import { ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+
 import { IProducto } from "app/models";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import FetchApi from "app/shared/helpers/FetchApi";

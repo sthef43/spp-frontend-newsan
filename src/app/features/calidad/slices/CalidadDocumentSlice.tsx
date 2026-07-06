@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { GenericSlice } from "./genericSlice";
 import { IIniState } from "app/models/IIniState";
-import { CalidadDocumentService } from "app/services/calidadDocument.service";
 import { ICalidadDocument } from "app/models/ICalidadDocument";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { CalidadDocumentService } from "../services/calidadDocument.service";
 
 const calidadDocumentService = new CalidadDocumentService();
 class calidadDocumentClassSlice extends GenericSlice<ICalidadDocument> {
@@ -11,12 +11,12 @@ class calidadDocumentClassSlice extends GenericSlice<ICalidadDocument> {
     super("CalidadDocument", service);
   }
   //nuevos asyncthunks aqui
-  getByPlPrFaMoSIARequest = createAsyncThunk<ICalidadDocument[], {plantId, productoId, familiaId, modeloId, semielaboradoIAId}>(
-    `CalidadDocument/getByPlPrFaMoSIARequest`,
-    async (modelo, info) => {
-      return await errorNotification(() => this.service.GetByPlPrFaMoSIA(modelo), info);
-    }
-  );
+  getByPlPrFaMoSIARequest = createAsyncThunk<
+    ICalidadDocument[],
+    { plantId; productoId; familiaId; modeloId; semielaboradoIAId }
+  >(`CalidadDocument/getByPlPrFaMoSIARequest`, async (modelo, info) => {
+    return await errorNotification(() => this.service.GetByPlPrFaMoSIA(modelo), info);
+  });
 }
 export const CalidadDocumentSliceRequests = new calidadDocumentClassSlice(calidadDocumentService);
 

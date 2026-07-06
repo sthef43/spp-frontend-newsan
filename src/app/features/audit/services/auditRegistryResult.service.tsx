@@ -1,6 +1,6 @@
 import { IAuditRegistryResult } from "app/models/IAuditRegistryResult";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class AuditRegistryResultService extends GenericService<IAuditRegistryResult> {
   Url = "AuditRegistryResult";

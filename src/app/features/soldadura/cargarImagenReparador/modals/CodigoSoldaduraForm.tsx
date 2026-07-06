@@ -20,7 +20,7 @@ import { Image } from "@mui/icons-material";
 import { ICodigoSoldadura } from "app/models/ICodigoSoldadura";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { IFamilia } from "app/models/IFamilia";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { CDImage } from "./CDImage";
 // import { GenericImageUploadSliceRequests } from "app/Middleware/reducers/GenericImageUploadSlice";
 import { CodigoSoldaduraSliceRequests } from "app/Middleware/reducers/CodigoSoldaduraSlice";

@@ -6,7 +6,7 @@ import { IBinariosIdentificadores } from "app/models/IBinariosIdentificadores";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState } from "react";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import { BinariosForm } from "../modal/BinariosForm";
 

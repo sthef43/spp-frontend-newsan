@@ -8,7 +8,8 @@ import { useAppDispatch } from "app/core/store/store";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { ILinea } from "app/models";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
-import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+import { PlantSliceRequests } from "app/Middleware/reducers";
 
 interface Props {
   open: any;

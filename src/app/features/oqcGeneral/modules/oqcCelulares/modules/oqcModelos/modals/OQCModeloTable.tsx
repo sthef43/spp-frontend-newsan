@@ -5,7 +5,7 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { IOQCModelo } from "app/models/IOQModelo";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
-import { ModalCompoment } from "../../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCModeloForm } from "./OQCModeloForm";
 import { IconButton, Tooltip } from "@mui/material";
 import { Delete, Edit, PowerSettingsNew } from "@mui/icons-material";

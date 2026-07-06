@@ -15,7 +15,7 @@ import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { IOQCPalet } from "app/models/IOQCPalet";
 import { IOQCDesignadaResultado } from "app/models/IOQCDesignadaResultado";
-import { ModalCompoment } from "../../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCPaletPrint } from "../../../global/modals/OQCPaletPrint";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { OQCDesignadaResultadoSliceRequests } from "app/features/oqcGeneral/slices/OQCDesignadaResultadoSlice";

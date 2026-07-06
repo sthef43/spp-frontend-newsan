@@ -1,7 +1,7 @@
 import { IIniState } from "app/models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { MainRegService } from "app/services/mainReg.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { MainRegService } from "app/features/calidad/services/mainReg.service";
 import { IMainReg } from "app/models/IMainReg";
 //<IAuth, IAuthUser>
 const mainRegService = new MainRegService();

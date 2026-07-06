@@ -1,16 +1,16 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { Button, FormControl, FormHelperText, Input, InputLabel, MenuItem, Select } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CausaSliceRequest } from "app/Middleware/reducers/CausaSlice";
-import { DefectoSliceRequest } from "app/Middleware/reducers/DefectoSlice";
-import { OrigenesSliceRequest } from "app/Middleware/reducers/OrigenSlice";
-import { PuestosParametroSliceRequests } from "app/Middleware/reducers/PuestosParametroSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { MaterialButtons } from "../../../../../../shared/components/material-ui/MaterialButtons";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
+import { CausaSliceRequest } from "app/features/calidad/slices/CausaSlice";
+import { DefectoSliceRequest } from "app/features/calidad/slices/DefectoSlice";
+import { OrigenesSliceRequest } from "app/features/calidad/slices/OrigenSlice";
+import { PuestosParametroSliceRequests } from "app/features/calidad/slices/PuestosParametroSlice";
 
 interface props {
   setOpenPopup: any;

@@ -20,7 +20,7 @@ import { ProduccionMateriales } from "../../../components/ProduccionMateriales";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { PedidoMaterialesProduccionSliceRequests } from "app/Middleware/reducers/PedidoMaterialesProduccionSlice";
 import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialesDialog } from "../../../../calidad/components/MaterialesDialog";
 import { IAppUser, ISuperCargalinea } from "app/models";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

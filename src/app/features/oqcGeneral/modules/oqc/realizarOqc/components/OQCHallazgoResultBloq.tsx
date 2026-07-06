@@ -6,7 +6,7 @@ import { IOQCHallazgoResult } from "app/models/IOQCHallazgoResult";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IOQCBloqueHallazgo } from "app/models/IOQCBloqueHallazgo";
 import { IOQCHallazgo } from "app/models/IOQCHallazgo";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCVerImagenAyudaHallazgo } from "./OQCVerImagenAyudaHallazgo";
 import { oqcHallazgoResultSlice } from "app/features/oqcGeneral/slices/OQCHallazgoResultSlice";
 interface IOQCHallazgoResultBloq {

@@ -1,5 +1,5 @@
 import { GenericService } from "app/services/generic.service";
-import { IAuditValoresResult } from "../models/IAuditValoresResult";
+import { IAuditValoresResult } from "app/models/IAuditValoresResult";
 
 export class AuditValoresResultService extends GenericService<IAuditValoresResult> {
   Url = "AuditValoresResult";

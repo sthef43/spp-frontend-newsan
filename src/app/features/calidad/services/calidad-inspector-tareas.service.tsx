@@ -1,6 +1,6 @@
 import { ICalidadInspectorTareas } from "app/models/ICalidadInspectorTareas";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
-import { GenericService } from "./generic.service";
 
 export interface InspeccionesGroupedDTO {
   codigo: string;

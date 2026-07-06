@@ -5,7 +5,7 @@ import { IParadasDeLinea } from "app/models/IParadasDeLinea";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
 import TitleUIComponent from "../../../../../shared/components/helpComponents/TitleUIComponent";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import moment from "moment";
 import { ParadasDeLineaForm } from "../modals/ParadasDeLineaForm";

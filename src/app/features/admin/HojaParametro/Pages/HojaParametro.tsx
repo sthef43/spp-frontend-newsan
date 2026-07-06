@@ -13,7 +13,6 @@ import {
   Tooltip
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ProductoSliceRequests } from "app/Middleware/reducers";
 import { FamiliaSliceRequests } from "app/Middleware/reducers/FamiliaSlice";
 import { HojaParametroSliceRequests } from "app/Middleware/reducers/HojaParametroSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
@@ -35,6 +34,7 @@ import { HojaParametrosAprobacionForm } from "../Modals/HojaParametrosAprobacion
 import { HojaParametrosForm } from "../Modals/HojaParametrosForm";
 import { HojaParametrosImageAprobadaForm } from "../Modals/HojaParametrosImageAprobadaForm";
 import { HojaParametrosImprimirForm } from "../Modals/HojaParametrosImprimirForm";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
 
 interface initialState {
   productoId: number;

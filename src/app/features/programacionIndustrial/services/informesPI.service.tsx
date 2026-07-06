@@ -1,6 +1,6 @@
 import { IInformesPI } from "app/models/IInformesPI";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class InformesPIService extends GenericService<IInformesPI> {
   Url = "InformesPI";

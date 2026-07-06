@@ -1,9 +1,9 @@
 import { IInstpuesto } from "app/models/IInstpuesto";
 import { IIniState } from "app/models/IIniState";
-import { InstpuestoService } from "app/services/instpuesto.service";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { GenericSlice } from "./genericSlice";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { GenericSlice } from "app/Middleware/reducers/genericSlice";
+import { InstpuestoService } from "../services/instpuesto.service";
 //<IAuth, IAuthUser>
 const instpuestoService = new InstpuestoService();
 

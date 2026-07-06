@@ -1,7 +1,7 @@
 import { IAuditDispositivo } from "app/models/IAuditDispositivo";
 import { IAuditTable } from "app/models/IAuditTable";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class AuditDispositivoService extends GenericService<IAuditDispositivo> {
   Url = "AuditDispositivo";

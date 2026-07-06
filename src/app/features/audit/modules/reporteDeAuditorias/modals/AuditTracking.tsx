@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { MaterialButtons } from "../../../../../shared/components/material-ui/MaterialButtons";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import TitleUIComponent from "../../../../../shared/components/helpComponents/TitleUIComponent";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AuditTrackingFormModal } from "../../../../auditorias/modules/modals/reporteAuditoria/AuditTrackingFormModal";
 import { Check, Clear, Visibility } from "@mui/icons-material";
 // import { IAuditTracking } from "app/models/IAuditTracking";

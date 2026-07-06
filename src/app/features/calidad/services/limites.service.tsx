@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { ILimites } from "app/models";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
-import { GenericService } from "./generic.service";
 
 export class LimitesService extends GenericService<ILimites> {
   Url = "Limites";

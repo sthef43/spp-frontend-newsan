@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { OQCReprocesoSampling } from "./OQCReprocesoSampling";
-import { ModalCompoment } from "../../../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { Check, Close } from "@mui/icons-material";
 import { IOQCNuevoPallet } from "app/models/IOQCNuevoPallet";

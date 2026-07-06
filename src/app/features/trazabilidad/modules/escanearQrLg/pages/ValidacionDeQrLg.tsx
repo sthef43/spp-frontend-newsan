@@ -11,7 +11,8 @@ import {
   Tooltip
 } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { PlantSliceRequests, ProductoSliceRequests } from "app/Middleware/reducers";
+import { ProductoSliceRequests } from "app/features/trazabilidad/slices/ProductoSlice";
+import { PlantSliceRequests } from "app/Middleware/reducers";
 import { ValidarQrLgSliceRequests } from "app/Middleware/reducers/ValidarQrLgSlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { useAppDispatch } from "app/core/store/store";

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import { useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { HorasExtrasForm } from "../modals/HorasExtrasForm";
 import moment from "moment";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";

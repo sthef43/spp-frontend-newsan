@@ -1,8 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { IIniState } from "app/models";
 import { IOrigenes } from "app/models/IOrigen";
-import { OrigenService } from "app/services/origen.service";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
+import { OrigenService } from "app/features/calidad/services/origen.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
 
 const origenService = new OrigenService();
 class OrigenClass {

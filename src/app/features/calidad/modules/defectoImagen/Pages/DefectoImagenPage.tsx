@@ -1,6 +1,5 @@
 /* eslint-disable unused-imports/no-unused-vars */
 import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { DefectoImagenSliceRequest } from "app/Middleware/reducers/DefectoImagenSlice";
 import { LineaProduccionFamiliaSliceRequests } from "app/Middleware/reducers/LineaProduccionFamiliaSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
@@ -16,6 +15,7 @@ import { IDefectoImagen } from "app/models/IDefectoImagen";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { DefectoImagenTable } from "../Components/DefectoImagenTable";
 import { DefectoImagenFormClone } from "../Components/DefectoImagenFormClone";
+import { DefectoImagenSliceRequest } from "app/features/calidad/slices/DefectoImagenSlice";
 
 const defaultValues = {
   familia: ""

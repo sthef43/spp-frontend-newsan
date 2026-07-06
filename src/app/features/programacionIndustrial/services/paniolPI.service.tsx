@@ -1,6 +1,6 @@
 import { IPaniolPI } from "app/models/IPaniolPI";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class PaniolPIService extends GenericService<IPaniolPI> {
   Url = "PaniolPI";

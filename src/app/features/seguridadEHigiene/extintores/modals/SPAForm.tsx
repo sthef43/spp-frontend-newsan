@@ -9,7 +9,7 @@ import { ExtintorAgenteSliceRequests } from "app/Middleware/reducers/ExtintorAge
 import { TableComponent } from "../../../../shared/components/Table/TableComponent";
 import { FormControl, FormHelperText, IconButton, InputLabel, MenuItem, Select, Tooltip } from "@mui/material";
 import { Edit } from "@mui/icons-material";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { SPAEditForm } from "./SPAEditForm";
 interface props {
   setOpenPopup: any;

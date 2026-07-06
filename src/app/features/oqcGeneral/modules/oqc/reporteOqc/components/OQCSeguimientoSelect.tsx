@@ -8,7 +8,7 @@ import { oqcSeguimientoSlice } from "app/features/oqcGeneral/slices/OQCSeguimien
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IOQCDesignadaResultado } from "app/models/IOQCDesignadaResultado";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCSeguimientoForm } from "./OQCSeguimientoForm";
 import {
   oqcHallazgoResultSlice,

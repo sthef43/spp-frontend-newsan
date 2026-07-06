@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { TableComponent } from "../../../../shared/components/Table/TableComponent";
 import { ActionsButtons } from "app/shared/helpers/ActionsButtons";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { RolForm } from "../form/RolForm";
 import { IRol } from "app/models";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";

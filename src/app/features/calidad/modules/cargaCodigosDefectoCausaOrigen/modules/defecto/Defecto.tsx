@@ -11,9 +11,9 @@ import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useAppDispatch } from "app/core/store/store";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { DefectoSliceRequest } from "app/Middleware/reducers/DefectoSlice";
 import { IDefecto } from "app/models/IDefecto";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { DefectoSliceRequest } from "app/features/calidad/slices/DefectoSlice";
 
 interface props {
   codRechazoId: string;

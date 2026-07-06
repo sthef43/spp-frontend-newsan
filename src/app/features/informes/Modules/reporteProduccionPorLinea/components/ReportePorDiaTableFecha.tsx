@@ -3,11 +3,11 @@ import { IconButton } from "@mui/material";
 import { Info } from "@mui/icons-material";
 import { TableComponent } from "../../../../../shared/components/Table/TableComponent";
 import { IPlanProd } from "app/models";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { ProduccionDialog } from "../../../../produccion/modules/gestionProduccion/modals/ProduccionDialog";
 import moment from "moment";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
-// import { ModalCompoment } from "../ModalComponent";
+// import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface props {
   lotes: IPlanProd[];

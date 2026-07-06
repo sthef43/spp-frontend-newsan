@@ -31,7 +31,7 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import _ from "lodash";
 import { TooltipComponent } from "app/shared/helpers/ComponentsMUIModify/TooltipComponent";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { HorasExtrasCargaEmails } from "./HorasExtrasCargaEmails";
 
 interface IHorasExtrasForm {

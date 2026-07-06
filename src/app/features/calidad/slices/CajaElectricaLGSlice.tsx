@@ -1,7 +1,7 @@
 import { IIniState } from "app/models/IIniState";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { errorNotification } from "../HelperMidleware/errorNotifications";
-import { CajaElectricaLGService } from "app/services/cajaElectricaLG.service";
+import { errorNotification } from "app/Middleware/HelperMidleware/errorNotifications";
+import { CajaElectricaLGService } from "app/features/calidad/services/cajaElectricaLG.service";
 import { IcajaElectricaLG } from "app/models/IcajaElectricaLG";
 //<IAuth, IAuthUser>
 const cajaElectricaLGService = new CajaElectricaLGService();

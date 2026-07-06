@@ -1,0 +1,1 @@
+import{j as a}from"./index-BkiOUA73.js";const t=({optionCharge:e,file:s,openModal:n,setOpenModal:m,styles:r})=>a.jsx("main",{className:r,children:e==="url"?a.jsx("img",{src:s,alt:""}):a.jsx("img",{src:`./imagenes/${s}`,alt:""})});export{t as E};

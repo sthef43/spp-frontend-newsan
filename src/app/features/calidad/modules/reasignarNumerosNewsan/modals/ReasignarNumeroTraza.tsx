@@ -10,10 +10,10 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";
 import { IAppUser, IInicio } from "app/models";
 import moment from "moment";
-import { TrazaManualSliceRequests } from "app/Middleware/reducers/TrazaManualSlice";
 import { InicioHistorySliceRequests } from "app/Middleware/reducers/InicioHistorySlice";
 import { ITrazaManual } from "app/models/ITrazaManual";
-import { TrazaManualHistorySliceRequests } from "app/Middleware/reducers/TrazaManualHistorySlice";
+import { TrazaManualHistorySliceRequests } from "app/features/calidad/slices/TrazaManualHistorySlice";
+import { TrazaManualSliceRequests } from "app/features/calidad/slices/TrazaManualSlice";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;

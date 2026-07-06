@@ -20,7 +20,7 @@ import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { GetInfoUser } from "app/shared/helpers/userConfig";
 import { MaterialButtons } from "../../../../shared/components/material-ui/MaterialButtons";
-import { ModalCompoment } from "../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { MaterialesDialog } from "../../../calidad/components/MaterialesDialog";
 
 interface props {

@@ -6,7 +6,7 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { ICompresor } from "app/models/ICompresor";
-import { CompresorSliceRequests } from "app/Middleware/reducers/CompresorSlice";
+import { CompresorSliceRequests } from "app/features/calidad/slices/CompresorSlice";
 interface props {
   setOpenPopup: any;
   editState?: ICompresor | null;

@@ -6,11 +6,11 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { CtrlPlacasHallazgosSliceRequests } from "app/Middleware/reducers/CtrlPlacasHallazgosSlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { Delete } from "@mui/icons-material";
 import { CtrlPlacasSliceRequests } from "app/Middleware/reducers/CtrlPlacasSlice";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
+import { CtrlPlacasHallazgosSliceRequests } from "app/features/calidad/slices/CtrlPlacasHallazgosSlice";
 interface props {
   setOpenPopup?: any;
 }

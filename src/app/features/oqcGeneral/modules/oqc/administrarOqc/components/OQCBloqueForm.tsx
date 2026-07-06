@@ -19,7 +19,7 @@ import { MaterialButtons } from "../../../../../../shared/components/material-ui
 import TitleUIComponent from "../../../../../../shared/components/helpComponents/TitleUIComponent";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IProducto } from "app/models";
-import { ModalCompoment } from "../../../../../../shared/components/ModalComponent";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { OQCBloqueHallazgoForm } from "./OQCBloqueHallazgoForm";
 import { IOQCBloqueGroup } from "app/models/IOQCBloqueGroup";
 import { IOQCBloque } from "app/models/IOQCBloque";

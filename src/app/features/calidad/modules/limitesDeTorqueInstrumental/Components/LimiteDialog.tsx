@@ -10,13 +10,13 @@ import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { GenericoSliceRequests } from "app/Middleware/reducers/GenericoSlice";
 import { GenericFieldsGenerator } from "app/shared/helpers/GenericFieldsGenerator";
-import { InstpuestoSliceRequests } from "app/Middleware/reducers/InstpuestoSlice";
 import { ILimites } from "app/models/ILimites";
-import { ColorSliceRequests } from "app/Middleware/reducers/ColorSlice";
-import { AtornilladoraAlimSliceRequests } from "app/Middleware/reducers/AtornilladoraAlimSlice";
-import { AtornilladoraFormatoSliceRequests } from "app/Middleware/reducers/AtornilladoraFormatoSlice";
-import { LimitesSliceRequests } from "app/Middleware/reducers/LimitesSlice";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { AtornilladoraAlimSliceRequests } from "app/features/calidad/slices/AtornilladoraAlimSlice";
+import { AtornilladoraFormatoSliceRequests } from "app/features/calidad/slices/AtornilladoraFormatoSlice";
+import { ColorSliceRequests } from "app/features/calidad/slices/ColorSlice";
+import { InstpuestoSliceRequests } from "app/features/calidad/slices/InstpuestoSlice";
+import { LimitesSliceRequests } from "app/features/calidad/slices/LimitesSlice";
 
 interface props {
   limite: ILimites;

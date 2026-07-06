@@ -1,7 +1,7 @@
 import { IPagedPaginator } from "app/models/IPagedPaginator";
 import { IRegistry } from "app/models/IRegistry";
+import { GenericService } from "app/services/generic.service";
 import axios from "axios";
-import { GenericService } from "./generic.service";
 
 export class RegistryService extends GenericService<IRegistry> {
   Url = "Registry";

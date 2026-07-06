@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import InspeccionesCard from "../../components/inspecciones/InspeccionesCard";
 import { useParams } from "react-router-dom";
 import { useAppDispatch } from "app/core/store/store";
-import { CalidadInspeccionesSliceRequest } from "app/Middleware/reducers/CalidadInspeccionesSlice";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { ICalidadInspecciones, ICalidadInspeccionRechazoMultiple } from "app/services/calidad-inspecciones.service";
 import moment from "moment";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import Swal from "sweetalert2";
+import {
+  ICalidadInspecciones,
+  ICalidadInspeccionRechazoMultiple
+} from "app/features/calidad/services/calidad-inspecciones.service";
+import { CalidadInspeccionesSliceRequest } from "app/features/calidad/slices/CalidadInspeccionesSlice";
 const InspeccionesDetailPage = () => {
   const { TitleChanger } = useTitleOfApp();
   const { codigo }: any = useParams();

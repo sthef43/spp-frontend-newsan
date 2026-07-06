@@ -1,7 +1,7 @@
 import { ITodo } from "app/models/ITodo";
 import { ITodoToday } from "app/models/ITodoToday";
 import axios from "axios";
-import { GenericService } from "./generic.service";
+import { GenericService } from "app/services/generic.service";
 
 export class TodoService extends GenericService<ITodo> {
   Url = "Todo";

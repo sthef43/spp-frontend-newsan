@@ -3,9 +3,9 @@ import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { IReprocesoLinea } from "app/models/IReprocesoLinea";
 import moment from "moment";
 import { Button, FormControl, FormControlLabel, FormLabel, Radio, RadioGroup } from "@mui/material";
-import { ModalCompoment } from "../../../../../shared/components/ModalComponent";
-import { AgregarReprocesadoIndividual } from "../../../components/AgregarReprocesadoIndividual";
-import { AgregarReprocesadoPorGrupo } from "../../../components/AgregarReprocesadoPorGrupo";
+import { AgregarReprocesadoIndividual } from "app/features/calidad/components/AgregarReprocesadoIndividual";
+import { AgregarReprocesadoPorGrupo } from "app/features/calidad/components/AgregarReprocesadoPorGrupo";
+import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 
 interface props {
   listado: IReprocesoLinea[]; //Listado de ReprocesoLinea que existen

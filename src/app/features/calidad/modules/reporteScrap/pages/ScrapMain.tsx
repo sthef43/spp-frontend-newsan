@@ -8,7 +8,6 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { TextField, Button } from "@mui/material";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { CalidadScrapService } from "app/services/CalidadScrap.service";
 import _ from "lodash";
 import { Group } from "@mui/icons-material";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
@@ -29,6 +28,7 @@ import {
 } from "recharts";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { useAppDispatch } from "app/core/store/store";
+import { CalidadScrapService } from "app/features/calidad/services/CalidadScrap.service";
 
 //_______HELPERS_______//
 const normHeader = (s: any) =>

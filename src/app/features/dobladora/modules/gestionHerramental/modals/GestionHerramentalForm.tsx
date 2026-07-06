@@ -9,11 +9,11 @@ import { unwrapResult } from "@reduxjs/toolkit";
 import { DobHHerramentalSliceRequests } from "app/Middleware/reducers/DobHHerramentalSlice";
 import { IDobHHistorial } from "app/models/IDobHHistorial";
 import { DobHUbicacionSliceRequests } from "app/Middleware/reducers/DobHUbicacionSlice";
-import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 import { IAppUser } from "app/models";
 import moment from "moment";
 import { DobHHistorialSliceRequests } from "app/Middleware/reducers/DobHHistorialSlice";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
+import { DobHMaquinaSliceRequests } from "app/Middleware/reducers/DobHMaquinaSlice";
 interface props {
   setOpenPopup: any;
   editState?: IDobHHistorial | null;
