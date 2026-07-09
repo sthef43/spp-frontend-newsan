@@ -14,6 +14,17 @@ import { ICLISectores } from "../Models/ICLISectores";
 import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
 import { useForm } from "react-hook-form";
 import { CLISectoresSliceRequest } from "../Middlewares/CliSectoresSlice";
+import { AreaChartComponent } from "app/shared/helpers/Graficos/components/graficos/AreaChartComponent";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
+import { IPlanProd } from "app/models";
+import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
+import { ContainerForGraphics } from "app/shared/helpers/Graficos/containers/ContainerForGraphics";
+
+interface DataGrafico {
+  cantidad: number;
+  cantidadStack: number;
+  numeroOp: string;
+}
 
 const fakeData1 = [
   {
@@ -83,7 +94,9 @@ export const Pruebas = () => {
   const dispatch = useAppDispatch();
 
   const [listaContenedore, setListaContenedores] = useState<ICLISectores[]>([]);
-  const [listaSectores, setListaSectores] = useState<ICLISectores[]>([]);
+  const [listaPlanProd, setListaPlanProd] = useState<IPlanProd[]>([]);
+  const [objetoPruebaGrafico, setObjetoPruebaGrafico] = useState<DataGrafico[]>([]);
+
   const [listaSectoresModificada, setListaSectoresModificada] = useState([]);
   const [cantidadAprobados, setCantidadAprobados] = useState(0);
 
@@ -92,8 +105,39 @@ export const Pruebas = () => {
   const { generateLpnWitPrefixCode } = UseGeneratorCodesForLabels();
   const { generateSeriesNumbers, validateOrReplaceWithRegex } = UseUtilHooks();
 
-  FetchApi<ICLISectores[]>(CLISectoresSliceRequest.getAllRequest, null, false, null, setListaSectores);
   FetchApi<ICLISectores[]>(CLISectoresSliceRequest.getAllRequest, null, false, null, setListaContenedores);
+  // FetchApi<IPlanProd[]>(
+  //   PlanProdSliceRequests.getUtimasByLineaRequest,
+  //   { lineaId: 1, codigoNewsan2: 200 },
+  //   false,
+  //   null,
+  //   setListaPlanProd,
+  //   false,
+  //   false,
+  //   true,
+  //   (data: IPlanProd[]) => {
+  //     const clonContenedor = [...listaContenedore];
+  //     const newObjetc = clonContenedor.map((elementos, index) => ({
+  //       cantidad: data[index]?.cantidad ?? 2000,
+  //       cantidadStack: elementos?.cantidadStacks ?? 1000,
+  //       numeroOp: `OP-${index}`
+  //     }));
+  //     console.log(newObjetc);
+  //     setObjetoPruebaGrafico(newObjetc);
+  //   }
+  // );
+
+  useEffect(() => {
+    if (listaContenedore.length > 0) {
+      const clonContenedor = [...listaContenedore];
+      const newObjetc = clonContenedor.map((elementos, index) => ({
+        cantidad: Math.floor(Math.random() * 2000) + 1,
+        cantidadStack: Math.floor(Math.random() * 1000) + 1,
+        numeroOp: `OP-${index + 1}`
+      }));
+      setObjetoPruebaGrafico(newObjetc);
+    }
+  }, [listaContenedore]);
 
   const getAllModify = async () => {
     const lista = [];
@@ -178,8 +222,6 @@ export const Pruebas = () => {
   useEffect(() => {
     getAllModify();
   }, []);
-
-  console.log(pruebaSelect);
 
   return (
     <main className="w-full p-4">
@@ -296,13 +338,43 @@ export const Pruebas = () => {
             ]}
           />
         </div>
-      </Suspense> */}
+        </Suspense> */}
       <div>
         <button onClick={() => probarBotonBack()}>Boton Back</button>
         <button onClick={() => probarBotonesNext()}>Boton Next</button>
       </div>
       <Suspense fallback={<p>Cargando...</p>}>
-        <div className="my-8 w-full">
+        <ContainerForGraphics
+          data={objetoPruebaGrafico}
+          xAxisKey="numeroOp"
+          extraKeys={[
+            {
+              title: "Producido",
+              objectDate: "cantidad"
+              // render: () => {
+              //   return (
+              //     <p style={{ margin: 0, color: "#555" }}>
+              //       <strong className="text-green-500">Producido: </strong>
+              //     </p>
+              //   );
+              // }
+            },
+            {
+              title: "Rechazados",
+              objectDate: "cantidadStack"
+              // render: () => (
+              //   <p style={{ margin: 0, color: "#555" }}>
+              //     <strong className="text-red-500">Rechazados: </strong>
+              //   </p>
+              // )
+            }
+          ]}
+          areas={[
+            { key: "cantidad", stroke: "blue", fill: "#82ca9d" },
+            { key: "cantidadStack", stroke: "red", fill: "#ff0000" }
+          ]}
+        />
+        {/* <div className="my-8 w-full">
           <StepperComponent
             activeStepNumber={cantidadAprobados}
             itemList={listaSectoresModificada}
@@ -317,9 +389,43 @@ export const Pruebas = () => {
             arrayItemsVisualizer={["jefeSector", "cantidadStacks", "nombreSector", "operator.dni"]}
             stylesForToolTip={stylesTool}
           />
-        </div>
+        </div> */}
       </Suspense>
-      <Suspense fallback={<p>Cargando...</p>}>
+      {/* <ContainerForPages optionsLayout="Selects" activeEffectVisible>
+        <>
+          <AreaChartComponent
+            data={objetoPruebaGrafico}
+            xAxisKey="numeroOp"
+            extraKeys={[
+              {
+                title: "Producido",
+                objectDate: "cantidad"
+                // render: () => {
+                //   return (
+                //     <p style={{ margin: 0, color: "#555" }}>
+                //       <strong className="text-green-500">Producido: </strong>
+                //     </p>
+                //   );
+                // }
+              },
+              {
+                title: "Rechazados",
+                objectDate: "cantidadStack"
+                // render: () => (
+                //   <p style={{ margin: 0, color: "#555" }}>
+                //     <strong className="text-red-500">Rechazados: </strong>
+                //   </p>
+                // )
+              }
+            ]}
+            areas={[
+              { key: "cantidad", stroke: "#000000", fill: "#82ca9d" },
+              { key: "cantidadStack", stroke: "#000000", fill: "#ff0000" }
+            ]}
+          />
+        </>
+      </ContainerForPages> */}
+      {/* <Suspense fallback={<p>Cargando...</p>}>
         {fakeData1.map((elementos) => {
           return (
             <div key={elementos.id}>
@@ -327,7 +433,7 @@ export const Pruebas = () => {
             </div>
           );
         })}
-      </Suspense>
+      </Suspense> */}
     </main>
   );
 };

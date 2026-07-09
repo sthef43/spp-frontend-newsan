@@ -95,6 +95,9 @@ module.exports = {
         colorTableTop: "var(--table-color-top)",
         colorTableBottom: "var(--table-color-bottom)",
 
+        //Colores Botones
+        buttonSelectorGraphics: "var(--button-selector-graphics)",
+
         background: "var(--background-color)",
         dangerNew: "var(--danger-color)",
         textColor: "var(--text-color)",

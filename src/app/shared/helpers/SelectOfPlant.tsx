@@ -86,7 +86,7 @@ export const SelectOFPlant = (props: ISelectOFPlant): JSX.Element => {
 
   return (
     <div className={`container m-auto bg-secondaryNew text-center  rounded-lg ${!notShadow && "shadow-elevation-4"}`}>
-      <div className={`py-4 grid gap-10 mx-2 h-full ${children ? `grid-cols-2` : `grid-cols-1`}`}>
+      <div className={`py-4 grid gap-10 mx-2 items-center h-full ${children ? `grid-cols-2` : `grid-cols-1`}`}>
         <Controller
           name="plantId"
           control={control}

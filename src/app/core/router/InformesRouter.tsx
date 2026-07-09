@@ -132,10 +132,16 @@ const InformesRoutes: LazyRouteConfig[] = [
     permission: "informes/informe-renacer"
   },
   {
-    path: "/informe-placas-automotriz",
+    path: "/informe-automotriz-traza",
     importFn: () => import("app/features/informes/Modules/reportePlacasAutomotriz/Pages/InformePlacasAutomotriz"),
     exportName: "InformePlacasAutomotriz",
-    permission: "informes/informe-placas-automotriz"
+    permission: "informes/informe-automotriz-traza"
+  },
+  {
+    path: "/informe-automotriz-jig",
+    importFn: () => import("app/features/informes/Modules/reporteJigAutomotriz/pages/ReporteAutomotriz"),
+    exportName: "ReporteAutomotriz",
+    permission: "informes/informe-automotriz-jig"
   }
 ];
 

@@ -94,12 +94,6 @@ const adminRoutes: LazyRouteConfig[] = [
     importFn: () => import("app/features/admin/lineasRechazoHabilitadas/lineasRechazoHabilidadesPage"),
     exportName: "LineasRechazoHabilitadasPage",
     permission: "admin/lineas-rechazo"
-  },
-  {
-    path: "/reporte-calidad",
-    importFn: () => import("app/features/calidad/modules/reporteCalidad/ReporteCalidad"),
-    exportName: "ReporteCalidad",
-    permission: "admin/reporte-calidad"
   }
 ];
 

@@ -19,10 +19,19 @@ export class AuditRegistryService extends GenericService<IAuditRegistry> {
         });
     });
   }
-  public getPaginatedbyRolId(plantId: number, rolId: number): Promise<IAuditRegistry[]> {
+  public getPaginatedbyRolId(
+    plantId: number,
+    rolId: number,
+    fechaDesde: string,
+    fechaHasta: string
+  ): Promise<IAuditRegistry[]> {
     return new Promise((resolve, reject) => {
       axios
-        .get<IAuditRegistry[]>(`${import.meta.env.VITE_API_URL}/${this.Url}/GetAllPaginatedByRol/${plantId}/${rolId}`)
+        .get<IAuditRegistry[]>(
+          `${import.meta.env.VITE_API_URL}/${
+            this.Url
+          }/GetAllPaginatedByRol/${plantId}/${rolId}/${fechaDesde}/${fechaHasta}`
+        )
         .then(function (response) {
           resolve(response.data);
         })

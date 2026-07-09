@@ -155,19 +155,27 @@ export const HorasExtrasForm = ({
 
   const seleccionarHorasExtras = (horaExtra: ITurnoExtras) => {
     if (!edicionActiva) {
-      setListaHorasExtrasSeleccionadas((prev) => {
-        if (prev.some((item) => item.id === horaExtra.id)) {
-          return prev.filter((item) => item.id !== horaExtra.id);
-        }
-        return [...prev, horaExtra];
-      });
+      setListaHorasExtrasSeleccionadas((prev) => [...prev, horaExtra]);
     }
   };
 
-  const eliminarHorasExtras = (horaExtra: ITurnoExtras) => {
+  const eliminarHorasExtras = (indexToRemove: number) => {
     if (!edicionActiva) {
+      for (let i = indexToRemove; i < listaHorasExtrasSeleccionadas.length - 1; i++) {
+        setValue(`lineaProduccion-${i}`, getValues(`lineaProduccion-${i + 1}`));
+        setValue(`cantidadPersonal-${i}`, getValues(`cantidadPersonal-${i + 1}`));
+        setValue(`comedor-${i}`, getValues(`comedor-${i + 1}`));
+        setValue(`transporte-${i}`, getValues(`transporte-${i + 1}`));
+        setValue(`observaciones-${i}`, getValues(`observaciones-${i + 1}`));
+      }
+      const lastIndex = listaHorasExtrasSeleccionadas.length - 1;
+      setValue(`lineaProduccion-${lastIndex}`, undefined);
+      setValue(`cantidadPersonal-${lastIndex}`, "");
+      setValue(`comedor-${lastIndex}`, false);
+      setValue(`transporte-${lastIndex}`, false);
+      setValue(`observaciones-${lastIndex}`, "");
       setListaHorasExtrasSeleccionadas((prev) => {
-        return prev.filter((item) => item.id !== horaExtra.id);
+        return prev.filter((_, index) => index !== indexToRemove);
       });
     }
   };
@@ -176,7 +184,7 @@ export const HorasExtrasForm = ({
     const horaTurnoExtras = data.horaExtraTurnoExtras;
     const listaTurnosExtras = data.horaExtraTurnoExtras.flatMap((elementos) => elementos.turnoExtras);
 
-    setListaHorasExtras(listaTurnosExtras);
+    setListaHorasExtras(_.uniqBy(listaTurnosExtras, "id"));
     setListaHorasExtrasSeleccionadas(listaTurnosExtras);
 
     const lineasAgrupadas = _.groupBy(data.horaExtraTurnoExtras, "horaExtraId");
@@ -328,20 +336,28 @@ export const HorasExtrasForm = ({
                 activeEffectVisible
                 classNamePersonalized="flex flex-col items-center">
                 <div className="flex flex-row bg-backgroundModalAudit p-6 rounded-2xl flex-wrap mt-2 w-full justify-between">
-                  {listaHorasExtras.map((elementos, index) => (
-                    <div
-                      onClick={() => seleccionarHorasExtras(elementos)}
-                      key={index}
-                      className={`flex flex-row group transition-all duration-100 cursor-pointer ${
-                        listaHorasExtrasSeleccionadas.some((item) => item.id === elementos.id)
-                          ? "bg-primaryNewOpacity rounded-2xl text-white border-[3px] border-blue-600/55"
-                          : "border-[3px] border-gray-400 rounded-2xl"
-                      }`}>
-                      <p className="text-base text-gray-900 w-full rounded-xl px-6 py-2 group-hover:bg-primaryNewOpacity group-hover:text-white group-hover:border-primaryNewOpacity transition-all duration-300">
-                        {elementos.desdeHora.slice(0, 5)} - {elementos.hastaHora.slice(0, 5)}
-                      </p>
-                    </div>
-                  ))}
+                  {listaHorasExtras.map((elementos, index) => {
+                    const clickCount = listaHorasExtrasSeleccionadas.filter((item) => item.id === elementos.id).length;
+                    return (
+                      <div
+                        onClick={() => seleccionarHorasExtras(elementos)}
+                        key={index}
+                        className={`relative flex flex-row group transition-all duration-100 cursor-pointer ${
+                          listaHorasExtrasSeleccionadas.some((item) => item.id === elementos.id)
+                            ? "bg-primaryNewOpacity rounded-2xl text-white border-[3px] border-blue-600/55"
+                            : "border-[3px] border-gray-400 rounded-2xl"
+                        }`}>
+                        <p className="text-base text-gray-900 w-full rounded-xl px-6 py-2 group-hover:bg-primaryNewOpacity group-hover:text-white group-hover:border-primaryNewOpacity transition-all duration-300">
+                          {elementos.desdeHora.slice(0, 5)} - {elementos.hastaHora.slice(0, 5)}
+                        </p>
+                        {clickCount > 1 && (
+                          <div className="absolute -top-2 -right-2 bg-blue-600 text-white rounded-full w-5 h-5 flex items-center justify-center text-[10px] font-extrabold border border-white shadow z-10">
+                            {clickCount}
+                          </div>
+                        )}
+                      </div>
+                    );
+                  })}
                 </div>
               </ContainerForPages>
             )}
@@ -361,7 +377,7 @@ export const HorasExtrasForm = ({
                         {elementos.desdeHora.slice(0, 5)} - {elementos.hastaHora.slice(0, 5)}
                       </p>
                     </div>
-                    <Button onClick={() => eliminarHorasExtras(elementos)}>
+                    <Button onClick={() => eliminarHorasExtras(index)}>
                       <CloseRounded color="error" />
                     </Button>
                   </header>

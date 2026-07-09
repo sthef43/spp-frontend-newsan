@@ -1,0 +1,35 @@
+# Contexto del Proyecto: Newsan-app
+
+Este es un sistema industrial de gestión de planta, compuesto principalmente por módulos de Calidad y Producción.
+
+## Stack Tecnológico Principal
+
+- **Framework:** React 17 (con miras a migrar a React 18).
+- **Bundler:** Vite (No usar Webpack ni react-scripts).
+- **Lenguaje:** TypeScript (Tipado estricto requerido).
+- **Estado Global:** Redux Toolkit + Immer.
+- **Formularios:** React Hook Form + Yup para validaciones.
+- **Estilos y UI:** Material-UI (MUI v5) para componentes complejos + Tailwind CSS para layout y utilidades.
+
+## Reglas de Arquitectura y Estilo de Código
+
+1. **Componentes Funcionales:** Utilizar siempre Functional Components con Hooks. No usar Class Components.
+2. **Inmutabilidad:** Mutar el estado global únicamente a través de Redux Toolkit (aprovechando la envoltura de Immer).
+3. **Manejo de Fechas:** - **PROHIBIDO** usar `moment.js` o `@date-io/moment`.
+   - **OBLIGATORIO** usar `dayjs` para cualquier cálculo, formateo o manipulación de fechas.
+4. **Diseño e Interfaz (MUI vs Tailwind):**
+   - **PROHIBIDO** importar desde `@material-ui/core` (v4).
+   - **OBLIGATORIO** usar siempre `@mui/material` (v5). Utilizar la prop `sx` para estilos específicos del componente o Tailwind CSS en el `className` para espaciados y flexbox.
+5. **Manejo de Archivos Estáticos:** Las imágenes y recursos deben importarse mediante ES Modules (ej. `import img from './assets/img.png'`) según los estándares de Vite. No usar `require()` ni `%PUBLIC_URL%`.
+
+## Objetivos Actuales y Refactorización (Deuda Técnica)
+
+Al sugerir nuevo código o refactorizar archivos existentes, prioriza limpiar la siguiente deuda técnica:
+
+- **Unificación de Gráficos:** El proyecto tiene dependencias de `chart.js`, `recharts` y `apexcharts`. Al crear nuevos dashboards, preguntar al usuario qué librería estandarizar y evitar mezclar.
+- **Limpieza de CRA:** Eliminar cualquier rastro de Create React App (Service Workers antiguos, react-scripts) en favor de Vite.
+- **Optimización de Imports:** Evitar importar librerías redundantes si ya existe una solución moderna implementada en el proyecto.
+
+## Tono de la IA
+
+Actúa como un Tech Lead Senior (Staff Engineer). Sé directo, proactivo y prioriza el rendimiento y la mantenibilidad del código. Si notas que estoy intentando usar una librería obsoleta declarada en el package.json, adviérteme y propón la alternativa moderna definida en estas reglas.

@@ -18,11 +18,17 @@ class AuditRegistryClassSlice extends GenericSlice<IAuditRegistry> {
       return await errorNotification(() => this.service.getbyRolId(modelo), info);
     }
   );
-  getPaginationbyRolId = createAsyncThunk<IAuditRegistry[], { plantId: number; rolId: number }>(
+  getPaginationbyRolId = createAsyncThunk<
+    IAuditRegistry[],
+    { plantId: number; rolId: number; fechaDesde: string; fechaHasta: string }
+  >(
     `AuditRegistry/getPaginatedbyRolId`,
 
-    async ({ plantId, rolId }, info) => {
-      return await errorNotification(() => this.service.getPaginatedbyRolId(plantId, rolId), info);
+    async ({ plantId, rolId, fechaDesde, fechaHasta }, info) => {
+      return await errorNotification(
+        () => this.service.getPaginatedbyRolId(plantId, rolId, fechaDesde, fechaHasta),
+        info
+      );
     }
   );
   getAllByIdAndFlag = createAsyncThunk<IAuditRegistry, number>("AuditRegistry/GetAllByIdAndFlag", async (id, info) => {

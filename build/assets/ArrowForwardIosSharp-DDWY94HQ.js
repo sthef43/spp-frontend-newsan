@@ -1,1 +1,0 @@
-import{bN as e,j as a,bO as t}from"./index-BkiOUA73.js";var r={},o=t;Object.defineProperty(r,"__esModule",{value:!0});var u=r.default=void 0,s=o(e()),d=a;u=r.default=(0,s.default)((0,d.jsx)("path",{d:"M6.23 20.23 8 22l10-10L8 2 6.23 3.77 14.46 12z"}),"ArrowForwardIosSharp");export{u as d};

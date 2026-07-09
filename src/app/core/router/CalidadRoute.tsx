@@ -168,6 +168,12 @@ const calidadRoutes: LazyRouteConfig[] = [
     exportName: "AltaAutomotriz",
     permission: "calidad/alta-automotriz"
   },
+  {
+    path: "/reporte-calidad",
+    importFn: () => import("app/features/calidad/modules/reporteCalidad/ReporteCalidad"),
+    exportName: "ReporteCalidad",
+    permission: "calidad/reporte-calidad"
+  },
   // Rutas públicas (sin permiso)
   {
     path: "/reasignacion-nro-serie-traza-manual/:codNewsan",

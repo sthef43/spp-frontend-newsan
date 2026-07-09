@@ -172,6 +172,10 @@ export function UseUtilHooks<T>() {
     }
   };
 
+  const getNestedValue = (obj: any, path: string) => {
+    return path.split(".").reduce((acc, part) => (acc ? acc[part] : undefined), obj);
+  };
+
   const listRegex = (regex: TypeValidationOrReplace): RegExp => {
     switch (regex.typeRegex) {
       case "email":
@@ -194,6 +198,7 @@ export function UseUtilHooks<T>() {
     generateSeriesNumbers,
     pagination,
     validateOrReplaceWithRegex,
-    generateColorRandom
+    generateColorRandom,
+    getNestedValue
   };
 }

@@ -16,6 +16,8 @@ export const OQCPaletPrintView = ({ parentRef, reproceso, estadoReimpresion }: I
   const paletPrint = useAppSelector((state) => state.oqcPaletPrint.object);
   const palet = useAppSelector((state) => state.oqcPalet.object);
 
+  console.log(reproceso);
+
   return (
     <div
       ref={parentRef}

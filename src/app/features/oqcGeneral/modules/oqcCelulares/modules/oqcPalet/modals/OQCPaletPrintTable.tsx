@@ -40,7 +40,11 @@ export const OQCPaletPrintTable = ({ closeModal }: IOQCPaletPrintTable): JSX.Ele
       if (await getConfirmation("Dar de baja OQC", "Esta seguro de dar de baja el resultado del oqc")) {
         dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
         const operator = unwrapResult(await dispatch(OperatorSliceRequests.getInfoByDni(GetInfoUser().dni | 0)));
-        const objectSubmit = { ...limpiarPaletPrint(paletPrint), operatorCanceledId: operator.id, canceled: true } as IOQCPaletPrint;
+        const objectSubmit = {
+          ...limpiarPaletPrint(paletPrint),
+          operatorCanceledId: operator.id,
+          canceled: true
+        } as IOQCPaletPrint;
         await dispatch(OQCPaletPrintSliceRequests.PutRequest(objectSubmit));
         await dispatch(OQCPaletPrintSliceRequests.getAllByPalet(objectSubmit.oqcPaletId));
         dispatch(LoadingUISlice.actions.LoadingUIClose());
@@ -173,6 +177,7 @@ export const OQCPaletPrintTable = ({ closeModal }: IOQCPaletPrintTable): JSX.Ele
           subTitle="Reimpresión de ticket para reproceso"
           title="Imprimir Ticket Reproceso">
           <OQCPaletPrint
+            reproceso={paletSeleccionado.reprocesado}
             ultimaMuestraOQC={ultimaMuestraOQC}
             reimpresion={true}
             closeModal={setOpenModalReimpresion}

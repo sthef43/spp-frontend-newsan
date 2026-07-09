@@ -20,16 +20,27 @@ import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { AuditComent } from "../modals/AuditComent";
 import { AuditRegistrySliceRequests } from "app/features/audit/slices/AuditRegistrySlice";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
+import { SelectOfDate } from "app/shared/helpers/SelectOfDate";
+import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 
 export const AuditTableOfPerformed = (): JSX.Element => {
-  const dispatch = useAppDispatch();
   const history = useHistory();
+
+  const dispatch = useAppDispatch();
+  const { openNotificationUI } = useNotificationUI();
+
   const [auditRegistryId, setAuditRegistryId] = useState(0);
   const [auditId, setAuditId] = useState(0);
   const [modalOpen, setOpenModal] = useState(false);
   const [openModalComent, setOpenModalComent] = useState(false);
   const [plantId, setPlantId] = useState(0);
   const [dataTable, setDataTable] = useState<IAuditRegistry[]>([]);
+
+  const [fechaDesde, setFechaDesde] = useState("");
+  const [fechaHasta, setFechaHasta] = useState("");
+  const [error, setError] = useState(false);
+
   const { TitleChanger } = useTitleOfApp();
   React.useEffect(() => {
     TitleChanger("Auditorias Terminadas");
@@ -37,15 +48,32 @@ export const AuditTableOfPerformed = (): JSX.Element => {
   const infoUser: IAppUser = useAppSelector<IAppUser>((state) => state.appUser.data as any);
 
   async function onInit(): Promise<void> {
-    const information = unwrapResult(
-      await dispatch(
-        AuditRegistrySliceRequests.getPaginationbyRolId({
-          plantId: plantId,
-          rolId: infoUser?.permisos?.rolId
-        })
-      )
-    );
-    setDataTable(information);
+    try {
+      if (!error) {
+        dispatch(LoadingUISlice.actions.LoadingUIOpen());
+        const information = unwrapResult(
+          await dispatch(
+            AuditRegistrySliceRequests.getPaginationbyRolId({
+              plantId: plantId,
+              rolId: infoUser?.permisos?.rolId,
+              fechaDesde: fechaDesde,
+              fechaHasta: fechaHasta
+            })
+          )
+        );
+        if (information && information.length > 0) {
+          setDataTable(information);
+          openNotificationUI("Auditorias obtenidas con éxito", "success");
+        } else {
+          setDataTable([]);
+          openNotificationUI("No se encontraron auditorias", "info");
+        }
+      }
+    } catch (error) {
+      openNotificationUI("Error al obtener las auditorias", "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
+    }
   }
   const verEstado = (estado: boolean) => {
     if (estado) return "Dado de baja";
@@ -79,17 +107,33 @@ export const AuditTableOfPerformed = (): JSX.Element => {
   };
 
   React.useEffect(() => {
-    if (plantId != 0) onInit();
-  }, [plantId]);
+    if (plantId != 0 && fechaDesde && fechaHasta) onInit();
+  }, [plantId, fechaDesde, fechaHasta]);
 
   return (
-    <div>
+    <ContainerForPages optionsLayout="page" activeEffectVisible>
       <TitleUIComponent
         classNameTitle="text-base"
         title={"Lo siguiente es una lista de todas las auditorías realizadas ordenadas por fecha"}
       />
-      <SelectOFPlant setPlantId={setPlantId} />
-      <div className="my-2 mx-4 h-full">
+      <ContainerForPages optionsLayout="Selects" activeEffectVisible>
+        <div className="w-full">
+          <SelectOFPlant
+            setPlantId={setPlantId}
+            children={
+              <>
+                <SelectOfDate
+                  fechaDesdeHasta
+                  setFechaDesdeProps={setFechaDesde}
+                  setFechaHastaProps={setFechaHasta}
+                  setErrorProps={setError}
+                />
+              </>
+            }
+          />
+        </div>
+      </ContainerForPages>
+      <div>
         {/* aca va el search  */}
         <TableComponent
           buscar={true}
@@ -226,6 +270,6 @@ export const AuditTableOfPerformed = (): JSX.Element => {
           audit={auditRegistry}
           setOpenModalComment={setOpenModalComent}></AuditComent>
       </ModalCompoment>
-    </div>
+    </ContainerForPages>
   );
 };

@@ -191,7 +191,11 @@ export const OQCPaletPrint = ({
       try {
         dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
         const operator = unwrapResult(await dispatch(OperatorSliceRequests.getInfoByDni(GetInfoUser().dni | 0)));
-        const paletSubmit = limpiarPalet({ ...palet, operatorId: operator.id, cerrado: false } as IOQCPalet) as IOQCPalet;
+        const paletSubmit = limpiarPalet({
+          ...palet,
+          operatorId: operator.id,
+          cerrado: false
+        } as IOQCPalet) as IOQCPalet;
         await dispatch(OQCPaletSliceRequests.PutRequest(paletSubmit));
       } catch (error) {
         console.log(error);
@@ -298,8 +302,11 @@ export const OQCPaletPrint = ({
     onInit();
   }, []);
 
+  console.log(reproceso);
+  console.log(estadoReimpresion);
+
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-5 w-">
+    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-5 w-[25vw]">
       <div className="hidden bg-white">
         <OQCPaletPrintView estadoReimpresion={estadoReimpresion} reproceso={reproceso} parentRef={componentRef} />
       </div>
