@@ -1,4 +1,5 @@
-import { Box, FormControl, SxProps, TextField, Theme } from "@mui/material";
+import React from "react";
+import { FormControl, SxProps, TextField, Theme } from "@mui/material";
 import { FieldValues, UseControllerProps, useController } from "react-hook-form";
 
 interface Props<T extends FieldValues> extends UseControllerProps<T> {

@@ -1,3 +1,4 @@
+import React from "react";
 import { AreaChartComponent } from "../components/graficos/AreaChartComponent";
 import { BarChartComponent } from "../components/graficos/BarChartComponents";
 import { LineaChartComponent } from "../components/graficos/LineaChartComponent";

@@ -1,5 +1,5 @@
+import React, { useMemo } from "react";
 import { Box, Chip, FormControl, FormHelperText, InputLabel, MenuItem, Select, SelectChangeEvent } from "@mui/material";
-import { useMemo } from "react";
 
 // Eliminamos la dependencia de react-hook-form y UseControllerProps
 interface Props<TItem> {
