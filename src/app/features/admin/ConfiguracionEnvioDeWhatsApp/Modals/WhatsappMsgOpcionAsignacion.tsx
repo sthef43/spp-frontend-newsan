@@ -1,5 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-vars */
 import React from "react";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch } from "app/core/store/store";
@@ -9,7 +7,7 @@ import { IWhatsappMsgOpcionAsignacion } from "app/models/IWhatsappMsgOpcionAsign
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button } from "@mui/material";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
-import { TextFieldComponent } from "app/features/cli/Components/TextFieldComponente";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;
@@ -17,19 +15,32 @@ interface Props {
   plantaSeleccionadaId: number;
 }
 
+interface FormValues {
+  nombre: string;
+  descripcion: string;
+}
+
+const defaultValues: FormValues = {
+  nombre: "",
+  descripcion: ""
+};
+
 export const WhatsappMsgOpcionAsignacion: React.FC<Props> = ({ setOpenModal, openModal, plantaSeleccionadaId }) => {
   const {
     control,
     handleSubmit,
-    formState: { errors, isValid }
-  } = useForm();
+    formState: { isValid }
+  } = useForm<FormValues>({
+    defaultValues,
+    mode: "onChange"
+  });
 
   const { openNotificationUI } = useNotificationUI();
   const dispatch = useAppDispatch();
   const buttonClases = MaterialButtons();
   const { FetchPost } = useFetchApiMultiResults();
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: FormValues) => {
     const nuevaAsignacion: IWhatsappMsgOpcionAsignacion = {
       nombre: data.nombre,
       descripcion: data.descripcion,
@@ -45,23 +56,17 @@ export const WhatsappMsgOpcionAsignacion: React.FC<Props> = ({ setOpenModal, ope
   return (
     <main className="w-[45vw]">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-y-4">
-        <TextFieldComponent
+        <InputComponentForm
           control={control}
-          nameInput="nombre"
-          index={0}
-          labelInput="Ingrese el nombre de la nueva asignacion"
-          valueDefault=""
-          requiredBool
-          errors={errors}
+          name="nombre"
+          label="Ingrese el nombre de la nueva asignacion"
+          rules={{ required: "Este campo es requerido" }}
         />
-        <TextFieldComponent
+        <InputComponentForm
           control={control}
-          nameInput="descripcion"
-          index={1}
-          labelInput="Ingrese una descripcion para la asignacion"
-          valueDefault=""
-          requiredBool
-          errors={errors}
+          name="descripcion"
+          label="Ingrese una descripcion para la asignacion"
+          rules={{ required: "Este campo es requerido" }}
         />
         <section className="flex justify-center gap-x-4 mt-4">
           <div>

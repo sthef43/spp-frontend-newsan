@@ -1,75 +1,63 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-/* eslint-disable unused-imports/no-unused-vars */
 import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
+import { Controller, useForm, useWatch } from "react-hook-form";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { Button } from "@mui/material";
 import { FormControl, FormControlLabel, FormLabel, Radio, RadioGroup, TextField } from "@mui/material";
 import { TimePicker } from "@mui/x-date-pickers";
+import { Dayjs } from "dayjs";
 import { WhatsappMsgTiempoSliceRequests } from "app/features/admin/slices/WhatsappMsgTiempoSlice";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 
-interface props {
-  refresh: any;
+interface Props {
+  refresh: () => void;
 }
 
-interface initialState {
+interface FormValues {
   turno: string;
   hora: string;
 }
-const initialStateVar = {
+
+const initialFormValues: FormValues = {
   turno: "M",
   hora: ""
 };
 
-export const WhatsappMsgTiempoForm = ({ refresh }: props) => {
+export const WhatsappMsgTiempoForm: React.FC<Props> = ({ refresh }: Props) => {
   const {
     control,
     setValue,
-    getValues,
     handleSubmit,
-    watch,
-    formState: { isDirty, isValid, errors }
-  } = useForm<initialState>({
-    defaultValues: initialStateVar
+    formState: { isDirty, isValid }
+  } = useForm<FormValues>({
+    defaultValues: initialFormValues,
+    mode: "onChange"
   });
 
   const classes = MaterialButtons();
   const dispatch = useAppDispatch();
   const { openNotificationUI } = useNotificationUI();
+  const { FetchPost } = useFetchApiMultiResults();
 
-  const [valor, setValor] = useState(null);
+  const [valor, setValor] = useState<Dayjs | null>(null);
 
-  const watchHora = watch("hora");
+  const watchHora = useWatch({ control, name: "hora" });
 
-  const loginSubmit = async (e) => {
-    let result;
-    console.log(e);
-    const datosCorrectos = validarDatos();
+  const loginSubmit = async (e: FormValues) => {
+    const datosCorrectos = e.turno != "" && e.hora != "";
     if (!datosCorrectos) {
       openNotificationUI("Completar los campos", "info");
-      return false;
+      return;
     }
-    try {
-      result = await dispatch(WhatsappMsgTiempoSliceRequests.PostRequest(JSON.parse(JSON.stringify(e))));
-    } catch (x) {
-      result = null;
-    }
-    if (result) {
-      openNotificationUI("Guardado exitosamente :)", "success");
-      refresh();
-    }
+    await FetchPost(WhatsappMsgTiempoSliceRequests.PostRequest, e, false, refresh);
   };
 
-  const validarDatos = () => {
-    if (getValues("turno") != "" && watchHora != "") return true;
-    else return false;
-  };
-
-  const handleChange = (newValue) => {
+  const handleChange = (newValue: Dayjs | null) => {
     setValor(newValue);
-    setValue("hora", newValue.format("HH:mm"));
+    if (newValue) {
+      setValue("hora", newValue.format("HH:mm"));
+    }
   };
 
   return (
@@ -108,7 +96,7 @@ export const WhatsappMsgTiempoForm = ({ refresh }: props) => {
           </div>
         </div>
         <div className="pt-1 flex justify-around" style={{ flex: "1 1 10%" }}>
-          <Button className={classes.greenButton} type="submit" variant="contained" disabled={!isDirty && !isValid}>
+          <Button className={classes.greenButton} type="submit" variant="contained" disabled={!isDirty || !isValid}>
             Guardar
           </Button>
         </div>

@@ -1,10 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-vars */
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useAppDispatch } from "app/core/store/store";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Select, MenuItem, InputLabel, FormControl, Button, Tooltip, IconButton } from "@mui/material";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { IPlant } from "app/models";
@@ -15,47 +10,44 @@ import { PlantSliceRequests } from "app/Middleware/reducers";
 import { Delete } from "@mui/icons-material";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
+import FetchApi from "app/shared/helpers/FetchApi";
 
-interface props {
+interface Props {
   whatsappMsgTiempo: IWhatsappMsgTiempo;
 }
 
-export const AccionAsignarPlanta = ({ whatsappMsgTiempo }: props) => {
-  const dispatch = useAppDispatch();
-  const { FetchDelete } = useFetchApiMultiResults();
+export const AccionAsignarPlanta: React.FC<Props> = ({ whatsappMsgTiempo }: Props) => {
+  const { FetchDelete, FetchPost } = useFetchApiMultiResults();
   const classes = MaterialButtons();
 
   const [plantas, setPlantas] = useState<IPlant[]>([]);
-  const [dataInfo, setDataInfo] = useState([]);
-  const [modalOpen, setModalOpen] = useState(false);
   const [plantSelected, setPlantSelected] = useState(0);
+  const [refreshKey, setRefreshKey] = useState(0);
 
-  const getPlantas = async () => {
-    const result = unwrapResult(await dispatch(PlantSliceRequests.getAllRequest()));
-    if (result) setPlantas(result);
-  };
+  const [dataInfo, setDataInfo] = useState<IWhatsappMsgTiempoPlant[]>([]);
 
-  const getListByWhatsappMsgTiempoId = async () => {
-    const result = unwrapResult(await dispatch(WhatsappMsgTiempoPlantSliceRequests.getAllRequest()));
+  FetchApi<IPlant[]>(PlantSliceRequests.getAllRequest, null, false, null, setPlantas, false, false, false);
 
-    if (result) {
-      setDataInfo(result.filter((x) => x.whatsappMsgTiempoId == whatsappMsgTiempo.id));
-    } else setDataInfo([]);
-  };
+  FetchApi<IWhatsappMsgTiempoPlant[]>(
+    WhatsappMsgTiempoPlantSliceRequests.getAllRequest, null, false,
+    { whatsappMsgTiempo, refreshKey },
+    (data) => {
+      if (data) {
+        setDataInfo(data.filter((x) => x.whatsappMsgTiempoId === whatsappMsgTiempo.id));
+      } else setDataInfo([]);
+    },
+    true, false, false
+  );
 
   const guardar = async () => {
     const object: IWhatsappMsgTiempoPlant = {
       plantId: plantSelected,
       whatsappMsgTiempoId: whatsappMsgTiempo.id
     };
-    const result = unwrapResult(await dispatch(WhatsappMsgTiempoPlantSliceRequests.PostRequest(object)));
-    if (result) {
-      console.log("gurdado");
-      getListByWhatsappMsgTiempoId();
-    }
+    FetchPost(WhatsappMsgTiempoPlantSliceRequests.PostRequest, object, false, () => setRefreshKey(k => k + 1));
   };
 
-  const eliminarAsignacion = (id) => {
+  const eliminarAsignacion = (id: number) => {
     FetchDelete({
       sliceRequest: WhatsappMsgTiempoPlantSliceRequests.deleteRequest,
       deleteId: id,
@@ -63,19 +55,9 @@ export const AccionAsignarPlanta = ({ whatsappMsgTiempo }: props) => {
       mensajePersonalizado: true,
       messageUser: "Desea eliminar la asignacion?",
       titleUser: "Eliminar Asignacion",
-      functionAdd: async () => {
-        const result = unwrapResult(await dispatch(WhatsappMsgTiempoPlantSliceRequests.getAllRequest()));
-        if (result) {
-          setDataInfo(result.filter((x) => x.whatsappMsgTiempoId == whatsappMsgTiempo.id));
-        }
-      }
+      functionAdd: () => setRefreshKey(k => k + 1)
     });
   };
-
-  useEffect(() => {
-    if (whatsappMsgTiempo) getListByWhatsappMsgTiempoId();
-    getPlantas();
-  }, []);
 
   return (
     <div className="flex flex-col">
@@ -103,7 +85,7 @@ export const AccionAsignarPlanta = ({ whatsappMsgTiempo }: props) => {
             </FormControl>
           </div>
         )}
-        <Button disabled={plantSelected == 0} variant="contained" className={classes.greenButton} onClick={guardar}>
+        <Button disabled={plantSelected === 0} variant="contained" className={classes.greenButton} onClick={guardar}>
           Guardar
         </Button>
       </div>
@@ -120,7 +102,7 @@ export const AccionAsignarPlanta = ({ whatsappMsgTiempo }: props) => {
             {
               title: "Acciones",
               field: "",
-              render: (row: IWhatsappMsgTiempo) => {
+              render: (row: IWhatsappMsgTiempoPlant) => {
                 return (
                   <section>
                     <div>

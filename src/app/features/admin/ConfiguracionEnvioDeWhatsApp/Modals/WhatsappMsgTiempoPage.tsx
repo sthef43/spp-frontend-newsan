@@ -1,57 +1,51 @@
-/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton } from "@mui/material";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { WhatsappMsgTiempoSliceRequests } from "app/features/admin/slices/WhatsappMsgTiempoSlice";
 import { useAppDispatch } from "app/core/store/store";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { WhatsappMsgTiempoForm } from "./WhatsappMsgTiempoForm";
 import { IWhatsappMsgTiempo } from "app/models/IWhatsappMsgTiempo";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { AccionAsignarPlanta } from "./AccionAsignarPlanta";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
+import FetchApi from "app/shared/helpers/FetchApi";
 
-export const WhatsappMsgTiempoPage = () => {
+export const WhatsappMsgTiempoPage: React.FC = () => {
   const dispatch = useAppDispatch();
   const { openNotificationUI } = useNotificationUI();
-  const { getConfirmation } = useConfirmationDialog();
+  const { FetchDelete } = useFetchApiMultiResults();
 
-  const [dataInfo, setDataInfo] = useState([]);
+  const [dataInfo, setDataInfo] = useState<IWhatsappMsgTiempo[]>([]);
   const [rowSelected, setRowSelected] = useState<IWhatsappMsgTiempo>();
   const [openModal, setOpenModal] = useState(false);
 
-  const getData = async () => {
-    let result = [];
-    result = unwrapResult(await dispatch(WhatsappMsgTiempoSliceRequests.getAllRequest()));
-    if (result) {
-      setDataInfo(result);
-    }
-  };
+  FetchApi<IWhatsappMsgTiempo[]>(WhatsappMsgTiempoSliceRequests.getAllRequest, null, false, null, setDataInfo, false, false, false);
 
-  const eliminar = async (row) => {
-    const respuesta = await getConfirmation("Eliminar", "¿ Seguro que desea eliminar ?");
-    if (!respuesta) {
-      return false;
-    }
-    const result = unwrapResult(await dispatch(WhatsappMsgTiempoSliceRequests.deleteRequest(row.id)));
-    if (result) {
-      openNotificationUI("Eliminado exitosamente :)", "success");
-      getData();
-    } else {
-      openNotificationUI("Error al eliminar :(", "error");
-    }
+  const eliminar = async (row: IWhatsappMsgTiempo) => {
+    FetchDelete({
+      sliceRequest: WhatsappMsgTiempoSliceRequests.deleteRequest,
+      deleteId: row.id,
+      consoleLog: false,
+      mensajePersonalizado: true,
+      messageUser: "¿Está seguro de eliminar este horario de WhatsApp?",
+      titleUser: "Eliminar Horario",
+      functionAdd: async () => {
+        const result = await dispatch(WhatsappMsgTiempoSliceRequests.getAllRequest());
+        if (result.payload) setDataInfo(result.payload as IWhatsappMsgTiempo[]);
+      }
+    });
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
 
   return (
     <div>
-      <WhatsappMsgTiempoForm refresh={getData}></WhatsappMsgTiempoForm>
+      <WhatsappMsgTiempoForm refresh={() => {
+        dispatch(WhatsappMsgTiempoSliceRequests.getAllRequest()).then((res) => {
+          if (res.payload) setDataInfo(res.payload as IWhatsappMsgTiempo[]);
+        });
+      }}></WhatsappMsgTiempoForm>
       <ContainerForPages optionsLayout="Table" tableForModalOrPageStyle="Modal">
         <TableComponent
           Dense={true}
@@ -69,7 +63,7 @@ export const WhatsappMsgTiempoPage = () => {
             {
               title: "Acciones",
               field: "",
-              render: (row) => {
+              render: (row: IWhatsappMsgTiempo) => {
                 return (
                   <div className="flex w-full justify-end sm:justify-start gap-4">
                     <div>
@@ -104,7 +98,10 @@ export const WhatsappMsgTiempoPage = () => {
       <ModalCompoment
         title={"Asignacion de planta a hora de envio de mensaje."}
         openPopup={openModal}
-        setOpenPopup={setOpenModal}>
+        setOpenPopup={setOpenModal}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Asigne una planta al horario de envío seleccionado">
         <AccionAsignarPlanta whatsappMsgTiempo={rowSelected}></AccionAsignarPlanta>
       </ModalCompoment>
     </div>

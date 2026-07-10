@@ -1,23 +1,19 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-vars */
 import { AssignmentTurnedIn } from "@mui/icons-material";
 import { Autocomplete, Button, IconButton, TextField } from "@mui/material";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { WhatsappMsgappUserSliceRequests } from "app/features/admin/slices/WhatsappMsgAppUserSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser, IPlant } from "app/models";
 import { IWhatsappMsg } from "app/models/IWhatsappMsg";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import FetchApi from "app/shared/helpers/FetchApi";
 import { IWhatsappMsgAppUser } from "app/models/IIWhatsappMsgAppUser";
-import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { SkeletonComponent } from "app/shared/helpers/Layouts/Skeleton/SkeletonComponent";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 
 interface Props {
   rowSelected: IWhatsappMsg;
@@ -32,20 +28,16 @@ export const AccionAsignarUsuarios: React.FC<Props> = ({
   openModal,
   opcionSeleccionada
 }) => {
-  const {
-    handleSubmit,
-    formState: { isDirty, isValid, errors }
-  } = useForm();
+  const { handleSubmit } = useForm();
 
-  const { getConfirmation } = useConfirmationDialog();
   const classes = MaterialButtons();
   const dispatch = useAppDispatch();
   const { openNotificationUI } = useNotificationUI();
+  const { FetchPost, FetchPut } = useFetchApiMultiResults();
 
   const plantaSeleccionada = useAppSelector((state) => state.plant.object as IPlant);
 
-  const [selectedUser, setselectedUser] = useState<IAppUser>(null);
-  const [valor, setValor] = useState();
+  const [selectedUser, setselectedUser] = useState<IAppUser | null>(null);
 
   const [usersList, setUsersList] = useState<IAppUser[]>([]);
   FetchApi<IWhatsappMsgAppUser[]>(
@@ -71,105 +63,64 @@ export const AccionAsignarUsuarios: React.FC<Props> = ({
     false
   );
 
-  const guardar = async (e) => {
-    const cargarNuevoUsuario = generarNuevoMsgUser(e);
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const response = unwrapResult(await dispatch(WhatsappMsgappUserSliceRequests.PostRequest(cargarNuevoUsuario)));
-      if (response) {
-        const refreshUsers = unwrapResult(
-          await dispatch(
-            WhatsappMsgappUserSliceRequests.GetAllUsersWithNoAssigment({
-              opcionId: opcionSeleccionada,
-              whatsappMsgId: rowSelected.id,
-              plantId: plantaSeleccionada.id
-            })
-          )
-        );
-        const refreshTableUsers = unwrapResult(
-          await dispatch(
-            WhatsappMsgappUserSliceRequests.GetAllByOpcionAsign({
-              opcionId: opcionSeleccionada,
-              whatsappMsgId: rowSelected.id
-            })
-          )
-        );
-        if (refreshUsers && refreshTableUsers) {
-          setUsersList(refreshUsers);
-          setDataInfo(refreshTableUsers);
-          openNotificationUI("Se agrego el usuario", "success");
-        }
-      }
-    } catch (error) {
-      console.log(error);
-      openNotificationUI(error, "error");
-    } finally {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    }
-  };
-
-  const activarUsuario = async (row) => {
-    let respuesta;
-    if (row.activo) {
-      respuesta = await getConfirmation(
-        "Descativar mensajes",
-        "¿ Seguro que desea desactivar los mensajes para esta persona ?"
-      );
-    } else
-      respuesta = await getConfirmation(
-        "Activar mensajes",
-        "¿ Seguro que desea activar los mensajes para esta persona ?"
-      );
-    if (respuesta == false) return false;
-    const objectSubmit = { ...row, activo: !row.activo, appUser: null };
-    const result = unwrapResult(await dispatch(WhatsappMsgappUserSliceRequests.PutRequest(objectSubmit)));
-    const refreshTableUsers = unwrapResult(
-      await dispatch(
-        WhatsappMsgappUserSliceRequests.GetAllByOpcionAsign({
-          opcionId: opcionSeleccionada,
-          whatsappMsgId: rowSelected.id
-        })
-      )
+  const refreshData = async () => {
+    const usersPromise = dispatch(
+      WhatsappMsgappUserSliceRequests.GetAllUsersWithNoAssigment({
+        opcionId: opcionSeleccionada,
+        whatsappMsgId: rowSelected.id,
+        plantId: plantaSeleccionada.id
+      })
     );
-    if (result) {
-      openNotificationUI("Guardado exitosamente :)", "success");
-      setDataInfo(refreshTableUsers);
-    } else {
-      openNotificationUI("Error al guardar :(", "error");
-    }
-  };
-
-  const handleChange = (e, value) => {
-    if (value) setselectedUser(usersList?.find((x) => x.id === value?.id));
-  };
-
-  const generarNuevoMsgUser = (data) => {
-    try {
-      const nuevoUser: IWhatsappMsgAppUser = {
-        activo: false,
-        appUserId: selectedUser.id,
-        whatsappMsgOpcionAsignacionId: opcionSeleccionada,
+    const tablePromise = dispatch(
+      WhatsappMsgappUserSliceRequests.GetAllByOpcionAsign({
+        opcionId: opcionSeleccionada,
         whatsappMsgId: rowSelected.id
-      };
-      if (nuevoUser !== null) {
-        return nuevoUser;
-      }
-    } catch (error) {
-      console.log(error);
-      openNotificationUI("Ocurrio un error", "warning");
-    }
+      })
+    );
+    const [usersResult, tableResult] = await Promise.all([usersPromise, tablePromise]);
+    if (usersResult.payload) setUsersList(usersResult.payload as IAppUser[]);
+    if (tableResult.payload) setDataInfo(tableResult.payload as IWhatsappMsgAppUser[]);
   };
 
-  const CustomAutocomplete = (options, onChange, defaultValue) => {
-    return (
-      <Autocomplete
-        options={options}
-        onChange={onChange}
-        defaultValue={defaultValue}
-        getOptionLabel={(option) => option.operator.name + " " + option.operator.surname}
-        renderInput={(props) => <TextField {...props} fullWidth label="Usuario del sistema" />}
-      />
-    );
+  const guardar = async () => {
+    if (!selectedUser) return;
+    const cargarNuevoUsuario: IWhatsappMsgAppUser = {
+      activo: false,
+      appUserId: selectedUser.id,
+      whatsappMsgOpcionAsignacionId: opcionSeleccionada,
+      whatsappMsgId: rowSelected.id
+    };
+    FetchPost(WhatsappMsgappUserSliceRequests.PostRequest, cargarNuevoUsuario, false, async () => {
+      await refreshData();
+      openNotificationUI("Se agrego el usuario", "success");
+    });
+  };
+
+  const activarUsuario = async (row: IWhatsappMsgAppUser) => {
+    const objectSubmit = { ...row, activo: !row.activo, appUser: null };
+    FetchPut({
+      sliceRequest: WhatsappMsgappUserSliceRequests.PutRequest,
+      modelPut: objectSubmit,
+      consoleLog: false,
+      activeConfirmation: true,
+      mensajePersonalizado: true,
+      messageUser: "¿Está seguro de actualizar el estado del usuario?",
+      titleUser: "Actualizar Usuario WhatsApp",
+      functionAdd: async () => {
+        const result = await dispatch(
+          WhatsappMsgappUserSliceRequests.GetAllByOpcionAsign({
+            opcionId: opcionSeleccionada,
+            whatsappMsgId: rowSelected.id
+          })
+        );
+        if (result.payload) setDataInfo(result.payload as IWhatsappMsgAppUser[]);
+        openNotificationUI("Guardado exitosamente :)", "success");
+      }
+    });
+  };
+
+  const handleChange = (e: React.SyntheticEvent, value: IAppUser | null) => {
+    if (value) setselectedUser(value);
   };
 
   return (
@@ -180,14 +131,17 @@ export const AccionAsignarUsuarios: React.FC<Props> = ({
         <>
           <form onSubmit={handleSubmit(guardar)} className="w-full">
             <div className="w-full">
-              {CustomAutocomplete(
-                usersList.filter((elementos) => elementos.operator.surname !== "Senior"),
-                handleChange,
-                valor
-              )}
+              <Autocomplete
+                options={usersList.filter((elementos) => elementos.operator.surname !== "Senior")}
+                onChange={handleChange}
+                getOptionLabel={(option: IAppUser) =>
+                  option?.operator?.name + " " + option?.operator?.surname
+                }
+                renderInput={(props) => <TextField {...props} fullWidth label="Usuario del sistema" />}
+              />
             </div>
             <div className="p-2 text-center">
-              <Button className={classes.greenButton} type="submit" variant="contained" disabled={!isDirty && !isValid}>
+              <Button className={classes.greenButton} type="submit" variant="contained" disabled={!selectedUser}>
                 Guardar
               </Button>
             </div>
@@ -205,7 +159,7 @@ export const AccionAsignarUsuarios: React.FC<Props> = ({
                 {
                   title: "Activo",
                   field: "",
-                  render: (row) => {
+                  render: (row: IWhatsappMsgAppUser) => {
                     return row.activo == true ? "SI" : "NO";
                   }
                 },
@@ -216,13 +170,12 @@ export const AccionAsignarUsuarios: React.FC<Props> = ({
                 {
                   title: "Acciones",
                   field: "",
-                  render: (row) => {
+                  render: (row: IWhatsappMsgAppUser) => {
                     return (
                       <div className="flex w-full justify-end sm:justify-start gap-4">
                         <div>
                           <IconButton
                             onClick={() => {
-                              //accionAsignarUsuarios(row);
                               activarUsuario(row);
                             }}
                             size="small"
