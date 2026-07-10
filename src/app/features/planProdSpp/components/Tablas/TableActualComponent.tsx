@@ -123,7 +123,7 @@ export const TableActualComponent: FC<Props> = ({ refreshListPlanProd }) => {
   const lineaProduccion = useAppSelector((state) => state.lineaProduccion);
   const { dataFormatExcel } = useAppSelector((state) => state.statesFormModals);
   const { estadoEdicion } = useAppSelector((state) => state.optionForm);
-  const { mostrarContenedores, mostrarInformacionModelo, openModalEditar } = useAppSelector(
+  const { mostrarContenedores, mostrarInformacionModelo, openModalEditar, mostrarDesgloceDiario } = useAppSelector(
     (state) => state.statesFormModals
   );
 

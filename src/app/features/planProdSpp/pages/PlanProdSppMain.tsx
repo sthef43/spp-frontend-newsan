@@ -25,6 +25,7 @@ import { DesktopDatePicker } from "@mui/x-date-pickers";
 import moment from "moment";
 import { StatesFormModalsSlice } from "../reducers/StatesForModalsSlice";
 import { TableActualComponent } from "../components/Tablas/TableActualComponent";
+import { TableDesgloceDiarioComponent } from "../components/Tablas/TableDesgloceDiarioComponent";
 import { TableNewInfoComponent } from "../components/Tablas/TableNewInfoComponent";
 import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -45,7 +46,7 @@ export const PlanProdSppMain = () => {
   const { control, setValue } = useForm();
 
   const lineaProduccion = useAppSelector((state) => state.lineaProduccion);
-  const { dataFormatExcel, nuevosRegistrosPlanProd, dataFormatExcelEmbarque, mostrarContenedores } = useAppSelector(
+  const { dataFormatExcel, nuevosRegistrosPlanProd, dataFormatExcelEmbarque, mostrarContenedores, mostrarDesgloceDiario } = useAppSelector(
     (state) => state.statesFormModals
   );
   const planesProduccion = useAppSelector((state) => state.planProdSpp.dataAll as any[]);
@@ -469,6 +470,16 @@ export const PlanProdSppMain = () => {
               Editar Orden
             </Button>
           )}
+          {planesProduccion && planesProduccion.length > 0 && (
+            <Button
+              variant="contained"
+              className={mostrarDesgloceDiario ? buttonClases.redButton : buttonClases.blueButton}
+              onClick={() => {
+                dispatch(StatesFormModalsSlice.actions.setMostrarDesgloceDiario(!mostrarDesgloceDiario));
+              }}>
+              {mostrarDesgloceDiario ? "Ocultar Desglose" : "Desglose Diario"}
+            </Button>
+          )}
           {mostrarContenedores && mostrarContenedores && (
             <>
               <input
@@ -493,15 +504,26 @@ export const PlanProdSppMain = () => {
         </div>
       </section>
       {planesProduccion && planesProduccion.length > 0 && (
-        <>
-          <section className="mt-4">
+        <section className="mt-4 flex flex-row gap-x-4">
+          <div className={mostrarDesgloceDiario ? "w-1/2" : "w-full"}>
             <TableActualComponent
               refreshListPlanProd={() => {
                 getAllPlan(lineaSeleccionada as number, fechaSeleccionadaMesNombre, fechaFinSeleccionadaMesNombre);
               }}
             />
-          </section>
-        </>
+          </div>
+          {mostrarDesgloceDiario && (
+            <div className="w-1/2 overflow-x-auto">
+              <TableDesgloceDiarioComponent
+                planes={planesProduccion}
+                mesInicio={fechaSeleccionadaMesNombre}
+                mesFin={fechaFinSeleccionadaMesNombre}
+                anio={dayjs().year()}
+                mostrar={mostrarDesgloceDiario}
+              />
+            </div>
+          )}
+        </section>
       )}
       {dataFormatExcel && dataFormatExcel.length > 0 && (
         <section className="mt-4">

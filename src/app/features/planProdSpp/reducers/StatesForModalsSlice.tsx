@@ -6,6 +6,7 @@ export interface StatesForModals {
   mostrarInformacionModelo: boolean;
   mostrarInformacionModeloNuevaTabla: boolean;
   mostrarContenedores: boolean;
+  mostrarDesgloceDiario: boolean;
   openModalEditar: boolean;
   nuevosRegistrosPlanProd: boolean;
   mesSeleccionado: string;
@@ -23,6 +24,7 @@ export interface StatesForModals {
 
 const initialState: StatesForModals = {
   mostrarContenedores: false,
+  mostrarDesgloceDiario: false,
   mostrarInformacionModelo: false,
   mostrarInformacionModeloNuevaTabla: false,
   nuevosRegistrosPlanProd: false,
@@ -52,6 +54,9 @@ export const StatesFormModalsSlice = createSlice({
     },
     setMostrarContenedores: (state, action: PayloadAction<boolean>) => {
       state.mostrarContenedores = action.payload;
+    },
+    setMostrarDesgloceDiario: (state, action: PayloadAction<boolean>) => {
+      state.mostrarDesgloceDiario = action.payload;
     },
     setOpenModalEditar: (state, action: PayloadAction<boolean>) => {
       state.mostrarContenedores = action.payload;
