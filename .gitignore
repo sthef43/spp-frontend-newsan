@@ -13,7 +13,7 @@ dist/
 
 # IDE
 .vscode/
-.opencode
+.opencode/node_modules
 
 # TypeScript incremental
 *.tsbuildinfo
