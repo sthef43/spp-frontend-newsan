@@ -1,121 +1,103 @@
-import { Button, TextField } from "@mui/material";
+import { Button } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
-import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { useAppDispatch } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import React from "react";
-import { Controller, useForm } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { ICLISectores } from "../../Models/ICLISectores";
 import { CLISectoresSliceRequest } from "../../Middlewares/CliSectoresSlice";
 
 interface Props {
-  sectorSeleccionada: ICLISectores;
+  sectorSeleccionado: ICLISectores;
   setOpenModal: (newValue: boolean) => void;
   refreshLista: (newValue: ICLISectores[]) => void;
 }
 
-export const EditSectores: React.FC<Props> = ({ sectorSeleccionada, setOpenModal, refreshLista }) => {
+const getDefaultValues = (sector: ICLISectores) => ({
+  jefeSector: sector.jefeSector || "",
+  cantidadStacks: sector.cantidadStacks || 0,
+  nombreSector: sector.nombreSector || ""
+});
+
+export const EditSectores: React.FC<Props> = ({ sectorSeleccionado, setOpenModal, refreshLista }) => {
   const {
     handleSubmit,
     control,
-    formState: { errors }
-  } = useForm();
+    formState: { errors, isValid }
+  } = useForm<ICLISectores>({
+    mode: "onChange",
+    defaultValues: getDefaultValues(sectorSeleccionado)
+  });
 
   const dispatch = useAppDispatch();
-  const buttonClases = MaterialButtons();
+  const buttonClasses = MaterialButtons();
   const { openNotificationUI } = useNotificationUI();
+  const { FetchPut } = useFetchApiMultiResults<ICLISectores>();
 
-  const onSubmit = async (data) => {
+  const onSubmit = (data: ICLISectores) => {
     const param: ICLISectores = {
-      id: sectorSeleccionada.id,
-      jefeSector: data.nombreJefe,
-      cantidadStacks: parseInt(data.cantidadStacks),
+      id: sectorSeleccionado.id,
+      jefeSector: data.jefeSector,
+      cantidadStacks: Number(data.cantidadStacks),
       nombreSector: data.nombreSector
     };
-
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const response = unwrapResult(await dispatch(CLISectoresSliceRequest.PutRequest(param)));
-      const responseLista = unwrapResult(await dispatch(CLISectoresSliceRequest.getAllRequest()));
-      if (response) {
-        openNotificationUI("Se edito correctamente el sector", "success");
+    FetchPut({
+      consoleLog: false,
+      modelPut: param,
+      sliceRequest: CLISectoresSliceRequest.PutRequest,
+      activeConfirmation: true,
+      mensajePersonalizado: true,
+      titleUser: "Editar Sector",
+      messageUser: "¿Desea guardar los cambios en el sector?",
+      functionAdd: async () => {
+        const responseLista = unwrapResult(await dispatch(CLISectoresSliceRequest.getAllRequest()));
+        openNotificationUI("Se editó correctamente el sector", "success");
         refreshLista(responseLista);
         setOpenModal(false);
       }
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    } catch (error) {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-      console.log(error);
-    }
+    });
   };
 
   return (
-    <main className="w-[35vw]">
+    <ContainerForPages optionsLayout="modal">
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col justify-center gap-y-4">
         <div className="w-full">
-          <Controller
-            name="nombreJefe"
+          <InputComponentForm
             control={control}
-            defaultValue={sectorSeleccionada.jefeSector}
-            rules={{ required: "Este campo es obligatorio", minLength: 3 }}
-            render={({ field }) => (
-              <TextField
-                defaultValue={sectorSeleccionada.jefeSector}
-                fullWidth
-                {...field}
-                label="Ingrese el nombre de un jefe de sector"
-                error={!!errors.nombreJefe}
-                helperText={errors.nombreJefe?.message}
-                variant="outlined"
-              />
-            )}
+            name="jefeSector"
+            label="Ingrese el nombre de un jefe de sector"
+            rules={{ required: "Este campo es obligatorio", minLength: { value: 3, message: "Debe tener al menos 3 caracteres" } }}
+            variant="outlined"
           />
         </div>
         <div className="w-full">
-          <Controller
+          <InputComponentForm
+            control={control}
             name="cantidadStacks"
-            control={control}
-            defaultValue={sectorSeleccionada.cantidadStacks}
-            rules={{ required: "Este campo es obligatorio" }}
-            render={({ field }) => (
-              <TextField
-                defaultValue={sectorSeleccionada.cantidadStacks}
-                fullWidth
-                {...field}
-                label="Ingrese la cantidad de stakcs del sector"
-                error={!!errors.nombreJefe}
-                helperText={errors.nombreJefe?.message}
-                variant="outlined"
-              />
-            )}
+            label="Ingrese la cantidad de stacks del sector"
+            rules={{ required: "Este campo es obligatorio", pattern: { value: /^[0-9]+$/, message: "Debe ingresar un número válido" } }}
+            variant="outlined"
           />
         </div>
         <div className="w-full">
-          <Controller
-            name="nombreSector"
+          <InputComponentForm
             control={control}
-            defaultValue={sectorSeleccionada.nombreSector}
+            name="nombreSector"
+            label="Ingrese un nombre para el sector"
             rules={{ required: "Este campo es obligatorio" }}
-            render={({ field }) => (
-              <TextField
-                defaultValue={sectorSeleccionada.nombreSector}
-                fullWidth
-                {...field}
-                label="Ingrese la cantidad de stakcs del sector"
-                error={!!errors.nombreJefe}
-                helperText={errors.nombreJefe?.message}
-                variant="outlined"
-              />
-            )}
+            variant="outlined"
           />
         </div>
         <div className="flex flex-row justify-center gap-x-3 mt-4">
-          <Button className={buttonClases.greenButton} type="submit">
+          <Button className={buttonClasses.greenButton} type="submit" disabled={!isValid}>
             Guardar
           </Button>
           <Button
-            className={buttonClases.redButton}
+            className={buttonClasses.redButton}
             type="button"
             onClick={() => {
               setOpenModal(false);
@@ -124,6 +106,6 @@ export const EditSectores: React.FC<Props> = ({ sectorSeleccionada, setOpenModal
           </Button>
         </div>
       </form>
-    </main>
+    </ContainerForPages>
   );
 };

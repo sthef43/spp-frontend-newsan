@@ -52,11 +52,11 @@ export const cliSectoresSlice = createSlice({
   name: "CLISectores",
   initialState: initialState,
   reducers: {
-    setSelectUbicacion: (state, payload: PayloadAction<number>) => {
-      state.object = state.dataAll.find((sector) => sector.id == payload.payload);
+    setSelectUbicacion: (state, action: PayloadAction<number>) => {
+      state.object = state.dataAll.find((sector) => sector.id === action.payload);
     },
-    setObject: (state, actions: PayloadAction<number>) => {
-      state.object = state.dataAll.find((elementos) => elementos.id == actions.payload);
+    setObject: (state, action: PayloadAction<number>) => {
+      state.object = state.dataAll.find((elementos) => elementos.id === action.payload);
     }
   },
   extraReducers: (builder) => {
