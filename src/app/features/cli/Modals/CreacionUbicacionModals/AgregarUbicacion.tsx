@@ -1,24 +1,40 @@
 import FetchApi from "app/shared/helpers/FetchApi";
 import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { SelectComponent } from "../../Components/SelectComponent";
-import { Button, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { Button } from "@mui/material";
+import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { unwrapResult } from "@reduxjs/toolkit";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { ICLIOrganizacion } from "../../Models/ICLIOrganizacion";
 import { ICLITipoUBC } from "../../Models/ICLITipoUBC";
 import { ICLIUbicacionSector } from "../../Models/ICLIUbicacionSector";
 import { CLIOrganizacionSliceRequest } from "../../Middlewares/CLIOrganizacionSlice";
 import { CLITipoUBCSliceRequests } from "../../Middlewares/CLITipoUBCSlice";
 import { CLIUbicacionSectoresSliceRequest } from "../../Middlewares/CLIUbiacacionSectorSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 interface Props {
   setOpenModal: (newValue: boolean) => void;
   refreshList: (newValue: ICLIUbicacionSector[]) => void;
 }
+
+interface IFormData {
+  localizador: string;
+  UBC: string | number;
+  Organizacion: string | number;
+  estado: string | number;
+}
+
+const defaultValues: IFormData = {
+  localizador: "",
+  UBC: "",
+  Organizacion: "",
+  estado: ""
+};
 
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const AgregarUbicacion: React.FC<Props> = ({ setOpenModal, refreshList }) => {
@@ -26,18 +42,18 @@ export const AgregarUbicacion: React.FC<Props> = ({ setOpenModal, refreshList })
     handleSubmit,
     control,
     watch,
-    formState: { errors, isValid }
-  } = useForm();
+    formState: { isValid }
+  } = useForm<IFormData>({ defaultValues });
 
   const ubicaciones = useAppSelector((state) => state.cliUbicacionSectores.dataAll as ICLIUbicacionSector[]);
 
-  const [tipoUbc, setTipoUbc] = useState(null);
-  const [tipoOrganizacion, setTipoOrganizacion] = useState(null);
-  const [tipoEstado, setTipoEstado] = useState(null);
+  const localizadorValue = watch("localizador");
 
   const dispatch = useAppDispatch();
+  const { FetchPost } = useFetchApiMultiResults();
   const buttonClases = MaterialButtons();
   const { openNotificationUI } = useNotificationUI();
+  const { getConfirmation } = useConfirmationDialog();
 
   const estado = [
     { id: 1, estado: "Activo" },
@@ -51,41 +67,47 @@ export const AgregarUbicacion: React.FC<Props> = ({ setOpenModal, refreshList })
 
   FetchApi<ICLIOrganizacion[]>(CLIOrganizacionSliceRequest.getAllRequest, null, false, null, setListaOrganizacion);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: IFormData) => {
     const buscarLocalizador = localizadorEncontrado();
     if (buscarLocalizador) {
       openNotificationUI("El localizador ingresado ya se encuentra", "error");
     } else {
       const nuevoObjeto: ICLIUbicacionSector = {
         localizador: data.localizador,
-        cliTipoUBCId: tipoUbc,
-        cliOrganizacionId: tipoOrganizacion,
-        estado: tipoEstado
+        cliTipoUBCId: Number(data.UBC),
+        cliOrganizacionId: Number(data.Organizacion),
+        estado: data.estado === 1 ? true : false
       };
-      try {
-        dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-        const responseAniadirObjeto = unwrapResult(
-          await dispatch(CLIUbicacionSectoresSliceRequest.PostRequest(nuevoObjeto))
+
+      if (
+        await getConfirmation(
+          "Agregar ubicación",
+          "¿Está seguro de que desea agregar esta ubicación?",
+          null,
+          "Agregar",
+          "Cancelar"
+        )
+      ) {
+        FetchPost(
+          CLIUbicacionSectoresSliceRequest.PostRequest,
+          nuevoObjeto,
+          false,
+          async () => {
+            const responseRefresh = unwrapResult(await dispatch(CLIUbicacionSectoresSliceRequest.getAllRequest()));
+            if (responseRefresh) {
+              openNotificationUI("Se agrego la ubicacion correctamente", "success");
+              refreshList(responseRefresh);
+              setOpenModal(false);
+            }
+          }
         );
-        const responseRefresh = unwrapResult(await dispatch(CLIUbicacionSectoresSliceRequest.getAllRequest()));
-        if (responseAniadirObjeto) {
-          openNotificationUI("Se agrego la ubicacion correctamente", "success");
-          refreshList(responseRefresh);
-          setOpenModal(false);
-          setTipoEstado(null);
-        }
-        dispatch(LoadingUISlice.actions.LoadingUIClose());
-      } catch (error) {
-        openNotificationUI(`El error ${error} no dejo añadir la ubicacion`, "error");
-        dispatch(LoadingUISlice.actions.LoadingUIClose());
       }
     }
   };
 
   const localizadorEncontrado = () => {
-    const numeroLocalizadorInput = watch("localizador");
     const buscarLocalizador = ubicaciones.some((elementos) => {
-      return numeroLocalizadorInput == elementos.localizador;
+      return localizadorValue == elementos.localizador;
     });
     if (buscarLocalizador != null) {
       return buscarLocalizador;
@@ -96,56 +118,42 @@ export const AgregarUbicacion: React.FC<Props> = ({ setOpenModal, refreshList })
     <main className="w-[45vw]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex flex-row gap-x-4">
-          <SelectComponent
+          <SelectComponentForm
             control={control}
-            listaObjetos={listaUBC}
-            nameSelect="UBC"
-            inputLabel="Seleccione un tipo de UBC"
+            listItems={listaUBC}
+            name="UBC"
+            label="Seleccione un tipo de UBC"
             valueLabel={(item) => item.nombre}
             valueSelect={(item) => item.id}
-            ValueSave={setTipoUbc}
-            valueKey={(item) => item}
+            rules={{ required: "Este campo es obligatorio", validate: (value) => Number(value) > 0 || "Debe seleccionar una opción válida" }}
           />
-          <SelectComponent
+          <SelectComponentForm
             control={control}
-            listaObjetos={listaOrganizacion}
-            nameSelect="Organizacion"
-            inputLabel="Seleccione una organizacion"
+            listItems={listaOrganizacion}
+            name="Organizacion"
+            label="Seleccione una organizacion"
             valueLabel={(item) => item.nombre}
             valueSelect={(item) => item.id}
-            ValueSave={setTipoOrganizacion}
-            valueKey={(item) => item}
+            rules={{ required: "Este campo es obligatorio", validate: (value) => Number(value) > 0 || "Debe seleccionar una opción válida" }}
           />
         </section>
         <section className="flex flex-row gap-x-4 mt-4">
-          <Controller
+          <InputComponentForm
             name="localizador"
             control={control}
             rules={{ required: "Este campo es obligatorio", minLength: 3 }}
-            defaultValue=""
-            render={({ field }) => (
-              <TextField
-                autoComplete="false"
-                fullWidth
-                {...field}
-                label="Ingrese el numero de localizador"
-                error={!!errors.nombreJefe}
-                helperText={errors.localizador?.message}
-                variant="outlined"
-              />
-            )}
+            label="Ingrese el numero de localizador"
           />
         </section>
         <section className="mt-4">
-          <SelectComponent
+          <SelectComponentForm
             control={control}
-            listaObjetos={estado}
-            nameSelect="estado"
-            inputLabel="Seleccione un estado"
+            listItems={estado}
+            name="estado"
+            label="Seleccione un estado"
             valueLabel={(item) => item.estado}
             valueSelect={(item) => item.id}
-            ValueSave={setTipoEstado}
-            valueKey={(item) => item}
+            rules={{ required: "Este campo es obligatorio", validate: (value) => Number(value) > 0 || "Debe seleccionar una opción válida" }}
           />
         </section>
         <div className="flex flex-row justify-center gap-x-3 mt-4">

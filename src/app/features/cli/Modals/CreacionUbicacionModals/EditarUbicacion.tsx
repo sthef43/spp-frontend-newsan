@@ -1,11 +1,12 @@
 import FetchApi from "app/shared/helpers/FetchApi";
 import React, { useState } from "react";
-import { Controller, useForm } from "react-hook-form";
-import { SelectComponent } from "../../Components/SelectComponent";
-import { Button, TextField } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { Button } from "@mui/material";
+import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { useAppDispatch } from "app/core/store/store";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { ICLIOrganizacion } from "../../Models/ICLIOrganizacion";
 import { ICLITipoUBC } from "../../Models/ICLITipoUBC";
 import { ICLIUbicacionSector } from "../../Models/ICLIUbicacionSector";
@@ -14,6 +15,7 @@ import { CLIOrganizacionSliceRequest } from "../../Middlewares/CLIOrganizacionSl
 import { CLITipoUBCSliceRequests } from "../../Middlewares/CLITipoUBCSlice";
 import { CLIUbicacionSectoresSliceRequest } from "../../Middlewares/CLIUbiacacionSectorSlice";
 import { CLISectoresSliceRequest } from "../../Middlewares/CliSectoresSlice";
+import { unwrapResult } from "@reduxjs/toolkit";
 
 interface Props {
   refreshLista: (newvalue: ICLIUbicacionSector[]) => void;
@@ -22,20 +24,33 @@ interface Props {
   openModal: boolean;
 }
 
+interface IFormData {
+  localizador: string;
+  ubc: string | number;
+  organizacion: string | number;
+  sector: string | number;
+}
+
+const defaultValues: IFormData = {
+  localizador: "",
+  ubc: "",
+  organizacion: "",
+  sector: ""
+};
+
 // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const EditarUbicacion: React.FC<Props> = ({ refreshLista, setOpenModal, ubicacionSeleccionada, openModal }) => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid }
-  } = useForm();
+    formState: { isValid }
+  } = useForm<IFormData>({ defaultValues });
 
   const dispatch = useAppDispatch();
+  const { FetchPut } = useFetchApiMultiResults();
   const buttonClases = MaterialButtons();
 
-  const [tipoUBCSeleccionado, setTipoUBCSeleccionado] = useState<string | number>(0);
-  const [organizacionSeleccionada, setOrganizacionSeleccionada] = useState<string | number>(0);
-  const [sectorSeleccionado, setSectorSeleccionado] = useState<string | number>();
+  // Los valores de los selects se manejan mediante react-hook-form
 
   const [listaUBC, setListaUBC] = useState<ICLITipoUBC[]>([]);
   const [listaSectores, setListaSectores] = useState<ICLISectores[]>([]);
@@ -47,79 +62,72 @@ export const EditarUbicacion: React.FC<Props> = ({ refreshLista, setOpenModal, u
 
   FetchApi<ICLISectores[]>(CLISectoresSliceRequest.getAllRequest, null, false, openModal, setListaSectores, true);
 
-  const onSubmit = async (data) => {
+  const onSubmit = async (data: IFormData) => {
     const nuevoObjeto: ICLIUbicacionSector = {
       ...ubicacionSeleccionada,
       localizador: data.localizador,
-      cliTipoUBCId: Number(tipoUBCSeleccionado),
-      cliOrganizacionId: Number(organizacionSeleccionada),
-      cliSectoresId: Number(sectorSeleccionado)
+      cliTipoUBCId: Number(data.ubc),
+      cliOrganizacionId: Number(data.organizacion),
+      cliSectoresId: Number(data.sector)
     };
     delete nuevoObjeto.cliTipoUBC;
     delete nuevoObjeto.cliOrganizacion;
-    try {
-      const response = unwrapResult(await dispatch(CLIUbicacionSectoresSliceRequest.PutRequest(nuevoObjeto)));
-      const responseRefresh = unwrapResult(await dispatch(CLIUbicacionSectoresSliceRequest.getAllRequest()));
-      if (response) {
-        refreshLista(responseRefresh);
-        setOpenModal(false);
+
+    FetchPut({
+      sliceRequest: CLIUbicacionSectoresSliceRequest.PutRequest,
+      modelPut: nuevoObjeto,
+      consoleLog: false,
+      activeConfirmation: true,
+      titleUser: "Actualizar ubicación",
+      messageUser: "¿Está seguro de que desea actualizar esta ubicación?",
+      functionAdd: async () => {
+        const responseRefresh = unwrapResult(await dispatch(CLIUbicacionSectoresSliceRequest.getAllRequest()));
+        if (responseRefresh) {
+          refreshLista(responseRefresh)
+          setOpenModal(false);
+        }
       }
-    } catch (error) {
-      console.log(error);
-    }
+    });
   };
 
   return (
     <main className="w-[45vw]">
       <form onSubmit={handleSubmit(onSubmit)}>
         <section className="flex flex-row gap-x-4 w-full">
-          <SelectComponent
+          <SelectComponentForm
             control={control}
-            listaObjetos={listaUBC}
-            nameSelect="ubc"
-            inputLabel="Seleccione un tipo de UBC"
+            listItems={listaUBC}
+            name="ubc"
+            label="Seleccione un tipo de UBC"
             valueLabel={(items) => items.nombre}
             valueSelect={(items) => items.id}
-            valueKey={(item) => item}
-            ValueSave={setTipoUBCSeleccionado}
+            rules={{ required: "Este campo es obligatorio", validate: (value) => Number(value) > 0 || "Debe seleccionar una opción válida" }}
           />
-          <SelectComponent
+          <SelectComponentForm
             control={control}
-            listaObjetos={listaOrganizacion}
-            nameSelect="organizacion"
-            inputLabel="Seleccione un tipo de organizacion"
+            listItems={listaOrganizacion}
+            name="organizacion"
+            label="Seleccione un tipo de organizacion"
             valueLabel={(items) => items.nombre}
             valueSelect={(items) => items.id}
-            valueKey={(item) => item}
-            ValueSave={setOrganizacionSeleccionada}
+            rules={{ required: "Este campo es obligatorio", validate: (value) => Number(value) > 0 || "Debe seleccionar una opción válida" }}
           />
-          <SelectComponent
+          <SelectComponentForm
             control={control}
-            listaObjetos={listaSectores}
-            nameSelect="sector"
-            inputLabel="Seleccione un sector"
+            listItems={listaSectores}
+            name="sector"
+            label="Seleccione un sector"
             valueLabel={(items) => items.nombreSector}
             valueSelect={(items) => items.id}
-            valueKey={(item) => item}
-            ValueSave={setSectorSeleccionado}
+            rules={{ required: "Este campo es obligatorio", validate: (value) => Number(value) > 0 || "Debe seleccionar una opción válida" }}
           />
         </section>
         <section className="mt-4">
-          <Controller
+          <InputComponentForm
             name="localizador"
             control={control}
             rules={{ required: "Este campo es obligatorio", minLength: 3 }}
-            render={({ field }) => (
-              <TextField
-                fullWidth
-                {...field}
-                defaultValue={ubicacionSeleccionada.localizador}
-                label="Ingrese un numero de localizador"
-                error={!!errors.nombreJefe}
-                helperText={errors.localizador?.message}
-                variant="outlined"
-              />
-            )}
+            label="Ingrese un numero de localizador"
           />
         </section>
         <div className="flex flex-row justify-center gap-x-3 mt-4">
