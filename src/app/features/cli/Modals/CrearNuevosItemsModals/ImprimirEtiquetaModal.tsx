@@ -1,75 +1,117 @@
-/* eslint-disable unused-imports/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import FetchApi from "app/shared/helpers/FetchApi";
-import React, { useEffect, useState } from "react";
-import { SelectComponent } from "../../Components/SelectComponent";
+import React, { useEffect, useMemo, useState } from "react";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
-import { Button, TextField } from "@mui/material";
-import { Controller, useForm } from "react-hook-form";
+import { Button } from "@mui/material";
+import { useForm } from "react-hook-form";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
+import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
 import moment from "moment";
-import { unwrapResult } from "@reduxjs/toolkit";
-import { useAppDispatch } from "app/core/store/store";
+import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
+import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { ImpresionEtiquetaSliceRequests } from "app/Middleware/reducers/ImpresionEtiquetaSlice";
-import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { ICLIImpresionEtiquetas } from "../../Models/ICLIImpresionEtiquetas";
 import { ICLIItems } from "../../Models/ICLIItems";
 import { ICLISectores } from "../../Models/ICLISectores";
 import { CLISectoresSliceRequest } from "../../Middlewares/CliSectoresSlice";
 import { CLIImpresionEtiquetasSliceRequests } from "../../Middlewares/CLIImpresionEtiquetas";
 
+interface IImprimirEtiquetaForm {
+  cantidad: string;
+  cantidadEtiquetas: string;
+  formatoImpresion: string;
+  selectImpresora: string;
+  sector: number;
+}
+
 interface Props {
   setOpenModal: (newValue: boolean) => void;
-  listaItems: ICLIItems;
+  listaItems?: ICLIItems;
 }
+
+const defaultFormValues: IImprimirEtiquetaForm = { cantidad: "", cantidadEtiquetas: "", formatoImpresion: "", selectImpresora: "", sector: 0 };
 
 export const ImprimirEtiquetaModal: React.FC<Props> = ({ setOpenModal, listaItems }) => {
   const {
     watch,
-    setValue,
-    register,
     handleSubmit,
     control,
-    formState: { errors }
-  } = useForm();
+    formState: { isValid, isSubmitting }
+  } = useForm<IImprimirEtiquetaForm>({
+    defaultValues: defaultFormValues
+  });
 
-  const dispatch = useAppDispatch();
+  const { FetchPost } = useFetchApiMultiResults();
+  const { openNotificationUI } = useNotificationUI();
+  const { getConfirmation } = useConfirmationDialog();
   const buttonClases = MaterialButtons();
 
   const [listaNumeroLPN, setListaNumerosLPN] = useState([]);
   const [listaImpresoras, setListaImpresoras] = useState([]);
+  const [checkServerDone, setCheckServerDone] = useState(false);
 
   const [listaSectores, setListaSectores] = useState<ICLISectores[]>([]);
-  const [sectorFiltrado, setSectorFiltrado] = useState<ICLISectores>();
-
-  const [impresoraSeleccionada, setImpresoraSeleccionada] = useState<string | number>(0);
-  const [sectorSeleccionado, setSectorSeleccionado] = useState<string | number>(0);
-  const [opcionSeleccionada, setOpcionSeleccionada] = useState<string | number>("");
 
   const cantidadEtiquetas = watch("cantidadEtiquetas");
   const cantidadUnitaria = watch("cantidad");
+  const opcionSeleccionada = watch("formatoImpresion");
+  const impresoraSeleccionada = watch("selectImpresora");
+  const sectorSeleccionado = watch("sector");
+  const sectorFiltrado = useMemo(
+    () => listaSectores.find((elementos) => elementos.id == sectorSeleccionado),
+    [listaSectores, sectorSeleccionado]
+  );
 
   const fechaActual = moment().format("YYYY/MM/DD");
   const formatoImpresion = ["Imprimir Cantidad de Etiquetas", "Imprimir Etiqueta Unica"];
 
-  FetchApi(CLISectoresSliceRequest.getAllRequest, null, false, null, setListaSectores);
+  FetchApi<ICLISectores[]>(CLISectoresSliceRequest.getAllRequest, null, false, null, setListaSectores);
 
+  FetchApi<any>(
+    ImpresionEtiquetaSliceRequests.chechServer,
+    undefined,
+    false,
+    null,
+    undefined,
+    false,
+    false,
+    false,
+    () => setCheckServerDone(true)
+  );
+
+  FetchApi<any>(
+    ImpresionEtiquetaSliceRequests.getListaImpresoras,
+    undefined,
+    false,
+    checkServerDone,
+    setListaImpresoras,
+    true,
+    false,
+    true
+  );
+  
   const imprimirEtiqueta = async () => {
     const nuevosRegistrosDeImpresion = crearDatosImpresiones();
     const zplCode = crearTextoZPL();
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const agregarImpresiones = unwrapResult(
-        await dispatch(CLIImpresionEtiquetasSliceRequests.multiPostRequest(nuevosRegistrosDeImpresion))
+
+    if (await getConfirmation("Imprimir Etiqueta", "Se imprimira la etiqueta, desea continuar?")) {
+      FetchPost(
+        CLIImpresionEtiquetasSliceRequests.multiPostRequest,
+        nuevosRegistrosDeImpresion,
+        false,
+        () => {
+          FetchPost(
+            ImpresionEtiquetaSliceRequests.imprimir,
+            { impresora: impresoraSeleccionada.toString(), zpl: zplCode },
+            false,
+            () => {
+              openNotificationUI("Impresion realizada con exito", "success");
+            }
+          );
+        }
       );
-      const response = unwrapResult(
-        await dispatch(
-          ImpresionEtiquetaSliceRequests.imprimir({ impresora: impresoraSeleccionada.toString(), zpl: zplCode })
-        )
-      );
-      console.log("Enviado correctamente");
-    } catch (error) {
-      console.error("Error al imprimir", error);
-    } finally {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
   };
 
@@ -136,34 +178,6 @@ export const ImprimirEtiquetaModal: React.FC<Props> = ({ setOpenModal, listaItem
     }
   };
 
-  const CheckImpresoras = async () => {
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const response = unwrapResult(await dispatch(ImpresionEtiquetaSliceRequests.chechServer()));
-      if (response) {
-        listaImpresorasService();
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    }
-  };
-
-  const listaImpresorasService = async () => {
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const response = unwrapResult(await dispatch(ImpresionEtiquetaSliceRequests.getListaImpresoras()));
-      if (response) {
-        setListaImpresoras(response);
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    }
-  };
-
   const generarNumerosLpn = () => {
     const cantidadNumeros = opcionSeleccionada == "Imprimir Etiqueta Unica" ? 1 : parseInt(watch("cantidadEtiquetas"));
     let numerolpn = "0";
@@ -188,108 +202,65 @@ export const ImprimirEtiquetaModal: React.FC<Props> = ({ setOpenModal, listaItem
     }
   }, [cantidadUnitaria, cantidadEtiquetas]);
 
-  useEffect(() => {
-    setSectorFiltrado(listaSectores.find((elementos) => elementos.id == sectorSeleccionado));
-  }, [sectorSeleccionado]);
-
-  useEffect(() => {
-    if (setOpenModal) {
-      CheckImpresoras();
-    }
-  }, [setOpenModal]);
-
   return (
     <form onSubmit={handleSubmit(imprimirEtiqueta)} className="w-[45vw]">
       <section className="my-4">
-        <SelectComponent
+        <SelectComponentForm
           control={control}
-          listaObjetos={formatoImpresion}
-          nameSelect="formatoImpresion"
-          inputLabel="Seleccione una opcion de impresion"
-          valueLabel={(item) => item}
-          valueSelect={(item) => item}
-          valueKey={(item) => item}
-          ValueSave={setOpcionSeleccionada}
+          name="formatoImpresion"
+          label="Seleccione una opcion de impresion"
+          listItems={formatoImpresion}
+          rules={{ required: "Seleccione un formato de impresion", validate: (e: string | number) => e === "" ? "Seleccione un formato de impresion" : true }}
+          valueLabel={(item: string) => item}
+          valueSelect={(item: string) => item}
         />
       </section>
       <section className="flex flex-row gap-x-4">
-        <SelectComponent
+        <SelectComponentForm
           control={control}
-          listaObjetos={listaImpresoras}
-          inputLabel="Seleccione una impresora"
-          nameSelect="selectImpresora"
-          valueLabel={(item) => item}
-          valueSelect={(item) => item}
-          valueKey={(item) => item}
-          ValueSave={setImpresoraSeleccionada}
+          name="selectImpresora"
+          label="Seleccione una impresora"
+          listItems={listaImpresoras}
+          rules={{ required: "Seleccione una impresora", validate: (e: string | number) => e === "" ? "Seleccione una impresora" : true }}
+          valueLabel={(item: any) => item}
+          valueSelect={(item: any) => item}
         />
-        <SelectComponent
+        <SelectComponentForm
           control={control}
-          listaObjetos={listaSectores}
-          inputLabel="Seleccione un sector"
-          nameSelect="sector"
-          valueLabel={(item) => item.nombreSector}
-          valueSelect={(item) => item.id}
-          valueKey={(item) => item}
-          ValueSave={setSectorSeleccionado}
+          name="sector"
+          label="Seleccione un sector"
+          listItems={listaSectores}
+          rules={{ required: "Seleccione un sector", validate: (e: string | number) => (typeof e === "number" && e <= 0) ? "Seleccione un sector" : true }}
+          valueLabel={(item: ICLISectores) => item.nombreSector}
+          valueSelect={(item: ICLISectores) => item.id}
         />
       </section>
       <section className={`${opcionSeleccionada == "" ? "hidden" : "flex"} w-full`}>
         {opcionSeleccionada == "Imprimir Etiqueta Unica" ? (
           <div className="mt-4 w-full">
-            <Controller
+            <InputComponentForm
               control={control}
               name="cantidad"
-              defaultValue=""
+              label="Ingrese de cuanto es la cantidad de material"
               rules={{ required: "Debe ingresar una cantidad", pattern: /^[0-9]+$/ }}
-              render={({ field }) => (
-                <TextField
-                  {...register("cantidad")}
-                  fullWidth
-                  label="Ingrese de cuanto es la cantidad de material"
-                  error={!!errors.cantidad}
-                  helperText={errors.cantidad?.message}
-                  variant="outlined"
-                />
-              )}
             />
           </div>
         ) : (
           <section className="flex flex-row gap-x-4 w-full">
             <div className="mt-4 w-full">
-              <Controller
+              <InputComponentForm
                 control={control}
                 name="cantidadEtiquetas"
-                defaultValue=""
+                label="Ingrese cuantas etiquetas desea imprimir"
                 rules={{ required: "Debe ingresar cuantas etiquetas desea imprimir", pattern: /^[0-9]+$/ }}
-                render={({ field }) => (
-                  <TextField
-                    {...register("cantidadEtiquetas")}
-                    fullWidth
-                    label="Ingrese cuantas etiquetas desea imprimir"
-                    error={!!errors.cantidadEtiquetas}
-                    helperText={errors.cantidadEtiquetas?.message}
-                    variant="outlined"
-                  />
-                )}
               />
             </div>
             <div className="mt-4 w-full">
-              <Controller
+              <InputComponentForm
                 control={control}
                 name="cantidad"
-                defaultValue=""
+                label="Ingrese de cuanto es la cantidad de material"
                 rules={{ required: "Debe ingresar una cantidad", pattern: /^[0-9]+$/ }}
-                render={({ field }) => (
-                  <TextField
-                    {...register("cantidad")}
-                    fullWidth
-                    label="Ingrese de cuanto es la cantidad de material"
-                    error={!!errors.cantidad}
-                    helperText={errors.cantidad?.message}
-                    variant="outlined"
-                  />
-                )}
               />
             </div>
           </section>
@@ -297,7 +268,7 @@ export const ImprimirEtiquetaModal: React.FC<Props> = ({ setOpenModal, listaItem
       </section>
       <section className="flex justify-center gap-x-4 mt-4">
         <div>
-          <Button type="submit" disabled={impresoraSeleccionada == 0} className={buttonClases.greenButton}>
+          <Button type="submit" disabled={!impresoraSeleccionada || !isValid || isSubmitting} className={buttonClases.greenButton}>
             Agregar
           </Button>
         </div>

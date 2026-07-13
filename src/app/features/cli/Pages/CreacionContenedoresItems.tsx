@@ -2,14 +2,13 @@ import { Add, Delete, Print, Visibility } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import FetchApi from "app/shared/helpers/FetchApi";
 import React, { useEffect, useState } from "react";
 import { AgregarItemsContenedores } from "../Modals/CreacionContenedoresItems/AgregarItemsContenedores";
-import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import { unwrapResult } from "@reduxjs/toolkit";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
-import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
 import { ExaminarItems } from "../Modals/CreacionContenedoresItems/ExaminarItems";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { EliminarContenedor } from "../Modals/CreacionContenedoresItems/EliminarContenedor";
@@ -19,9 +18,7 @@ import { ICLIImpresionEtiquetas } from "../Models/ICLIImpresionEtiquetas";
 import { UseGeneratorCodesForLabels } from "app/shared/hooks/useGeneratorCodesForLabels";
 import { CLIContenedorItemsSliceRequest } from "../Middlewares/CLIContenedorItemsSlice";
 
-export const CreacionContenedoresItems = () => {
-  const dispatch = useAppDispatch();
-
+export const CreacionContenedoresItems: React.FC = () => {
   const { TitleChanger } = useTitleOfApp();
   const { openNotificationUI } = useNotificationUI();
   const { getConfirmation } = useConfirmationDialog();
@@ -35,56 +32,61 @@ export const CreacionContenedoresItems = () => {
   const [contenedorSeleccionado, setContenedorSeleccionado] = useState<ICLIContendorItems>();
   const [listaContenedores, setListaContenedores] = useState<ICLIContendorItems[]>([]);
   const [containerConItems, setContainerConItems] = useState<ICLIImpresionEtiquetas[]>([]);
+  const [refreshCounter, setRefreshCounter] = useState(0);
+  const [activadorVerItems, setActivadorVerItems] = useState<number | null>(null);
+
+  const { FetchPost } = useFetchApiMultiResults<ICLIContendorItems>();
 
   FetchApi<ICLIContendorItems[]>(
     CLIContenedorItemsSliceRequest.GetByOptionLpn,
     "CLI",
     true,
-    null,
+    refreshCounter,
     setListaContenedores
   );
 
-  const nuevoContainer = async () => {
-    const container = crearNuevoContenedor();
-    try {
-      if (await getConfirmation("Añadir container", "Desea añadir un nuevo contenedor?")) {
-        dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-        const response = unwrapResult(await dispatch(CLIContenedorItemsSliceRequest.PostRequest(container)));
-        const refresh = unwrapResult(await dispatch(CLIContenedorItemsSliceRequest.GetByOptionLpn("CLI")));
-        if (response) {
+  FetchApi<ICLIContendorItems>(
+    CLIContenedorItemsSliceRequest.GetAllWithItemsId,
+    activadorVerItems,
+    false,
+    activadorVerItems,
+    (data) => {
+      if (data?.cliImpresionEtiquetas) setContainerConItems(data.cliImpresionEtiquetas);
+    },
+    true
+  );
+
+  const nuevoContenedor = async () => {
+    if (await getConfirmation("Añadir container", "Desea añadir un nuevo contenedor?")) {
+      const container = crearNuevoContenedor();
+      if (!container) return;
+      await FetchPost(
+        CLIContenedorItemsSliceRequest.PostRequest,
+        container,
+        false,
+        () => {
           openNotificationUI("Se agrego el container correctamente", "success");
-          setListaContenedores(refresh);
+          setRefreshCounter((prev) => prev + 1);
         }
-        dispatch(LoadingUISlice.actions.LoadingUIClose());
-      }
-    } catch (error) {
-      console.log(error);
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
+      );
     }
   };
 
-  const verItems = async (rowItems: ICLIContendorItems) => {
-    try {
-      const response = unwrapResult(await dispatch(CLIContenedorItemsSliceRequest.GetAllWithItemsId(rowItems.id)));
-      if (response) {
-        setContainerConItems(response.cliImpresionEtiquetas);
-      }
-    } catch (error) {
-      console.log(error);
-    }
+  const verItems = (rowItems: ICLIContendorItems) => {
+    setActivadorVerItems(rowItems.id);
   };
 
   const crearNuevoContenedor = () => {
     const articulo = generateArticleCode(["A", "B", "C", "D", "E", "F"], 12, 3);
     const lpn = generateLpnWitPrefixCode(6, "CLI0");
     if (articulo) {
-      const nuevoContainer: ICLIContendorItems = {
+      const nuevoContenedor: ICLIContendorItems = {
         lpnGenerada: lpn,
         articulo: articulo,
         cantidadTotalItems: 0,
         permisoAgregar: "Habilitado"
       };
-      return nuevoContainer;
+      return nuevoContenedor;
     } else {
       openNotificationUI("Ocurrio un error generando los codigos aletorios", "error");
     }
@@ -92,15 +94,15 @@ export const CreacionContenedoresItems = () => {
 
   useEffect(() => {
     TitleChanger("Creacion de contenedores y asignacion");
-  });
+  }, []);
 
   return (
-    <main className="p-4">
-      <section>
+    <ContainerForPages optionsLayout="page" activeEffectVisible>
+      <ContainerForPages optionsLayout="Table">
         <TableComponent
-          dataInfo={listaContenedores == null ? [] : listaContenedores}
+          dataInfo={listaContenedores ?? []}
           IDcolumn="id"
-          agregar={() => nuevoContainer()}
+          agregar={() => nuevoContenedor()}
           buscar
           columns={[
             {
@@ -188,11 +190,14 @@ export const CreacionContenedoresItems = () => {
             }
           ]}
         />
-      </section>
+      </ContainerForPages>
       <ModalCompoment
         setOpenPopup={setOpenModalAgregar}
         openPopup={openModalAgregar}
-        title="Agregar Items al Contenedor">
+        title="Agregar Items al Contenedor"
+        titleModalStyle="Audit"
+        showModalCenterPage
+        subTitle="Agregar items a un contenedor">
         <AgregarItemsContenedores
           openModal={openModalAgregar}
           refreshLista={setListaContenedores}
@@ -200,14 +205,26 @@ export const CreacionContenedoresItems = () => {
           contenedorSeleccionado={contenedorSeleccionado}
         />
       </ModalCompoment>
-      <ModalCompoment setOpenPopup={setOpenModalExaminar} openPopup={openModalExaminar} title="Examinar Items">
+      <ModalCompoment
+        setOpenPopup={setOpenModalExaminar}
+        openPopup={openModalExaminar}
+        title="Examinar Items"
+        titleModalStyle="Audit"
+        showModalCenterPage
+        subTitle="Examinar los items del contenedor">
         <ExaminarItems
           refreshLista={setListaContenedores}
           containerSeleecionado={contenedorSeleccionado}
           setOpenModal={setOpenModalExaminar}
         />
       </ModalCompoment>
-      <ModalCompoment setOpenPopup={setOpenModalEliminar} openPopup={openModalEliminar} title="Eliminar Contenedor">
+      <ModalCompoment
+        setOpenPopup={setOpenModalEliminar}
+        openPopup={openModalEliminar}
+        title="Eliminar Contenedor"
+        titleModalStyle="Audit"
+        showModalCenterPage
+        subTitle="Eliminar contenedor seleccionado">
         <EliminarContenedor
           refreshLista={setListaContenedores}
           contenedorSeleccionado={contenedorSeleccionado}
@@ -215,13 +232,19 @@ export const CreacionContenedoresItems = () => {
           listaItems={containerConItems}
         />
       </ModalCompoment>
-      <ModalCompoment setOpenPopup={setOpenModalImprimir} openPopup={openModalImprimir} title="Imprimir Etiqueta Padre">
+      <ModalCompoment
+        setOpenPopup={setOpenModalImprimir}
+        openPopup={openModalImprimir}
+        title="Imprimir Etiqueta Padre"
+        titleModalStyle="Audit"
+        showModalCenterPage
+        subTitle="Imprimir etiqueta del contenedor">
         <ImprimirEtiquetaPadre
           contenedorSeleccionado={contenedorSeleccionado}
           openModal={openModalImprimir}
           setOpenModal={setOpenModalImprimir}
         />
       </ModalCompoment>
-    </main>
+    </ContainerForPages>
   );
 };
