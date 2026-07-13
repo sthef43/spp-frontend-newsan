@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
+import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { unwrapResult } from "@reduxjs/toolkit";
 import { PlanProdSliceRequests } from "app/Middleware/reducers/PlanProdSlice";
 import { InicioSliceRequests } from "app/Middleware/reducers/InicioSlice";
@@ -9,14 +11,31 @@ import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { XXE_WIP_OTSliceRequests } from "app/Middleware/reducers/XXE_WIP_OTSlice";
 import Button from "@mui/material/Button";
 import { XXE_WIP_ITF_SERIESliceRequests } from "app/Middleware/reducers/XXE_WIP_ITF_SERIESlice";
-import { IPlant } from "app/models";
+import { IPlant, IPlanProd } from "app/models";
+import { IXXE_WIP_OT } from "app/models/IXXE_WIP_OT";
 import { PlantSliceRequests } from "app/Middleware/reducers";
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
+const MOTIVO_MODELO = 1;
+const MOTIVO_SMIELABORADO = 2;
+const PLANTA_ID_ESPECIAL = 4;
+
+interface EnrichedPlanProd extends IPlanProd {
+  cantidadInicio?: number;
+  cantidadEbs?: number;
+  equiposProceso?: number;
+  equiposError?: number;
+}
+
+interface OtPlanItem {
+  ot: IXXE_WIP_OT;
+  plan: EnrichedPlanProd;
+}
+
 export const AnalisisProductoTerminado = (): JSX.Element => {
   const opcionesMotivo = [
-    { motivo: "Modelo", value: 1 },
-    { motivo: "Semielaborado", value: 2 }
+    { motivo: "Modelo", value: MOTIVO_MODELO },
+    { motivo: "Semielaborado", value: MOTIVO_SMIELABORADO }
   ];
   const opcionesSemielaborado = [
     { opcion: "Caños", value: 1, filtro: "TC" },
@@ -25,15 +44,16 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
 
   const dispatch = useAppDispatch();
   const { TitleChanger } = useTitleOfApp();
-  const [dataOpen, setDataOpen] = useState([]);
-  const [listOT, setListOT] = useState([]);
-  const [listOtPlan, setListOtPlan] = useState([]);
+  const { openNotificationUI } = useNotificationUI();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [dataOpen, setDataOpen] = useState<any[]>([]);
+  const [listOT, setListOT] = useState<IXXE_WIP_OT[]>([]);
+  const [listOtPlan, setListOtPlan] = useState<OtPlanItem[]>([]);
   const plantas = useAppSelector((state) => state.plant.dataAll as IPlant[]);
-  const [plantSelected, setPlantSelected] = useState(null);
-  const [motivoSelected, setMotivoSelected] = useState(null);
-  const [semielaboradoSelected, setSemielaboradoSelected] = useState([]);
+  const [plantSelected, setPlantSelected] = useState<number | null>(null);
+  const [motivoSelected, setMotivoSelected] = useState<number | null>(null);
+  const [semielaboradoSelected, setSemielaboradoSelected] = useState<string[]>([]);
 
-  //Constantes para las tablas----------------------*
   const columns_modelo = [
     {
       title: "N° OP",
@@ -47,7 +67,6 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
       title: "Lote",
       field: "plan.lote"
     },
-
     {
       title: "Cant. Lote",
       field: "plan.cantidad"
@@ -60,22 +79,18 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
       title: "Cant. EBS",
       field: "plan.cantidadEbs"
     },
-    /*  {
-            title: "Cant. WIPOT",
-            field: "cantidadWIPOT"
-          }, */
     {
       title: "Diferencia",
       field: "",
-      render: (row) => {
-        return row.plan?.cantidadInicio - row.plan?.cantidadEbs;
+      render: (row: OtPlanItem) => {
+        return (row.plan?.cantidadInicio as number) - (row.plan?.cantidadEbs as number);
       }
     },
     {
       title: "Resta Lote",
       field: "",
-      render: (row) => {
-        return row.plan?.cantidad - row.plan?.cantidadInicio;
+      render: (row: OtPlanItem) => {
+        return (row.plan?.cantidad as number) - (row.plan?.cantidadInicio as number);
       }
     },
     {
@@ -109,35 +124,42 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
       field: "quantitY_COMPLETED"
     }
   ];
-  //Constantes para las tablas----------------------*
+
+  const findPlant = (): IPlant | undefined => {
+    return plantas.find((x) => x.id === plantSelected);
+  };
 
   useEffect(() => {
     TitleChanger("Analisis de Productos Terminados");
     dispatch(PlantSliceRequests.getAllRequest());
-  }, []);
+  }, [dispatch]);
 
-  //fetch de lista de OT por modelo.
   const getListByOrganizationCode = async () => {
-    const org = plantas.find((x) => x.id == plantSelected);
-    dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-    let result = [];
-    try {
-      result = unwrapResult(await dispatch(XXE_WIP_OTSliceRequests.GetListByOrganizationCode(org.organizationCode)));
-    } catch (error) {
-      console.log(error);
+    const org = findPlant();
+    if (!org) {
+      openNotificationUI("Planta no encontrada", "error");
+      return;
     }
-    if (result) setListOT(result);
+    dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
+    try {
+      const result = unwrapResult(await dispatch(XXE_WIP_OTSliceRequests.GetListByOrganizationCode(org.organizationCode)));
+      setListOT(result);
+    } catch (error) {
+      openNotificationUI("Error al cargar la lista de OT", "error");
+    } finally {
+      dispatch(LoadingUISlice.actions.LoadingUIClose());
+    }
   };
-  //fetch de lista de OT por modelo.
-
-  //fetch de lista de OT por modelo.
 
   const getListByOrganizationCodeAndSemielaborado = async () => {
-    const org = plantas.find((x) => x.id == plantSelected);
+    const org = findPlant();
+    if (!org) {
+      openNotificationUI("Planta no encontrada", "error");
+      return;
+    }
     dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-    let result = [];
     try {
-      result = unwrapResult(
+      const result = unwrapResult(
         await dispatch(
           XXE_WIP_OTSliceRequests.GetListByOrganizationCodeAndSemielaborado({
             organizationCode: org.organizationCode,
@@ -145,132 +167,115 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
           })
         )
       );
-    } catch (error) {
-      console.log(error);
-    }
-    if (result) {
-      console.log("result semielaborado", result);
       setListOT(result);
       setDataOpen(result);
+    } catch (error) {
+      openNotificationUI("Error al cargar la lista de OT por semielaborado", "error");
+    } finally {
       dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
   };
-  //fetch de lista de OT por modelo.
 
-  //Obtiene el plan prod por op
-  const getPlanProdByOp = async (op) => {
-    let result;
+  const getPlanProdByOp = async (op: string): Promise<IPlanProd | undefined> => {
     try {
-      result = unwrapResult(await dispatch(PlanProdSliceRequests.getPlanprodByNumeroOpRequest(op)));
-    } catch (e) {
-      console.log(e);
-    }
-    if (result) {
-      return result;
+      return unwrapResult(await dispatch(PlanProdSliceRequests.getPlanprodByNumeroOpRequest(op)));
+    } catch (error) {
+      openNotificationUI("Error al obtener plan de producción", "error");
+      return undefined;
     }
   };
 
-  //Por cada registro de OT, ME TRAIGO SU PLAN PROD.
   const getPlanProdByOt = async () => {
-    const newArray = [];
-    let planAux = null;
-    for (let index = 0; index < listOT.length; index++) {
-      const element = listOT[index];
-      planAux = await getPlanProdByOp(element.wiP_ENTITY_NAME);
+    const newArray: OtPlanItem[] = [];
+    for (const element of listOT) {
+      const planAux = await getPlanProdByOp(element.wiP_ENTITY_NAME);
       if (planAux) newArray.push({ ot: element, plan: planAux });
-      planAux = null;
     }
     setListOtPlan(newArray);
   };
 
-  //Cuando termina de cargar el listado de ot con su plan prod, traigo los datos faltantes.
   useEffect(() => {
-    if (listOtPlan.length > 0 && motivoSelected == 1) {
+    if (listOtPlan.length > 0 && motivoSelected === MOTIVO_MODELO) {
       getDatosFaltantes();
     }
-  }, [listOtPlan]);
+  }, [listOtPlan, motivoSelected]);
 
-  //Una vez que obtengo el listado de  OT, me traigo la data
   useEffect(() => {
-    if (listOT.length > 0 && motivoSelected == 1) {
+    if (listOT.length > 0 && motivoSelected === MOTIVO_MODELO) {
       getPlanProdByOt();
     }
-  }, [listOT]);
+  }, [listOT, motivoSelected]);
 
-  //Por cada registro de planprod, me traigo los inicio, filtrando por numeroOP.
-  const getIniciosByNroOp = async () => {
-    const newArray = [];
-    let cantidadInicio = 0;
-    let objetoOtPlan;
-    for (let index = 0; index < listOtPlan.length; index++) {
-      objetoOtPlan = { ...listOtPlan[index] };
-      if (objetoOtPlan.plan != undefined) {
-        cantidadInicio = await getInicioByNroOp(objetoOtPlan.plan.numeroOp);
-        const newPlan = { ...objetoOtPlan.plan, cantidadInicio }; //Le agrego la cantidadInicio al objeto planprod.
-        objetoOtPlan.plan = { ...newPlan };
-      }
-      newArray.push(objetoOtPlan);
-    }
-    return newArray;
-  };
-
-  //Por cada registro de planprod, me traigo los TRAZA, filtrando por numeroOP.
-  const getCantidadEBSByOp = async (listadoOtPlan) => {
-    const newArray = [];
-    let cantidadEbs = 0;
-    let objetoOtPlan;
-    for (let index = 0; index < listadoOtPlan.length; index++) {
-      objetoOtPlan = { ...listadoOtPlan[index] };
-      if (objetoOtPlan.plan != undefined) {
-        cantidadEbs = await getCounByOp(objetoOtPlan.plan.numeroOp);
-        const newPlan = { ...objetoOtPlan.plan, cantidadEbs }; //Le agrego la cantidadInicio al objeto planprod.
-        objetoOtPlan.plan = { ...newPlan };
-      }
-      newArray.push(objetoOtPlan);
-    }
-    return newArray;
-  };
-
-  //Obtiene la cantidad de registros filtrando por numeroOP, y transok: (piede ser > o =). = es para los en proceso. > es para los equipos con errores.
-  const getCounByOpAndTransOk = async (op: string, transOk: string) => {
-    let resultado;
+  const getInicioByNroOp = async (nroOp: string): Promise<number> => {
     try {
-      const plant = plantas.find((x) => x.id == plantSelected);
-      resultado = unwrapResult(
+      return unwrapResult(await dispatch(InicioSliceRequests.getAllbyNroOp(nroOp)));
+    } catch (error) {
+      openNotificationUI("Error al obtener inicios por número de OP", "error");
+      return 0;
+    }
+  };
+
+  const getIniciosByNroOp = async (): Promise<OtPlanItem[]> => {
+    const newArray: OtPlanItem[] = [];
+    for (const item of listOtPlan) {
+      const objetoOtPlan = { ...item };
+      if (objetoOtPlan.plan !== undefined) {
+        const cantidadInicio = await getInicioByNroOp(objetoOtPlan.plan.numeroOp);
+        const newPlan = { ...objetoOtPlan.plan, cantidadInicio };
+        objetoOtPlan.plan = { ...newPlan };
+      }
+      newArray.push(objetoOtPlan);
+    }
+    return newArray;
+  };
+
+  const getCounByOp = async (op: string): Promise<number> => {
+    const plant = findPlant();
+    if (!plant) return 0;
+    try {
+      return unwrapResult(await dispatch(XXE_WIP_OTSliceRequests.getCountByOP({ op, orgCode: plant.organizationCode })));
+    } catch (error) {
+      openNotificationUI("Error al obtener cantidad por OP", "error");
+      return 0;
+    }
+  };
+
+  const getCantidadEBSByOp = async (listadoOtPlan: OtPlanItem[]): Promise<OtPlanItem[]> => {
+    const newArray: OtPlanItem[] = [];
+    for (const item of listadoOtPlan) {
+      const objetoOtPlan = { ...item };
+      if (objetoOtPlan.plan !== undefined) {
+        const cantidadEbs = await getCounByOp(objetoOtPlan.plan.numeroOp);
+        const newPlan = { ...objetoOtPlan.plan, cantidadEbs };
+        objetoOtPlan.plan = { ...newPlan };
+      }
+      newArray.push(objetoOtPlan);
+    }
+    return newArray;
+  };
+
+  const getCounByOpAndTransOk = async (op: string, transOk: string): Promise<number> => {
+    const plant = findPlant();
+    if (!plant) return 0;
+    try {
+      return unwrapResult(
         await dispatch(
           XXE_WIP_ITF_SERIESliceRequests.getCountByOpAndTransOk({ op, transOk, orgCode: plant.organizationCode })
         )
       );
     } catch (error) {
-      console.log(error);
+      openNotificationUI("Error al obtener cantidad por OP y transacción", "error");
+      return 0;
     }
-    if (resultado) return resultado;
-    else return 0;
-  };
-  //Obtiene la cantidad de registros filtrando por numeroOP, y transok: (piede ser > o =). = es para los en proceso. > es para los equipos con errores.
-  const getCounByOp = async (op: string) => {
-    let resultado;
-    try {
-      const plant = plantas.find((x) => x.id == plantSelected);
-      resultado = unwrapResult(
-        await dispatch(XXE_WIP_OTSliceRequests.getCountByOP({ op, orgCode: plant.organizationCode }))
-      );
-    } catch (error) {
-      console.log(error);
-    }
-    if (resultado) return resultado;
-    else return 0;
   };
 
-  const getEquiposProceso = async (listOtPlan) => {
-    const newArray = [];
-    let equiposProceso = 0;
-    let objetoOtPlan;
-    for (let index = 0; index < listOtPlan.length; index++) {
-      objetoOtPlan = { ...listOtPlan[index] };
-      if (objetoOtPlan.plan != undefined) {
-        equiposProceso = await getCounByOpAndTransOk(objetoOtPlan.plan.numeroOp, "=");
-        const newPlan = { ...objetoOtPlan.plan, equiposProceso: equiposProceso }; //Le agrego la cantidadInicio al objeto planprod.
+  const getEquiposProceso = async (listOtPlanItems: OtPlanItem[]): Promise<OtPlanItem[]> => {
+    const newArray: OtPlanItem[] = [];
+    for (const item of listOtPlanItems) {
+      const objetoOtPlan = { ...item };
+      if (objetoOtPlan.plan !== undefined) {
+        const equiposProceso = await getCounByOpAndTransOk(objetoOtPlan.plan.numeroOp, "=");
+        const newPlan = { ...objetoOtPlan.plan, equiposProceso };
         objetoOtPlan.plan = { ...newPlan };
       }
       newArray.push(objetoOtPlan);
@@ -278,15 +283,13 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
     return newArray;
   };
 
-  const getEquiposError = async (listOtPlan) => {
-    const newArray = [];
-    let equiposError = 0;
-    let objetoOtPlan;
-    for (let index = 0; index < listOtPlan.length; index++) {
-      objetoOtPlan = { ...listOtPlan[index] };
-      if (objetoOtPlan.plan != undefined) {
-        equiposError = await getCounByOpAndTransOk(objetoOtPlan.plan.numeroOp, ">");
-        const newPlan = { ...objetoOtPlan.plan, equiposError: equiposError }; //Le agrego la cantidadInicio al objeto planprod.
+  const getEquiposError = async (listOtPlanItems: OtPlanItem[]): Promise<OtPlanItem[]> => {
+    const newArray: OtPlanItem[] = [];
+    for (const item of listOtPlanItems) {
+      const objetoOtPlan = { ...item };
+      if (objetoOtPlan.plan !== undefined) {
+        const equiposError = await getCounByOpAndTransOk(objetoOtPlan.plan.numeroOp, ">");
+        const newPlan = { ...objetoOtPlan.plan, equiposError };
         objetoOtPlan.plan = { ...newPlan };
       }
       newArray.push(objetoOtPlan);
@@ -295,109 +298,84 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
   };
 
   const getDatosFaltantes = async () => {
-    let arrayFinal = []; //Tambien tiene el campo CantidadEBS.
-    arrayFinal = await getIniciosByNroOp(); //a el array de plan prod le agrega la columna CantTRraza.
-    arrayFinal = await getCantidadEBSByOp(arrayFinal); //A el array le agrega CantidadEBS
-    arrayFinal = await getEquiposProceso(arrayFinal); //Le agrego los equipos en proceso
-    arrayFinal = await getEquiposError(arrayFinal); //Agrego los equipos con error
-    console.log("array final", arrayFinal);
+    let arrayFinal: OtPlanItem[] = [];
+    arrayFinal = await getIniciosByNroOp();
+    arrayFinal = await getCantidadEBSByOp(arrayFinal);
+    arrayFinal = await getEquiposProceso(arrayFinal);
+    arrayFinal = await getEquiposError(arrayFinal);
     setDataOpen(arrayFinal);
     dispatch(LoadingUISlice.actions.LoadingUIClose());
   };
 
-  const getInicioByNroOp = async (nroOp: string) => {
-    let result;
-    try {
-      result = unwrapResult(await dispatch(InicioSliceRequests.getAllbyNroOp(nroOp)));
-    } catch (error) {
-      console.log(error);
-    }
-    if (result) {
-      return result;
-    } else return 0;
-  };
-
-  // const getCantEBSByNroOp = async (nroOp: string) => {
-  //   let result;
-  //   try {
-  //     result = unwrapResult(await dispatch(XXE_WIP_OTSliceRequests.GetQuantityByOp(nroOp)));
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  //   if (result) {
-  //     return result;
-  //   } else return 0;
-  // };
-
   useEffect(() => {
-    if (plantSelected && motivoSelected == 1) {
+    if (plantSelected && motivoSelected === MOTIVO_MODELO) {
       getListByOrganizationCode();
-    } else if (plantSelected == 4 && motivoSelected == 2 && semielaboradoSelected.length > 0) {
+    } else if (plantSelected === PLANTA_ID_ESPECIAL && motivoSelected === MOTIVO_SMIELABORADO && semielaboradoSelected.length > 0) {
       getListByOrganizationCodeAndSemielaborado();
     }
   }, [plantSelected, motivoSelected, semielaboradoSelected]);
 
-  console.log("semielaborado", semielaboradoSelected);
-  console.log("planta:", plantSelected);
   return (
-    <div className="my-2 mx-4 h-full w-full">
-      <div className="flex w-full justify-around">
-        {plantas && (
-          <div className="flex flex-row justify-around" style={{ width: "800px" }}>
+    <ContainerForPages optionsLayout="page">
+      <ContainerForPages optionsLayout="Selects">
+        <div className="w-full">
+          <FormControl variant="standard">
+            <InputLabel>Planta</InputLabel>
+            <Select
+              value={plantSelected ?? ""}
+              onChange={(e) => {
+                setPlantSelected(parseInt(e.target.value.toString()));
+              }}
+              className="w-[275px]">
+              {plantas.map((plant) => (
+                <MenuItem key={plant.id} value={plant.id} className="w-[275px]">
+                  {plant.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+        </div>
+        {plantSelected === PLANTA_ID_ESPECIAL && (
+          <div className="w-full">
             <FormControl variant="standard">
-              <InputLabel>Planta</InputLabel>
+              <InputLabel>Motivo de busqueda</InputLabel>
               <Select
                 onChange={(e) => {
-                  setPlantSelected(parseInt(e.target.value.toString()));
+                  setMotivoSelected(parseInt(e.target.value.toString()));
                 }}
-                style={{ width: "275px" }}>
-                {plantas &&
-                  plantas.map((plant) => (
-                    <MenuItem key={plant.id} value={plant.id} style={{ width: "275px" }}>
-                      {plant.name}
-                    </MenuItem>
-                  ))}
+                className="w-[275px]"
+                value={motivoSelected ?? ""}>
+                {opcionesMotivo.map((opcion) => (
+                  <MenuItem key={opcion.value} value={opcion.value} className="w-[275px]">
+                    {opcion.motivo}
+                  </MenuItem>
+                ))}
               </Select>
             </FormControl>
-            {plantSelected === 4 && (
-              <FormControl variant="standard">
-                <InputLabel>Motivo de busqueda</InputLabel>
-                <Select
-                  onChange={(e) => {
-                    setMotivoSelected(parseInt(e.target.value.toString()));
-                  }}
-                  style={{ width: "275px" }}
-                  value={motivoSelected}>
-                  {opcionesMotivo.map((opcion, index) => (
-                    <MenuItem key={opcion.value || index} value={opcion.value} style={{ width: "275px" }}>
-                      {opcion.motivo}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
-            {motivoSelected == 2 && (
-              <FormControl variant="standard">
-                <InputLabel>Opciones</InputLabel>
-                <Select
-                  multiple
-                  onChange={(e) => {
-                    const { value } = e.target;
-                    setSemielaboradoSelected(typeof value === "string" ? value.split(",") : value);
-                  }}
-                  style={{ width: "200px" }}
-                  value={semielaboradoSelected}>
-                  {opcionesSemielaborado.map((opcion) => (
-                    <MenuItem key={opcion.value} value={opcion.filtro} style={{ width: "200px" }}>
-                      {opcion.opcion}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            )}
           </div>
         )}
-        <div style={{ textAlign: "center" }}>
+        {motivoSelected === MOTIVO_SMIELABORADO && (
+          <div className="w-full">
+            <FormControl variant="standard">
+              <InputLabel>Opciones</InputLabel>
+              <Select
+                multiple
+                onChange={(e) => {
+                  const { value } = e.target;
+                  setSemielaboradoSelected(typeof value === "string" ? value.split(",") : value);
+                }}
+                className="w-[200px]"
+                value={semielaboradoSelected}>
+                {opcionesSemielaborado.map((opcion) => (
+                  <MenuItem key={opcion.value} value={opcion.filtro} className="w-[200px]">
+                    {opcion.opcion}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+          </div>
+        )}
+        <div className="text-center">
           <Button
             variant="text"
             color="success"
@@ -408,16 +386,18 @@ export const AnalisisProductoTerminado = (): JSX.Element => {
             Refrescar listado
           </Button>
         </div>
-      </div>
-      <TableComponent
-        excel={true}
-        Dense={true}
-        Overflow={false}
-        buscar={true}
-        IDcolumn={motivoSelected === 2 ? "wiP_ENTITY_NAME" : "ot.wiP_ENTITY_NAME"}
-        columns={motivoSelected == 1 ? columns_modelo : columns_semielaborado}
-        dataInfo={dataOpen}
-      />
-    </div>
+      </ContainerForPages>
+      <ContainerForPages optionsLayout="Table" activeEffectVisible>
+        <TableComponent
+          excel={true}
+          Dense={true}
+          Overflow={false}
+          buscar={true}
+          IDcolumn={motivoSelected === MOTIVO_SMIELABORADO ? "wiP_ENTITY_NAME" : "ot.wiP_ENTITY_NAME"}
+          columns={motivoSelected === MOTIVO_MODELO ? columns_modelo : columns_semielaborado}
+          dataInfo={dataOpen}
+        />
+      </ContainerForPages>
+    </ContainerForPages>
   );
 };

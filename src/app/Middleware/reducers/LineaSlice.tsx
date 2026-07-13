@@ -108,6 +108,12 @@ export const LineaSlice = createSlice({
     builder.addCase(LineaSliceRequests.multiPutRequest.rejected, (state, action) => {
       state.loading = "rejected";
     });
+    builder.addCase(LineaSliceRequests.cambiarEBSRequest.fulfilled, (state, action) => {
+      state.loading = "fulfilled";
+    });
+    builder.addCase(LineaSliceRequests.cambiarEBSRequest.rejected, (state, action) => {
+      state.loading = "rejected";
+    });
     builder.addCase(LineaSliceRequests.GetByCodigoInicio.fulfilled, (state, action) => {
       state.loading = "fulfilled";
       state.object = action.payload;
@@ -116,7 +122,7 @@ export const LineaSlice = createSlice({
       state.loading = "rejected";
     });
     builder.addCase(LineaSliceRequests.GetLineasByTypeProducctionAndActive.fulfilled, (state, action) => {
-      state.loading = "fullfilled";
+      state.loading = "fulfilled";
       state.dataAll = action.payload;
     });
     builder.addCase(LineaSliceRequests.GetLineasByTypeProducctionAndActive.rejected, (state, action) => {

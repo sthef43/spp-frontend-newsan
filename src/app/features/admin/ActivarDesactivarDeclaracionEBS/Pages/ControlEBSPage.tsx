@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, TablePagination } from "@mui/material";
+import { CircularProgress, Switch, TablePagination } from "@mui/material";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import { LineaSliceRequests } from "app/Middleware/reducers/LineaSlice";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
@@ -7,10 +7,11 @@ import { ILinea } from "app/models";
 import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
-// import { ControlEBSTable } from "app/shared/components/produccion/EBS/ControlEBSTable";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 
 export const ControlEBSPage = () => {
-  const lineas = useAppSelector<ILinea[]>((action) => action.linea.dataAll);
+  const lineas = useAppSelector((state) => state.linea.dataAll);
+  const loading = useAppSelector((state) => state.linea.loading);
 
   const { getConfirmation } = useConfirmationDialog();
   const { TitleChanger } = useTitleOfApp();
@@ -29,38 +30,43 @@ export const ControlEBSPage = () => {
     try {
       await dispatch(LineaSliceRequests.getAllRequest());
     } catch (e) {
-      openNotificationUI(e as any, "error");
+      openNotificationUI(e as string, "error");
     }
   };
 
   const handleEBS = async () => {
     try {
-      let condicion: string;
       const declaraEnEBS = lineas?.[0]?.relacionaEbs;
 
       const confirm =
-        declaraEnEBS == "S" ? await getConfirmation("Desactivar EBS", "") : await getConfirmation("Activar EBS", "");
+        declaraEnEBS === "S"
+          ? await getConfirmation("Desactivar EBS", "¿Está seguro que desea desactivar EBS?")
+          : await getConfirmation("Activar EBS", "¿Está seguro que desea activar EBS?");
 
       if (confirm) {
-        declaraEnEBS == "S" ? (condicion = "N") : (condicion = "S");
+        const condicion = declaraEnEBS === "S" ? "N" : "S";
 
         const response = await dispatch(LineaSliceRequests.cambiarEBSRequest(condicion));
-        // response && declaraEnEBS == "S"
-        //   ? openNotificationUI("Se desactivo correctamente", "success")
-        //   : openNotificationUI("Se activo correctamente", "success");
 
-        getAllLineas();
+        if (response.meta.requestStatus === "fulfilled") {
+          openNotificationUI(
+            declaraEnEBS === "S" ? "Se desactivó correctamente" : "Se activó correctamente",
+            "success"
+          );
+        }
+
+        await getAllLineas();
       }
     } catch (e) {
-      openNotificationUI(e as any, "error");
+      openNotificationUI(e as string, "error");
     }
   };
 
-  const handleChangePage = (_: any, newPage: number) => {
+  const handleChangePage = (_: React.MouseEvent<HTMLButtonElement> | null, newPage: number) => {
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event: any) => {
+  const handleChangeRowsPerPage = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
   };
@@ -75,21 +81,30 @@ export const ControlEBSPage = () => {
     if (page > maxPage) setPage(0);
   }, [count, rowsPerPage]);
 
+  if (loading === null || loading === "pending") {
+    return (
+      <ContainerForPages optionsLayout="page">
+        <div className="flex justify-center items-center h-[400px]">
+          <CircularProgress />
+        </div>
+      </ContainerForPages>
+    );
+  }
+
   return (
-    <div className="container m-auto mt-10">
+    <ContainerForPages optionsLayout="page">
       <div className="flex justify-center">
         <div className="bg-New rounded-[5px] w-full max-w-[1100px] h-[140px] px-8 py-2">
           <div className="text-[20px] font-bold text-textNew">Estado Global</div>
           <div className="flex items-center justify-between">
-            <div className="text-[12px] text-textNew font-regular">Activar/Desactivar EBS</div>
+            <div className="text-[12px] text-textNew font-normal">Activar/Desactivar EBS</div>
 
-            {/* Switch personalizado */}
             <Switch
               checked={isOn}
               onChange={handleEBS}
               className={`ebs-switch scale-[1.35]
-                [&_.MuiSwitch-track]:!opacity-100 
-                [&_.MuiSwitch-track]:!rounded-[999px] 
+                [&_.MuiSwitch-track]:!opacity-100
+                [&_.MuiSwitch-track]:!rounded-[999px]
                 [&_.MuiSwitch-thumb]:!bg-[#FFF]
                 [&_.MuiSwitch-thumb]:!scale-[0.50]
                   ${
@@ -102,7 +117,7 @@ export const ControlEBSPage = () => {
           </div>
 
           <div
-            className={`mt-[5px] h-[44px] rounded-[5px] flex items-center justify-center text-[12px] font-regular
+            className={`mt-[5px] h-[44px] rounded-[5px] flex items-center justify-center text-[12px] font-normal
              ${isOn ? "bg-[#E7F8F2] text-[#10B981]" : "bg-[#FFF4E2] text-[#FFB53F]"}`}>
             {isOn ? "SISTEMA OPERATIVO ACTIVO" : "SISTEMA OPERATIVO DESACTIVADO"}
           </div>
@@ -113,9 +128,6 @@ export const ControlEBSPage = () => {
         <div className="w-full max-w-[1100px] pt-5 border-b border-divider"></div>
       </div>
 
-      {/* <ControlEBSTable /> comento tabla vieja */}
-
-      {/* TABLA NUEVA*/}
       <div className="mt-7 flex justify-center">
         <div className="bg-New rounded-[3px] w-full max-w-[1100px]">
           <div className="flex justify-between py-3 bg-NewSecondary border-b border-[var(--border)]">
@@ -123,22 +135,26 @@ export const ControlEBSPage = () => {
             <div className="font-bold text-textNew text-[12px] text-center w-[220px]">Estado en EBS</div>
           </div>
           <div className="w-full bg-New">
-            {lineasPaginadas.map((x) => {
-              const on = x.relacionaEbs === "S";
-              return (
-                <div key={x.idLinea} className="flex justify-between py-3 px-[65px] border-b border-[var(--border)]">
-                  <div className="text-[12px] text-textNew flex items-center">{x.descripcion}</div>
-                  <div className="text-[12px] text-textNew flex items-center w-[220px] justify-end">
-                    <span
-                      className={`flex items-center justify-center h-[24px] px-2 rounded-[5px] text-[11px] font-semibold ${
-                        on ? "bg-[#E7F8F2] text-[#10B981]" : "bg-[#FFF4E2] text-[#FFB53F]"
-                      }`}>
-                      {on ? "ACTIVO" : "DESACTIVADO"}
-                    </span>
+            {count === 0 ? (
+              <div className="py-8 text-center text-textNew text-[12px]">No hay líneas de producción disponibles</div>
+            ) : (
+              lineasPaginadas.map((x) => {
+                const on = x.relacionaEbs === "S";
+                return (
+                  <div key={x.idLinea} className="flex justify-between py-3 px-[65px] border-b border-[var(--border)]">
+                    <div className="text-[12px] text-textNew flex items-center">{x.descripcion}</div>
+                    <div className="text-[12px] text-textNew flex items-center w-[220px] justify-end">
+                      <span
+                        className={`flex items-center justify-center h-[24px] px-2 rounded-[5px] text-[11px] font-semibold ${
+                          on ? "bg-[#E7F8F2] text-[#10B981]" : "bg-[#FFF4E2] text-[#FFB53F]"
+                        }`}>
+                        {on ? "ACTIVO" : "DESACTIVADO"}
+                      </span>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })
+            )}
           </div>
           <TablePagination
             rowsPerPageOptions={[5, 10, 15, 25]}
@@ -156,6 +172,6 @@ export const ControlEBSPage = () => {
           />
         </div>
       </div>
-    </div>
+    </ContainerForPages>
   );
 };

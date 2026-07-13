@@ -13,33 +13,34 @@ import {
   Tooltip
 } from "@mui/material";
 import { useAppSelector } from "app/core/store/store";
-import React from "react";
+
 interface Props {
-  handleReset: any;
-  handleEdit: any;
+  handleReset: () => void;
+  handleEdit: () => void;
 }
+
+const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14
+  }
+}));
+
+const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0
+  }
+}));
+
 export const AjusteTable = ({ handleReset, handleEdit }: Props) => {
   const ajuste = useAppSelector((s) => s.ajuste?.object);
 
-  const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-      backgroundColor: theme.palette.common.black,
-      color: theme.palette.common.white
-    },
-    [`&.${tableCellClasses.body}`]: {
-      fontSize: 14
-    }
-  }));
-
-  const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    "&:nth-of-type(odd)": {
-      backgroundColor: theme.palette.action.hover
-    },
-    // hide last border
-    "&:last-child td, &:last-child th": {
-      border: 0
-    }
-  }));
   return (
     <div className="shadow-lg">
       <TableContainer component={Paper}>

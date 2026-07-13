@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@mui/material";
 import { AjusteSliceRequests } from "app/Middleware/reducers/AjusteSlice";
 import { useAppDispatch } from "app/core/store/store";
@@ -6,44 +5,31 @@ import { IAjuste } from "app/models/IAjuste";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { GenericFieldsGenerator } from "app/shared/helpers/GenericFieldsGenerator";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
-import React from "react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 
 interface Props {
-  ajuste: IAjuste;
-  setOpenModal: any;
-  refresh: any;
+  ajuste?: IAjuste;
+  setOpenModal: (open: boolean) => void;
+  refresh: () => void;
 }
+
+const ajusteSchema = yup
+  .object()
+  .shape({
+    ajuste1: yup
+      .number()
+      .positive("El numero tiene que ser mayor a 0")
+      .integer("El numero tiene que ser entero")
+      .required("El ajuste es requerido")
+  })
+  .required();
 
 export const AjusteForm = ({ ajuste, setOpenModal, refresh }: Props) => {
   const buttonClasses = MaterialButtons();
   const { openNotificationUI } = useNotificationUI();
   const dispatch = useAppDispatch();
-
-  const schema = yup
-    .object()
-    .shape({
-      ajuste1: yup
-        .number()
-        .positive("El numero tiene que ser mayor a 0")
-        .integer("El numero tiene que ser entero")
-        .required()
-    })
-    .required();
-
-  const handleGuardar = async () => {
-    try {
-      const objecto = { ...ajuste, ajuste1: getValues("ajuste1") };
-      const response = await dispatch(AjusteSliceRequests.putRequest(objecto));
-      response && openNotificationUI("Se edito el ajuste correctamente", "success");
-      refresh();
-      setOpenModal(false);
-    } catch (e) {
-      openNotificationUI(e, "error");
-    }
-  };
 
   const defaultFormValues = {
     ajuste1: ajuste?.ajuste1 || 0
@@ -53,13 +39,25 @@ export const AjusteForm = ({ ajuste, setOpenModal, refresh }: Props) => {
     ajuste1: "Ajuste"
   };
 
-  const { control, getValues, formState } = useForm({
+  const { control, handleSubmit, formState } = useForm({
     defaultValues: defaultFormValues,
-    resolver: yupResolver(schema),
+    resolver: yupResolver(ajusteSchema),
     mode: "onChange"
   });
 
-  const handleCancelar = async () => {
+  const onSubmit = async (data: { ajuste1: number }) => {
+    try {
+      const objecto = { ...ajuste, ajuste1: data.ajuste1 };
+      await dispatch(AjusteSliceRequests.putRequest(objecto)).unwrap();
+      openNotificationUI("Se edito el ajuste correctamente", "success");
+      refresh();
+      setOpenModal(false);
+    } catch (e) {
+      openNotificationUI(String(e), "error");
+    }
+  };
+
+  const handleCancelar = () => {
     setOpenModal(false);
   };
 
@@ -78,7 +76,7 @@ export const AjusteForm = ({ ajuste, setOpenModal, refresh }: Props) => {
           className={buttonClasses.blueButton}
           disabled={!formState.isValid}
           variant="contained"
-          onClick={handleGuardar}>
+          onClick={handleSubmit(onSubmit)}>
           Guardar
         </Button>
         <Button className={buttonClasses.redButton} variant="contained" onClick={handleCancelar}>
