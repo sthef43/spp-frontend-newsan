@@ -9,6 +9,7 @@ import { ILinea, IPlanProd } from "app/models";
 import { IImpresionEtiqueta } from "app/models/IImpresionEtiqueta";
 import { ITipoEtiqueta } from "app/models/ITipoEtiqueta";
 import { EtiquetasComponent } from "app/features/etiquetas/controlImpresionEtiquetas/components/Etiquetas.component";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
@@ -18,9 +19,25 @@ import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
-export const ControlImpresionEtiquetas = () => {
+interface ModalInformation {
+  idLinea: number;
+  idTipoEtiqueta: number;
+  tipoEtiquetaDescripcion: string;
+  tipoEtiquetaCodigo: string;
+  lote: string;
+  codigoModelo: string;
+  numeroOp: string;
+  prefijoNewsan: string;
+}
+
+interface RfidRow {
+  rfidDesde: string;
+  rfidHasta: string;
+}
+
+export const ControlimpresionEtiquetas: React.FC = () => {
   const dispatch = useAppDispatch();
   const { TitleChanger } = useTitleOfApp();
   const { openNotificationUI } = useNotificationUI();
@@ -29,15 +46,15 @@ export const ControlImpresionEtiquetas = () => {
   const tipoEtiquetas = useAppSelector((x) => x.tipoEtiquetas.dataAll);
 
   const cantidadEtiquetas = useAppSelector((x) => x.impresionEtiquetas.dataAll);
-  const ImpresionEtiquetas = useAppSelector((x) => x.impresionEtiquetas.filteredData);
-  const [selectedLinea, setSelectedLinea] = useState<ILinea>(null);
-  const [selectedPlanProd, setSelectedPlanProd] = useState<IPlanProd>(null);
-  const [selectedTipoEtiqueta, setSelectedTipoEtiqueta] = useState<ITipoEtiqueta>(null);
-  const [selectedEtiquetaImpresion, setSelectedEtiquetaImpresion] = useState(null);
-  const [modalInformation, setmodalInformation] = useState(null);
+  const impresionEtiquetas = useAppSelector((x) => x.impresionEtiquetas.filteredData);
+  const [selectedLinea, setSelectedLinea] = useState<ILinea | null>(null);
+  const [selectedPlanProd, setSelectedPlanProd] = useState<IPlanProd | null>(null);
+  const [selectedTipoEtiqueta, setSelectedTipoEtiqueta] = useState<ITipoEtiqueta | null>(null);
+  const [selectedEtiquetaImpresion, setSelectedEtiquetaImpresion] = useState<IImpresionEtiqueta | null>(null);
+  const [modalInformation, setModalInformation] = useState<ModalInformation | null>(null);
   const [openModal, setOpenModal] = useState(false);
   const [rfidAnchorEl, setRfidAnchorEl] = useState<null | HTMLElement>(null);
-  const [rfidRow, setRfidRow] = useState<any>(null);
+  const [rfidRow, setRfidRow] = useState<RfidRow | null>(null);
   const [rfidLoading, setRfidLoading] = useState(false);
   const [rfidError, setRfidError] = useState<string | null>(null);
   const [prefijoNewsan, setPrefijoNewsan] = useState<string>("");
@@ -89,7 +106,8 @@ export const ControlImpresionEtiquetas = () => {
     return selectedPlanProd?.cantidad * e.posiciones - cantidadImpresa;
   };
 
-  const CustomAutocomplete = (options, onChange, value) => {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomAutocomplete = (options: any[], onChange: (e: React.SyntheticEvent, value: IPlanProd | null) => void, value: IPlanProd | null) => {
     return (
       <Autocomplete
         options={options}
@@ -101,9 +119,7 @@ export const ControlImpresionEtiquetas = () => {
     );
   };
 
-  const [valor, setValor] = useState();
-
-  const handleChange = async (e, value) => {
+  const handleChange = async (e: React.SyntheticEvent, value: IPlanProd | null) => {
     if (!value) return;
     setSelectedPlanProd(value);
     try {
@@ -127,13 +143,24 @@ export const ControlImpresionEtiquetas = () => {
     }
   };
 
+  const buildModalInformation = (): ModalInformation => ({
+    idLinea: selectedTipoEtiqueta?.idLinea ?? 0,
+    idTipoEtiqueta: selectedTipoEtiqueta?.idTipoEtiqueta ?? 0,
+    tipoEtiquetaDescripcion: selectedTipoEtiqueta?.descripcion ?? "",
+    tipoEtiquetaCodigo: selectedTipoEtiqueta?.codigo ?? "",
+    lote: selectedPlanProd?.lote ?? "",
+    codigoModelo: selectedPlanProd?.codigoModelo ?? "",
+    numeroOp: selectedPlanProd?.numeroOp ?? "",
+    prefijoNewsan: prefijoNewsan
+  });
+
   useEffect(() => {
     TitleChanger("Control de impresion de etiquetas");
     dispatch(LineaSliceRequests.getAllRequest());
   }, []);
 
   //Lineas no visibles en front, eliminar una en caso de necesitar ver y usar.
-  const lineasVisibles = linea?.filter((l: ILinea) => {
+  const lineasVisibles = useMemo(() => linea?.filter((l: ILinea) => {
     const d = (l.descripcion ?? "").toLowerCase();
 
     return !(
@@ -147,19 +174,20 @@ export const ControlImpresionEtiquetas = () => {
       d.includes("renacer") ||
       d.includes("automotriz")
     );
-  });
+  }), [linea]);
 
   return (
-    <div>
+    <ContainerForPages optionsLayout="page" activeEffectVisible>
       <div className="wraper-container flex flex-wrap flex-col gap-8">
+        <ContainerForPages optionsLayout="Selects">
         <TextField
           value={selectedLinea?.idLinea || null}
           label="Linea"
           placeholder="Seleccione la linea"
           fullWidth
-          onChange={(e: any) => {
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.value) {
-              const info = linea.find((x) => x.idLinea == e.target.value);
+              const info = linea.find((x) => x.idLinea === Number(e.target.value));
               setSelectedLinea(info);
             }
           }}
@@ -172,6 +200,7 @@ export const ControlImpresionEtiquetas = () => {
         </TextField>
 
         {selectedLinea && planprod?.length > 0 && CustomAutocomplete(planprod, handleChange, selectedPlanProd)}
+        </ContainerForPages>
 
         {selectedPlanProd && (
           <div className="grid grid-cols-2 gap-2 md:gap-8">
@@ -187,6 +216,7 @@ export const ControlImpresionEtiquetas = () => {
                 <h1 className="text-center text-white ">Tipo de etiquetas</h1>
               </div>
 
+              <ContainerForPages optionsLayout="Table" activeEffectVisible>
               <TableComponent
                 IDcolumn="idTipoEtiqueta"
                 columns={[
@@ -196,10 +226,10 @@ export const ControlImpresionEtiquetas = () => {
                   {
                     title: "Acciones",
                     field: "",
-                    render: (e: any) => (
+                    render: (e: ITipoEtiqueta) => (
                       <Checkbox
                         checked={e.idTipoEtiqueta === selectedTipoEtiqueta?.idTipoEtiqueta}
-                        onChange={(element: any) => {
+                        onChange={(element: React.ChangeEvent<HTMLInputElement>) => {
                           if (element.target.checked) setSelectedTipoEtiqueta({ ...e });
                         }}
                       />
@@ -207,6 +237,7 @@ export const ControlImpresionEtiquetas = () => {
                   }
                 ]}
                 dataInfo={tipoEtiquetas}></TableComponent>
+              </ContainerForPages>
             </div>
 
             <div>
@@ -215,6 +246,7 @@ export const ControlImpresionEtiquetas = () => {
               </div>
 
               {selectedTipoEtiqueta && (
+                <ContainerForPages optionsLayout="Table" activeEffectVisible>
                 <TableComponent
                   IDcolumn="idImpresionEtiqueta"
                   columns={[
@@ -245,17 +277,7 @@ export const ControlImpresionEtiquetas = () => {
                               <span>
                                 <IconButton
                                   onClick={() => {
-                                    setmodalInformation({
-                                      idLinea: selectedTipoEtiqueta.idLinea,
-                                      idTipoEtiqueta: selectedTipoEtiqueta.idTipoEtiqueta,
-                                      tipoEtiquetaDescripcion: selectedTipoEtiqueta.descripcion,
-                                      tipoEtiquetaCodigo: selectedTipoEtiqueta.codigo,
-
-                                      lote: selectedPlanProd.lote,
-                                      codigoModelo: selectedPlanProd.codigoModelo,
-                                      numeroOp: selectedPlanProd.numeroOp,
-                                      prefijoNewsan: prefijoNewsan
-                                    });
+                                    setModalInformation(buildModalInformation());
                                     setSelectedEtiquetaImpresion({ ...row });
                                     setOpenModal(true);
                                   }}
@@ -296,23 +318,15 @@ export const ControlImpresionEtiquetas = () => {
                       )
                     }
                   ]}
-                  dataInfo={ImpresionEtiquetas}
+                  dataInfo={impresionEtiquetas}
                   buscar={true}
                   agregar={() => {
-                    setmodalInformation({
-                      idLinea: selectedTipoEtiqueta.idLinea,
-                      idTipoEtiqueta: selectedTipoEtiqueta.idTipoEtiqueta,
-                      tipoEtiquetaDescripcion: selectedTipoEtiqueta.descripcion,
-                      tipoEtiquetaCodigo: selectedTipoEtiqueta.codigo,
-                      lote: selectedPlanProd.lote,
-                      codigoModelo: selectedPlanProd.codigoModelo,
-                      numeroOp: selectedPlanProd.numeroOp,
-                      prefijoNewsan: prefijoNewsan
-                    });
+                    setModalInformation(buildModalInformation());
                     setSelectedEtiquetaImpresion(null);
                     setOpenModal(true);
                   }}
                 />
+              </ContainerForPages>
               )}
               <Popover
                 open={rfidOpen}
@@ -347,13 +361,13 @@ export const ControlImpresionEtiquetas = () => {
         )}
       </div>
 
-      <ModalCompoment title="Etiquetas Impresas" openPopup={openModal} setOpenPopup={setOpenModal}>
+      <ModalCompoment title="Etiquetas Impresas" openPopup={openModal} setOpenPopup={setOpenModal} showModalCenterPage titleModalStyle="Audit" subTitle="Gestión de etiquetas impresas">
         <EtiquetasComponent
           setOpenPopup={setOpenModal}
           impresionEtiqueta={selectedEtiquetaImpresion}
           informacion={modalInformation}
         />
       </ModalCompoment>
-    </div>
+    </ContainerForPages>
   );
 };
