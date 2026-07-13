@@ -1,5 +1,7 @@
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
+import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import React, { useEffect, useState } from "react";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { Button, IconButton, Tooltip } from "@mui/material";
@@ -9,6 +11,8 @@ import { useAppDispatch } from "app/core/store/store";
 import { Delete, Visibility } from "@mui/icons-material";
 import { LoadingUISlice } from "app/Middleware/reducers/LoadingUISlice";
 import { unwrapResult } from "@reduxjs/toolkit";
+import { useConfirmationDialog } from "app/shared/hooks/useConfirmationDialog";
+import FetchApi from "app/shared/helpers/FetchApi";
 import { ExaminarContenidoUbicacion } from "../Modals/AsignacionUbicacionesModals/ExaminarContenidoUbicacion";
 import { CLIUbicacionesConItems } from "app/models/Stored Procdure/CLIUbicacionesConItems";
 import { ExportExcel } from "app/shared/components/helpComponents/ExportExcel";
@@ -17,14 +21,16 @@ import { CLIContenedorItemsSliceRequest } from "../Middlewares/CLIContenedorItem
 import { CLIImpresionEtiquetasSliceRequests } from "../Middlewares/CLIImpresionEtiquetas";
 import { CLIUbicacionSectoresSliceRequest } from "../Middlewares/CLIUbiacacionSectorSlice";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-export const AsignacionUbicaciones = () => {
+export const AsignacionUbicaciones: React.FC = () => {
   const { TitleChanger } = useTitleOfApp();
+  const { openNotificationUI } = useNotificationUI();
+  const { getConfirmation } = useConfirmationDialog();
   const buttonClases = MaterialButtons();
   const dispatch = useAppDispatch();
 
   const [openModalAsignar, setOpenModalAsignar] = useState(false);
   const [openModalExaminar, setOpenModalExaminar] = useState<boolean>(false);
+  const [examinarId, setExaminarId] = useState<number | null>(null);
 
   const [tipoAsignacion, setTipoAsignacion] = useState<string>("");
 
@@ -32,42 +38,54 @@ export const AsignacionUbicaciones = () => {
   const [ubicacionSeleccionada, setUbicacionSeleccionada] = useState<ICLIUbicacionSector>();
   const [dataExcel, setDataExcel] = useState<CLIUbicacionesConItems[]>([]);
 
-  const ubicacionesInit = async () => {
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const response = unwrapResult(await dispatch(CLIUbicacionSectoresSliceRequest.getAllRequest()));
-      const ubicacionesItems = unwrapResult(
-        await dispatch(CLIUbicacionSectoresSliceRequest.getAllUbicacionesWithItems())
-      );
-      if (response) {
-        setUbicaciones(response);
-        exportarExcelConItems(ubicacionesItems);
-      }
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    } catch (error) {
-      console.log(error);
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    }
+  const exportarExcelConItems = (ubicacionesItems: CLIUbicacionesConItems[]) => {
+    setDataExcel(ubicacionesItems);
   };
 
-  const handeOpenModalExam = async (rowData: ICLIUbicacionSector) => {
-    try {
-      dispatch(LoadingUISlice.actions.LoadingUIOpen("Cargando..."));
-      const response = unwrapResult(
-        await dispatch(CLIUbicacionSectoresSliceRequest.getUbicacionWithItemById(rowData.id))
-      );
-      if (response) {
-        setUbicacionSeleccionada(response);
-      }
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    } catch (error) {
-      console.log(error);
-      dispatch(LoadingUISlice.actions.LoadingUIClose());
-    }
+  FetchApi<ICLIUbicacionSector[]>(
+    CLIUbicacionSectoresSliceRequest.getAllRequest,
+    null,
+    false,
+    null,
+    setUbicaciones
+  );
+
+  FetchApi<CLIUbicacionesConItems[]>(
+    CLIUbicacionSectoresSliceRequest.getAllUbicacionesWithItems,
+    null,
+    false,
+    null,
+    null,
+    false,
+    false,
+    true,
+    exportarExcelConItems
+  );
+
+  FetchApi<ICLIUbicacionSector>(
+    CLIUbicacionSectoresSliceRequest.getUbicacionWithItemById,
+    examinarId,
+    false,
+    examinarId,
+    (data) => {
+      if (data) setUbicacionSeleccionada(data);
+    },
+    true,
+    false,
+    true
+  );
+
+  const handeOpenModalExam = (rowData: ICLIUbicacionSector) => {
+    setExaminarId(rowData.id);
     setOpenModalExaminar(true);
   };
 
   const buscarLocalizador = async (rowData: ICLIUbicacionSector) => {
+    const confirm = await getConfirmation(
+      "Desvincular ubicación",
+      "¿Está seguro de que desea desvincular esta ubicación?"
+    );
+    if (!confirm) return;
     let objeto = null;
     const cambiarEstado = { ...rowData, estado: true };
     try {
@@ -92,34 +110,14 @@ export const AsignacionUbicaciones = () => {
         setUbicaciones(response);
       }
       dispatch(LoadingUISlice.actions.LoadingUIClose());
+      openNotificationUI("Ubicación desvinculada correctamente.", "success");
     } catch (error) {
-      console.log(error);
+      openNotificationUI("Error al desvincular ubicación.", "error");
       dispatch(LoadingUISlice.actions.LoadingUIClose());
     }
   };
 
-  const exportarExcelConItems = (ubicacionesItems: CLIUbicacionesConItems[]) => {
-    const newData = ubicacionesItems.map((elementos) => {
-      const localizador = elementos.localizador;
-      const lpnGenerada = elementos.lpnGenerada;
-      const articulo = elementos.articulo;
-      const nombreItem = elementos.nombreItem;
-      const descripcion = elementos.descripcion;
-      const nombreSector = elementos.nombreSector;
-      return {
-        ...elementos,
-        localizador,
-        lpnGenerada,
-        articulo,
-        nombreItem,
-        descripcion,
-        nombreSector
-      };
-    });
-    setDataExcel(newData);
-  };
-
-  const verDisponible = (rowData) => {
+  const verDisponible = (rowData: boolean) => {
     if (rowData) {
       return `Disponible`;
     } else {
@@ -134,15 +132,14 @@ export const AsignacionUbicaciones = () => {
 
   useEffect(() => {
     TitleChanger("Asignar Ubicaciones");
-    ubicacionesInit();
   }, []);
 
   return (
-    <main className="p-6">
-      <section className="flex flex-row justify-center gap-x-4">
+    <ContainerForPages optionsLayout="page" activeEffectVisible>
+      <ContainerForPages optionsLayout="Selects">
         <div>
           <Button
-            type="submit"
+            type="button"
             onClick={() => {
               handleOpenModal("lpnPadre");
             }}
@@ -165,7 +162,7 @@ export const AsignacionUbicaciones = () => {
             title="UbicacionesConItems"
             stylesButton="m-0"
             titleButton="Exportar Ubicaciones"
-            data={dataExcel.length > 0 ? dataExcel : []}
+            data={dataExcel}
             columns={[
               {
                 title: "Localizador",
@@ -194,12 +191,12 @@ export const AsignacionUbicaciones = () => {
             ]}
           />
         )}
-      </section>
-      <section className="mt-4">
+      </ContainerForPages>
+      <ContainerForPages optionsLayout="Table" activeEffectVisible>
         <TableComponent
           buscar
           IDcolumn="id"
-          dataInfo={ubicaciones == null ? [] : ubicaciones}
+          dataInfo={ubicaciones ?? []}
           columns={[
             {
               title: "Localizador",
@@ -259,13 +256,14 @@ export const AsignacionUbicaciones = () => {
             }
           ]}
         />
-      </section>
+      </ContainerForPages>
       <ModalCompoment
         setOpenPopup={setOpenModalAsignar}
         openPopup={openModalAsignar}
         title="Agregar Ubicaciones"
         titleModalStyle="Audit"
-        showModalCenterPage>
+        showModalCenterPage
+        subTitle="Asignar nuevas ubicaciones LPN Padre o por Item unitario">
         <AgregarUbicacionesModal
           tipoAsignacion={tipoAsignacion}
           refreshLista={setUbicaciones}
@@ -274,23 +272,22 @@ export const AsignacionUbicaciones = () => {
           openModal={openModalAsignar}
         />
       </ModalCompoment>
-      {openModalExaminar && (
-        <ModalCompoment
-          titleModalStyle="Audit"
-          showModalCenterPage
-          openPopup={openModalExaminar}
-          setOpenPopup={setOpenModalExaminar}
-          title={
-            ubicacionSeleccionada.cliImpresionEtiquetas == null
-              ? "Examinar Ubicacion con LPN Padre"
-              : "Examinar Ubicacion con Item"
-          }>
-          <ExaminarContenidoUbicacion
-            setOpenModal={setOpenModalExaminar}
-            ubicacionSeleccionada={ubicacionSeleccionada}
-          />
-        </ModalCompoment>
-      )}
-    </main>
+      <ModalCompoment
+        titleModalStyle="Audit"
+        showModalCenterPage
+        openPopup={openModalExaminar}
+        setOpenPopup={setOpenModalExaminar}
+        title={
+          ubicacionSeleccionada?.cliImpresionEtiquetas == null
+            ? "Examinar Ubicacion con LPN Padre"
+            : "Examinar Ubicacion con Item"
+        }
+        subTitle="Examinar el contenido de la ubicación seleccionada">
+        <ExaminarContenidoUbicacion
+          setOpenModal={setOpenModalExaminar}
+          ubicacionSeleccionada={ubicacionSeleccionada}
+        />
+      </ModalCompoment>
+    </ContainerForPages>
   );
 };
