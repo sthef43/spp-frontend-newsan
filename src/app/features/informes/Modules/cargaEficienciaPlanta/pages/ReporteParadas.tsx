@@ -24,7 +24,8 @@ interface initialState {
 
 const initialStateVar: initialState = {
   fechaInicio: moment().toDate(),
-  fechaFin: moment().toDate()
+  fechaFin: moment().toDate(),
+  codigoError2: 0,
 };
 
 export const ReporteParadas: React.FC = () => {

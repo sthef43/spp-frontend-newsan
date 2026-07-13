@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Delete, Edit } from "@mui/icons-material";
 import { IconButton, Tooltip } from "@mui/material";
 import { unwrapResult } from "@reduxjs/toolkit";
@@ -39,7 +39,7 @@ export const CreacionSectores: React.FC = () => {
     TitleChanger("Creación de sectores");
   }, [TitleChanger]);
 
-  const eliminarSector = (id: number | string) => {
+  const eliminarSector = (id: number) => {
     FetchDelete({
       consoleLog: false,
       deleteId: id,

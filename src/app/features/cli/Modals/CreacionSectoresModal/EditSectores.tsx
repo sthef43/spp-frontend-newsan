@@ -17,20 +17,24 @@ interface Props {
   refreshLista: (newValue: ICLISectores[]) => void;
 }
 
-const getDefaultValues = (sector: ICLISectores) => ({
-  jefeSector: sector.jefeSector || "",
-  cantidadStacks: sector.cantidadStacks || 0,
-  nombreSector: sector.nombreSector || ""
-});
+interface IFormValues {
+  jefeSector: string;
+  cantidadStacks: number;
+  nombreSector: string;
+}
 
 export const EditSectores: React.FC<Props> = ({ sectorSeleccionado, setOpenModal, refreshLista }) => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid }
-  } = useForm<ICLISectores>({
+    formState: { isValid }
+  } = useForm<IFormValues>({
     mode: "onChange",
-    defaultValues: getDefaultValues(sectorSeleccionado)
+    defaultValues: {
+      jefeSector: sectorSeleccionado.jefeSector || "",
+      cantidadStacks: sectorSeleccionado.cantidadStacks,
+      nombreSector: sectorSeleccionado.nombreSector || ""
+    }
   });
 
   const dispatch = useAppDispatch();

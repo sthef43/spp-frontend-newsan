@@ -99,9 +99,7 @@ export const AgregarItems: React.FC<Props> = ({ setOpenModal, refreshLista }) =>
         <div>
           <Button
             type="button"
-            onClick={() => {
-              setOpenModal(false);
-            }}
+            onClick={() => setOpenModal(false)}
             className={buttonClasses.redButton}>
             Cancelar
           </Button>

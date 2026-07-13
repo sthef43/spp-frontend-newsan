@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-empty-function */
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IconButton, Tooltip } from "@mui/material";
 import { Delete, Print } from "@mui/icons-material";
 import FetchApi from "app/shared/helpers/FetchApi";

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
-import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { Button, TextField } from "@mui/material";
 import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
 import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
@@ -62,16 +62,17 @@ interface props {
   setOpenPopup: any;
   refresh?: any; //Refresca la lista
 }
+
 export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
   const classes = MaterialButtons();
   const { openNotificationUI } = useNotificationUI();
   const dispatch = useAppDispatch();
-  const { FetchPost: FetchPostMulti, FetchPut } = useFetchApiMultiResults();
-  const [turnos, setTurnos] = useState<ITurno[]>(null);
+  const { FetchPost: FetchPostMulti } = useFetchApiMultiResults<IMotivo>();
+  const [turnos, setTurnos] = useState<ITurno[]>([]);
   const [openCargaMotivos, setOpenCargaMotivos] = useState(false);
   const [listResponsablesInicioLinea, setListResponsablesInicioLinea] = useState([]);
   const [listValida, setListValida] = useState([]);
-  const [lineasProduccion, setLineasProduccion] = useState([]);
+  const [lineasProduccion, setLineasProduccion] = useState<ILinea[]>([]);
   const [hayMinutosDiferencia, setHayMinutosDiferencia] = useState(false);
   const [objetoMotivo, setObjetoMotivo] = useState<IMotivo>(null);
   const [minutosPerdidosState, setMinutosPerdidosState] = useState(0);
@@ -452,7 +453,7 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
               valueLabel={(item) => item.descripcion}
               valueSelect={(item) => item.idLinea}
               variant="standard"
-              rules={{ required: "Seleccionar una línea", validate: (value) => value > 0 || "Seleccionar una línea" }}
+              rules={{ required: "Seleccionar una línea", validate: (value) => (value as number) > 0 || "Seleccionar una línea" }}
             />
           </div>
           <div style={{ minWidth: "176px" }}>
@@ -464,7 +465,7 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
               valueLabel={(item) => item.abreviatura}
               valueSelect={(item) => item.id}
               variant="standard"
-              rules={{ required: "Seleccionar un turno", validate: (value) => value > 0 || "Seleccionar un turno" }}
+              rules={{ required: "Seleccionar un turno", validate: (value) => (value as number) > 0 || "Seleccionar un turno" }}
             />
           </div>
         </div>
@@ -563,7 +564,7 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
               valueLabel={(item) => item.nombre}
               valueSelect={(item) => item.id}
               variant="standard"
-              rules={{ required: true, validate: (value) => value > 0 || "Seleccionar un responsable" }}
+              rules={{ required: true, validate: (value) => (value as number) > 0 || "Seleccionar un responsable" }}
             />
           </div>
           <div style={{ minWidth: "176px" }}>
@@ -575,7 +576,7 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
               valueLabel={(item) => item.nombre}
               valueSelect={(item) => item.id}
               variant="standard"
-              rules={{ required: true, validate: (value) => value > 0 || "Seleccionar quien valida" }}
+              rules={{ required: true, validate: (value) => (value as number) > 0 || "Seleccionar quien valida" }}
             />
           </div>
         </div>
