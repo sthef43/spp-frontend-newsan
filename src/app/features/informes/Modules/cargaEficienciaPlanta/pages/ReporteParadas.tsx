@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import { useAppDispatch } from "app/core/store/store";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { TableComponent } from "app/shared/components/Table/TableComponent";
-import { unwrapResult } from "@reduxjs/toolkit";
+import FetchApi from "app/shared/helpers/FetchApi";
 import { useForm } from "react-hook-form";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { ParadaSliceRequests } from "app/Middleware/reducers/ParadaSlice";
@@ -15,24 +14,29 @@ import { DesktopDatePicker } from "@mui/x-date-pickers";
 import { ExcelExport, ExcelExportColumn } from "@progress/kendo-react-excel-export";
 import { Edit } from "@mui/icons-material";
 import { ParadasEditForm } from "app/features/informes/Modules/cargaEficienciaPlanta/modals/ParadasEditForm";
+import { ContainerForPages } from "app/shared/helpers/Containers/ContainerForPages";
 
-export const ReporteParadas = (): JSX.Element => {
-  const dispatch = useAppDispatch();
+interface initialState {
+  fechaInicio: Date;
+  fechaFin: Date;
+  codigoError2: number;
+}
+
+const initialStateVar: initialState = {
+  fechaInicio: moment().toDate(),
+  fechaFin: moment().toDate()
+};
+
+export const ReporteParadas: React.FC = () => {
   const { TitleChanger } = useTitleOfApp();
   const { openNotificationUI } = useNotificationUI();
   const [ModalOpen, setModalOpen] = React.useState(false);
   const [listParadas, setListParadas] = useState([]);
+  const [activarFetchParadas, setActivarFetchParadas] = useState<any>(null);
+  const [parametrosParadas, setParametrosParadas] = useState<any>(null);
 
   const classes = MaterialButtons();
-  interface initialState {
-    fechaInicio: Date;
-    fechaFin: Date;
-  }
-  const initialStateVar = {
-    fechaInicio: moment().toDate(),
-    fechaFin: moment().toDate()
-  };
-  const { control, setValue, getValues, handleSubmit, watch, formState } = useForm<initialState>({
+  const { setValue, getValues, watch } = useForm<initialState>({
     defaultValues: initialStateVar
   });
 
@@ -43,33 +47,27 @@ export const ReporteParadas = (): JSX.Element => {
     TitleChanger("reporte paradas");
   }, []);
 
-  const getParadas = async (desde, hasta) => {
-    let result = [];
-    const param = {
-      fechaDesde: desde,
-      fechaHasta: hasta
-    };
-    try {
-      result = unwrapResult(await dispatch(ParadaSliceRequests.getListByDesdeHastaRequest(param)));
-    } catch (error) {
-      throw new Error(error);
-    }
-    if (result) {
-      const array = [];
-      //Pongo la fecha en el formato correcto para la exportacion de excel
-      for (let index = 0; index < result.length; index++) {
-        const element = result[index];
-        array.push({ ...element, fecha: moment(element.fecha).format("DD-MM-YYYY") });
+  const { state: resultParadas } = FetchApi<any[]>(
+    ParadaSliceRequests.getListByDesdeHastaRequest,
+    parametrosParadas,
+    false,
+    activarFetchParadas,
+    null,
+    true,
+    false,
+    true,
+    (result) => {
+      if (result) {
+        const array = [];
+        for (let index = 0; index < result.length; index++) {
+          const element = result[index];
+          array.push({ ...element, fecha: moment(element.fecha).format("DD-MM-YYYY") });
+        }
+        setListParadas(array);
       }
-      setListParadas(array);
+      setActivarFetchParadas(null);
     }
-  };
-
-  interface initialState {
-    codigoError2: number; // representa la linea.
-    fechaInicio: Date;
-    fechaFin: Date;
-  }
+  );
 
   const handleSearch = () => {
     const inicio = moment(getValues("fechaInicio")).format("YYYY-MM-DD");
@@ -78,7 +76,8 @@ export const ReporteParadas = (): JSX.Element => {
       openNotificationUI("La fecha Desde no puede ser mayor a la fecha Hasta", "warning");
       return false;
     }
-    getParadas(inicio, fin);
+    setParametrosParadas({ fechaDesde: inicio, fechaHasta: fin });
+    setActivarFetchParadas({ from: inicio, to: fin });
   };
 
   const _exporter = React.createRef<ExcelExport>();
@@ -92,16 +91,16 @@ export const ReporteParadas = (): JSX.Element => {
   const [editState, setEditState] = useState(null);
   const [ModalOpenEdit, setModalOpenEdit] = useState(false);
   const editar = (rowData) => {
-    const [day, month, year] = rowData.fecha.split("-");
-    const date = new Date(Number(year), Number(month) - 1, Number(day));
-    setEditState({ ...rowData, fecha: date.toISOString().slice(0, 10) });
+    const date = moment(rowData.fecha, "DD-MM-YYYY");
+    setEditState({ ...rowData, fecha: date.format("YYYY-MM-DD") });
     setModalOpenEdit(true);
   };
 
   return (
-    <div className="p-2">
+    <ContainerForPages optionsLayout="page">
       <form style={{ width: "100%", height: "100%" }}>
-        <div className="grid col-span-1 sm:grid-cols-4 gap-8 text-center bg-secondaryNew rounded-md shadow-elevation-6 p-2 items-center">
+        <ContainerForPages optionsLayout="Selects">
+          <div className="grid col-span-1 sm:grid-cols-4 gap-8 text-center bg-secondaryNew rounded-md shadow-elevation-6 p-2 items-center">
           {/* ----------------FECHA---------------*/}
           <div>
             <DesktopDatePicker
@@ -171,9 +170,11 @@ export const ReporteParadas = (): JSX.Element => {
             </ExcelExport>
           </div>
         </div>
+        </ContainerForPages>
       </form>
       {listParadas && (
-        <TableComponent
+        <ContainerForPages optionsLayout="Table" activeEffectVisible>
+          <TableComponent
           Dense={true}
           Overflow={false}
           buscar={true}
@@ -331,16 +332,29 @@ export const ReporteParadas = (): JSX.Element => {
             setModalOpen(true);
           }}
           dataInfo={listParadas}
-        />
+          />
+        </ContainerForPages>
       )}
 
-      <ModalCompoment title={"Carga de una Parada."} openPopup={ModalOpen} setOpenPopup={setModalOpen}>
+      <ModalCompoment
+        title={"Carga de una Parada."}
+        openPopup={ModalOpen}
+        setOpenPopup={setModalOpen}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Formulario para cargar una nueva parada">
         <ParadasForm setOpenPopup={setModalOpen} refresh={handleSearch} />
       </ModalCompoment>
 
-      <ModalCompoment title={"Editar Parada."} openPopup={ModalOpenEdit} setOpenPopup={setModalOpenEdit}>
+      <ModalCompoment
+        title={"Editar Parada."}
+        openPopup={ModalOpenEdit}
+        setOpenPopup={setModalOpenEdit}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Formulario para editar una parada existente">
         <ParadasEditForm setOpenPopup={setModalOpenEdit} editState={editState} refresh={handleSearch} />
       </ModalCompoment>
-    </div>
+    </ContainerForPages>
   );
 };

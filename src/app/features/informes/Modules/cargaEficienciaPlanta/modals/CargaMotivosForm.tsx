@@ -4,6 +4,58 @@ import { Button, TextField, Typography } from "@mui/material";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { IMotivo } from "app/models/IMotivo";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
+
+interface initialState {
+  tiempoXMantenimiento: number;
+  cambiosIngenieria: number;
+  cambioModelo: number;
+  ausentismo: number;
+  dobladoras: number;
+  soldadura: number;
+  montaje: number;
+  IAPlacasDisplay: number;
+  IAPlacasMain: number;
+  IMPlacasDisplay: number;
+  IMPlacasMain: number;
+  equipamientoMaquinariaMant: number;
+  equipamientoMaquinariaIng: number;
+  metodos: number;
+  calidad: number;
+  sistemas: number;
+  it: number;
+  abastecimiento: number;
+  cli: number;
+  supply: number;
+  terceros: number;
+  otros: number;
+}
+
+const initialStateVar: initialState = {
+  tiempoXMantenimiento: 0,
+  cambiosIngenieria: 0,
+  cambioModelo: 0,
+  ausentismo: 0,
+  dobladoras: 0,
+  soldadura: 0,
+  montaje: 0,
+  IAPlacasDisplay: 0,
+  IAPlacasMain: 0,
+  IMPlacasDisplay: 0,
+  IMPlacasMain: 0,
+  equipamientoMaquinariaMant: 0,
+  equipamientoMaquinariaIng: 0,
+  metodos: 0,
+  calidad: 0,
+  sistemas: 0,
+  it: 0,
+  abastecimiento: 0,
+  cli: 0,
+  supply: 0,
+  terceros: 0,
+  otros: 0
+};
+
 interface props {
   setOpenPopup: any;
   minutosPerdidos: number;
@@ -12,57 +64,9 @@ interface props {
 }
 export const CargaMotivosForm = ({ setOpenPopup, minutosPerdidos, setObjetoMotivo, defaultValues }: props) => {
   const classes = MaterialButtons();
-  interface initialState {
-    tiempoXMantenimiento: number;
-    cambiosIngenieria: number;
-    cambioModelo: number;
-    ausentismo: number;
-    dobladoras: number;
-    soldadura: number;
-    montaje: number;
-    IAPlacasDisplay: number;
-    IAPlacasMain: number;
-    IMPlacasDisplay: number;
-    IMPlacasMain: number;
-    equipamientoMaquinariaMant: number;
-    equipamientoMaquinariaIng: number;
-    metodos: number;
-    calidad: number;
-    sistemas: number;
-    it: number;
-    abastecimiento: number;
-    cli: number;
-    supply: number;
-    terceros: number;
-    otros: number;
-  }
-  const initialStateVar = {
-    tiempoXMantenimiento: 0,
-    cambiosIngenieria: 0,
-    cambioModelo: 0,
-    ausentismo: 0,
-    dobladoras: 0,
-    soldadura: 0,
-    montaje: 0,
-    IAPlacasDisplay: 0,
-    IAPlacasMain: 0,
-    IMPlacasDisplay: 0,
-    IMPlacasMain: 0,
-    equipamientoMaquinariaMant: 0,
-    equipamientoMaquinariaIng: 0,
-    metodos: 0,
-    calidad: 0,
-    sistemas: 0,
-    it: 0,
-    abastecimiento: 0,
-    cli: 0,
-    supply: 0,
-    terceros: 0,
-    otros: 0
-  };
 
   const { openNotificationUI } = useNotificationUI();
-  const { control, setValue, getValues, handleSubmit, watch, formState } = useForm<initialState>({
+  const { control, getValues, handleSubmit, watch, formState } = useForm<initialState>({
     defaultValues: defaultValues != null ? defaultValues : initialStateVar
   });
   const { isDirty, isValid, errors } = formState;
@@ -175,472 +179,232 @@ export const CargaMotivosForm = ({ setOpenPopup, minutosPerdidos, setObjetoMotiv
     }
   }, [defaultValues]);
 
+  useEffect(() => {
+    changeTotalCargando();
+  }, [watch([
+    "tiempoXMantenimiento", "cambiosIngenieria", "cambioModelo", "ausentismo", "dobladoras",
+    "soldadura", "montaje", "IAPlacasDisplay", "IAPlacasMain", "IMPlacasDisplay", "IMPlacasMain",
+    "equipamientoMaquinariaMant", "equipamientoMaquinariaIng", "metodos", "calidad", "sistemas",
+    "it", "abastecimiento", "cli", "supply", "terceros", "otros"
+  ])]);
+
   return (
-    <div style={{ height: "100%", width: "60vw", position: "relative" }}>
-      <div style={{ textAlign: "center" }}>
+    <div className="h-full w-[60vw] relative">
+      <div className="text-center">
         <Typography variant="h3">
           Total cargando: {totalCargando} - Diferencia: {diferencia}
         </Typography>
       </div>
-      <form onSubmit={handleSubmit(loginSubmit)} style={{ width: "100%", height: "100%" }}>
+      <form onSubmit={handleSubmit(loginSubmit)} className="w-full h-full">
         <div className=" flex-col grid grid-cols-4 gap-30 " style={{ height: "80%" }}>
           <div>
-            <Controller
-              name="tiempoXMantenimiento"
+            <InputComponentForm
               control={control}
+              name="tiempoXMantenimiento"
+              label="Tiempo por Mantenimiento"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Tiempo por Mantenimiento"
-                  variant="outlined"
-                  type="number"
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto p-2" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="cambiosIngenieria"
-              control={control}
+              label="Ramp Up/EOL/ Cambios Ing."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Ramp Up/EOL/ Cambios Ing."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="ausentismo"
-              control={control}
+              label="Ausentismo."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Ausentismo."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="dobladoras"
-              control={control}
+              label="Dobladoras.."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Dobladoras.."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="soldadura"
-              control={control}
+              label="Soldadura."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Soldadura."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="montaje"
-              control={control}
+              label="Montaje."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Montaje."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="IAPlacasDisplay"
-              control={control}
+              label="IA Placas Display"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="IA Placas Display"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="IAPlacasMain"
-              control={control}
+              label="IA Placas Main."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="IA Placas Main."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="IMPlacasDisplay"
-              control={control}
+              label="IM Placas Display."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="IM Placas Display."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.value)}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="IMPlacasMain"
-              control={control}
+              label="IM Placas Main."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="IM Placas Main."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="equipamientoMaquinariaMant"
-              control={control}
+              label="Equipamiento Maquinaria Mantenimiento."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Equipamiento Maquinaria Mantenimiento."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="equipamientoMaquinariaIng"
-              control={control}
+              label="Equipamiento Maquinaria Ing."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Equipamiento Maquinaria Ing."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="metodos"
-              control={control}
+              label="Metodos Calidad Sistemas."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Metodos Calidad Sistemas."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="calidad"
-              control={control}
+              label="Calidad."
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Calidad."
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="sistemas"
-              control={control}
+              label="Sistemas"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Sistemas"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="it"
-              control={control}
+              label="It"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="It"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="abastecimiento"
-              control={control}
+              label="Abastecimiento"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Abastecimiento"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="cli"
-              control={control}
+              label="Cli"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Cli"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="supply"
-              control={control}
+              label="Supply"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Supply"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="terceros"
-              control={control}
+              label="Terceros/dm"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Terceros/dm"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
           <div className="py-2 overflow-auto" style={{ flex: "1 1 90%" }}>
-            <Controller
-              name="otros"
+            <InputComponentForm
               control={control}
+              name="otros"
+              label="Otros"
+              typeDate="number"
+              variant="outlined"
               rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Otros"
-                  variant="outlined"
-                  multiline
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => {
-                    field.onChange(e.target.value);
-                    changeTotalCargando();
-                  }}
-                />
-              )}
             />
           </div>
         </div>
@@ -650,7 +414,7 @@ export const CargaMotivosForm = ({ setOpenPopup, minutosPerdidos, setObjetoMotiv
             className={classes.greenButton}
             type="submit"
             variant="contained"
-            disabled={(!isDirty && !isValid) || cometioError}>
+            disabled={!isValid || cometioError}>
             Guardar
           </Button>
         </div>

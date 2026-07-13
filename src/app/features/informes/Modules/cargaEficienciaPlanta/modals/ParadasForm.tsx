@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { Button, FormControl, FormHelperText, InputLabel, MenuItem, Select, TextField } from "@mui/material";
+import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
+import { InputComponentForm } from "app/shared/helpers/ComponentsForForms/InputComponentForm";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
 import { useAppDispatch } from "app/core/store/store";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
@@ -21,6 +23,40 @@ import { ILinea, ITurno } from "app/models";
 import { ParadasDeLineaSliceRequests } from "app/Middleware/reducers/ParadasDeLineaSlice";
 import { LineaProduccionSliceRequests } from "app/Middleware/reducers/lineaProducionSlice";
 import { IParadasDeLinea } from "app/models/IParadasDeLinea";
+import FetchApi from "app/shared/helpers/FetchApi";
+import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResults";
+
+interface initialState {
+  fecha: Date;
+  lineaId: number;
+  turno: number;
+  target: number;
+  producidos: number;
+  minutosDeLinea: number;
+  minutosPerdidos: number;
+  observacion: string;
+  responsableInicioLineaId: number;
+  validaId: number;
+  minutosParados: number;
+  lineaString: string;
+  planta: string;
+}
+
+const initialStateVar: initialState = {
+  fecha: moment().toDate(),
+  lineaId: 0,
+  turno: 0,
+  target: 0,
+  producidos: 0,
+  minutosDeLinea: 540,
+  minutosPerdidos: 0,
+  observacion: "",
+  responsableInicioLineaId: 0,
+  validaId: 0,
+  minutosParados: 0,
+  lineaString: "",
+  planta: "Planta 6"
+};
 
 interface props {
   setOpenPopup: any;
@@ -30,6 +66,7 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
   const classes = MaterialButtons();
   const { openNotificationUI } = useNotificationUI();
   const dispatch = useAppDispatch();
+  const { FetchPost: FetchPostMulti, FetchPut } = useFetchApiMultiResults();
   const [turnos, setTurnos] = useState<ITurno[]>(null);
   const [openCargaMotivos, setOpenCargaMotivos] = useState(false);
   const [listResponsablesInicioLinea, setListResponsablesInicioLinea] = useState([]);
@@ -41,37 +78,6 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
   const [editarTarget, setEditarTarget] = useState(false);
   const [paradasDeLinea, setParadasDeLinea] = useState<IParadasDeLinea[]>(null);
 
-  interface initialState {
-    fecha: Date;
-    lineaId: number;
-    turno: number;
-    target: number;
-    producidos: number;
-    minutosDeLinea: number;
-    minutosPerdidos: number;
-    observacion: string;
-    responsableInicioLineaId: number;
-    validaId: number;
-    minutosParados: number;
-    lineaString: string;
-    planta: string;
-  }
-  const initialStateVar = {
-    fecha: moment().toDate(),
-    lineaId: 0,
-    turno: 0,
-    target: 0,
-    producidos: 0,
-    minutosDeLinea: 540,
-    minutosPerdidos: 0,
-    observacion: "",
-    responsableInicioLineaId: 0,
-    validaId: 0,
-    minutosParados: 0,
-    lineaString: "",
-    planta: "Planta 6"
-  };
-
   const { control, setValue, getValues, handleSubmit, watch, formState } = useForm<initialState>({
     defaultValues: initialStateVar
   });
@@ -82,17 +88,64 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
   const watchMinutosPerdidos = watch("minutosPerdidos");
   // const watchMinutosDeLinea = watch("minutosDeLinea");
 
-  useEffect(() => {
-    getLineasProduccion();
-    getResponsablesInicioLinea();
-    getValida();
-    getTurnos();
-  }, []);
+  // GET LineasProduccion
+  FetchApi<any[]>(
+    LineaSliceRequests.getAllRequest,
+    null,
+    false,
+    null,
+    (data) => {
+      if (data) {
+        const parsed = JSON.parse(JSON.stringify(data));
+        setLineasProduccion(parsed);
+      }
+    },
+    false,
+    false,
+    true
+  );
 
-  const getTurnos = async () => {
-    const result = unwrapResult(await dispatch(TurnoSliceRequests.getAllRequest()));
-    setTurnos(result);
-  };
+  // GET Turnos
+  FetchApi<any[]>(
+    TurnoSliceRequests.getAllRequest,
+    null,
+    false,
+    null,
+    (data) => {
+      if (data) setTurnos(data);
+    },
+    false,
+    false,
+    true
+  );
+
+  // GET ResponsablesInicioLinea
+  FetchApi<any[]>(
+    ResponsableInicioLineaSliceRequests.getAllRequest,
+    null,
+    false,
+    null,
+    (data) => {
+      if (data) setListResponsablesInicioLinea(data);
+    },
+    false,
+    false,
+    true
+  );
+
+  // GET Valida
+  FetchApi<any[]>(
+    ValidaSliceRequests.getAllRequest,
+    null,
+    false,
+    null,
+    (data) => {
+      if (data) setListValida(data);
+    },
+    false,
+    false,
+    true
+  );
 
   useEffect(() => {
     if (watchFecha && watchLinea != 0 && watchTurno > 0) {
@@ -328,19 +381,8 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
     }
   };
 
-  const getLineasProduccion = async () => {
-    let result = unwrapResult(await dispatch(LineaSliceRequests.getAllRequest()));
-    result = JSON.parse(JSON.stringify(result));
-    setLineasProduccion(result);
-  };
-
   const guardarObjetoMotivo = async (objetoMotivo) => {
-    let resultMotivo;
-    try {
-      resultMotivo = await unwrapResult(await dispatch(MotivoSliceRequests.postRequest(objetoMotivo)));
-    } catch (x) {
-      resultMotivo = null;
-    }
+    const resultMotivo = await FetchPostMulti(MotivoSliceRequests.postRequest, objetoMotivo);
     if (resultMotivo) return resultMotivo;
   };
 
@@ -351,7 +393,6 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
 
   const loginSubmit = async (e) => {
     let result: IMotivo;
-    let resultFetchParada;
     const puedeGuardar = camposCorrectos();
 
     if (!puedeGuardar) {
@@ -362,31 +403,13 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
     //Si minutos de diferencia, entonces tuvo que haber creado un objeto con los Motivos. Caso contrario, no cargo.
     if (hayMinutosDiferencia && objetoMotivo) result = await guardarObjetoMotivo(objetoMotivo);
     else result = null;
-    try {
-      //Primero guarod el motivo, para tener el id del Objeto.
-      if (hayMinutosDiferencia && objetoMotivo) e.motivoId = result.id; //Si hay diferencia, asigna el objeto del motivo, sino no.
-      resultFetchParada = unwrapResult(await dispatch(ParadaSliceRequests.postRequest(e)));
-      if (resultFetchParada) {
-        openNotificationUI("Guardado exitosamente :)", "success");
-        setOpenPopup(false);
-        refresh();
-      }
-    } catch (x) {
-      result = null;
-    }
-  };
-
-  const getResponsablesInicioLinea = async () => {
-    const resultFetch = unwrapResult(await dispatch(ResponsableInicioLineaSliceRequests.getAllRequest()));
-    if (resultFetch) {
-      setListResponsablesInicioLinea(resultFetch);
-    }
-  };
-  //trae el listado de los que Validan.
-  const getValida = async () => {
-    const resultFetch = unwrapResult(await dispatch(ValidaSliceRequests.getAllRequest()));
-    if (resultFetch) {
-      setListValida(resultFetch);
+    //Primero guardo el motivo, para tener el id del Objeto.
+    if (hayMinutosDiferencia && objetoMotivo) e.motivoId = result.id; //Si hay diferencia, asigna el objeto del motivo, sino no.
+    const resultFetchParada = await FetchPostMulti(ParadaSliceRequests.postRequest, e);
+    if (resultFetchParada) {
+      openNotificationUI("Guardado exitosamente :)", "success");
+      setOpenPopup(false);
+      refresh();
     }
   };
 
@@ -400,8 +423,8 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
   }, [watchLinea]);
 
   return (
-    <div style={{ height: "100%", width: "80vw", position: "relative" }}>
-      <form onSubmit={handleSubmit(loginSubmit)} style={{ width: "100%", height: "100%" }}>
+    <div className="h-full w-[80vw] relative">
+      <form onSubmit={handleSubmit(loginSubmit)} className="w-full h-full">
         <div style={{ display: "flex", justifyContent: "space-around", padding: "20px" }}>
           <div>
             <Controller
@@ -421,78 +444,39 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
             />
           </div>
           <div style={{ minWidth: "176px" }}>
-            <Controller
-              name="lineaId"
+            <SelectComponentForm
               control={control}
-              render={({ field, fieldState: { error } }) => (
-                <FormControl fullWidth variant="outlined" error={!!error}>
-                  <InputLabel>Linea Produccion</InputLabel>
-                  <Select
-                    {...field}
-                    placeholder="Seleccione una Linea de Produccion"
-                    variant="standard"
-                    /*    onClick={() => getFamiliasByLineaProduccion()} */
-                  >
-                    {lineasProduccion &&
-                      lineasProduccion.map((x) => (
-                        <MenuItem key={x.idLinea} value={x.idLinea}>
-                          <div className="w-full">
-                            <div>{x.descripcion}</div>
-                          </div>
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {!!error && <FormHelperText>{error.type}</FormHelperText>}
-                </FormControl>
-              )}
+              name="lineaId"
+              label="Linea Produccion"
+              listItems={lineasProduccion || []}
+              valueLabel={(item) => item.descripcion}
+              valueSelect={(item) => item.idLinea}
+              variant="standard"
+              rules={{ required: "Seleccionar una línea", validate: (value) => value > 0 || "Seleccionar una línea" }}
             />
           </div>
           <div style={{ minWidth: "176px" }}>
-            <Controller
-              name="turno"
+            <SelectComponentForm
               control={control}
-              render={({ field, fieldState: { error } }) => (
-                <FormControl fullWidth variant="outlined" error={!!error}>
-                  <InputLabel>Turno</InputLabel>
-                  <Select
-                    {...field}
-                    placeholder="Seleccione un Turno"
-                    variant="standard"
-                    /*    onClick={() => getFamiliasByLineaProduccion()} */
-                  >
-                    {turnos &&
-                      turnos.map((x) => (
-                        <MenuItem key={x.id} value={x.id}>
-                          <div className="w-full">
-                            <div>{x.abreviatura}</div>
-                          </div>
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {!!error && <FormHelperText>{error.type}</FormHelperText>}
-                </FormControl>
-              )}
+              name="turno"
+              label="Turno"
+              listItems={turnos || []}
+              valueLabel={(item) => item.abreviatura}
+              valueSelect={(item) => item.id}
+              variant="standard"
+              rules={{ required: "Seleccionar un turno", validate: (value) => value > 0 || "Seleccionar un turno" }}
             />
           </div>
         </div>
         <div style={{ display: "flex", justifyContent: "space-around", padding: "20px" }}>
           <div>
-            <Controller
-              name="target"
+            <InputComponentForm
               control={control}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Target"
-                  variant="outlined"
-                  type="number"
-                  disabled={!editarTarget}
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.value)}
-                />
-              )}
+              name="target"
+              label="Target"
+              typeDate="number"
+              disabled={!editarTarget}
+              variant="outlined"
             />
             <Button
               className={classes.purpleButton}
@@ -511,79 +495,43 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
           </div>
 
           <div>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="producidos"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Producidos"
-                  variant="outlined"
-                  type="number"
-                  disabled={!editarTarget}
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.value)}
-                />
-              )}
+              label="Producidos"
+              typeDate="number"
+              disabled={!editarTarget}
+              variant="outlined"
             />
           </div>
           <div>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="minutosDeLinea"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  label="Minutos de Línea"
-                  variant="outlined"
-                  type="number"
-                  disabled={!editarTarget}
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  // onChange={(e) => field.onChange(e.target.value)}
-                />
-              )}
+              label="Minutos de Línea"
+              typeDate="number"
+              disabled={!editarTarget}
+              variant="outlined"
             />
           </div>
           <div>
-            <Controller
+            <InputComponentForm
+              control={control}
               name="minutosPerdidos"
-              control={control}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  disabled
-                  label="Minutos Perdidos"
-                  variant="outlined"
-                  type="number"
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.value)}
-                />
-              )}
+              label="Minutos Perdidos"
+              typeDate="number"
+              disabled={true}
+              variant="outlined"
             />
           </div>
           <div>
-            <Controller
-              name="minutosParados"
+            <InputComponentForm
               control={control}
-              render={({ field, fieldState: { error } }) => (
-                <TextField
-                  fullWidth
-                  disabled
-                  label="Minutos Parados"
-                  variant="outlined"
-                  type="number"
-                  error={!!error?.types}
-                  helperText={error?.type}
-                  {...field}
-                  onChange={(e) => field.onChange(e.target.value)}
-                />
-              )}
+              name="minutosParados"
+              label="Minutos Parados"
+              typeDate="number"
+              disabled={true}
+              variant="outlined"
             />
           </div>
           <div>
@@ -598,74 +546,42 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
           </div>
         </div>
         <div style={{ padding: "20px" }}>
-          <Controller
-            name="observacion"
+          <InputComponentForm
             control={control}
-            render={({ field, fieldState: { error } }) => (
-              <TextField
-                fullWidth
-                label="Observacion"
-                variant="outlined"
-                multiline
-                error={!!error?.types}
-                helperText={error?.type}
-                {...field}
-                onChange={(e) => field.onChange(e.target.value)}
-              />
-            )}
+            name="observacion"
+            label="Observacion"
+            variant="outlined"
           />
         </div>
         <div style={{ display: "flex", justifyContent: "space-around", padding: "20px" }}>
           <div style={{ minWidth: "176px" }}>
-            <Controller
-              name="responsableInicioLineaId"
+            <SelectComponentForm
               control={control}
-              rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <FormControl fullWidth variant="outlined" error={!!error}>
-                  <InputLabel>Seleccione un Responsable de linea</InputLabel>
-                  <Select {...field} variant="standard">
-                    {listResponsablesInicioLinea &&
-                      listResponsablesInicioLinea.map((x) => (
-                        <MenuItem key={x.id} value={x.id}>
-                          <div className="w-full">
-                            <div>{x.nombre}</div>
-                          </div>
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {!!error && <FormHelperText>{error.type}</FormHelperText>}
-                </FormControl>
-              )}
+              name="responsableInicioLineaId"
+              label="Seleccione un Responsable de linea"
+              listItems={listResponsablesInicioLinea || []}
+              valueLabel={(item) => item.nombre}
+              valueSelect={(item) => item.id}
+              variant="standard"
+              rules={{ required: true, validate: (value) => value > 0 || "Seleccionar un responsable" }}
             />
           </div>
           <div style={{ minWidth: "176px" }}>
-            <Controller
-              name="validaId"
+            <SelectComponentForm
               control={control}
-              rules={{ required: true }}
-              render={({ field, fieldState: { error } }) => (
-                <FormControl fullWidth variant="outlined" error={!!error}>
-                  <InputLabel>Valida</InputLabel>
-                  <Select {...field} variant="standard">
-                    {listValida &&
-                      listValida.map((x) => (
-                        <MenuItem key={x.id} value={x.id}>
-                          <div className="w-full">
-                            <div>{x.nombre}</div>
-                          </div>
-                        </MenuItem>
-                      ))}
-                  </Select>
-                  {!!error && <FormHelperText>{error.type}</FormHelperText>}
-                </FormControl>
-              )}
+              name="validaId"
+              label="Valida"
+              listItems={listValida || []}
+              valueLabel={(item) => item.nombre}
+              valueSelect={(item) => item.id}
+              variant="standard"
+              rules={{ required: true, validate: (value) => value > 0 || "Seleccionar quien valida" }}
             />
           </div>
         </div>
 
         <div className="pt-1 flex justify-around" style={{ flex: "1 1 10%" }}>
-          <Button className={classes.greenButton} type="submit" variant="contained" disabled={!isDirty && !isValid}>
+          <Button className={classes.greenButton} type="submit" variant="contained" disabled={!isValid}>
             Guardar
           </Button>
         </div>
@@ -674,7 +590,10 @@ export const ParadasForm = ({ setOpenPopup, refresh }: props) => {
       <ModalCompoment
         title={"Carga de Motivos. Minutos perdidos: " + minutosPerdidosState.toString()}
         openPopup={openCargaMotivos}
-        setOpenPopup={setOpenCargaMotivos}>
+        setOpenPopup={setOpenCargaMotivos}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Completar los motivos de los minutos perdidos">
         <CargaMotivosForm
           setOpenPopup={setOpenCargaMotivos}
           minutosPerdidos={minutosPerdidosState}
