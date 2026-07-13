@@ -5,7 +5,7 @@ import { Dialog, DialogTitle, DialogContent, Button } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
 import { MaterialButtons } from "../material-ui/MaterialButtons";
 
-interface props {
+interface Props {
   title: string;
   backgroundColor?: string;
   subTitle?: string;
@@ -20,17 +20,17 @@ interface props {
   subTitleClassName?: string;
 }
 
-interface ActiveButtonsAction extends props {
+interface ActiveButtonsAction extends Props {
   showButtons: true;
   functionButtonSave: () => void;
 }
 
-interface OptionalButtonsAction extends props {
+interface OptionalButtonsAction extends Props {
   showButtons?: false;
   functionButtonSave?: () => void;
 }
 
-type Props = ActiveButtonsAction | OptionalButtonsAction;
+type ModalComponentProps = ActiveButtonsAction | OptionalButtonsAction;
 
 /**
  * Componente genérico para renderizar un modal (Dialog) de Material-UI con estilos personalizados.
@@ -90,7 +90,7 @@ export const ModalCompoment = ({
   showButtons,
   subTitle,
   subTitleClassName
-}: Props): JSX.Element => {
+}: ModalComponentProps): JSX.Element => {
   const buttonClasses = MaterialButtons();
 
   const typeStyleHeader = titleModalStyle ? titleModalStyle : "Classic";
@@ -249,3 +249,5 @@ export const ModalCompoment = ({
     </Dialog>
   );
 };
+
+export const ModalComponent = ModalCompoment;
