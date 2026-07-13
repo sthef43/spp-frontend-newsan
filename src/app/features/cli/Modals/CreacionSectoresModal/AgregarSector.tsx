@@ -18,14 +18,20 @@ interface Props {
   refreshLista: (newValue: ICLISectores[]) => void;
 }
 
-const defaultFormValues: ICLISectores = { jefeSector: "", cantidadStacks: 0, nombreSector: "" };
+interface IFormData {
+  jefeSector: string;
+  cantidadStacks: string;
+  nombreSector: string;
+}
+
+const defaultFormValues: IFormData = { jefeSector: "", cantidadStacks: "", nombreSector: "" };
 
 export const AgregarSector: React.FC<Props> = ({ setOpenModal, refreshLista }) => {
   const {
     handleSubmit,
     control,
-    formState: { errors, isValid }
-  } = useForm<ICLISectores>({
+    formState: { isValid }
+  } = useForm<IFormData>({
     mode: "onChange",
     defaultValues: defaultFormValues
   });
@@ -35,7 +41,7 @@ export const AgregarSector: React.FC<Props> = ({ setOpenModal, refreshLista }) =
   const dispatch = useAppDispatch();
   const { FetchPost } = useFetchApiMultiResults<ICLISectores>();
 
-  const onSubmit = (data: ICLISectores) => {
+  const onSubmit = (data: IFormData) => {
     const param: ICLISectores = {
       cantidadStacks: Number(data.cantidadStacks),
       jefeSector: data.jefeSector,

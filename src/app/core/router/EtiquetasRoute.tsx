@@ -8,12 +8,12 @@ import { EnergiaEstaticas } from "app/features/etiquetas/impresionEtiquetas/page
 import { Familia } from "app/features/etiquetas/zplFamilia/pages/Familia";
 import { Hibridas } from "app/features/etiquetas/impresionEtiquetas/pages/Hibridas";
 import { MenuEtiquetas } from "app/features/etiquetas/impresionEtiquetas/pages/MenuEtiquetas";
-import { ControlImpresionEtiquetas } from "app/features/etiquetas/controlImpresionEtiquetas/pages/ControlImpresionEtiquetas";
 import { PrinterPage } from "app/features/produccion/modules/puestoTransferencia/PrinterPage";
 import { IngresarImagenesEtiquetas } from "app/features/etiquetas/cargarImagenesEtiquetas/IngresarImagenesEtiquetas";
 import { VerificarNumerosLGPage } from "app/features/etiquetas/verificarNumerosLG/pages/VerificarNumerosLGPage";
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
+import { ControlimpresionEtiquetas } from "app/features/etiquetas/controlImpresionEtiquetas/pages/ControlImpresionEtiquetas";
 export const EtiquetasRoute = (props: any): JSX.Element => {
   const location = useLocation();
   const { path } = useRouteMatch();
@@ -42,7 +42,7 @@ export const EtiquetasRoute = (props: any): JSX.Element => {
         </Route>
         <Route path={`${path}/etiquetas`}>
           <ProtectedRoute authorized={userRoutesContext.includes("etiquetas/etiquetas")}>
-            <ControlImpresionEtiquetas />
+            <ControlimpresionEtiquetas />
           </ProtectedRoute>
         </Route>
         <Route path={`${path}/energia-estaticas`}>
