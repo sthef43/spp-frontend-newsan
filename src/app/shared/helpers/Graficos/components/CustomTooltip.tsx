@@ -4,9 +4,10 @@ import { ValueType, NameType } from "recharts/types/component/DefaultTooltipCont
 
 interface CustomTooltipProps extends TooltipProps<ValueType, NameType> {
   extraKeys?: Array<{ title?: string; objectDate: string; render?: () => React.ReactNode }>;
+  titleTooltip?: string
 }
 
-export function CustomTooltip({ payload, label, active, extraKeys }: CustomTooltipProps) {
+export function CustomTooltip({ payload, label, active, extraKeys, titleTooltip }: CustomTooltipProps) {
   const { getNestedValue } = UseUtilHooks();
 
   if (active && payload && payload.length) {
@@ -14,19 +15,19 @@ export function CustomTooltip({ payload, label, active, extraKeys }: CustomToolt
     const rawData = uniquePayload.payload;
 
     return (
-      <div className="p-4 border border-gray-200 rounded-lg bg-white shadow-xl w-[200px]">
-        <p>
-          <strong>{label}</strong>
-        </p>
+      <div className={`${extraKeys?.length > 0 ? "w-[500px]" : "w-fit"} p-4 border border-gray-200 rounded-lg bg-white shadow-xl overflow-auto`}>
+        <h5 className="text-sm font-bold mb-2">
+          {titleTooltip ? titleTooltip : label}
+        </h5>
         {extraKeys && extraKeys.length > 0 && (
-          <div style={{ marginTop: "10px", borderTop: "1px dashed #ccc", paddingTop: "5px" }}>
+          <div className="mt-1 border-t border-gray-200 flex flex-col gap-y-2">
             {extraKeys.map((key) => {
               const value = getNestedValue(rawData, key.objectDate);
               if (value !== undefined) {
                 return (
-                  <div key={key.objectDate} className="m-0 text-black flex flex-row items-center gap-x-1">
-                    {key.title && key.title !== "" ? <strong>{key.title}</strong> : key.render && key.render()}
-                    {String(value)}
+                  <div key={key.objectDate} className="mt-2 text-black w-full bg-background p-2 border border-gray-200 rounded-md flex flex-col">
+                    {key.title && key.title !== "" ? <strong className="text-xs">{key.title}</strong> : key.render && key.render()}
+                    <span className="text-sm">{String(value)}</span>
                   </div>
                 );
               }

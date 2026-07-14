@@ -88,29 +88,29 @@ export const SelectComponentForm = <T extends FieldValues, TItem>({
         MenuProps={
           activeMultiple
             ? {
-                disablePortal: true,
-                PaperProps: {
-                  style: {
-                    maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                    width: "auto",
-                    minWidth: 250
-                  }
+              disablePortal: true,
+              PaperProps: {
+                style: {
+                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+                  width: "auto",
+                  minWidth: 250
                 }
               }
+            }
             : undefined
         }
         renderValue={
           activeMultiple
             ? (selected) => {
-                const selectedArray = selected as Array<string | number>;
-                return (
-                  <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                    {selectedArray.map((val, index) => (
-                      <Chip key={index} label={itemMap.get(val) || val} size="small" />
-                    ))}
-                  </Box>
-                );
-              }
+              const selectedArray = selected as Array<string | number>;
+              return (
+                <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                  {selectedArray.map((val, index) => (
+                    <Chip key={index} label={itemMap.get(val) || val} size="small" />
+                  ))}
+                </Box>
+              );
+            }
             : undefined
         }>
         {listItems.map((elements, index) => {
@@ -123,7 +123,9 @@ export const SelectComponentForm = <T extends FieldValues, TItem>({
           );
         })}
       </Select>
-      <FormHelperText error={invalid}>{(errors[name]?.message as string) || " "}</FormHelperText>
+      {invalid && (
+        <FormHelperText error={invalid}>{(errors[name]?.message as string) || " "}</FormHelperText>
+      )}
     </FormControl>
   );
 };

@@ -345,6 +345,7 @@ export const Pruebas = () => {
       </div>
       <Suspense fallback={<p>Cargando...</p>}>
         <ContainerForGraphics
+          classNameStyles="w-1/2 h-1/2 bg-secondaryNew p-4 rounded-md shadow-md my-4"
           data={objetoPruebaGrafico}
           xAxisKey="numeroOp"
           extraKeys={[

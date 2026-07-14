@@ -18,15 +18,35 @@ class AuditRegistryClassSlice extends GenericSlice<IAuditRegistry> {
       return await errorNotification(() => this.service.getbyRolId(modelo), info);
     }
   );
-  getPaginationbyRolId = createAsyncThunk<
+  getPaginationbyRolId = createAsyncThunk<IAuditRegistry[], { plantId: number; rolId: number }>(
+    `AuditRegistry/getPaginatedbyRolId`,
+
+    async ({ plantId, rolId }, info) => {
+      return await errorNotification(() => this.service.getPaginatedbyRolId(plantId, rolId), info);
+    }
+  );
+  GetGraphicByRolAndDates = createAsyncThunk<
     IAuditRegistry[],
     { plantId: number; rolId: number; fechaDesde: string; fechaHasta: string }
   >(
-    `AuditRegistry/getPaginatedbyRolId`,
+    `AuditRegistry/GetGraphicByRolAndDates`,
 
     async ({ plantId, rolId, fechaDesde, fechaHasta }, info) => {
       return await errorNotification(
-        () => this.service.getPaginatedbyRolId(plantId, rolId, fechaDesde, fechaHasta),
+        () => this.service.GetGraphicByRolAndDates(plantId, rolId, fechaDesde, fechaHasta),
+        info
+      );
+    }
+  );
+  GetAllPaginatedByRolAndDates = createAsyncThunk<
+    IAuditRegistry[],
+    { plantId: number; rolId: number; fechaDesde: string; fechaHasta: string }
+  >(
+    `AuditRegistry/GetAllPaginatedByRolAndDates`,
+
+    async ({ plantId, rolId, fechaDesde, fechaHasta }, info) => {
+      return await errorNotification(
+        () => this.service.GetAllPaginatedByRolAndDates(plantId, rolId, fechaDesde, fechaHasta),
         info
       );
     }

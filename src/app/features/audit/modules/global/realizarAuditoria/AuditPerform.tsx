@@ -47,7 +47,7 @@ import { EmailSliceRequest } from "app/Middleware/reducers/EmailSlice";
 import { AuditImagenesHistoricoSliceRequest } from "app/features/audit/slices/AuditImagenesHistoricoSlice";
 import { AuditRegistryImageSliceRequests } from "app/features/audit/slices/AuditRegistryImageSlice";
 import { AuditRegistrySliceRequests } from "app/features/audit/slices/AuditRegistrySlice";
-import { AuditHistoricoSliceRequest } from "app/features/audit/slices/AuditResultSlice";
+import { AuditResultSliceRequest } from "app/features/audit/slices/AuditResultSlice";
 import { AuditSliceRequests } from "app/features/audit/slices/AuditSlice";
 import { AuditValoresResultSliceRequest } from "app/features/audit/slices/AuditValoresResultSlice";
 const QontoConnector = styled(StepConnector)(({ theme }) => ({
@@ -240,14 +240,13 @@ export default function AuditPerform() {
         await dispatch(AuditRegistryImageSliceRequests.uploadMultipleImageRequest(newImageArray));
       }
       const auditResult = generarAuditAndValueResult();
-      const response = unwrapResult(await dispatch(AuditHistoricoSliceRequest.PostRequest(auditResult)));
+      const response = unwrapResult(await dispatch(AuditResultSliceRequest.PostRequest(auditResult)));
       if (response) {
         const auditValueResultList = generateAuditValueResult(response.id);
         const listadoImagenes = {
           auditHistoricoId: response.id,
           listaImagenes: listadoFiles
         };
-        console.log(listadoImagenes);
         await dispatch(AuditValoresResultSliceRequest.multiPostRequest(auditValueResultList));
         await dispatch(EmailSliceRequest.EmailProductoTerminado(resultado.id));
         //await dispatch(EmailSliceRequest.EmailAuditoria(resultado.id));
@@ -561,7 +560,7 @@ export default function AuditPerform() {
           </div>
         </Paper>
       )}
-      <div className="print-container">
+      <div className="hidden">
         <AuditPerformPrint
           array={audit?.auditBloq}
           audit={audit}

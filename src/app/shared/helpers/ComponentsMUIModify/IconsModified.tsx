@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  BarChartRounded,
   ChecklistRounded,
   DeleteRounded,
   EditRounded,
@@ -13,7 +14,7 @@ import { useTheme, Box } from "@mui/material";
 
 interface IconContainerProps {
   children: React.ReactNode;
-  typeButton: "editButton" | "restoreButton" | "shippingButton" | "deleteButton" | "viewListButton" | "checkListButton";
+  typeButton: "editButton" | "restoreButton" | "shippingButton" | "deleteButton" | "viewListButton" | "checkListButton" | "chartButton";
   size?: string;
   colorLigth?: string;
 }
@@ -47,6 +48,10 @@ const palleteColors = {
   checkListButton: {
     light: { bg: "#FFF5F5", radius: "12px" },
     dark: { bg: "#320606ff", radius: "12px" }
+  },
+  chartButton: {
+    light: { bg: "#e3f4fcff", radius: "0.5rem" },
+    dark: { bg: "#263340ff", radius: "0.5rem" }
   }
 };
 
@@ -115,3 +120,9 @@ export const CheckListIconEdited: React.FC<PropsIcon> = ({ size, colorLigth }) =
     <ChecklistRounded color="primary" />
   </IconContainer>
 );
+
+export const ChartButtonIconEdited: React.FC<PropsIcon> = ({ size, colorLigth }) => (
+  <IconContainer typeButton="chartButton" size={size} colorLigth={colorLigth}>
+    <BarChartRounded color="primary" />
+  </IconContainer>
+)

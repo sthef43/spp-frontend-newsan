@@ -162,6 +162,10 @@ export function UseUtilHooks<T>() {
     reader.readAsArrayBuffer(file);
   };
 
+  const getNestedValue = (obj: any, path: string) => {
+    return path.split(".").reduce((acc, part) => (acc ? acc[part] : undefined), obj);
+  };
+
   //----------------------------------------
   //FUNCIONES INTERNAS
   const formatHourOrMinutes = (hora: number): string => {
@@ -170,10 +174,6 @@ export function UseUtilHooks<T>() {
     } else {
       return hora.toString();
     }
-  };
-
-  const getNestedValue = (obj: any, path: string) => {
-    return path.split(".").reduce((acc, part) => (acc ? acc[part] : undefined), obj);
   };
 
   const listRegex = (regex: TypeValidationOrReplace): RegExp => {

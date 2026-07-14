@@ -23,6 +23,7 @@ Lee:
 `.opencode/skills/frontend-redux/SKILL.md`
 `.opencode/skills/frontend-ui/SKILL.md`
 `.opencode/skills/frontend-routing/SKILL.md`
+`.opencode/skills/tailwind-css-patterns/SKILL.md`
 
 Utiliza esos documentos como referencia.
 
@@ -43,7 +44,7 @@ Verificá:
 - uso de `ContainerForPages`
 - estructura de tablas
 - agrupación de selects
-- uso de Tailwind
+- uso de Tailwind y que los estilos aplicados hagan que la página sea responsiva (diseño responsive)
 - estructura de `ModalCompoment`
 - props obligatorias del modal
 

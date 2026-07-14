@@ -9,6 +9,7 @@ import { AuditTodo } from "app/features/audit/modules/asignacionAuditorias/pages
 import { AuditTodoRegistry } from "app/features/audit/modules/realizarAuditoriasDelDia/pages/AuditTodoRegistry";
 import { AuditTrackerPage } from "app/features/audit/modules/seguimientoDeAuditorias/pages/AuditTrackerPage";
 import { HistoricPerformedAudit } from "app/features/auditorias";
+import { GraficosAuditoriasPage } from "app/features/audit/modules/graficosAuditorias/pages/GraficosAuditoriasPage";
 import * as React from "react";
 import { Redirect, Route, Switch, useLocation, useRouteMatch } from "react-router-dom";
 export const AuditRoute = (props: any): JSX.Element => {
@@ -54,6 +55,11 @@ export const AuditRoute = (props: any): JSX.Element => {
         <Route path={`${path}/auditorias-tracker`}>
           <ProtectedRoute authorized={userRoutesContext.includes("auditoria/auditorias-tracker")}>
             <AuditTrackerPage />
+          </ProtectedRoute>
+        </Route>
+        <Route path={`${path}/graficos-auditorias`}>
+          <ProtectedRoute authorized={userRoutesContext.includes("auditoria/graficos-auditorias")}>
+            <GraficosAuditoriasPage />
           </ProtectedRoute>
         </Route>
         <Route path={`${path}/*`}>

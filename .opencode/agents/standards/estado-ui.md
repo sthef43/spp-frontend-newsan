@@ -82,7 +82,8 @@ Los campos de filtros o selección deben agruparse utilizando:
 
 ## Estilos
 
-Utilizar utilidades de Tailwind CSS para la estructura visual del componente.
+- Utilizar utilidades de Tailwind CSS para la estructura visual del componente.
+- Asegurar que los estilos y layouts implementados sean responsivos (diseño responsive), adaptándose correctamente a diferentes tamaños de pantalla.
 
 ---
 

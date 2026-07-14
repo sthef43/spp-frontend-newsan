@@ -53,7 +53,7 @@ export const AuditTableOfPerformed = (): JSX.Element => {
         dispatch(LoadingUISlice.actions.LoadingUIOpen());
         const information = unwrapResult(
           await dispatch(
-            AuditRegistrySliceRequests.getPaginationbyRolId({
+            AuditRegistrySliceRequests.GetAllPaginatedByRolAndDates({
               plantId: plantId,
               rolId: infoUser?.permisos?.rolId,
               fechaDesde: fechaDesde,

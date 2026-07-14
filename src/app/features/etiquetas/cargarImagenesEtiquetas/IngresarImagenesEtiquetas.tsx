@@ -61,11 +61,13 @@ export const IngresarImagenesEtiquetas = () => {
   const [data, setdata] = React.useState({ modelo: "", tipoDeEtiqueta: "", imageFile: null, tipoUnidad: "" });
   const [dataImagen, setDataImagen] = React.useState<IEtiquetasImagen>();
   const [urlImage, seturlImage] = React.useState(null);
+
   const getAllModels = async (etiqueta: string, tipoUnidad: string) => {
+    const convertTipoUnidad = etiqueta == "EE" ? "E" : tipoUnidad;
     let result;
     try {
       dispatch(LoadingUISlice.actions.LoadingUIOpen());
-      result = unwrapResult(await dispatch(ModelosSliceRequests.getModelosByTipoUnidad(tipoUnidad)));
+      result = unwrapResult(await dispatch(ModelosSliceRequests.getModelosByTipoUnidad(convertTipoUnidad)));
       result = getTipoModelo(result, etiqueta, tipoUnidad);
       setModelos(result);
       // if (etiqueta == "EE") {
@@ -91,6 +93,7 @@ export const IngresarImagenesEtiquetas = () => {
       result = null;
     }
   };
+
   const getTipoModelo = (modelos: IModelos[], etiqueta: string, tipoUnidad: string) => {
     const newModelos = modelos.filter((modelo) => {
       if (etiqueta == "EM") {
@@ -144,7 +147,6 @@ export const IngresarImagenesEtiquetas = () => {
       console.log(event.target.files[0]);
       const file = event.target.files[0];
       const reader = new FileReader();
-      console.log(reader);
       setdata(
         produce((draft) => {
           draft.imageFile = file;
@@ -155,7 +157,6 @@ export const IngresarImagenesEtiquetas = () => {
       });
       reader.readAsDataURL(event.target.files[0]);
     }
-    console.log(urlImage);
   };
 
   const handleClick = (event: any) => {
@@ -195,24 +196,20 @@ export const IngresarImagenesEtiquetas = () => {
   const [valor, setValor] = React.useState();
   const handleChange = (e, value) => {
     if (value) {
-      console.log(value.codigoModelo);
       setSelectModelo(value);
       setdata({ ...data, modelo: value.codigoModelo });
     }
   };
 
   React.useEffect(() => {
-    console.log(selectModelo);
     if (selectModelo && tipoEtiqueta) {
       getImage(tipoEtiqueta);
     }
   }, [selectModelo, tipoEtiqueta]);
+
   React.useEffect(() => {
     TitleChanger("Ingreso de imagenes de etiquetas");
   }, []);
-  React.useEffect(() => {
-    console.log(data);
-  }, [data]);
 
   return (
     <div>
@@ -265,7 +262,7 @@ export const IngresarImagenesEtiquetas = () => {
               onClick={handleClick}
               variant="contained"
               className="bg-blue-500 shadow-md hover:bg-blue-700 text-white text-icon-rest rounded-full px-4 py-1"
-              disabled={!tipoEtiqueta && data.modelo == ""}>
+              disabled={!tipoEtiqueta || !selectModelo || data.modelo == ""}>
               <Upload />
               <span className="hidden sm:block">Importar</span>
             </Button>

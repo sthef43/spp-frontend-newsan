@@ -23,6 +23,7 @@ Lee:
 `.opencode/skills/frontend-architect/SKILL.md`
 `.opencode/skills/frontend-components/SKILL.md`
 `.opencode/skills/frontend-hooks/SKILL.md`
+`.opencode/skills/react-best-practices/SKILL.md`
 
 Utiliza esos documentos como referencia.
 

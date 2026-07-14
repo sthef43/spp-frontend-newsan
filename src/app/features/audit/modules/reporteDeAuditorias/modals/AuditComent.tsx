@@ -59,14 +59,7 @@ export const AuditComent: React.FC<Props> = ({
       await dispatch(AuditRegistrySliceRequests.PutRequest(nuevoAudicion));
       await dispatch(AuditRegistrySliceRequests.canceledRequest({ id: audit.id, username: name + " " + surname }));
       const information = unwrapResult(
-        await dispatch(
-          AuditRegistrySliceRequests.getPaginationbyRolId({
-            plantId: plantaId,
-            rolId: permisoId,
-            fechaDesde: "",
-            fechaHasta: ""
-          })
-        )
+        await dispatch(AuditRegistrySliceRequests.getPaginationbyRolId({ plantId: plantaId, rolId: permisoId }))
       );
       if (information) {
         dataTable(information);

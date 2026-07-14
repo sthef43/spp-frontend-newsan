@@ -4,15 +4,15 @@ import { IIniState } from "app/models";
 import { IAuditHistorico } from "../../../models/IAuditHistorico";
 import { AuditHistoricoService } from "../services/auditHistorico.service";
 
-const auditHistoricoService = new AuditHistoricoService();
+const auditResultService = new AuditHistoricoService();
 
-class AuditHistoricoClassSlice extends GenericSlice<IAuditHistorico> {
+class AuditResultClassSlice extends GenericSlice<IAuditHistorico> {
   constructor(private service: AuditHistoricoService) {
     super("AuditHistorico", service);
   }
 }
 
-export const AuditHistoricoSliceRequest = new AuditHistoricoClassSlice(auditHistoricoService);
+export const AuditResultSliceRequest = new AuditResultClassSlice(auditResultService);
 
 const inititalState: IIniState<IAuditHistorico> = {
   loading: null,
@@ -21,11 +21,11 @@ const inititalState: IIniState<IAuditHistorico> = {
   object: null
 };
 
-export const AuditHistoricoSlice = createSlice({
-  name: "AuditHistorico",
+export const AuditResultSlice = createSlice({
+  name: "AuditResult",
   initialState: inititalState,
   reducers: {},
   extraReducers: (builder) => {
-    AuditHistoricoSliceRequest.builderAll(builder);
+    AuditResultSliceRequest.builderAll(builder);
   }
 });
