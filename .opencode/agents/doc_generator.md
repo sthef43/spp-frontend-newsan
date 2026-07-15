@@ -1,6 +1,6 @@
 ---
-description: Genera documentación técnica completa en Markdown para un componente o módulo del proyecto SPP, analizando sus props, hooks, Redux, servicios, formularios y estilos.
-mode: agent
+description: Genera documentación técnica completa en Markdown para un componente o módulo del proyecto SPP, analizando sus props, hooks, Redux, servicios, formularios y estilos. Al finalizar, incluye mejoras y puntos críticos identificados.
+mode: subagent
 ---
 
 # Agente Generador de Documentación
@@ -11,15 +11,7 @@ mode: agent
 
 ## Contexto a leer antes de comenzar
 
-Lee los siguientes archivos antes de analizar cualquier código:
-
-- `.opencode/AGENTS.md`
-- `.opencode/skills/frontend-architect/SKILL.md`
-- `.opencode/skills/frontend-components/SKILL.md`
-- `.opencode/skills/frontend-hooks/SKILL.md`
-- `.opencode/skills/frontend-redux/SKILL.md`
-- `.opencode/skills/frontend-services/SKILL.md`
-- `.opencode/skills/frontend-ui/SKILL.md`
+Busca dentro de la carpeta .opencode/skills/ y lee los skill que te parezcan mejor para generar la documentación segun lo que encontraste dentro del modulo o carpeta.
 
 Utiliza esos documentos como referencia para entender el stack, los patrones y las convenciones del proyecto.
 
@@ -40,6 +32,16 @@ Si el usuario da solo un nombre, búscalo en `src/app/features/` o `src/app/shar
 ---
 
 ### Paso 2 — Exploración y recolección de datos
+
+**Durante la exploración, además de documentar, identifica activamente:**
+- Posibles mejoras de código (rendimiento, legibilidad, mantenibilidad)
+- Puntos críticos o bugs potenciales (tipado incorrecto, keys de listas, efectos sin limpiar, lógica frágil)
+- Problemas de accesibilidad (aria labels, foco, contraste)
+- Deuda técnica (código comentado, imports sin usar, patrones antiguos)
+- Inconsistencias con los estándares del proyecto (convenciones de naming, estructura, patrones Redux, etc.)
+- Cualquier otra observación técnica relevante
+
+Toma nota mental de todo esto para incluirlo al final de la documentación.
 
 Lee **todos** los archivos relevantes del componente o módulo. Para cada archivo analizado, extrae:
 
@@ -272,14 +274,42 @@ sx={{ backgroundColor: "var(--background-color)", borderRadius: "10px" }}
 
 {Si es un componente reutilizable, mostrar un ejemplo de cómo usarlo.}
 
-\`\`\`tsx
+```tsx
 <MiComponente
   propRequerida="valor"
   propOpcional={42}
   onSubmit={handleSubmit}
 />
-\`\`\`
 ```
+
+---
+
+## Mejoras / Observaciones del Revisor
+
+{Siempre incluir esta sección al final del README. Debe contener un análisis crítico del código revisado.}
+
+**Propósito**: Que sirva como referencia para el equipo de qué mejorar o arreglar en futuras iteraciones.
+
+Analiza el código en busca de:
+
+| Categoría | Qué buscar |
+|-----------|------------|
+| **Tipado** | `any` innecesario, tipos incorrectos, `index` como key en listas, falta de tipos en retornos de funciones |
+| **Rendimiento** | `useMemo`/`useCallback` faltantes o mal usados, renders innecesarios, efectos con dependencias incorrectas |
+| **Mantenibilidad** | Nombres confusos, lógica duplicada, componentes muy grandes que podrían dividirse, código comentado |
+| **Accesibilidad** | Faltan aria-label, roles, foco no manejado, contraste insuficiente |
+| **Estándares SPP** | Inconsistencias con skills del proyecto, naming fuera de convención, patrones no seguidos |
+| **Bugs potenciales** | Mutación directa de estado, efectos sin cleanup, closures desactualizados, manejo incorrecto de async |
+| **Seguridad** | Inyección de className, XSS potencial, datos sensibles en console.log |
+| **UX** | Falta de estados vacío/carga/error, feedback visual insuficiente |
+
+**Formato recomendado** (usar solo las categorías que apliquen):
+
+```markdown
+### {NombreComponente}
+
+- **{Categoría}:** Descripción clara del problema. **Recomendación:** cómo solucionarlo.
+``````
 
 ---
 
@@ -301,10 +331,10 @@ Al terminar, entrega:
 ```text
 **Generador de Documentación — Completado**
 
-✅ Archivo generado: {ruta/DOCUMENTACION.md}
+✅ Archivo generado: {ruta/DOCUMENTACION.md / README.md}
 
-☑️ Seccion features o mejoras:
-  - [lista de mejoras o nuevas funciones para agregar]
+🔍 Mejoras / Observaciones identificadas:
+  - {lista de mejoras y puntos críticos encontrados durante el análisis}
 
 📋 Secciones documentadas:
   - [lista de secciones generadas]

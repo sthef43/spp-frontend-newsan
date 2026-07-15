@@ -67,6 +67,16 @@ Punto de entrada central. Este archivo es referenciado por `FRONTEND_AGENT.md` y
 
 ---
 
+## Agentes de Corrección por README
+
+| Agente | Propósito | Archivo |
+|--------|-----------|---------|
+| [readme-fixer-agent](agents/readme-fixer-agent.md) | Agente principal que lee README.md, extrae "Mejoras / Observaciones del Revisor" y coordina corrección automática |
+| [readme-orchestrator](agents/orchestrators/readme-orchestrator.md) | Orquestador puente entre README.md y componentes. Categoriza issues, consulta estándares y delega al fixer |
+| [readme-fixer](agents/fixers/readme-fixer.md) | Aplica correcciones al código según observaciones del README, organizado por área (estructura, formularios, API, estado/UI) |
+
+---
+
 ## Referencias útiles
 
 | Archivo | Contenido |
