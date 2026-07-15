@@ -131,7 +131,7 @@ export const InputsForm: React.FC<Props> = ({
           name="multiplesCausas"
           label="Seleccione una o mas causas"
           activeMultiple={true}
-          setMultiplesValues={setListadoCausas}
+          onMultipleChange={setListadoCausas}
           variant="standard"
         />
         <InputComponentForm
@@ -184,7 +184,7 @@ export const InputsForm: React.FC<Props> = ({
           name="multiplesDescripcionRechazo"
           label="Seleccione las descripciones de las causas"
           activeMultiple={true}
-          setMultiplesValues={(e) => {
+          onMultipleChange={(e) => {
             setListadoDescripcionesSeleccionadas(e);
           }}
           variant="standard"

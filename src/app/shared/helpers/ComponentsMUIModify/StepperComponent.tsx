@@ -1,6 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable unused-imports/no-unused-vars */
 import React, { useCallback, useState } from "react";
 import {
   Box,
@@ -28,7 +25,7 @@ interface QontoStepIconPropsCustom extends StepIconProps {
   shouldAnimate?: boolean;
 }
 
-interface props<T> {
+interface IProps<T> {
   orientationStepper: "vertical" | "horizontal";
   itemList: T[];
   labelStepper: (item: T) => string;
@@ -38,34 +35,29 @@ interface props<T> {
   itemFinishedFunction?: (item: T) => void;
 }
 
-interface ActiveButtonsNextAndBefore<T> extends props<T> {
+interface ActiveButtonsNextAndBefore<T> extends IProps<T> {
   activeButtonsNextAndBefore: true;
   functionButtonNext: () => void;
   functionButtonBack: () => void;
 }
 
-interface OptionalButtonsNextAndBefore<T> extends props<T> {
+interface OptionalButtonsNextAndBefore<T> extends IProps<T> {
   activeButtonsNextAndBefore?: false;
   functionButtonNext?: () => void;
   functionButtonBack?: () => void;
 }
 
-interface ActiveToolTipVisualizer<T> extends props<T> {
+interface ActiveToolTipVisualizer<T> extends IProps<T> {
   activeTooltipItem: true;
   arrayItemsVisualizer: string[];
   stylesForToolTip: React.CSSProperties;
 }
 
-interface OptionalToolTipVisualizer<T> extends props<T> {
+interface OptionalToolTipVisualizer<T> extends IProps<T> {
   activeTooltipItem?: false;
   arrayItemsVisualizer?: string[];
   stylesForToolTip?: React.CSSProperties;
 }
-
-//SEGUIR CON EL TEMA DE PODER RECHAZAR UN ITEM DEL RECORRIDO
-// interface ActiveRejectionMode<T> extends props<T> {
-//   activeRejectionMode: true;
-// }
 
 type Props<T> = (ActiveButtonsNextAndBefore<T> | OptionalButtonsNextAndBefore<T>) &
   (ActiveToolTipVisualizer<T> | OptionalToolTipVisualizer<T>);
@@ -88,7 +80,7 @@ type Props<T> = (ActiveButtonsNextAndBefore<T> | OptionalButtonsNextAndBefore<T>
  * @param {(item: T) => string} props.labelStepper - Función para extraer el texto de la etiqueta del paso desde el objeto `T`.
  * @param {(item: T) => boolean} props.elementComplete - Función lógica para determinar si un paso está completado.
  * @param {(item: T) => void} [props.itemFinishedFunction] - Callback al hacer clic en un paso completado (útil para navegación histórica).
- * @param {boolean} [props.activeOptionalMessage=false] - Muestra "Ultimo Elemento" bajo el último paso.
+ * @param {boolean} [props.activeOptionalMessage=false] - Muestra "Último Elemento" bajo el último paso.
  *
  * --- PROPS DE NAVEGACIÓN (Condicionales) ---
  * @param {boolean} [props.activeButtonsNextAndBefore=false] - Activa los botones internos de navegación.
@@ -149,12 +141,6 @@ const processBarCompletes = keyframes`
 //Estilos personalizados para la barra del tiempo con la que se conectan los items.
 //Agregando la animacion de la barra de progreso
 const QuontoConnector = styled(StepConnector)(({ theme }) => ({
-  //ESTO ES POR SI SE QUIERE MODIFICAR LA LINEA DEL TIEMPO YA SEA TAMAÑANO O POSICION.
-  // [`&.${stepConnectorClasses.alternativeLabel}`]: {
-  //   top: 10,
-  //   left: "calc(15% + -43px)",
-  //   right: "calc(15% + 50px)"
-  // },
   [`&.${stepConnectorClasses.active}`]: {
     [`& .${stepConnectorClasses.line}`]: {
       transition: "all .5s ease",
@@ -175,7 +161,7 @@ const QuontoConnector = styled(StepConnector)(({ theme }) => ({
 }));
 
 //Estilos personalizados tanto para la raiz del componente y tambien para cuando el item fue completado o esta marcado como en progreso.
-const QontoStepIconRoot = styled("div")<{ ownerState: QontoStepIconPropsCustom }>(({ theme, ownerState }) => ({
+const QontoStepIconRoot = styled("div")<{ ownerState: QontoStepIconPropsCustom }>(({ ownerState }) => ({
   transition: "none",
   color: "#eaeaf0",
   display: "flex",
@@ -233,8 +219,15 @@ const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
 
 //Funcion interna que la funcionalidad es que pueda acceder a objetos dentro de item.
 //Por ejemplo: operator.name, operator.plant.name, etc.
-const getPropertyWithin = (obj: any, path: string) => {
-  return path.split(".").reduce((acc, part) => (acc ? acc[part] : undefined), obj);
+const getPropertyWithin = (obj: unknown, path: string): unknown => {
+  const blockedProps = ["__proto__", "constructor", "prototype"];
+  return String(path)
+    .split(".")
+    .reduce((acc: unknown, part) => {
+      if (!acc || blockedProps.includes(part)) return undefined;
+      if (typeof acc !== "object" || acc === null) return undefined;
+      return (acc as Record<string, unknown>)[part];
+    }, obj);
 };
 
 //Condicional para que si el item este completo se ponga el icon de check de lo contrario el circulo.
@@ -271,9 +264,7 @@ export const StepperComponent = <T,>({
   //Estilos para los botones de "atras" y "siguiente".
   const buttonClases = MaterialButtons();
 
-  //Condicionales que son para que no se generen errores por si no llamo los props cuando uso el componente.
-  const optionalContentStepsDefault = activeButtonsNextAndBefore ? activeButtonsNextAndBefore : false;
-  const optionalMessageDefault = activeOptionalMessage ? activeOptionalMessage : false;
+  //Se utilizan directamente activeButtonsNextAndBefore y activeOptionalMessage
 
   //Esta es la funcion donde segun el array que se pasa como prop "arrayItemsVisualizer" se muestren solamente esos datos.
   //Se pueden pasar valores que estan en el objeto principal como objetos que estan dentro del principal.
@@ -303,6 +294,18 @@ export const StepperComponent = <T,>({
     [arrayItemsVisualizer]
   );
 
+  //Funcion de renderizado del icono del paso, memoizada para evitar recrearla en cada render.
+  //Usa props.icon (1-indexed) y props.completed para determinar si debe animarse.
+  const renderStepIcon = useCallback(
+    (props: StepIconProps) => {
+      const stepIndex = Number(props.icon) - 1;
+      const shouldAnimate =
+        props.completed && direction === "next" && activeStepNumber > 0 && stepIndex === activeStepNumber - 1;
+      return <QontoStepIcon {...props} direction={direction} shouldAnimate={shouldAnimate} />;
+    },
+    [direction, activeStepNumber]
+  );
+
   //Componente en general.
   return (
     <Box sx={{ width: "100%" }}>
@@ -319,13 +322,10 @@ export const StepperComponent = <T,>({
             stepProps.completed = true;
             completo = true;
           }
-          const shouldAnimateItem = completo && direction === "next" && index === activeStepNumber - 1;
           const labelContent = labelStepper(elementos);
           const stepLabelComponent = (
             <StepLabel
-              StepIconComponent={(props) => (
-                <QontoStepIcon {...props} direction={direction} shouldAnimate={shouldAnimateItem} />
-              )}
+              StepIconComponent={renderStepIcon}
               {...labelProps}
               onClick={() => {
                 itemFinishedFunction && itemFinishedFunction(elementos);
@@ -333,9 +333,10 @@ export const StepperComponent = <T,>({
               className={`${
                 completo ? "hover:underline cursor-pointer hover:text-blue-500 transition-all duration-300" : ""
               }`}
+              {...(completo && itemFinishedFunction ? { role: "button", tabIndex: 0 } : {})}
               optional={
-                optionalMessageDefault &&
-                (index === itemList.length - 1 ? <Typography variant="caption">Ultimo Elemento</Typography> : null)
+                activeOptionalMessage &&
+                (index === itemList.length - 1 ? <Typography variant="caption">Último Elemento</Typography> : null)
               }>
               {labelContent}
             </StepLabel>
@@ -346,6 +347,7 @@ export const StepperComponent = <T,>({
                 <>
                   <HtmlTooltip
                     componentsProps={{ tooltip: { style: stylesForToolTip } }}
+                    aria-haspopup="true"
                     title={
                       <>
                         <Typography
@@ -372,7 +374,7 @@ export const StepperComponent = <T,>({
         })}
       </Stepper>
       <>
-        {optionalContentStepsDefault && (
+        {activeButtonsNextAndBefore && itemList.length > 0 && (
           <Box
             sx={{
               display: "flex",
@@ -389,7 +391,8 @@ export const StepperComponent = <T,>({
               }}
               disabled={activeStepNumber == 0}
               className={buttonClases.redButton}
-              variant="contained">
+              variant="contained"
+              aria-label="Paso anterior">
               Atras
             </Button>
             <Button
@@ -399,7 +402,8 @@ export const StepperComponent = <T,>({
                 setDirection("next");
               }}
               className={buttonClases.blueButton}
-              variant="contained">
+              variant="contained"
+              aria-label="Paso siguiente">
               Siguiente
             </Button>
           </Box>
@@ -409,12 +413,3 @@ export const StepperComponent = <T,>({
   );
 };
 
-// const TooltipHelperItemEnded = () => {
-//   return(
-
-//   )
-// }
-
-//MEJORAS PARA IMPLEMENTAR EN UN FUTURO
-//1)_ Que se le permita poder cambiar los iconos de cuando esta aprobado y cuando esta en espera,
-//2)_ Añadir el modo para que se puedan rechazar los pasos que se siguieron.

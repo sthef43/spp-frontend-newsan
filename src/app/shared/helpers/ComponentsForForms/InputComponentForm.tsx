@@ -5,11 +5,13 @@ import { FieldValues, UseControllerProps, useController } from "react-hook-form"
 interface Props<T extends FieldValues> extends UseControllerProps<T> {
   placeholder?: string;
   label?: string;
-  functionOnchange?: React.KeyboardEventHandler<HTMLDivElement>;
+  onKeyDown?: React.KeyboardEventHandler<HTMLDivElement>;
   variant?: "standard" | "outlined" | "filled";
   typeDate?: "number" | "password" | "text";
   stylesPersonalizaed?: SxProps<Theme>;
   iconInput?: React.ReactNode;
+  InputProps?: Partial<import("@mui/material").TextFieldProps["InputProps"]>;
+  autoFocus?: boolean;
 }
 
 export const InputComponentForm = <T extends FieldValues>({
@@ -22,8 +24,10 @@ export const InputComponentForm = <T extends FieldValues>({
   typeDate = "text",
   disabled = false,
   label,
-  functionOnchange,
-  iconInput
+  onKeyDown,
+  iconInput,
+  InputProps: externalInputProps,
+  autoFocus
 }: Props<T>) => {
   const {
     field,
@@ -34,7 +38,7 @@ export const InputComponentForm = <T extends FieldValues>({
     <FormControl fullWidth>
       <TextField
         {...field}
-        onKeyDown={functionOnchange}
+        onKeyDown={onKeyDown}
         autoComplete="off"
         disabled={disabled}
         sx={stylesPersonalizaed}
@@ -45,7 +49,11 @@ export const InputComponentForm = <T extends FieldValues>({
         error={invalid}
         helperText={errors[name]?.message as string}
         fullWidth
-        InputProps={{ startAdornment: iconInput }}
+        autoFocus={autoFocus}
+        InputProps={{
+          ...externalInputProps,
+          startAdornment: iconInput ?? externalInputProps?.startAdornment
+        }}
       />
     </FormControl>
   );

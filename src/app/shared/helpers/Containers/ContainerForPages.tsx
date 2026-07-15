@@ -7,6 +7,7 @@ interface BaseProps {
   children: React.ReactNode;
   optionsLayout: "Table" | "page" | "modal" | "Selects" | "personalized";
   tableForModalOrPageStyle?: "Modal" | "page";
+  timeout?: number;
 }
 
 interface ActivedClassPersonalized extends BaseProps {
@@ -26,7 +27,8 @@ export const ContainerForPages: React.FC<Props> = ({
   classNamePersonalized,
   optionsLayout,
   tableForModalOrPageStyle,
-  activeEffectVisible
+  activeEffectVisible,
+  timeout = 500
 }) => {
   const verifyOptionsLayout = (optionsLayout: "Table" | "page" | "modal" | "Selects" | "personalized") => {
     let classNameStyles = "";
@@ -48,9 +50,12 @@ export const ContainerForPages: React.FC<Props> = ({
           "flex flex-row text-center w-full gap-x-4 justify-between items-end bg-secondaryNew p-4 rounded-md shadow-md";
         break;
       case "personalized":
-        classNameStyles = classNamePersonalized;
+        classNameStyles = classNamePersonalized || "w-full h-full p-4";
         break;
       default:
+        console.warn(
+          `[ContainerForPages] optionsLayout "${optionsLayout}" no es un valor válido. Usando fallback visual.`
+        );
         classNameStyles = "bg-red-500 w-full h-full p-4";
         break;
     }
@@ -60,11 +65,15 @@ export const ContainerForPages: React.FC<Props> = ({
   return (
     <>
       {activeEffectVisible ? (
-        <Grow in timeout={500}>
-          <main className={verifyOptionsLayout(optionsLayout)}>{children}</main>
+        <Grow in timeout={timeout}>
+          <main key={optionsLayout} className={verifyOptionsLayout(optionsLayout)}>
+            {children}
+          </main>
         </Grow>
       ) : (
-        <main className={verifyOptionsLayout(optionsLayout)}>{children}</main>
+        <main key={optionsLayout} className={verifyOptionsLayout(optionsLayout)}>
+          {children}
+        </main>
       )}
     </>
   );

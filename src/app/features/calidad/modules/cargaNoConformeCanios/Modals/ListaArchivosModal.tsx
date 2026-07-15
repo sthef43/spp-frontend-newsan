@@ -60,7 +60,7 @@ export const ListaArchivosModal: React.FC<Props> = ({
               onClick={() => handleExaminarImagen(item, "examinarImagen")}
               titleTooltip="Examinar Imagen"
               typeTooltip="normal"
-              componenteIcono={<ImageIconEdited size="1.5rem" colorLigth="#3ba3ff66" />}
+              componenteIcono={<ImageIconEdited size="1.5rem" colorLight="#3ba3ff66" />}
             />
             {!edicionActiva && (
               <TooltipComponent

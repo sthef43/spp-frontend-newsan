@@ -6,7 +6,7 @@ interface Props<T extends FieldValues, TItem> extends UseControllerProps<T> {
   listItems: TItem[];
   valueLabel: (item: TItem) => string;
   valueSelect: (item: TItem) => string | number;
-  setMultiplesValues?: (item: Array<string | number>) => void;
+  onMultipleChange?: (item: Array<string | number>) => void;
   activeMultiple?: boolean;
   label: string;
   variant?: "standard" | "outlined" | "filled";
@@ -20,7 +20,7 @@ export const SelectComponentForm = <T extends FieldValues, TItem>({
   listItems = [],
   valueLabel,
   valueSelect,
-  setMultiplesValues,
+  onMultipleChange,
   activeMultiple = false,
   label,
   name,
@@ -52,10 +52,9 @@ export const SelectComponentForm = <T extends FieldValues, TItem>({
 
   const handleChange = (event: SelectChangeEvent<typeof selectValue>) => {
     const newValue = event.target.value;
-    const resolvedValue = typeof newValue === "string" ? newValue.split(",") : newValue;
-    onChange(resolvedValue);
-    if (setMultiplesValues) {
-      setMultiplesValues(resolvedValue as Array<string | number>);
+    onChange(newValue);
+    if (onMultipleChange) {
+      onMultipleChange(newValue as Array<string | number>);
     }
   };
 
@@ -105,19 +104,19 @@ export const SelectComponentForm = <T extends FieldValues, TItem>({
               const selectedArray = selected as Array<string | number>;
               return (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selectedArray.map((val, index) => (
-                    <Chip key={index} label={itemMap.get(val) || val} size="small" />
+                  {selectedArray.map((val) => (
+                    <Chip key={val} label={itemMap.get(val) || val} size="small" />
                   ))}
                 </Box>
               );
             }
             : undefined
         }>
-        {listItems.map((elements, index) => {
+        {listItems.map((elements) => {
           const itemVal = valueSelect(elements);
           const itemText = valueLabel(elements);
           return (
-            <MenuItem key={index} value={itemVal}>
+            <MenuItem key={itemVal} value={itemVal}>
               {itemText}
             </MenuItem>
           );

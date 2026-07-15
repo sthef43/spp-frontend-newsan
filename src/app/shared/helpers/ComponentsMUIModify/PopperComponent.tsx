@@ -1,10 +1,9 @@
-/* eslint-disable unused-imports/no-unused-vars */
 import { MoreHorizRounded } from "@mui/icons-material";
-import { IconButton, Popper, Fade } from "@mui/material";
+import { IconButton, Popper, Fade, useTheme } from "@mui/material";
 import { Box } from "@mui/system";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 
-interface Props<T> {
+interface IProps<T> {
   elemento: T;
   elementoIndex: (item: T) => string | number;
   children?: React.ReactNode;
@@ -12,37 +11,74 @@ interface Props<T> {
   customChildren?: React.ReactNode | JSX.Element;
 }
 
-export const PopperComponent = <T,>({ elemento, elementoIndex, children, showElement, customChildren }: Props<T>) => {
-  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const timeoutPopperRef = useRef<NodeJS.Timeout | null>(null);
+const POPPER_Z_INDEX = 1300;
+const HOVER_TIMEOUT_MS = 200;
 
-  const handleMouseEnter = (event: React.MouseEvent<HTMLElement>) => {
+export const PopperComponent = <T,>({ elemento, elementoIndex, children, showElement, customChildren }: IProps<T>) => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const timeoutPopperRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const theme = useTheme();
+
+  const clearCurrentTimeout = useCallback(() => {
     if (timeoutPopperRef.current) {
       clearTimeout(timeoutPopperRef.current);
       timeoutPopperRef.current = null;
     }
-    setAnchorEl(event.currentTarget);
-  };
+  }, []);
 
   useEffect(() => {
     return () => {
-      if (timeoutPopperRef.current) clearTimeout(timeoutPopperRef.current);
+      clearCurrentTimeout();
     };
-  }, []);
+  }, [clearCurrentTimeout]);
 
-  const handleMouseLeave = () => {
+  const handleOpen = useCallback((event: React.MouseEvent<HTMLElement> | React.FocusEvent<HTMLElement>) => {
+    clearCurrentTimeout();
+    setAnchorEl(event.currentTarget);
+  }, [clearCurrentTimeout]);
+
+  const handleClose = useCallback(() => {
+    clearCurrentTimeout();
     timeoutPopperRef.current = setTimeout(() => {
       setAnchorEl(null);
       timeoutPopperRef.current = null;
-    }, 50);
-  };
+    }, HOVER_TIMEOUT_MS);
+  }, [clearCurrentTimeout]);
+
+  const handleToggle = useCallback((event: React.MouseEvent<HTMLElement>) => {
+    if (anchorEl) {
+      clearCurrentTimeout();
+      setAnchorEl(null);
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
+  }, [anchorEl, clearCurrentTimeout]);
+
+  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLElement>) => {
+    if (event.key === "Escape") {
+      clearCurrentTimeout();
+      setAnchorEl(null);
+    }
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleToggle(event as unknown as React.MouseEvent<HTMLElement>);
+    }
+  }, [clearCurrentTimeout, handleToggle]);
 
   const open = Boolean(anchorEl);
   const id = open ? `popper-${elementoIndex(elemento)}` : undefined;
 
   return (
-    <div className="relative pointer-events-auto no-hover-zone" onMouseLeave={handleMouseLeave}>
-      <IconButton onMouseEnter={handleMouseEnter} aria-describedby={id}>
+    <div className="relative pointer-events-auto no-hover-zone" onMouseLeave={handleClose}>
+      <IconButton
+        onMouseEnter={handleOpen}
+        onFocus={handleOpen}
+        onClick={handleToggle}
+        onKeyDown={handleKeyDown}
+        aria-describedby={id}
+        aria-haspopup="menu"
+        aria-expanded={open}
+      >
         {showElement ? showElement : <MoreHorizRounded />}
       </IconButton>
       <Popper
@@ -57,10 +93,8 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
             options: { boundary: "viewport" }
           }
         ]}
-        style={{ zIndex: 1300 }}
-        onMouseEnter={() => {
-          if (timeoutPopperRef.current) clearTimeout(timeoutPopperRef.current);
-        }}>
+        style={{ zIndex: POPPER_Z_INDEX }}
+        onMouseEnter={clearCurrentTimeout}>
         {({ TransitionProps }) =>
           customChildren ? (
             <Fade {...TransitionProps} timeout={300}>
@@ -68,7 +102,7 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
                 sx={{
                   border: 1,
                   borderColor: "#e5e7eb",
-                  backgroundColor: "var(--secondary-color)",
+                  backgroundColor: theme.palette.secondary.main,
                   zIndex: 10,
                   minWidth: "25rem",
                   borderRadius: "12px",
@@ -83,7 +117,7 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
                 sx={{
                   border: 1,
                   borderColor: "#e5e7eb",
-                  backgroundColor: "var(--secondary-color)",
+                  backgroundColor: theme.palette.secondary.main,
                   zIndex: 10,
                   minWidth: "15rem",
                   borderRadius: "12px",

@@ -1,8 +1,7 @@
-/* eslint-disable unused-imports/no-unused-vars */
 import { Box, Chip, FormControl, MenuItem, Select, SelectChangeEvent, InputLabel } from "@mui/material";
 import React from "react";
 
-interface Props<T> {
+interface IProps<T extends Record<string, unknown>> {
   labelSelect: string;
   listValuesSelected: string[];
   varianteEstilo?: "standard" | "outlined" | "filled";
@@ -22,14 +21,14 @@ const MenuProps = {
   }
 };
 
-export const MultiSelectModified = <T,>({
+export const MultiSelectModified = <T extends Record<string, unknown>,>({
   labelSelect,
   listValuesSelected,
   varianteEstilo = "outlined",
   options,
   setValues,
   valueSelect
-}: Props<T>) => {
+}: IProps<T>) => {
   const handleChangeValues = (event: SelectChangeEvent<string[]>) => {
     const {
       target: { value }
@@ -38,7 +37,7 @@ export const MultiSelectModified = <T,>({
   };
 
   return (
-    <main className="w-full">
+    <Box className="w-full">
       <FormControl fullWidth variant={varianteEstilo}>
         <InputLabel id="select-multiple-chip-label">{labelSelect}</InputLabel>
         <Select
@@ -48,13 +47,19 @@ export const MultiSelectModified = <T,>({
           label={labelSelect}
           value={listValuesSelected}
           onChange={handleChangeValues}
-          renderValue={(seleccionados) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {seleccionados.map((value, index) => (
-                <Chip key={index} label={value} sx={{ fontSize: "16px" }} />
-              ))}
-            </Box>
-          )}
+          displayEmpty
+          renderValue={(seleccionados) => {
+            if (seleccionados.length === 0) {
+              return <Box sx={{ color: "text.secondary", fontStyle: "italic" }}>Seleccionar opciones...</Box>;
+            }
+            return (
+              <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                {seleccionados.map((value) => (
+                  <Chip key={value} label={value} sx={{ fontSize: "16px" }} />
+                ))}
+              </Box>
+            );
+          }}
           MenuProps={MenuProps}>
           {options.map((option) => {
             const val = valueSelect(option);
@@ -66,6 +71,6 @@ export const MultiSelectModified = <T,>({
           })}
         </Select>
       </FormControl>
-    </main>
+    </Box>
   );
 };

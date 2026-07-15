@@ -229,7 +229,7 @@ export const Pruebas = () => {
         <SelectComponentForm
           control={control}
           activeMultiple={true}
-          setMultiplesValues={setPruebaSelect}
+          onMultipleChange={setPruebaSelect}
           label="Seleccione un contenedor"
           listItems={listaContenedore}
           name="multiSelect"

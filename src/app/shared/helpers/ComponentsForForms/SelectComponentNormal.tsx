@@ -7,13 +7,14 @@ interface Props<TItem> {
   valueLabel: (item: TItem) => string;
   valueSelect: (item: TItem) => string | number;
   value: string | number | Array<string | number>;
-  onChange: (newValue: string | number | Array<string | number> | TItem) => void;
+  onChange: (newValue: string | number | Array<string | number>) => void;
   activeMultiple?: boolean;
   label: string;
   variant?: "standard" | "outlined" | "filled";
   disabled?: boolean;
   error?: boolean;
   helperText?: string;
+  MenuProps?: Partial<import("@mui/material").SelectProps["MenuProps"]>;
 }
 
 const ITEM_HEIGHT = 48;
@@ -30,7 +31,8 @@ export const SelectComponentNormal = <TItem,>({
   variant = "outlined",
   disabled = false,
   error = false,
-  helperText = " "
+  helperText = " ",
+  MenuProps: externalMenuProps
 }: Props<TItem>) => {
   const itemMap = useMemo(() => {
     const map = new Map<string | number, string>();
@@ -47,10 +49,39 @@ export const SelectComponentNormal = <TItem,>({
     return value !== undefined && value !== null ? value : "";
   }, [value, activeMultiple]);
 
+  const defaultMenuProps = useMemo(() => {
+    const baseProps = {
+      PaperProps: {
+        style: {
+          maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+          width: "auto",
+          minWidth: 250
+        }
+      }
+    };
+    if (activeMultiple) {
+      return { ...baseProps, disablePortal: true };
+    }
+    return baseProps;
+  }, [activeMultiple]);
+
+  const mergedMenuProps = useMemo(() => {
+    const base = { ...defaultMenuProps, ...externalMenuProps };
+    if (externalMenuProps?.PaperProps) {
+      base.PaperProps = {
+        ...defaultMenuProps.PaperProps,
+        style: {
+          ...defaultMenuProps.PaperProps.style,
+          ...externalMenuProps.PaperProps.style
+        }
+      };
+    }
+    return base;
+  }, [defaultMenuProps, externalMenuProps]);
+
   const handleChange = (event: SelectChangeEvent<typeof selectValue>) => {
     const newValue = event.target.value;
-    const resolvedValue = typeof newValue === "string" && activeMultiple ? newValue.split(",") : newValue;
-    onChange(resolvedValue);
+    onChange(newValue);
   };
 
   return (
@@ -63,39 +94,26 @@ export const SelectComponentNormal = <TItem,>({
         value={selectValue}
         onChange={handleChange}
         disabled={disabled}
-        MenuProps={
-          activeMultiple
-            ? {
-              disablePortal: true,
-              PaperProps: {
-                style: {
-                  maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
-                  width: "auto",
-                  minWidth: 250
-                }
-              }
-            }
-            : undefined
-        }
+        MenuProps={mergedMenuProps}
         renderValue={
           activeMultiple
             ? (selected) => {
               const selectedArray = selected as Array<string | number>;
               return (
                 <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-                  {selectedArray.map((val, index) => (
-                    <Chip key={index} label={itemMap.get(val) || val} size="small" />
+                  {selectedArray.map((val) => (
+                    <Chip key={val} label={itemMap.get(val) || val} size="small" />
                   ))}
                 </Box>
               );
             }
             : undefined
         }>
-        {listItems.map((elements, index) => {
+        {listItems.map((elements) => {
           const itemVal = valueSelect(elements);
           const itemText = valueLabel(elements);
           return (
-            <MenuItem key={index} value={itemVal}>
+            <MenuItem key={itemVal} value={itemVal}>
               {itemText}
             </MenuItem>
           );

@@ -1,14 +1,15 @@
-/* eslint-disable unused-imports/no-unused-vars */
-import { IconButton, styled, Tooltip, tooltipClasses, TooltipProps, Typography } from "@mui/material";
+import { IconButton, Tooltip, TooltipProps, Typography } from "@mui/material";
 import React, { FC, ReactNode } from "react";
 
-interface props {
+interface IProps {
   /** El contenido (título) principal a mostrar dentro del tooltip. */
   titleTooltip: string | ReactNode;
   /** El ícono a renderizar dentro del botón (ej. <DeleteIcon />). */
+  iconComponent?: ReactNode;
+  /** @deprecated Usar `iconComponent` en su lugar. */
   componenteIcono?: ReactNode;
   /** Contenido adicional (ej. un <p>) para mostrar *dentro* del tooltip. **Solo se usa en modo `HtmlType`**. */
-  children?: ReactNode; // Corregido el typo 'chilldren'
+  children?: ReactNode;
   /** Si es `true`, el `IconButton` estará deshabilitado. */
   disabled?: boolean;
   /** El tamaño del `IconButton`. */
@@ -17,13 +18,13 @@ interface props {
   styleIconButton?: React.CSSProperties;
 }
 
-interface TypeTooltipHtml extends props {
+interface ITypeTooltipHtml extends IProps {
   typeTooltip: "HtmlType";
   /** **Requerido si `typeTooltip` es `HtmlType`**. Objeto de estilos CSS para aplicar al popper del tooltip. */
   styleTooltip: React.CSSProperties;
 }
 
-interface TypeTooltipNormal extends props {
+interface ITypeTooltipNormal extends IProps {
   typeTooltip: "normal";
   styleTooltip?: React.CSSProperties;
 }
@@ -32,7 +33,9 @@ interface TypeTooltipNormal extends props {
 type ForwardedTooltipProps = Omit<TooltipProps, "title" | "children">;
 
 // Combina los props personalizados con todos los demás props de Tooltip
-type Props = (TypeTooltipNormal | TypeTooltipHtml) & ForwardedTooltipProps;
+type Props = (ITypeTooltipNormal | ITypeTooltipHtml) & ForwardedTooltipProps;
+
+const TOOLTIP_Z_INDEX = 1500;
 
 /**
  * Componente que encapsula un `IconButton` de Material-UI dentro de un `Tooltip`.
@@ -48,7 +51,7 @@ type Props = (TypeTooltipNormal | TypeTooltipHtml) & ForwardedTooltipProps;
  * - `"normal"`: Renderiza un `Tooltip` estándar de MUI.
  * - `"HtmlType"`: Renderiza un `Tooltip` personalizado que permite estilos (`styleTooltip`) y contenido complejo (`children`).
  *
- * @param {ReactNode} props.componenteIcono - El componente de ícono (ej. `<DeleteIcon />`) que se mostrará dentro del botón.
+ * @param {ReactNode} props.iconComponent - El componente de ícono (ej. `<DeleteIcon />`) que se mostrará dentro del botón.
  * @param {string} props.titleTooltip - El texto principal a mostrar en el tooltip.
  *
  * @param {boolean} [props.disabled=false] - Si es `true`, el `IconButton` se mostrará deshabilitado.
@@ -65,7 +68,7 @@ type Props = (TypeTooltipNormal | TypeTooltipHtml) & ForwardedTooltipProps;
  * <TooltipComponent
  * typeTooltip="normal"
  * titleTooltip="Eliminar registro"
- * componenteIcono={<DeleteIcon />}
+ * iconComponent={<DeleteIcon />}
  * onClickFunction={() => console.log('Eliminado')}
  * placement="top"
  * />
@@ -75,7 +78,7 @@ type Props = (TypeTooltipNormal | TypeTooltipHtml) & ForwardedTooltipProps;
  * <TooltipComponent
  * typeTooltip="HtmlType"
  * titleTooltip="Información Adicional"
- * componenteIcono={<InfoIcon />}
+ * iconComponent={<InfoIcon />}
  * styleTooltip={{ backgroundColor: '#333', color: 'white' }}
  * arrow
  * enterDelay={500}
@@ -86,57 +89,80 @@ type Props = (TypeTooltipNormal | TypeTooltipHtml) & ForwardedTooltipProps;
 export const TooltipComponent: FC<Props> = ({
   typeTooltip,
   titleTooltip,
+  iconComponent,
   componenteIcono,
   disabled,
   sizeButton,
   children,
   styleIconButton,
   styleTooltip,
-  ...rest // Aquí se capturan 'placement', 'arrow', 'enterDelay', etc.
+  ...rest
 }) => {
-  const typeTooltipPredetermined = typeTooltip ? typeTooltip : "normal";
+  const resolvedType = typeTooltip ?? "normal";
+  const iconToRender = iconComponent ?? componenteIcono;
 
-  const HtmlTooltip = styled(({ className, ...props }: TooltipProps) => (
-    <Tooltip {...props} classes={{ popper: className }} />
-  ))(({ theme }) => ({
-    [`& .${tooltipClasses.tooltip}`]: styleTooltip
-  }));
+  const zIndexProps = { PopperProps: { sx: { zIndex: TOOLTIP_Z_INDEX } } };
 
-  const selectTypeTooltip = (typeTooltipPredetermined: string) => {
-    switch (typeTooltipPredetermined) {
-      case "normal":
-        return (
-          <>
-            <Tooltip title={titleTooltip} {...rest} PopperProps={{ sx: { zIndex: 99999 } }}>
-              <span>
-                <IconButton disabled={disabled} size={sizeButton} style={styleIconButton}>
-                  {componenteIcono}
-                </IconButton>
-              </span>
-            </Tooltip>
-          </>
-        );
-      case "HtmlType":
-        return (
-          <>
-            <HtmlTooltip
-              {...rest}
-              title={
-                <>
-                  <Typography>{titleTooltip}</Typography>
-                  {children}
-                </>
-              }>
-              <span>
-                <IconButton disabled={disabled} size={sizeButton} style={styleIconButton}>
-                  {componenteIcono ? componenteIcono : null}
-                </IconButton>
-              </span>
-            </HtmlTooltip>
-          </>
-        );
-    }
+  const renderTooltipBody = (): React.ReactElement | null => {
+    if (!iconToRender) return null;
+
+    return (
+      <span>
+        <IconButton disabled={disabled} size={sizeButton} style={styleIconButton}>
+          {iconToRender}
+        </IconButton>
+      </span>
+    );
   };
 
-  return <div className="flex flex-row items-center">{selectTypeTooltip(typeTooltipPredetermined)}</div>;
+  const tooltipBody = renderTooltipBody();
+
+  if (!tooltipBody) return null;
+
+  if (resolvedType === "normal") {
+    return (
+      <div className="flex flex-row items-center">
+        <Tooltip title={titleTooltip} {...rest} {...zIndexProps}>
+          {tooltipBody}
+        </Tooltip>
+      </div>
+    );
+  }
+
+  if (resolvedType === "HtmlType") {
+    return (
+      <div className="flex flex-row items-center">
+        <Tooltip
+          {...rest}
+          {...zIndexProps}
+          componentsProps={{
+            tooltip: {
+              sx: {
+                backgroundColor: "var(--secondary-color)",
+                border: "1px solid var(--background-color)",
+                color: "var(--text-color)",
+                ...styleTooltip
+              }
+            }
+          }}
+          title={
+            <>
+              <Typography>{titleTooltip}</Typography>
+              {children}
+            </>
+          }>
+          {tooltipBody}
+        </Tooltip>
+      </div>
+    );
+  }
+
+  console.warn(`TooltipComponent: tipo de tooltip "${resolvedType}" no válido. Usando "normal".`);
+  return (
+    <div className="flex flex-row items-center">
+      <Tooltip title={titleTooltip} {...rest} {...zIndexProps}>
+        {tooltipBody}
+      </Tooltip>
+    </div>
+  );
 };

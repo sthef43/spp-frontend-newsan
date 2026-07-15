@@ -177,7 +177,7 @@ export const AprobarEtiquetasModal: React.FC<Props> = ({ setDataTable, setOpenMo
       <div>
         <InputComponentForm
           control={control}
-          functionOnchange={onSubmitCod}
+          onKeyDown={onSubmitCod}
           name="codigoInterno"
           label="Ingrese el codigo de la etiqueta"
           rules={{ required: { message: "Debe ingresar un codigo valido", value: true } }}
