@@ -116,6 +116,29 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
     false
   );
 
+  const cambiarEstadoValoresPreview = (elemento: IAuditoriaValores, objetoValue: string) => {
+    const clonElemento = { ...elemento };
+    switch (objetoValue) {
+      case "flagMail":
+        clonElemento.flagMail = !clonElemento.flagMail;
+        break;
+      case "flagCriterio":
+        clonElemento.flagCriterio = clonElemento.flagCriterio ? false : true;
+        break;
+    }
+    if (mostrarListaValores) {
+      const actualizado = listaValoresPreview.map((value) =>
+        value.nombre === clonElemento.nombre ? clonElemento : value
+      );
+      dispatch(auditoriasUISlice.actions.setListaValoresPreview(actualizado));
+    } else {
+      const actualizado = listaValoresFetch.map((value) =>
+        value.id === clonElemento.id ? clonElemento : value
+      );
+      setListaValoresFetch(actualizado);
+    }
+  };
+
   const onSubmit = async (data: any) => {
     const nuevaLista = generarNuevaListaValores(data);
     const datosParaLaTabla = !mostrarListaValores ? generarValoresCreados() : listaValoresPreview;
@@ -154,20 +177,20 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
     });
   };
 
-  const renderInputCambiarEstado = (estado: boolean) => {
-    // elemento: IAuditoriaValores, objetoValue: string => esto va dentro de los argumentos
+  const renderInputCambiarEstado = (elemento: IAuditoriaValores, objetoValue: string) => {
+    const estado = objetoValue === "flagMail" ? elemento.flagMail : elemento.flagCriterio;
     return (
       <div className="flex flex-row justify-center items-center">
         <p
-          // onClick={() => cambiarEstadoValores(elemento, objetoValue)}
-          className={`text-sm ${
+          onClick={() => cambiarEstadoValoresPreview(elemento, objetoValue)}
+          className={`text-sm cursor-pointer ${
             estado ? "bg-green-500" : "bg-background"
           } rounded-l-md px-6 py-2 transition-colors duration-300`}>
           SI
         </p>
         <p
-          // onClick={() => cambiarEstadoValores(elemento, objetoValue)}
-          className={`text-sm ${
+          onClick={() => cambiarEstadoValoresPreview(elemento, objetoValue)}
+          className={`text-sm cursor-pointer ${
             estado ? "bg-background" : "bg-green-500"
           } rounded-r-md px-6 py-2 transition-colors duration-300`}>
           NO
@@ -340,8 +363,8 @@ export const AgregarTipoAuditoria: React.FC<Props> = ({ setOpenModal, openModal 
                       <TableRow key={value.id}>
                         <TableCell align="center">{value.nombre}</TableCell>
                         <TableCell align="center">{value.descripcion}</TableCell>
-                        <TableCell align="center">{renderInputCambiarEstado(value.flagMail)}</TableCell>
-                        <TableCell align="center">{renderInputCambiarEstado(value.flagCriterio)}</TableCell>
+                        <TableCell align="center">{renderInputCambiarEstado(value, "flagMail")}</TableCell>
+                        <TableCell align="center">{renderInputCambiarEstado(value, "flagCriterio")}</TableCell>
                       </TableRow>
                     );
                   })}
