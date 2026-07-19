@@ -7,6 +7,7 @@ import { MaterialButtons } from "app/shared/components/material-ui/MaterialButto
 import { valuesDefaultStepper } from "../../../models/utils/ValuesDefaultStepper";
 import { ForwardRounded } from "@mui/icons-material";
 import { useAppSelector } from "app/core/store/store";
+import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
 
 interface QontoStepIconPropsCustom extends StepIconProps {
   active?: boolean;
@@ -130,6 +131,7 @@ export const StepperAuditorias: React.FC<Props> = ({
   const { listaEmails, tipoAuditoriaId, listaValores, bloques } = useAppSelector(
     (state) => state.auditoriasUI
   );
+  const auditoriaEditando = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada | null);
 
   const arrayTextos = ["Nombre y Mails", "Tipo de Auditoria", "Bloques y Items"];
 
@@ -144,8 +146,13 @@ export const StepperAuditorias: React.FC<Props> = ({
     if (tipoAuditoriaId && listaValores.length > 0 && pasoActivo == 2) {
       return true;
     }
-    if (bloques && bloques.length > 0 && pasoActivo == 3) {
-      return true;
+    if (pasoActivo == 3) {
+      if (bloques && bloques.length > 0) {
+        return true;
+      }
+      if (auditoriaEditando) {
+        return true;
+      }
     }
     return false;
   };
