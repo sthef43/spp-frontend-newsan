@@ -22,6 +22,7 @@ import { IAuditoriaAsignada } from "../../models/IAuditoriaAsignada";
 import { AuditoriaAsignadaSliceRequest } from "../../slices/AuditoriaAsignadaSlice";
 import { IAuditoriaGrupoItems } from "../../models/IAuditoriaGrupoItems";
 import { AuditoriaValoresResultSliceRequest } from "../../slices/AuditoriaValoresResult.slice";
+import { auditoriasUISlice } from "../../slices/auditoriasUISlice";
 
 const initialValues: valuesDefaultStepper[] = [
   {
@@ -49,9 +50,17 @@ export const CrudCreacionAuditorias: React.FC = () => {
   } = useForm();
 
   const infoUser: IAppUser = useAppSelector((state) => state.appUser.data as IAppUser);
-  const { listaValores, listaValoresResult, bloques, listaValoresPadre, listaEmails, tipoAuditoriaId } = useAppSelector(
-    (state) => state.auditoriasUI
-  );
+  const {
+    listaValores,
+    listaValoresResult,
+    bloques,
+    listaValoresPadre,
+    listaEmails,
+    tipoAuditoriaId,
+    modoEdicionGlobal,
+    listaAuditoriasAsignadasGlobal,
+    cantidadAuditoriasAfectadas
+  } = useAppSelector((state) => state.auditoriasUI);
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
 
   const history = useHistory();
@@ -82,6 +91,29 @@ export const CrudCreacionAuditorias: React.FC = () => {
     }
   };
 
+  const handleBatchUpdate = async () => {
+    const data = {} as any;
+    const edicionAuditoriaDTO = generarAuditoriaConResultsParaEdicion(data);
+    const updates = listaAuditoriasAsignadasGlobal.map(async (asignacion) => {
+      const dtoActualizado: AuditoriaEditDTO = {
+        ...edicionAuditoriaDTO,
+        auditoriaAsignada: {
+          ...edicionAuditoriaDTO.auditoriaAsignada,
+          id: asignacion.id,
+          auditoriaId: asignacion.auditoriaId
+        }
+      };
+      return dispatch(AuditoriaAsignadaSliceRequest.updateAuditWithResults(dtoActualizado));
+    });
+    await Promise.all(updates);
+    await dispatch(AuditoriaValoresResultSliceRequest.multiPutRequest(listaValoresResult));
+    openNotificationUI(`Se actualizaron ${listaAuditoriasAsignadasGlobal.length} auditorías con éxito`, "success");
+    dispatch(auditoriasUISlice.actions.setModoEdicionGlobal(false));
+    dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal([]));
+    dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(0));
+    history.push("/main/auditorias-v2/creacion-auditorias");
+  };
+
   const onSubmit = async (data: any) => {
     let edicionAuditoriaDTO: AuditoriaEditDTO;
     let nuevaAuditoriaEntidadesDTO: AuditoriaEntidadesDTO;
@@ -90,6 +122,12 @@ export const CrudCreacionAuditorias: React.FC = () => {
       nuevaAuditoriaEntidadesDTO = generarAuditoriaConResults(data);
     } else {
       edicionAuditoriaDTO = generarAuditoriaConResultsParaEdicion(data);
+    }
+    if (auditoria !== null && modoEdicionGlobal && listaAuditoriasAsignadasGlobal.length > 0) {
+      if (await getConfirmation("Edición Global", `Se actualizarán ${listaAuditoriasAsignadasGlobal.length} auditorías asignadas. ¿Desea continuar?`)) {
+        await handleBatchUpdate();
+      }
+      return;
     }
     if (await getConfirmation("Crear Auditoria", "Desea crear la auditoria")) {
       if (auditoria === null) {
@@ -241,6 +279,8 @@ export const CrudCreacionAuditorias: React.FC = () => {
           resetFather={reset}
           errosFather={errors}
           pasoActivo={pasoActivoNumber}
+          modoEdicionGlobal={modoEdicionGlobal}
+          cantidadAuditoriasAfectadas={cantidadAuditoriasAfectadas}
         />
       </form>
     </ContainerForPages>

@@ -4,6 +4,7 @@ import { IAuditoriaGrupoItems } from "../models/IAuditoriaGrupoItems";
 import { IAuditoriaListaValores } from "../models/IAuditoriaListaValores";
 import { IAuditoriaGrupoItemsResult } from "../models/IAuditoriaGrupoItemsResult";
 import { IAuditoriaValoresResult } from "../models/IAuditoriaValoresResult";
+import { IAuditoriaAsignada } from "../models/IAuditoriaAsignada";
 
 interface AuditoriasUIState {
   cantidadBloques: number;
@@ -23,6 +24,9 @@ interface AuditoriasUIState {
   activeFetchTipoAuditoria: boolean;
   activeBloqItems: boolean;
   activeFetchTipoAgrupacion: boolean;
+  modoEdicionGlobal: boolean;
+  listaAuditoriasAsignadasGlobal: IAuditoriaAsignada[];
+  cantidadAuditoriasAfectadas: number;
 }
 
 const initialState: AuditoriasUIState = {
@@ -42,7 +46,10 @@ const initialState: AuditoriasUIState = {
   activeFetchListaValores: true,
   activeFetchTipoAuditoria: true,
   activeBloqItems: true,
-  activeFetchTipoAgrupacion: true
+  activeFetchTipoAgrupacion: true,
+  modoEdicionGlobal: false,
+  listaAuditoriasAsignadasGlobal: [],
+  cantidadAuditoriasAfectadas: 0
 };
 
 export const auditoriasUISlice = createSlice({
@@ -106,6 +113,15 @@ export const auditoriasUISlice = createSlice({
     },
     setActiveFetchTipoAgrupacion: (state, action: PayloadAction<boolean>) => {
       state.activeFetchTipoAgrupacion = action.payload;
+    },
+    setModoEdicionGlobal: (state, action: PayloadAction<boolean>) => {
+      state.modoEdicionGlobal = action.payload;
+    },
+    setListaAuditoriasAsignadasGlobal: (state, action: PayloadAction<IAuditoriaAsignada[]>) => {
+      state.listaAuditoriasAsignadasGlobal = action.payload;
+    },
+    setCantidadAuditoriasAfectadas: (state, action: PayloadAction<number>) => {
+      state.cantidadAuditoriasAfectadas = action.payload;
     }
   }
 });

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { AddCircle, MoreHorizRounded } from "@mui/icons-material";
-import { Button } from "@mui/material";
+import { AddCircle, EditRounded, MoreHorizRounded } from "@mui/icons-material";
+import { Button, Switch, FormControlLabel } from "@mui/material";
 import { plantSlice } from "app/Middleware/reducers";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser, IPlant } from "app/models";
@@ -15,8 +15,9 @@ import { useGetAllPlantsExecute } from "app/shared/hooks/hooksServices/usePlantA
 import { UseUtilHooks } from "app/shared/hooks/useUtilsHooks";
 import { useForm } from "react-hook-form";
 import { useHistory } from "react-router-dom";
+import { unwrapResult } from "@reduxjs/toolkit";
 import { IAuditoria } from "../../models/IAuditoria";
-import { auditoriaAsignadaSlice } from "../../slices/AuditoriaAsignadaSlice";
+import { auditoriaAsignadaSlice, AuditoriaAsignadaSliceRequest } from "../../slices/AuditoriaAsignadaSlice";
 import { auditoriasUISlice } from "../../slices/auditoriasUISlice";
 import { useGetAllAuditsFatherByRolAndPlantId } from "../../composables/useAuditoriasApi";
 import { ModalCompoment } from "app/shared/components/ui/ModalComponent";
@@ -37,6 +38,7 @@ export const CreacionAuditoriasMain: React.FC = () => {
   const watchPlanta = watch("planta");
   const history = useHistory();
   const dispatch = useAppDispatch();
+  const modoEdicionGlobal = useAppSelector((state) => state.auditoriasUI.modoEdicionGlobal);
 
   const [openModalBloques, setOpenModalBloques] = useState<boolean>(false);
   const [openModalValores, setOpenModalValores] = useState<boolean>(false);
@@ -76,6 +78,44 @@ export const CreacionAuditoriasMain: React.FC = () => {
     setOpenModalValores(true);
   };
 
+  const handleEditAuditoria = async (auditoria: IAuditoria) => {
+    dispatch(auditoriasUISlice.actions.setBloquesVacio([]));
+    const response = unwrapResult(
+      await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id))
+    );
+    if (response) {
+      dispatch(auditoriaAsignadaSlice.actions.setAuditoria(response));
+      dispatch(
+        auditoriasUISlice.actions.setListaValores(
+          response.auditoria.auditoriaListaValoresResult.auditoriaValoresResult
+        )
+      );
+      response.auditoriaGrupoItemsResult.map((elementos) => {
+        dispatch(auditoriasUISlice.actions.setBloques(elementos));
+      });
+      dispatch(
+        auditoriasUISlice.actions.setTipoAuditoria(
+          response.auditoria.auditoriaListaValoresResult.auditoriaTiposId
+        )
+      );
+      if (modoEdicionGlobal) {
+        const todasLasAsignaciones = unwrapResult(
+          await dispatch(AuditoriaAsignadaSliceRequest.getAllAuditAsignedByAuditId(auditoria.id))
+        );
+        dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal(todasLasAsignaciones));
+        dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(todasLasAsignaciones.length));
+      } else {
+        dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal([]));
+        dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(0));
+      }
+      history.push(`/main/auditorias-v2/crud-creacion-auditorias/${response.id}`);
+    }
+  };
+
+  const handleToggleGlobalEdit = () => {
+    dispatch(auditoriasUISlice.actions.setModoEdicionGlobal(!modoEdicionGlobal));
+  };
+
   useEffect(() => {
     TitleChanger("Creacion de Auditorías");
     plantsExecute();
@@ -100,14 +140,20 @@ export const CreacionAuditoriasMain: React.FC = () => {
             valueKey={(value) => value}
           />
         </div>
-        <Button
-          disabled={!watchPlanta}
-          className={`${buttonClases.blueButton} p-3 w-1/4`}
-          variant="contained"
-          onClick={handleCreateAuditoria}>
-          <AddCircle sx={{ marginRight: "10px" }} />
-          CREAR AUDITORIA
-        </Button>
+        <div className="flex flex-row items-center gap-x-4">
+          <FormControlLabel
+            control={<Switch checked={modoEdicionGlobal} onChange={handleToggleGlobalEdit} color="primary" />}
+            label={modoEdicionGlobal ? "Edición Global" : "Edición Individual"}
+          />
+          <Button
+            disabled={!watchPlanta}
+            className={`${buttonClases.blueButton} p-3 w-full`}
+            variant="contained"
+            onClick={handleCreateAuditoria}>
+            <AddCircle sx={{ marginRight: "10px" }} />
+            CREAR AUDITORIA
+          </Button>
+        </div>
       </div>
       <ContainerForPages optionsLayout="Table" activeEffectVisible>
         <TableComponent
@@ -162,6 +208,14 @@ export const CreacionAuditoriasMain: React.FC = () => {
                         }}>
                         <CheckListIconEdited />
                         <p className="font-semibold">Examinar Valores</p>
+                      </div>
+                      <div
+                        className="flex flex-row items-center gap-x-3 cursor-pointer rounded-lg hover:bg-primaryNewOpacity hover:p-1 hover:scale-105 transition-all duration-200"
+                        onClick={() => {
+                          handleEditAuditoria(auditoria);
+                        }}>
+                        <EditRounded color="primary" />
+                        <p className="font-semibold">Editar</p>
                       </div>
                     </PopperComponent>
                   </>
