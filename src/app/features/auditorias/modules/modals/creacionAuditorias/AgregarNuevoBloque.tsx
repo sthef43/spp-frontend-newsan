@@ -4,6 +4,7 @@
 import React, { useState } from "react";
 import { useNotificationUI } from "app/shared/hooks/useNotificationUI";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
+import { unwrapResult } from "@reduxjs/toolkit";
 import useTitleOfApp from "app/shared/hooks/UseTitleOfApp";
 import { useForm } from "react-hook-form";
 import { MaterialButtons } from "app/shared/components/material-ui/MaterialButtons";
@@ -60,6 +61,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
 
   const edicionActiva = useAppSelector((state) => state.auditoriasUI.edicionActiva);
   const auditoria = useAppSelector((state) => state.auditoriaAsignada.data as IAuditoriaAsignada);
+  const modoEdicionGlobal = useAppSelector((state) => state.auditoriasUI.modoEdicionGlobal);
 
   const buttonClases = MaterialButtons();
   const dispatch = useAppDispatch();
@@ -144,6 +146,16 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
     });
   };
 
+  const refetchAfterEdit = async () => {
+    await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id));
+    if (modoEdicionGlobal && auditoria.auditoriaId) {
+      const todasLasAsignaciones = unwrapResult(
+        await dispatch(AuditoriaAsignadaSliceRequest.getAllAuditAsignedByAuditId(auditoria.auditoriaId))
+      );
+      dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal(todasLasAsignaciones));
+    }
+  };
+
   const actualizarListadoItems = (items: IAuditoriaItemsResult[]) => {
     FetchPut({
       consoleLog: false,
@@ -152,7 +164,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
       activeConfirmation: false,
       functionAdd: async () => {
         openNotificationUI("Se actualizaron los items con exito", "success");
-        await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id));
+        await refetchAfterEdit();
         setOpenModal(false);
       }
     });
@@ -168,7 +180,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
       titleUser: "Eliminar item",
       functionAdd: async () => {
         openNotificationUI("Se elimino el item con exito", "success");
-        await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id));
+        await refetchAfterEdit();
         handleDeleteItem(index);
       }
     });
@@ -187,6 +199,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
   const filterItems = (data: any): IAuditoriaItems[] | IAuditoriaItemsResult[] => {
     const itemsMapeados = tipoItem.map((_, index) => {
       const itemExistId = data[`itemExistente${index}`];
+      const existingItem = edicionActiva ? grupoItemsSeleccionado?.auditoriaItemsResult[index] : undefined;
       const item = {
         nombre:
           itemExistId !== undefined && itemExistId !== null
@@ -197,7 +210,11 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
             ? listaDeItems.find((item) => item.id === itemExistId)?.auditoriaNivelItemId
             : Number(data[`nivelRiesgo${index}`]),
         itemExistente: itemExistId !== undefined && itemExistId !== null ? true : false,
-        id: edicionActiva ? grupoItemsSeleccionado?.auditoriaItemsResult[index]?.id ?? 0 : itemExistId ?? 0
+        id: edicionActiva
+          ? existingItem
+            ? existingItem.id
+            : undefined
+          : (itemExistId ?? 0)
       };
       return item;
     });
