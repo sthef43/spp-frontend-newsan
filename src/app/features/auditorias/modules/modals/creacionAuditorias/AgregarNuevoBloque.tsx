@@ -26,6 +26,7 @@ import { TransitionGroup } from "react-transition-group";
 import { IAuditoriaGrupoItemsResult } from "../../../models/IAuditoriaGrupoItemsResult";
 import { auditoriasUISlice } from "../../../slices/auditoriasUISlice";
 import { AuditoriaItemsResultSliceRequest } from "../../../slices/AuditoriaItemsResultSlice";
+import { AuditoriaGrupoItemsResultSliceRequest } from "../../../slices/AuditoriaGrupoItemsResultSlice";
 import { AuditoriaAsignadaSliceRequest } from "../../../slices/AuditoriaAsignadaSlice";
 import { IAuditoriaAsignada } from "../../../models/IAuditoriaAsignada";
 import { IAuditoriaItemsResult } from "../../../models/IAuditoriaItemsResult";
@@ -169,17 +170,31 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
   };
 
   const deleteItemEdicion = (idEliminacion: number, index: number) => {
+    const isLastItem = tipoItem.length === 1;
     FetchDelete({
       consoleLog: false,
       deleteId: idEliminacion,
       sliceRequest: AuditoriaItemsResultSliceRequest.deleteRequest,
       mensajePersonalizado: true,
-      messageUser: "Se eliminara el item seleccionado del bloque, ¿Desea continuar?",
-      titleUser: "Eliminar item",
+      messageUser: isLastItem
+        ? "Se eliminará el ítem seleccionado. Al ser el último, también se eliminará el bloque entero. ¿Desea continuar?"
+        : "Se eliminara el item seleccionado del bloque, ¿Desea continuar?",
+      titleUser: isLastItem ? "Eliminar ítem y bloque" : "Eliminar item",
       functionAdd: async () => {
-        openNotificationUI("Se elimino el item con exito", "success");
-        await refetchAfterEdit();
-        handleDeleteItem(index);
+        if (isLastItem && grupoItemsSeleccionado) {
+          try {
+            await dispatch(AuditoriaGrupoItemsResultSliceRequest.deleteRequest(grupoItemsSeleccionado.id));
+            openNotificationUI("Se eliminó el ítem y el bloque con éxito", "success");
+            await refetchAfterEdit();
+            setOpenModal(false);
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          openNotificationUI("Se elimino el item con exito", "success");
+          await refetchAfterEdit();
+          handleDeleteItem(index);
+        }
       }
     });
   };
@@ -208,7 +223,8 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
             ? listaDeItems.find((item) => item.id === itemExistId)?.auditoriaNivelItemId
             : Number(data[`nivelRiesgo${index}`]),
         itemExistente: itemExistId !== undefined && itemExistId !== null ? true : false,
-        id: edicionActiva ? (existingItem ? existingItem.id : undefined) : itemExistId ?? 0
+        id: edicionActiva ? (existingItem ? existingItem.id : undefined) : itemExistId ?? 0,
+        auditoriaGrupoItemsResultId: grupoItemsSeleccionado?.id
       };
       return item;
     });
