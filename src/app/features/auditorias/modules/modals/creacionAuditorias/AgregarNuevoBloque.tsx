@@ -108,8 +108,6 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
     const itemsExistentes = nuevosItems.filter((item) => item.itemExistente);
     const itemsNuevos = nuevosItems.filter((item) => !item.itemExistente);
 
-    console.log(itemsExistentes, itemsNuevos);
-
     if (await getConfirmation(edicionActiva ? "Edicion De Bloque" : "Creacion De Bloque", "¿Desea crear el bloque?")) {
       if (!edicionActiva) {
         FetchPost(AuditoriaGrupoItemsSliceRequest.PostRequest, nuevoGrupoItems(data), false, (responseGrupo) => {
@@ -147,7 +145,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
   };
 
   const refetchAfterEdit = async () => {
-    await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id));
+    await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.auditoriaId));
     if (modoEdicionGlobal && auditoria.auditoriaId) {
       const todasLasAsignaciones = unwrapResult(
         await dispatch(AuditoriaAsignadaSliceRequest.getAllAuditAsignedByAuditId(auditoria.auditoriaId))
@@ -210,11 +208,7 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
             ? listaDeItems.find((item) => item.id === itemExistId)?.auditoriaNivelItemId
             : Number(data[`nivelRiesgo${index}`]),
         itemExistente: itemExistId !== undefined && itemExistId !== null ? true : false,
-        id: edicionActiva
-          ? existingItem
-            ? existingItem.id
-            : undefined
-          : (itemExistId ?? 0)
+        id: edicionActiva ? (existingItem ? existingItem.id : undefined) : itemExistId ?? 0
       };
       return item;
     });
