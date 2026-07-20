@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { AddCircle, EditRounded, MoreHorizRounded } from "@mui/icons-material";
-import { Button, Switch, FormControlLabel } from "@mui/material";
+import { Button } from "@mui/material";
 import { plantSlice } from "app/Middleware/reducers";
 import { useAppDispatch, useAppSelector } from "app/core/store/store";
 import { IAppUser, IPlant } from "app/models";
@@ -27,6 +27,8 @@ import { useGetAllListValuesByAuditIdExcute } from "../../composables/useAuditor
 import { IAuditoriaListaValoresResult } from "../../models/IAuditoriaListaValoresResult";
 import { useGetAllGroupResultsByAuditIdExcute } from "../../composables/useAuditoriaGrupoItemsResultApi";
 import { IAuditoriaGrupoItemsResult } from "../../models/IAuditoriaGrupoItemsResult";
+import { IAuditoriaAsignada } from "../../models/IAuditoriaAsignada";
+import { SeleccionarAuditoriaEditarModal } from "../modals/creacionAuditorias/SeleccionarAuditoriaEditarModal";
 
 export const CreacionAuditoriasMain: React.FC = () => {
   const { control, watch } = useForm();
@@ -38,12 +40,13 @@ export const CreacionAuditoriasMain: React.FC = () => {
   const watchPlanta = watch("planta");
   const history = useHistory();
   const dispatch = useAppDispatch();
-  const modoEdicionGlobal = useAppSelector((state) => state.auditoriasUI.modoEdicionGlobal);
 
   const [openModalBloques, setOpenModalBloques] = useState<boolean>(false);
   const [openModalValores, setOpenModalValores] = useState<boolean>(false);
+  const [openModalSeleccion, setOpenModalSeleccion] = useState<boolean>(false);
 
   const [auditoriaSeleccionada, setAuditoriaSeleccionada] = useState<IAuditoria | null>(null);
+  const [auditoriaPadreId, setAuditoriaPadreId] = useState<number>(0);
 
   const { TitleChanger } = useTitleOfApp();
   const { formatDateHourOrMinutes } = UseUtilHooks();
@@ -78,7 +81,7 @@ export const CreacionAuditoriasMain: React.FC = () => {
     setOpenModalValores(true);
   };
 
-  const handleEditAuditoria = async (auditoria: IAuditoria) => {
+  const handleEdicionGlobal = async (auditoria: IAuditoria) => {
     dispatch(auditoriasUISlice.actions.setBloquesVacio([]));
     const response = unwrapResult(
       await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(auditoria.id))
@@ -98,22 +101,19 @@ export const CreacionAuditoriasMain: React.FC = () => {
           response.auditoria.auditoriaListaValoresResult.auditoriaTiposId
         )
       );
-      if (modoEdicionGlobal) {
-        const todasLasAsignaciones = unwrapResult(
-          await dispatch(AuditoriaAsignadaSliceRequest.getAllAuditAsignedByAuditId(auditoria.id))
-        );
-        dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal(todasLasAsignaciones));
-        dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(todasLasAsignaciones.length));
-      } else {
-        dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal([]));
-        dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(0));
-      }
+      const todasLasAsignaciones = unwrapResult(
+        await dispatch(AuditoriaAsignadaSliceRequest.getAllAuditAsignedByAuditId(auditoria.id))
+      );
+      dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal(todasLasAsignaciones));
+      dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(todasLasAsignaciones.length));
+      dispatch(auditoriasUISlice.actions.setModoEdicionGlobal(true));
       history.push(`/main/auditorias-v2/crud-creacion-auditorias/${response.id}`);
     }
   };
 
-  const handleToggleGlobalEdit = () => {
-    dispatch(auditoriasUISlice.actions.setModoEdicionGlobal(!modoEdicionGlobal));
+  const handleAbrirSeleccionEspecifica = (auditoria: IAuditoria) => {
+    setAuditoriaPadreId(auditoria.id);
+    setOpenModalSeleccion(true);
   };
 
   useEffect(() => {
@@ -141,10 +141,6 @@ export const CreacionAuditoriasMain: React.FC = () => {
           />
         </div>
         <div className="flex flex-row items-center gap-x-4">
-          <FormControlLabel
-            control={<Switch checked={modoEdicionGlobal} onChange={handleToggleGlobalEdit} color="primary" />}
-            label={modoEdicionGlobal ? "Edición Global" : "Edición Individual"}
-          />
           <Button
             disabled={!watchPlanta}
             className={`${buttonClases.blueButton} p-3 w-full`}
@@ -212,10 +208,18 @@ export const CreacionAuditoriasMain: React.FC = () => {
                       <div
                         className="flex flex-row items-center gap-x-3 cursor-pointer rounded-lg hover:bg-primaryNewOpacity hover:p-1 hover:scale-105 transition-all duration-200"
                         onClick={() => {
-                          handleEditAuditoria(auditoria);
+                          handleAbrirSeleccionEspecifica(auditoria);
                         }}>
                         <EditRounded color="primary" />
-                        <p className="font-semibold">Editar</p>
+                        <p className="font-semibold">Editar Específica</p>
+                      </div>
+                      <div
+                        className="flex flex-row items-center gap-x-3 cursor-pointer rounded-lg hover:bg-primaryNewOpacity hover:p-1 hover:scale-105 transition-all duration-200"
+                        onClick={() => {
+                          handleEdicionGlobal(auditoria);
+                        }}>
+                        <EditRounded color="primary" />
+                        <p className="font-semibold">Edición Global</p>
                       </div>
                     </PopperComponent>
                   </>
@@ -248,6 +252,19 @@ export const CreacionAuditoriasMain: React.FC = () => {
         subTitle="Modal exclusivamente para poder examinar valores no editar"
         titleModalStyle="Audit">
         <ExaminarValoresAudiutoria listaValores={listaValores} setOpenModal={setOpenModalValores} />
+      </ModalCompoment>
+      <ModalCompoment
+        setOpenPopup={setOpenModalSeleccion}
+        openPopup={openModalSeleccion}
+        showModalCenterPage
+        titleModalStyle="Audit"
+        subTitle="Seleccione la auditoría asignada que desea editar"
+        title="Seleccionar Auditoría a Editar">
+        <SeleccionarAuditoriaEditarModal
+          setOpenModal={setOpenModalSeleccion}
+          openModal={openModalSeleccion}
+          auditoriaId={auditoriaPadreId}
+        />
       </ModalCompoment>
     </ContainerForPages>
   );
