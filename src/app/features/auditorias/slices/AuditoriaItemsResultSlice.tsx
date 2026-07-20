@@ -18,6 +18,13 @@ class AuditoriaItemsResultClassSlice extends GenericSlice<IAuditoriaItemsResult>
       return await errorNotification(() => this.service.MultiPutItemsResult(items), info);
     }
   );
+
+  DeleteItemsGlobal = createAsyncThunk<boolean, { AuditoriasIdPadre: number; nombreItem: string }>(
+    `AuditoriaItemsResult/DeleteItemsGlobal`,
+    async (model, info) => {
+      return await errorNotification(() => this.service.DeleteItemsGlobal(model), info);
+    }
+  );
 }
 
 export const AuditoriaItemsResultSliceRequest = new AuditoriaItemsResultClassSlice(auditoriaItemsResultService);

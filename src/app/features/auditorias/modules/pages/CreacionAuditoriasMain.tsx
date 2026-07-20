@@ -59,6 +59,7 @@ export const CreacionAuditoriasMain: React.FC = () => {
     useGetAllListValuesByAuditIdExcute<IAuditoriaListaValoresResult>();
 
   const handleCreateAuditoria = () => {
+    dispatch(auditoriasUISlice.actions.setModoEdicionGlobal(false));
     dispatch(auditoriaAsignadaSlice.actions.setAuditoria(null));
     dispatch(auditoriasUISlice.actions.setListaEmails(""));
     dispatch(auditoriasUISlice.actions.setBloquesVacio([]));
@@ -89,17 +90,13 @@ export const CreacionAuditoriasMain: React.FC = () => {
     if (response) {
       dispatch(auditoriaAsignadaSlice.actions.setAuditoria(response));
       dispatch(
-        auditoriasUISlice.actions.setListaValores(
-          response.auditoria.auditoriaListaValoresResult.auditoriaValoresResult
-        )
+        auditoriasUISlice.actions.setListaValores(response.auditoria.auditoriaListaValoresResult.auditoriaValoresResult)
       );
       response.auditoriaGrupoItemsResult.map((elementos) => {
         dispatch(auditoriasUISlice.actions.setBloques(elementos));
       });
       dispatch(
-        auditoriasUISlice.actions.setTipoAuditoria(
-          response.auditoria.auditoriaListaValoresResult.auditoriaTiposId
-        )
+        auditoriasUISlice.actions.setTipoAuditoria(response.auditoria.auditoriaListaValoresResult.auditoriaTiposId)
       );
       const todasLasAsignaciones = unwrapResult(
         await dispatch(AuditoriaAsignadaSliceRequest.getAllAuditAsignedByAuditId(auditoria.id))
@@ -205,14 +202,14 @@ export const CreacionAuditoriasMain: React.FC = () => {
                         <CheckListIconEdited />
                         <p className="font-semibold">Examinar Valores</p>
                       </div>
-                      <div
+                      {/* <div
                         className="flex flex-row items-center gap-x-3 cursor-pointer rounded-lg hover:bg-primaryNewOpacity hover:p-1 hover:scale-105 transition-all duration-200"
                         onClick={() => {
                           handleAbrirSeleccionEspecifica(auditoria);
                         }}>
                         <EditRounded color="primary" />
                         <p className="font-semibold">Editar Específica</p>
-                      </div>
+                      </div> */}
                       <div
                         className="flex flex-row items-center gap-x-3 cursor-pointer rounded-lg hover:bg-primaryNewOpacity hover:p-1 hover:scale-105 transition-all duration-200"
                         onClick={() => {

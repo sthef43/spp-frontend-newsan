@@ -32,10 +32,13 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
     };
   }, [clearCurrentTimeout]);
 
-  const handleOpen = useCallback((event: React.MouseEvent<HTMLElement> | React.FocusEvent<HTMLElement>) => {
-    clearCurrentTimeout();
-    setAnchorEl(event.currentTarget);
-  }, [clearCurrentTimeout]);
+  const handleOpen = useCallback(
+    (event: React.MouseEvent<HTMLElement> | React.FocusEvent<HTMLElement>) => {
+      clearCurrentTimeout();
+      setAnchorEl(event.currentTarget);
+    },
+    [clearCurrentTimeout]
+  );
 
   const handleClose = useCallback(() => {
     clearCurrentTimeout();
@@ -45,25 +48,31 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
     }, HOVER_TIMEOUT_MS);
   }, [clearCurrentTimeout]);
 
-  const handleToggle = useCallback((event: React.MouseEvent<HTMLElement>) => {
-    if (anchorEl) {
-      clearCurrentTimeout();
-      setAnchorEl(null);
-    } else {
-      setAnchorEl(event.currentTarget);
-    }
-  }, [anchorEl, clearCurrentTimeout]);
+  const handleToggle = useCallback(
+    (event: React.MouseEvent<HTMLElement>) => {
+      if (anchorEl) {
+        clearCurrentTimeout();
+        setAnchorEl(null);
+      } else {
+        setAnchorEl(event.currentTarget);
+      }
+    },
+    [anchorEl, clearCurrentTimeout]
+  );
 
-  const handleKeyDown = useCallback((event: React.KeyboardEvent<HTMLElement>) => {
-    if (event.key === "Escape") {
-      clearCurrentTimeout();
-      setAnchorEl(null);
-    }
-    if (event.key === "Enter" || event.key === " ") {
-      event.preventDefault();
-      handleToggle(event as unknown as React.MouseEvent<HTMLElement>);
-    }
-  }, [clearCurrentTimeout, handleToggle]);
+  const handleKeyDown = useCallback(
+    (event: React.KeyboardEvent<HTMLElement>) => {
+      if (event.key === "Escape") {
+        clearCurrentTimeout();
+        setAnchorEl(null);
+      }
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        handleToggle(event as unknown as React.MouseEvent<HTMLElement>);
+      }
+    },
+    [clearCurrentTimeout, handleToggle]
+  );
 
   const open = Boolean(anchorEl);
   const id = open ? `popper-${elementoIndex(elemento)}` : undefined;
@@ -77,8 +86,7 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
         onKeyDown={handleKeyDown}
         aria-describedby={id}
         aria-haspopup="menu"
-        aria-expanded={open}
-      >
+        aria-expanded={open}>
         {showElement ? showElement : <MoreHorizRounded />}
       </IconButton>
       <Popper
@@ -102,7 +110,7 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
                 sx={{
                   border: 1,
                   borderColor: "#e5e7eb",
-                  backgroundColor: theme.palette.secondary.main,
+                  backgroundColor: "var(--background-color)",
                   zIndex: 10,
                   minWidth: "25rem",
                   borderRadius: "12px",
@@ -117,7 +125,7 @@ export const PopperComponent = <T,>({ elemento, elementoIndex, children, showEle
                 sx={{
                   border: 1,
                   borderColor: "#e5e7eb",
-                  backgroundColor: theme.palette.secondary.main,
+                  backgroundColor: "var(--background-color)",
                   zIndex: 10,
                   minWidth: "15rem",
                   borderRadius: "12px",

@@ -91,8 +91,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
     }
   };
 
-  const handleBatchUpdate = async () => {
-    const data = {} as any;
+  const handleBatchUpdate = async (data: any) => {
     const edicionAuditoriaDTO = generarAuditoriaConResultsParaEdicion(data);
     const updates = listaAuditoriasAsignadasGlobal.map(async (asignacion) => {
       const dtoActualizado: AuditoriaEditDTO = {
@@ -124,12 +123,22 @@ export const CrudCreacionAuditorias: React.FC = () => {
       edicionAuditoriaDTO = generarAuditoriaConResultsParaEdicion(data);
     }
     if (auditoria !== null && modoEdicionGlobal && listaAuditoriasAsignadasGlobal.length > 0) {
-      if (await getConfirmation("Edición Global", `Se actualizarán ${listaAuditoriasAsignadasGlobal.length} auditorías asignadas. ¿Desea continuar?`)) {
-        await handleBatchUpdate();
+      if (
+        await getConfirmation(
+          "Edición Global",
+          `Se actualizarán ${listaAuditoriasAsignadasGlobal.length} auditorías asignadas. ¿Desea continuar?`
+        )
+      ) {
+        await handleBatchUpdate(data);
       }
       return;
     }
-    if (await getConfirmation("Crear Auditoria", "Desea crear la auditoria")) {
+    if (
+      await getConfirmation(
+        auditoria === null ? "Creacion de Auditoria" : "Edicion de Auditoria",
+        "Desea " + (auditoria === null ? "crear" : "actualizar") + " la auditoria"
+      )
+    ) {
       if (auditoria === null) {
         FetchPost(AuditoriaSliceRequest.createAuditWithResults, nuevaAuditoriaEntidadesDTO, false, () => {
           openNotificationUI("Auditoria creada exitosamente", "success");
@@ -143,7 +152,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
           functionAdd: async () => {
             await dispatch(AuditoriaValoresResultSliceRequest.multiPutRequest(listaValoresResult));
             openNotificationUI("Se actualizo la auditoria con exito", "success");
-            history.push("/main/auditorias-v2/realizar-auditorias");
+            history.push("/main/auditorias-v2/creacion-auditorias");
           }
         });
       }
@@ -242,6 +251,7 @@ export const CrudCreacionAuditorias: React.FC = () => {
       rolId: infoUser.permisos.rolId,
       plantId: infoUser.operator.plantaId,
       auditoriaMailGroup: listaEmails,
+      id: auditoria ? auditoria.id : 0,
       auditoriaId: auditoria ? auditoria.id : 0 //Uso este id para simular la edicion de la auditoria asignada
     };
     return nuevaAuditoria;

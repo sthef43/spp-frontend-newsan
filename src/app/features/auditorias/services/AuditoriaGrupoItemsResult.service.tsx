@@ -22,4 +22,17 @@ export class AuditoriaGrupoItemsResultService extends GenericService<IAuditoriaG
         });
     });
   }
+
+  public async DeleteGroupItemsGlobal(model: { AuditoriasIdPadre: number; nombreItem: string }): Promise<boolean> {
+    return new Promise<boolean>((resolve, reject) => {
+      axios
+        .put(`${import.meta.env.VITE_API_URL}/${this.Url}/DeleteGroupItemsGlobal`, model)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
 }

@@ -44,22 +44,18 @@ export const SeleccionarAuditoriaEditarModal: React.FC<Props> = ({ setOpenModal,
   const handleEditarEspecifica = async (asignacion: IAuditoriaAsignada) => {
     dispatch(auditoriasUISlice.actions.setBloquesVacio([]));
     const response = unwrapResult(
-      await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesById(asignacion.id))
+      await dispatch(AuditoriaAsignadaSliceRequest.getAuditResultWithAllDatesByAuditAsignadaId(asignacion.id))
     );
     if (response) {
       dispatch(auditoriaAsignadaSlice.actions.setAuditoria(response));
       dispatch(
-        auditoriasUISlice.actions.setListaValores(
-          response.auditoria.auditoriaListaValoresResult.auditoriaValoresResult
-        )
+        auditoriasUISlice.actions.setListaValores(response.auditoria.auditoriaListaValoresResult.auditoriaValoresResult)
       );
       response.auditoriaGrupoItemsResult.map((elementos) => {
         dispatch(auditoriasUISlice.actions.setBloques(elementos));
       });
       dispatch(
-        auditoriasUISlice.actions.setTipoAuditoria(
-          response.auditoria.auditoriaListaValoresResult.auditoriaTiposId
-        )
+        auditoriasUISlice.actions.setTipoAuditoria(response.auditoria.auditoriaListaValoresResult.auditoriaTiposId)
       );
       dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal([]));
       dispatch(auditoriasUISlice.actions.setCantidadAuditoriasAfectadas(0));

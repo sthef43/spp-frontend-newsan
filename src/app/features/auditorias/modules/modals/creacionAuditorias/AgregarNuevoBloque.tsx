@@ -67,7 +67,10 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
   const buttonClases = MaterialButtons();
   const dispatch = useAppDispatch();
   const { FetchPost, FetchDelete, FetchPut } = useFetchApiMultiResults<
-    IAuditoriaGrupoItems | IAuditoriaItems[] | IAuditoriaGrupoItemsBloq[]
+    | IAuditoriaGrupoItems
+    | IAuditoriaItems[]
+    | IAuditoriaGrupoItemsBloq[]
+    | { AuditoriasIdPadre: number; nombreItem: string }
   >();
   const { openNotificationUI } = useNotificationUI();
   const { getConfirmation } = useConfirmationDialog();
@@ -194,6 +197,40 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
           openNotificationUI("Se elimino el item con exito", "success");
           await refetchAfterEdit();
           handleDeleteItem(index);
+          setOpenModal(false);
+        }
+      }
+    });
+  };
+
+  const deleteItemsGlobal = (AuditoriasIdPadre: number, nombreItem: string) => {
+    const isLastItem = tipoItem.length === 1;
+    FetchPut({
+      consoleLog: false,
+      modelPut: { AuditoriasIdPadre, nombreItem },
+      sliceRequest: AuditoriaItemsResultSliceRequest.DeleteItemsGlobal,
+      mensajePersonalizado: true,
+      activeConfirmation: true,
+      messageUser: isLastItem
+        ? "Se eliminará el ítem seleccionado. Al ser el último, también se eliminará el bloque entero. ¿Desea continuar?"
+        : "Se eliminara el item seleccionado del bloque, ¿Desea continuar?",
+      titleUser: isLastItem ? "Eliminar ítem y bloque" : "Eliminar item",
+      functionAdd: async () => {
+        if (isLastItem && grupoItemsSeleccionado) {
+          try {
+            await dispatch(
+              AuditoriaGrupoItemsResultSliceRequest.DeleteGroupItemsGlobal({ AuditoriasIdPadre, nombreItem })
+            );
+            openNotificationUI("Se eliminó el ítem y el bloque con éxito", "success");
+            await refetchAfterEdit();
+            setOpenModal(false);
+          } catch (error) {
+            console.error(error);
+          }
+        } else {
+          openNotificationUI("Se eliminaron los items de forma global", "success");
+          await refetchAfterEdit();
+          setOpenModal(false);
         }
       }
     });
@@ -279,7 +316,11 @@ export const AgregarNuevoBloque: React.FC<Props> = ({ setOpenModal, openModal, g
           className="cursor-pointer"
           color="error"
           onClick={() => {
-            edicionActiva ? deleteItemEdicion(item?.id, index) : handleDeleteItem(index);
+            edicionActiva && !modoEdicionGlobal
+              ? deleteItemEdicion(item?.id, index)
+              : edicionActiva && modoEdicionGlobal
+              ? deleteItemsGlobal(auditoria.auditoriaId, item?.nombre || "")
+              : handleDeleteItem(index);
           }}
         />
       </ContainerForPages>

@@ -17,6 +17,13 @@ class AuditoriaGrupoItemsResultClassSlice extends GenericSlice<IAuditoriaGrupoIt
       return await this.service.GetAllGroupResultsByAuditId(auditoriaId);
     }
   );
+
+  DeleteGroupItemsGlobal = createAsyncThunk<boolean, { AuditoriasIdPadre: number; nombreItem: string }>(
+    "AuditoriaGrupoItemsResult/DeleteGroupItemsGlobal",
+    async (model) => {
+      return await this.service.DeleteGroupItemsGlobal(model);
+    }
+  );
 }
 
 export const AuditoriaGrupoItemsResultSliceRequest = new AuditoriaGrupoItemsResultClassSlice(

@@ -16,8 +16,6 @@ import { useFetchApiMultiResults } from "app/shared/hooks/UseFetchApiMultiResult
 import { useForm, Controller } from "react-hook-form";
 import { SelectComponentForm } from "app/shared/helpers/ComponentsForForms/SelectComponentForm";
 
-// ─── Interfaces ───────────────────────────────────────────────────────────────
-
 interface ImagenAnteriorProps {
   etiquetaImagen: IEtiquetasImagen | null;
 }
@@ -33,8 +31,6 @@ interface CustomAutocompleteProps {
   value: IModelos | null;
   onChange: (event: React.SyntheticEvent, value: IModelos | null) => void;
 }
-
-// ─── Componente ImagenAnterior ────────────────────────────────────────────────
 
 const ImagenAnterior: React.FC<ImagenAnteriorProps> = ({ etiquetaImagen }) => {
   return (
@@ -59,8 +55,6 @@ const ImagenAnterior: React.FC<ImagenAnteriorProps> = ({ etiquetaImagen }) => {
   );
 };
 
-// ─── Componente CustomAutocomplete ────────────────────────────────────────────
-
 const CustomAutocomplete: React.FC<CustomAutocompleteProps> = ({ options, value, onChange }) => {
   return (
     <Autocomplete
@@ -73,16 +67,12 @@ const CustomAutocomplete: React.FC<CustomAutocompleteProps> = ({ options, value,
   );
 };
 
-// ─── Componente principal ─────────────────────────────────────────────────────
-
 export const IngresarImagenesEtiquetas: React.FC = () => {
   const classes = MaterialButtons();
   const { TitleChanger } = useTitleOfApp();
   const { openNotificationUI } = useNotificationUI();
   const { getConfirmation } = useConfirmationDialog();
   const { FetchPost } = useFetchApiMultiResults();
-
-  // ─── React Hook Form ──────────────────────────────────────────────────────
 
   const {
     control,
@@ -97,13 +87,9 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
   const watchedTipoEtiqueta = watch("tipoEtiqueta");
   const watchedTipoUnidad = watch("tipoUnidad");
 
-  // ─── Título ────────────────────────────────────────────────────────────────
-
   React.useEffect(() => {
     TitleChanger("Ingresar imagenes para etiquetas");
   }, []);
-
-  // ─── Refs y estados ────────────────────────────────────────────────────────
 
   const hiddenFileInput = React.useRef<HTMLInputElement>(null);
   const [modelos, setModelos] = React.useState<IModelos[]>([]);
@@ -113,8 +99,6 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
   const [urlImage, setUrlImage] = React.useState<string | null>(null);
   const [imageFile, setImageFile] = React.useState<File | null>(null);
   const [isUploading, setIsUploading] = React.useState(false);
-
-  // ─── Fetch modelos con FetchApi ────────────────────────────────────────────
 
   const convertTipoUnidad = React.useMemo(() => {
     if (!watchedTipoEtiqueta) return null;
@@ -143,8 +127,6 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
     }
   );
 
-  // ─── Fetch imagen con FetchApi (activación condicional) ────────────────────
-
   const activadorImagen = React.useMemo(() => {
     if (selectModelo?.codigoModelo && watchedTipoEtiqueta) {
       return `${selectModelo.codigoModelo}-${watchedTipoEtiqueta}`;
@@ -165,8 +147,6 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
     () => setDataImagen(null)
   );
 
-  // ─── Helpers ──────────────────────────────────────────────────────────────
-
   const getTipoModelo = (modelosList: IModelos[], etiqueta: string, tipoUnidad: string): IModelos[] => {
     return modelosList.filter((modelo) => {
       if (etiqueta === "EM") {
@@ -179,7 +159,7 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
         if (modelo.tipoUnidad !== "P") return true;
       }
       if (etiqueta === "EC") {
-        if (modelo.nombre?.startsWith("S4")) {
+        if (modelo.codigoModelo.startsWith("S4")) {
           if (modelo.tipoUnidad === "I" && tipoUnidad === "I") return true;
           if (modelo.tipoUnidad === "E" && tipoUnidad === "E") return true;
         }
@@ -187,8 +167,6 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
       return false;
     });
   };
-
-  // ─── Event Handlers ────────────────────────────────────────────────────────
 
   const onFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files?.[0]) {
@@ -218,7 +196,6 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
       openNotificationUI("Error el modelo no es valido", "error");
       return;
     }
-
     const confirmed = await getConfirmation(
       "Guardar imagen",
       "¿Está seguro de guardar la imagen para esta etiqueta?",
@@ -226,9 +203,7 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
       "Guardar",
       "Cancelar"
     );
-
     if (!confirmed) return;
-
     setIsUploading(true);
     try {
       await FetchPost(
@@ -254,15 +229,13 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
     }
   };
 
-  // ─── Render ───────────────────────────────────────────────────────────────
-
   return (
     <ContainerForPages optionsLayout="page" activeEffectVisible>
       <div className="mx-5">
         <ContainerForPages optionsLayout="Selects">
           <div className="grid grid-cols-1 sm:grid-cols-2 justify-center gap-4 my-5 w-full">
             <div className="col-span-2 flex gap-4 justify-center w-full">
-              <div className="w-full">
+              <div className="w-full flex flex-col gap-y-4">
                 <SelectComponentForm
                   control={control}
                   name="tipoEtiqueta"
@@ -296,11 +269,7 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
                     name="modelo"
                     control={control}
                     render={() => (
-                      <CustomAutocomplete
-                        options={modelos}
-                        value={valor}
-                        onChange={handleChangeAutocomplete}
-                      />
+                      <CustomAutocomplete options={modelos} value={valor} onChange={handleChangeAutocomplete} />
                     )}
                   />
                 )}
@@ -309,8 +278,7 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
                 onClick={handleClick}
                 variant="contained"
                 className={classes.blueButton}
-                disabled={!watchedTipoEtiqueta || !selectModelo || !imageFile}
-              >
+                disabled={!watchedTipoEtiqueta}>
                 <Upload />
                 <span className="hidden sm:block">Importar</span>
               </Button>
@@ -341,19 +309,14 @@ export const IngresarImagenesEtiquetas: React.FC = () => {
             <>
               <TitleUIComponent title="Preview nueva imagen de etiqueta" classNameTitle="text-base" />
               <div className="border-2 rounded-lg overflow-hidden border-red-400">
-                <img
-                  className="max-h-[50vh] w-auto h-full"
-                  src={urlImage}
-                  alt="Preview nueva imagen de etiqueta"
-                />
+                <img className="max-h-[50vh] w-auto h-full" src={urlImage} alt="Preview nueva imagen de etiqueta" />
               </div>
               <Button
                 startIcon={<Check />}
                 className={classes.greenButton}
                 variant="contained"
                 onClick={handleSubmit(onSubmit)}
-                disabled={isSubmitting || isUploading}
-              >
+                disabled={isSubmitting || isUploading}>
                 Guardar
               </Button>
             </>

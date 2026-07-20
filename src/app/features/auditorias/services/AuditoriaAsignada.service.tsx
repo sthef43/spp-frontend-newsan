@@ -68,6 +68,19 @@ export class AuditoriaAsignadaService extends GenericService<IAuditoriaAsignada>
     });
   }
 
+  public async GetAuditResultWithAllDatesByAuditAsignadaId(id: number): Promise<IAuditoriaAsignada> {
+    return new Promise<IAuditoriaAsignada>((resolve, reject) => {
+      axios
+        .get(`${import.meta.env.VITE_API_URL}/${this.Url}/GetAuditResultWithAllDatesByAuditAsignadaId/${id}`)
+        .then((response) => {
+          resolve(response.data);
+        })
+        .catch((error) => {
+          reject(error);
+        });
+    });
+  }
+
   public async GetAllAuditAsignedByAuditId(id: number): Promise<IAuditoriaAsignada[]> {
     return new Promise<IAuditoriaAsignada[]>((resolve, reject) => {
       axios

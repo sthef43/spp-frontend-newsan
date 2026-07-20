@@ -42,6 +42,13 @@ class AuditoriaAsignadaClassSlice extends GenericSlice<IAuditoriaAsignada> {
     }
   );
 
+  getAuditResultWithAllDatesByAuditAsignadaId = createAsyncThunk<IAuditoriaAsignada, number>(
+    `AuditoriaAsignada/getAuditResultWithAllDatesByAuditAsignadaId`,
+    async (id, info) => {
+      return await errorNotification(() => this.service.GetAuditResultWithAllDatesByAuditAsignadaId(id), info);
+    }
+  );
+
   getAllAuditAsignedByAuditId = createAsyncThunk<IAuditoriaAsignada[], number>(
     `AuditoriaAsignada/getAllAuditAsignedByAuditId`,
     async (id, info) => {
