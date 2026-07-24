@@ -143,6 +143,7 @@ export const DashboardScreen = (): JSX.Element => {
                     <Route path={`${path}/calidad`}>
                       <RutasPadre routeSelected="calidad" />
                     </Route>
+
                     {/* CUENTA */}
                     <Route path={`${path}/cuenta`}>
                       <RutasPadre routeSelected="cuenta" />
