@@ -20,10 +20,10 @@ Lee los archivos que ya existen (`RutasPadre.tsx`, `DashboardScreen.tsx`) e inye
 ## Herramientas
 
 | Tool | Disponible |
-|------|-----------|
-| read | true |
-| edit | true |
-| bash | false |
+| ---- | ---------- |
+| read | true       |
+| edit | true       |
+| bash | false      |
 
 ---
 
@@ -33,6 +33,8 @@ Lee los archivos que ya existen (`RutasPadre.tsx`, `DashboardScreen.tsx`) e inye
 
 - Utiliza `read` para analizar el contenido del archivo antes de modificarlo, y `edit` para inyectar el código exactamente donde corresponde (junto a las demás rutas).
 - Reemplaza `{Name}` por la versión PascalCase (ej. `Usuarios`) y `{name_lower}` por la versión en minúsculas (ej. `usuarios`).
+- Antes de insertar una ruta, verifica si el `lazy import`, el `case` o el bloque `<Route>` ya existen para `{name_lower}`. Si ya existen, no los dupliques.
+- Si alguno de los archivos destino no contiene los puntos de inyección esperados, detén el proceso y reporta un error en lugar de continuar a ciegas.
 
 ---
 
@@ -60,14 +62,16 @@ Dentro de la función `selectRoute`, busca el `switch (routeFather)` e inyecta e
 Lee el archivo `src/app/shared/components/dashboard/DashboardScreen.tsx`. Busca el lugar exacto donde se declaran las etiquetas `<Route>` de los demás módulos e inyecta el siguiente bloque:
 
 ```typescript
-                    {/* {Name} */}
-                    <Route path={`${path}/{name_lower}`}>
-                      <RutasPadre routeSelected="{name_lower}" />
-                    </Route>
+{
+  /* {Name} */
+}
+<Route path={`${path}/{name_lower}`}>
+  <RutasPadre routeSelected="{name_lower}" />
+</Route>;
 ```
 
-**4. Reportar al Orquestador:**
+**4. Verificar resultado y reportar al Orquestador:**
 
-Una vez inyectado el código y verificado que no hay errores de sintaxis, NO pidas confirmación al usuario humano. Responde directamente al Orquestador con el siguiente mensaje:
+Una vez inyectado el código, verifica que las tres inserciones estén presentes en los archivos correspondientes y que no haya duplicados. Si falta alguna inserción o aparece duplicada, reporta el error y no finalices como éxito. Si todo está correcto, responde directamente al Orquestador con el siguiente mensaje:
 
 > "Éxito: Las rutas del módulo {Name} han sido inyectadas en RutasPadre.tsx y DashboardScreen.tsx correctamente. El proceso ha finalizado."
