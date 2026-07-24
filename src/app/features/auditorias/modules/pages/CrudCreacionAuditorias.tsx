@@ -94,18 +94,27 @@ export const CrudCreacionAuditorias: React.FC = () => {
   const handleBatchUpdate = async (data: any) => {
     const edicionAuditoriaDTO = generarAuditoriaConResultsParaEdicion(data);
     const updates = listaAuditoriasAsignadasGlobal.map(async (asignacion) => {
+      const grupoItemsSinId = edicionAuditoriaDTO.auditoriaGrupoItems.map((grupo) => ({
+        ...grupo,
+        id: 0,
+        auditoriaItemsResult: grupo.auditoriaItemsResult?.map((item) => ({
+          ...item,
+          id: 0,
+          auditoriaGrupoItemsResultId: 0
+        }))
+      }));
       const dtoActualizado: AuditoriaEditDTO = {
         ...edicionAuditoriaDTO,
         auditoriaAsignada: {
           ...edicionAuditoriaDTO.auditoriaAsignada,
           id: asignacion.id,
           auditoriaId: asignacion.auditoriaId
-        }
+        },
+        auditoriaGrupoItems: grupoItemsSinId
       };
       return dispatch(AuditoriaAsignadaSliceRequest.updateAuditWithResults(dtoActualizado));
     });
     await Promise.all(updates);
-    await dispatch(AuditoriaValoresResultSliceRequest.multiPutRequest(listaValoresResult));
     openNotificationUI(`Se actualizaron ${listaAuditoriasAsignadasGlobal.length} auditorías con éxito`, "success");
     dispatch(auditoriasUISlice.actions.setModoEdicionGlobal(false));
     dispatch(auditoriasUISlice.actions.setListaAuditoriasAsignadasGlobal([]));
