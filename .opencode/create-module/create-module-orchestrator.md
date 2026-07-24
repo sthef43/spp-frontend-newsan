@@ -20,10 +20,10 @@ Coordinar la creación completa de un nuevo módulo en el proyecto SPP, incluyen
 
 ## Agentes Disponibles
 
-| Agente | Responsabilidad |
-|---------|-----------------|
-| module_creator | Crea carpetas vacías + `{Name}Page.tsx` + `{Name}Router.tsx` |
-| Integrador | Inyecta lazy import + case en `RutasPadre.tsx` + `<Route>` en `DashboardScreen.tsx` |
+| Agente | Responsabilidad | Ubicación |
+|---------|-----------------|-----------|
+| module_creator | Crea carpetas vacías + `{Name}Page.tsx` + `{Name}Router.tsx` | `.opencode/create-module/module_creator.md` |
+| Integrador | Inyecta lazy import + case en `RutasPadre.tsx` + `<Route>` en `DashboardScreen.tsx` | `.opencode/create-module/Integrador.md` |
 
 ---
 
