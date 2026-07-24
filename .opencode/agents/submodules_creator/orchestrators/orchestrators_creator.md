@@ -31,8 +31,8 @@ Nunca debes realizar los cambios directamente en el código. Tu única responsab
 2. Espera la respuesta completa de éxito.
 3. Entrega el resumen del módulo creado al usuario.
 
-### Flujo B: Creación AVANZADA (Con argumentos de componentes, gráficos o selects)
-*Si el usuario pide un módulo especificando elementos visuales (ej. "con un gráfico de líneas" o "con select de sucursales"):*
+### Flujo B: Creación AVANZADA (Con argumentos de componentes o gráficos)
+*Si el usuario pide un módulo especificando elementos visuales sin selects (ej. "con un gráfico de líneas"):*
 
 **Paso 1 (Delegación):**
 1. Ejecuta la tarea: `creator_submodule_orchestrator`.
@@ -57,6 +57,35 @@ Nunca debes realizar los cambios directamente en el código. Tu única responsab
    - **Nombre del archivo/componente solicitado:**
    - **Path esperado donde se buscó:**
    - **Observación:** (Ej. "No se encontró el componente de gráfico de barras, se dejó un TODO en el código").
+
+### Flujo C: Creación con SELECTS (Con selects para filtros/búsqueda)
+*Si el usuario pide un módulo especificando selects (ej. "con select de sucursales" o "con filtros de planta y área"):*
+
+**Paso 1 (Delegación):**
+1. Ejecuta la tarea: `creator_submodule_orchestrator`.
+2. Mapea y transmite al subagente los siguientes datos en la orden de trabajo:
+   - **Objetivo solicitado por el usuario** (Nombre del submódulo).
+   - **Lista de selects requeridos** con sus propiedades:
+     - Nombre del select (`nameSelect`).
+     - Label a mostrar (`label`).
+     - Endpoint/Data de donde obtener los items (`listItems`), si se conoce.
+     - `valueLabel` y `valueSelect` (funciones para extraer texto y valor).
+   - **Contexto de las carpetas del proyecto** donde debe buscar los componentes.
+   - **Indicación explícita** de que debe usar `react-hook-form` con `useForm()` y `SelectComponentForm` de `src/app/shared/helpers/ComponentsForForms/SelectComponentForm`.
+
+**Paso 2 (Espera):**
+1. Espera la respuesta de confirmación del subagente.
+
+**Paso 3 (Consolidación):**
+1. Conserva íntegramente el reporte recibido. No lo resumas ni elimines información sobre los archivos creados.
+
+**Paso 4 (Validación de éxito):**
+1. Si el reporte indica que todo se creó correctamente:
+   - Informa al usuario con un resumen estructurado que incluya los selects configurados.
+   - Finaliza el flujo.
+
+**Paso 5 (Validación de archivos faltantes):**
+1. Si el reporte indica que algún componente de formulario (como `SelectComponentForm`) no fue encontrado, infórmalo en el reporte final.
 
 ---
 
